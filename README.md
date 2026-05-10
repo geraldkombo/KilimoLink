@@ -19,7 +19,6 @@ At its core, **KilimoLink** is a functional bridge between the city and the farm
     - **Privy**: Email-to-Wallet onboarding for urban farmers.
     - **Phantom Connect**: Native wallet support for experienced users.
 - **Financial Operations**: **Altitude** (by Squads) for business-grade treasury, APY yield, and ACH/SWIFT payouts.
-- **Payments**: **x402 protocol** for pay-per-query agricultural data monetization.
 
 ## Network Resilience
 Due to recent Devnet resets, **KilimoLink** is configured to prioritize **Quiknode Premium RPC** endpoints with automatic fallbacks to public nodes, ensuring the marketplace remains operational during network maintenance periods.
@@ -44,7 +43,6 @@ Swagger: http://localhost:3000/docs
 Web: http://localhost:5173
 
 ## Colosseum Hackathon Resources
-This project uses several sponsor tools from the Colosseum hackathon:
-- **Phantom**: For wallet integration.
-- **Quiknode**: For high-performance Solana RPC.
-- **Neon**: For serverless PostgreSQL.
+This project leverages the official Colosseum developer tools:
+- **Colosseum Copilot**: For deep ecosystem research and market gap analysis.
+- **Colosseum Resources**: For identifying optimal Solana build paths and sponsor integrations.

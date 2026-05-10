@@ -21,8 +21,9 @@
 - Climate-smart training category
 - Impact metrics placeholders (jobs, income, emissions reduced) at business level
 
-## U.S. Embassy ASSH
+## IGAD Youth Climate / Resilience
 
-- Market linkage module to demonstrate income and buyer connections
-- Aggregated donor reporting endpoint without PII
+- Drought early warning integration (NDMA-aligned) for climate-smart livestock/crop management
+- Impact tracking for emissions reduction and jobs created in the green economy
+- Cross-border trade facilitation placeholders for regional resilience metrics
 

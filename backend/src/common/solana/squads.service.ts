@@ -1,16 +1,16 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Connection, PublicKey } from '@solana/web3.js';
+import { Connection, PublicKey, clusterApiUrl } from '@solana/web3.js';
 
 @Injectable()
 export class SquadsService implements OnModuleInit {
-  private connection: Connection;
-  private multisigProgramId: PublicKey;
+  private connection!: Connection;
+  private multisigProgramId!: PublicKey;
 
   constructor(private readonly configService: ConfigService) {}
 
   onModuleInit() {
-    const rpcUrl = this.configService.get<string>('SOLANA_RPC_URL');
+    const rpcUrl = this.configService.get<string>('SOLANA_RPC_URL') || clusterApiUrl('devnet');
     this.connection = new Connection(rpcUrl, 'confirmed');
     
     // Squads V4 Program ID

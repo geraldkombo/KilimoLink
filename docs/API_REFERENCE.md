@@ -66,3 +66,10 @@ Swagger/OpenAPI: `/docs`
 
 - `GET /donor/impact-metrics` (public, aggregated only)
 - `GET /donor/impact-metrics/export.csv` (public)
+
+## Future Extensions (Grant Readiness)
+
+- `GET /oracle/prices?product=&region=` → fetches verified statistical data (KNBS-aligned)
+- `POST /governance/proposals` (Bearer token) → submit cooperative fund proposal
+- `GET /governance/proposals/:id/votes` → track on-chain multisig/DAO votes
+- `GET /market/disruption-alerts` → real-time alerts based on NDMA drought phases

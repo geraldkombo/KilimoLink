@@ -75,3 +75,16 @@ This document records official Kenya government requirements and mandates that i
 **Implementation notes for this project**
 - Use these portals as canonical entry points to sector ministries when building “official source” documentation and when validating the provenance of requirements.
 
+## International Alignment (UN SDGs)
+
+**Key requirements / interpretation**
+KilimoLink directly contributes to several United Nations Sustainable Development Goals:
+- **SDG 1: No Poverty**: By increasing farmer income through direct market access.
+- **SDG 2: Zero Hunger**: By improving supply chain efficiency and food security.
+- **SDG 5: Gender Equality**: By prioritizing women-led agribusinesses (captured in profile).
+- **SDG 8: Decent Work and Economic Growth**: By providing training and grants to youth.
+- **SDG 12: Responsible Consumption and Production**: Through price transparency and reduced waste.
+
+**Implementation notes for this project**
+- Use these tags in donor reporting and grant application metadata to align with international funding priorities.
+

@@ -5,6 +5,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { TerminusModule } from '@nestjs/terminus';
 import { AdminModule } from './admin/admin.module';
 import { AuthModule } from './auth/auth.module';
+import { GovernanceModule } from './governance/governance.module';
 import { CryptoModule } from './common/crypto/crypto.module';
 import { DocumentsModule } from './common/documents/documents.module';
 import { NotificationsModule } from './common/notifications/notifications.module';
@@ -13,6 +14,7 @@ import { SolanaModule } from './common/solana/solana.module';
 import { VerificationModule } from './common/verification/verification.module';
 import { HealthModule } from './health/health.module';
 import { MarketModule } from './market/market.module';
+import { OracleModule } from './oracle/oracle.module';
 import { QueuesModule } from './queues/queues.module';
 import { UsersModule } from './users/users.module';
 
@@ -37,7 +39,9 @@ import { UsersModule } from './users/users.module';
     UsersModule,
     MarketModule,
     AdminModule,
-    HealthModule
+    HealthModule,
+    OracleModule,
+    GovernanceModule
   ],
   providers: [
     {

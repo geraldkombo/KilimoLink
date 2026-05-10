@@ -5,12 +5,12 @@ import { Connection, PublicKey, clusterApiUrl } from '@solana/web3.js';
 @Injectable()
 export class SolanaService implements OnModuleInit {
   private readonly logger = new Logger(SolanaService.name);
-  private connection: Connection;
+  private connection!: Connection;
 
   constructor(private readonly configService: ConfigService) {}
 
   onModuleInit() {
-    const rpcUrl = this.configService.get<string>('SOLANA_RPC_URL');
+    const rpcUrl = this.configService.get<string>('SOLANA_RPC_URL') || clusterApiUrl('devnet');
     const wssUrl = this.configService.get<string>('SOLANA_WSS_URL');
 
     this.connection = new Connection(rpcUrl, {

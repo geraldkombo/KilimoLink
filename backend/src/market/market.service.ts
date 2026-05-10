@@ -48,21 +48,21 @@ export class MarketService {
       orderBy: { createdAt: 'desc' } 
     });
 
-    return products.map(p => ({
+    return products.map((p: any) => ({
       ...p,
       verification: this.verification.validatePrice(p.county, p.category, p.priceKes)
     }));
   }
 
   async placeOrder(userId: string, dto: PlaceOrderDto) {
-    const productIds = dto.items.map((i) => i.productId);
+    const productIds = dto.items.map((i: any) => i.productId);
     const products = await this.prisma.product.findMany({ where: { id: { in: productIds } } });
     if (products.length !== productIds.length) {
       throw new BadRequestException('Invalid product(s)');
     }
 
-    const unitPriceById = new Map(products.map((p) => [p.id, p.priceKes]));
-    const totalAmount = dto.items.reduce((sum, item) => sum + (unitPriceById.get(item.productId) || 0) * item.quantity, 0);
+    const unitPriceById = new Map(products.map((p: any) => [p.id, p.priceKes]));
+    const totalAmount = dto.items.reduce((sum: number, item: any) => sum + (unitPriceById.get(item.productId) || 0) * item.quantity, 0);
 
     return this.prisma.order.create({
       data: {

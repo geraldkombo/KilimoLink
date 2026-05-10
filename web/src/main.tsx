@@ -22,7 +22,8 @@ function Root() {
    * 2. Public Devnet (fallback)
    */
   const endpoint = useMemo(() => {
-    return 'https://cool-sparkling-putty.solana-devnet.quiknode.pro/193e15a0bf88b4b6cb225aed43ff6c92b221fd42' || clusterApiUrl('devnet');
+    const qn = import.meta.env.VITE_SOLANA_RPC_URL;
+    return qn || clusterApiUrl('devnet');
   }, []);
 
   const wallets = useMemo(
@@ -39,7 +40,7 @@ function Root() {
         who don't have Phantom wallets yet.
       */}
       <PrivyProvider
-        appId="cmp000ywe01mm0cldpk8r2kt7"
+        appId={import.meta.env.VITE_PRIVY_APP_ID || 'cmp000ywe01mm0cldpk8r2kt7'}
         config={{
           loginMethods: ['email', 'wallet', 'google'],
           appearance: {
