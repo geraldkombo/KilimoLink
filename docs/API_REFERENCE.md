@@ -1,0 +1,68 @@
+# API Reference
+
+Base URL: `/api/v1`
+
+Swagger/OpenAPI: `/docs`
+
+## Auth
+
+- `POST /auth/otp` `{ phone }` → sends OTP (TextBee via queue)
+- `POST /auth/verify` `{ phone, code }` → returns `{ token }`
+
+## Business Profiles
+
+- `POST /businesses` (Bearer token) → upsert business profile
+- `GET /businesses/me` (Bearer token) → current business profile
+
+## Users
+
+- `GET /users/me` (Bearer token)
+- `POST /users/me/consent` (Bearer token) `{ consentSms, consentPush }`
+- `DELETE /users/me` (Bearer token)
+- `GET /users/me/applications` (Bearer token)
+
+## Grants
+
+- `GET /grants?sector=&county=&minAmount=&maxAmount=&funder=&deadlineFrom=&deadlineTo=&keyword=&page=&pageSize=`
+- `GET /grants/:id`
+- `POST /grants/:id/apply` (Bearer token, multipart files) → apply with encrypted document storage
+- `GET /grants/applications` (Bearer token)
+- `POST /grants/:id/save` (Bearer token)
+- `POST /grants/:id/unsave` (Bearer token)
+- `GET /grants/saved` (Bearer token)
+
+## Training
+
+- `GET /training/courses`
+- `GET /training/courses/:id`
+- `POST /training/:id/progress` (Bearer token) `{ percent }`
+- `GET /training/courses/:id/certificate` (Bearer token) → PDF
+
+## Market
+
+- `GET /products?category=&county=&minPrice=&maxPrice=&search=`
+- `POST /products` (Bearer token) → list produce for sale
+- `PATCH /products/:id` (Bearer token)
+- `DELETE /products/:id` (Bearer token)
+- `POST /orders` (Bearer token) → place order
+- `GET /orders/:id`
+- `PATCH /orders/:id/status` (Bearer token)
+- `GET /products/:id/reviews`
+- `POST /products/:id/reviews` (Bearer token, requires delivered order)
+
+## Admin
+
+- `POST /admin/auth/login` `{ email, password, totp? }`
+- `GET /admin/grants` (Bearer admin token)
+- `POST /admin/grants` (Bearer admin token)
+- `PATCH /admin/grants/:id` (Bearer admin token)
+- `GET /admin/grants/pending` (Bearer admin token)
+- `POST /admin/grants/:id/approve` (Bearer admin token) `{ decision, notes? }`
+- `PATCH /admin/applications/:id/status` (Bearer admin token) `{ status: "UNDER_REVIEW" }`
+- `GET /admin/applications/:applicationId/documents/:documentId/download` (Bearer admin token) → decrypted stream
+- `GET /admin/analytics` (Bearer admin token)
+
+## Donor
+
+- `GET /donor/impact-metrics` (public, aggregated only)
+- `GET /donor/impact-metrics/export.csv` (public)

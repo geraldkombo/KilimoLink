@@ -1,0 +1,4 @@
+Title: KilimoLink Platform (Kenya)
+Short description: Grants, training, and market linkage for youth and women-led agribusinesses in Kenya.
+Keywords: agribusiness, grants, Kenya, youth, women, training, market
+Support email: support@example.org

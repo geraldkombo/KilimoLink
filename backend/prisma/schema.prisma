@@ -1,0 +1,227 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL")
+}
+
+enum BusinessType {
+  CROPS
+  LIVESTOCK
+  VALUE_ADDITION
+}
+
+enum OrderStatus {
+  PENDING
+  ACCEPTED
+  DISPATCHED
+  DELIVERED
+  REJECTED
+}
+
+enum AdminRole {
+  SUPER_ADMIN
+  COUNTY_ADMIN
+  SUPPORT
+}
+
+model User {
+  id        String   @id @default(uuid())
+  phone     String   @unique
+  consentSms Boolean @default(false)
+  consentPush Boolean @default(false)
+  consentAt DateTime?
+  deletedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  business  Business?
+  otps      OtpChallenge[]
+  notifications NotificationLog[]
+  reviews Review[]
+}
+
+model OtpChallenge {
+  id        String   @id @default(uuid())
+  phone     String
+  codeHash  String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([phone, createdAt])
+}
+
+model OtpVerifyThrottle {
+  id          String   @id @default(uuid())
+  phone       String
+  failures    Int      @default(0)
+  lockedUntil DateTime?
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+
+  @@unique([phone])
+}
+
+model Business {
+  id              String       @id @default(uuid())
+  userId          String       @unique
+  youthLed        Boolean      @default(false)
+  womenLed        Boolean      @default(false)
+  agpoCertificate String?
+  businessType    BusinessType
+  sector          String
+  county          String
+  businessSize    String
+  jobsCreated     Int          @default(0)
+  incomeIncrease  Int          @default(0)
+  emissionsReduced Float       @default(0)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  products      Product[]
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  businessId  String
+  name        String
+  category    String
+  priceKes    Int
+  quantity    Int
+  unit        String
+  description String
+  county      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  images   ProductImage[]
+  orderItems OrderItem[]
+  reviews  Review[]
+}
+
+model ProductImage {
+  id        String   @id @default(uuid())
+  productId String
+  url       String
+  sortOrder Int      @default(0)
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model Order {
+  id               String      @id @default(uuid())
+  status           OrderStatus @default(PENDING)
+  buyerName        String
+  buyerPhone       String?
+  buyerOrganization String?
+  buyerUserId      String?
+  deliveryLocation String
+  county           String
+  totalAmount      Int         @default(0)
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  items            OrderItem[]
+}
+
+model OrderItem {
+  id        String @id @default(uuid())
+  orderId   String
+  productId String
+  quantity  Int
+  unitPrice Int
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  @@unique([orderId, productId])
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  productId String
+  userId    String
+  rating    Int
+  comment   String?
+  createdAt DateTime @default(now())
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([productId, createdAt])
+}
+
+model AdminUser {
+  id              String    @id @default(uuid())
+  email           String    @unique
+  passwordHash    String
+  role            AdminRole
+  county          String?
+  totpSecretEnc   String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  auditLogs       AuditLog[]
+  loginThrottles  AdminLoginThrottle[]
+}
+
+model AdminLoginThrottle {
+  id          String   @id @default(uuid())
+  adminEmail  String
+  ip          String?
+  failures    Int      @default(0)
+  lockedUntil DateTime?
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+
+  adminId     String?
+  admin       AdminUser? @relation(fields: [adminId], references: [id], onDelete: SetNull)
+
+  @@index([adminEmail, updatedAt])
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  adminId   String
+  action    String
+  entityType String
+  entityId  String?
+  payload   Json
+  ip        String?
+  createdAt DateTime @default(now())
+
+  admin AdminUser @relation(fields: [adminId], references: [id], onDelete: Cascade)
+}
+
+enum NotificationChannel {
+  SMS
+  PUSH
+}
+
+enum NotificationStatus {
+  QUEUED
+  SENT
+  FAILED
+}
+
+model NotificationLog {
+  id        String              @id @default(uuid())
+  userId    String?
+  phone     String?
+  channel   NotificationChannel
+  template  String
+  payload   Json
+  status    NotificationStatus @default(QUEUED)
+  error     String?
+  createdAt DateTime            @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+}
