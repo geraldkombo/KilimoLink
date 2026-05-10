@@ -42,6 +42,9 @@ API: http://localhost:3000/api/v1
 Swagger: http://localhost:3000/docs  
 Web: http://localhost:5173
 
+## GitHub Repository
+https://github.com/geraldkombo/KilimoLink
+
 ## Colosseum Hackathon Resources
 This project leverages the official Colosseum developer tools:
 - **Colosseum Copilot**: For deep ecosystem research and market gap analysis.
