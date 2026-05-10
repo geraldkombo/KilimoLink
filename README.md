@@ -45,6 +45,15 @@ Web: http://localhost:5173
 ## GitHub Repository
 https://github.com/geraldkombo/KilimoLink
 
+## Documentation
+Explore the full depth of the KilimoLink protocol:
+- **[Project Thesis](file:///docs/PROJECT_THESIS.md)**: Our vision for the African urban-rural nexus.
+- **[Pitch Deck Content](file:///docs/PITCH_DECK_CONTENT.md)**: Strategy and slides for institutional investors.
+- **[Official Mandates](file:///docs/OFFICIAL_MANDATES.md)**: Alignment with Kenya government (NDMA, KNBS) and UN SDGs.
+- **[API Reference](file:///docs/API_REFERENCE.md)**: Detailed documentation for developers and integrators.
+- **[User Manual](file:///docs/USER_MANUAL.md)**: Step-by-step guide for farmers and agribusinesses.
+- **[Security Audit](file:///docs/SECURITY_AUDIT.md)**: MAESTRO-style threat model and data protection (DPA 2019).
+
 ## Colosseum Hackathon Resources
 This project leverages the official Colosseum developer tools:
 - **Colosseum Copilot**: For deep ecosystem research and market gap analysis.
