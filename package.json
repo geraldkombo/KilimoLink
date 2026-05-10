@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "pnpm -r dev",
     "build": "pnpm -r build",
+    "start": "pnpm --filter @kilimolink/backend start",
     "lint": "pnpm -r lint",
     "test": "pnpm -r test"
   },
