@@ -8,8 +8,8 @@ At its core, **KilimoLink** is a functional bridge between the city and the farm
 ## Key Components
 - **The Marketplace**: A direct-to-consumer platform for urban residents to buy produce from local farmers.
 - **Climate Tracking**: Real-time measurement of carbon emissions saved by choosing local sourcing over long-distance imports.
-- **Governance Dashboard**: A multi-role administrative tool for cooperative managers to oversee internal fund allocation and manage member disbursements via Squads multisig.
-- **Identity & Verification**: Secure, wallet-based verification for farmers and businesses to ensure trust and accountability.
+- **Governance Dashboard**: A simplified administrative tool for cooperative and market managers to oversee trade volume, price fairness, and user verification.
+- **Proof of Trade**: A Solana-based ledger that records marketplace transactions to help farmers build a digital credit history.
 
 ## 2026 Developer Stack
 - **Backend**: NestJS, Prisma, PostgreSQL (Neon), BullMQ (Redis).

@@ -1,16 +1,16 @@
-# Cooperative & Private Standards
+# Market & Value-Addition Standards
 
-This document records the standards and cooperative frameworks that inform implementation choices in KilimoLink.
+This document records the standards and frameworks that inform implementation choices in KilimoLink.
 
-## SACCO & Cooperative Frameworks
+## Value-Addition & Trade Standards
 
 **Key requirements / interpretation**
-- Cooperatives require transparent oversight of internal funds and member disbursements.
-- SACCOs prioritize member savings and credit history for loan eligibility.
+- Smallholder farmers require direct access to urban markets to avoid value loss.
+- Value addition (processing, branding) is the primary driver of increased farm-gate income.
 
 **Implementation notes for this project**
-- Use Solana as a transparent internal ledger for SACCO-managed funds.
-- Align training to "Value Addition" standards (processing, packaging, branding) to improve member productivity.
+- Use Solana as a "Proof of Trade" ledger to record successful marketplace transactions.
+- Align training to "Value Addition" standards (processing, packaging, branding) to improve product marketability.
 
 ## Kenya Revenue Authority (eTIMS / electronic invoicing)
 

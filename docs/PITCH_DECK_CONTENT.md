@@ -12,9 +12,9 @@
 *Visual: Screenshot of the KilimoLink Dashboard showing 'Raw Produce' vs 'Value Added' price comparison.*
 **Script**: "Our platform uses the Solana blockchain to provide instant, auditable transactions. We go beyond simple trade by incentivizing value addition—training farmers to process and brand their goods, doubling their margins while ensuring urban consumers get high-quality, verified products."
 
-## Slide 4: Cooperative Governance (The SACCO Bridge)
-*Visual: A diagram showing funds moving from Cooperatives → KilimoLink Multisig → SACCO → Farmer Bank Account.*
-**Script**: "We focus on empowering local SACCOs and cooperatives directly. We use Solana as a transparent ledger for internal auditability. Once a payout is approved, it flows through existing SACCO rails via RTGS and M-Pesa, ensuring every Shilling is tracked but paid in KES."
+## Slide 4: Financial Empowerment (Proof of Trade)
+*Visual: A farmer showing their phone with a 'Credit Score' based on their last 10 successful trades.*
+**Script**: "We don't need complex institutional bridges. We use Solana to record every successful trade. This 'Proof of Trade' becomes the farmer's collateral. While they get paid in M-Pesa today, they are building the digital history they need to access formal credit tomorrow."
 
 ## Slide 5: The "Magic" (Privy)
 *Visual: A farmer logging in with just an email and a wallet being created.*

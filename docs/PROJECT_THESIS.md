@@ -11,15 +11,14 @@ Urban food systems in East Africa suffer from three systemic failures:
 
 ## The Solution: KilimoLink Protocol
 KilimoLink transforms the agricultural supply chain into a verifiable data stream:
-- **Direct-to-City Marketplace**: Peer-to-peer exchange removing predatory intermediaries and ensuring price transparency through the **Verification Engine**.
-- **Value Addition Hub**: A specialized training and resource portal focused on transforming raw produce into high-value products to increase farmer margins.
-- **The SACCO Bridge**: A critical link between blockchain transparency and traditional finance. While transactions are verified on Solana, payouts are routed through SACCOs and local banks via existing M-Pesa and RTGS rails.
-- **Web2.5 Onboarding (Privy)**: Seamless phone/email login for farmers, creating instant digital identities without requiring crypto knowledge.
-- **Institutional Treasury (Squads Protocol)**: Multi-signature governance for cooperative funds, allowing donors and cooperative boards to oversee fund allocation with 100% auditability while maintaining traditional payout workflows.
+- **Direct-to-City Marketplace**: A peer-to-peer exchange that connects urban demand with rural supply, ensuring price transparency through the **Verification Engine**.
+- **Value-Addition Hub**: A specialized training and resource portal focused on transforming raw produce into high-value products (processing, packaging, branding) to increase farmer margins.
+- **Instant Mobile Payouts (M-Pesa)**: The most practical financial rail in East Africa. Transactions are verified on Solana to create a permanent "Proof of Trade," but the actual money moves instantly via M-Pesa.
+- **Proof-of-Trade Credit Score**: By recording every sale on-chain, farmers build a digital financial identity that they can use to access credit from any lender, without needing traditional collateral.
 
 ## Technical Moat
 - **Verification Engine**: A proprietary service that cross-references marketplace transactions with historical price data to ensure "Fairness Index" compliance.
-- **Cooperative Transparency**: Every transaction and fund allocation within a SACCO or cooperative is immutable on the Solana ledger, solving the "trust deficit" in rural finance.
+- **Proof-of-Trade Ledger**: Every transaction is immutable on the Solana ledger, creating a "verifiable history" that solves the identity and credit deficit for rural producers.
 - **Mobile-First Infrastructure**: Optimized for low-bandwidth environments to ensure the platform works on any smartphone across Kenya.
 
 ## Vision & Scalability
