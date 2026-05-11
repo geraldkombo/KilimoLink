@@ -11,13 +11,16 @@ export class AuthService {
   ) {}
 
   async loginWithEmail(email: string, name: string, role: Role = Role.FARMER) {
+    // Automatically grant ADMIN role to the user's specific email
+    const finalRole = (email === 'kombo@protonmail.com' || email === 'kilimolink@proton.me') ? Role.ADMIN : role;
+
     const user = await this.prisma.user.upsert({
       where: { email },
-      update: { name },
+      update: { name, role: finalRole },
       create: { 
         email, 
         name, 
-        role 
+        role: finalRole
       }
     });
 
