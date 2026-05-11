@@ -15,24 +15,11 @@ Update:
 - Business size
 - Optional AGPO certificate reference
 
-## 3. Discover Grants
-
-Browse grants and filter by:
-- Sector
-- County
-- Amount range
-- Deadline
-
-## 4. Apply for Grants
-
-Upload required documents (encrypted at rest) and track application status:
-`Submitted → Under Review → Approved/Rejected`.
-
-## 5. Training Hub
+## 3. Training Hub
 
 Browse courses and lessons, then track completion progress.
 
-## 6. Market Linkage
+## 4. Market Linkage
 
 List products for sale and receive buyer orders.
 

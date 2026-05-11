@@ -50,7 +50,6 @@ This document records official Kenya government requirements and mandates that i
 - Align core modules to these mandates:
   - Training hub (entrepreneurial + market readiness)
   - Market linkage (product listing + buyer orders)
-  - Grant application workflow (proposal readiness + document handling)
 
 ## Kenya Revenue Authority (eTIMS / electronic invoicing)
 

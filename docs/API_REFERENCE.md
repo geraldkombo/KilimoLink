@@ -19,17 +19,6 @@ Swagger/OpenAPI: `/docs`
 - `GET /users/me` (Bearer token)
 - `POST /users/me/consent` (Bearer token) `{ consentSms, consentPush }`
 - `DELETE /users/me` (Bearer token)
-- `GET /users/me/applications` (Bearer token)
-
-## Grants
-
-- `GET /grants?sector=&county=&minAmount=&maxAmount=&funder=&deadlineFrom=&deadlineTo=&keyword=&page=&pageSize=`
-- `GET /grants/:id`
-- `POST /grants/:id/apply` (Bearer token, multipart files) → apply with encrypted document storage
-- `GET /grants/applications` (Bearer token)
-- `POST /grants/:id/save` (Bearer token)
-- `POST /grants/:id/unsave` (Bearer token)
-- `GET /grants/saved` (Bearer token)
 
 ## Training
 
@@ -53,13 +42,6 @@ Swagger/OpenAPI: `/docs`
 ## Admin
 
 - `POST /admin/auth/login` `{ email, password, totp? }`
-- `GET /admin/grants` (Bearer admin token)
-- `POST /admin/grants` (Bearer admin token)
-- `PATCH /admin/grants/:id` (Bearer admin token)
-- `GET /admin/grants/pending` (Bearer admin token)
-- `POST /admin/grants/:id/approve` (Bearer admin token) `{ decision, notes? }`
-- `PATCH /admin/applications/:id/status` (Bearer admin token) `{ status: "UNDER_REVIEW" }`
-- `GET /admin/applications/:applicationId/documents/:documentId/download` (Bearer admin token) → decrypted stream
 - `GET /admin/analytics` (Bearer admin token)
 
 ## Donor

@@ -6,7 +6,6 @@ This project is a reference implementation intended to support Kenya’s Data Pr
 
 - Phone number for authentication (OTP)
 - Business profile attributes (sector, county, youth/women-led flags)
-- Grant application metadata and uploaded documents
 - Training progress and market transactions
 
 ## Security Controls
@@ -30,7 +29,7 @@ This project is a reference implementation intended to support Kenya’s Data Pr
 ## Deletion (Right to Erasure)
 
 - Users can request account deletion via the platform. Deletion disables login and removes direct identifiers (e.g., phone).
-- Implementers should document whether operational records (applications, transactions) are retained for reporting/accountability and for how long.
+- Implementers should document whether operational records (transactions) are retained for reporting/accountability and for how long.
 
 ## Sharing
 

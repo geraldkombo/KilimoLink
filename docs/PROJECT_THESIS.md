@@ -11,14 +11,14 @@ Urban food systems in East Africa suffer from three systemic failures:
 
 ## The Solution: KilimoLink Protocol
 KilimoLink transforms the agricultural supply chain into a verifiable data stream:
-- **Direct-to-City Marketplace**: Peer-to-peer exchange removing predatory intermediaries.
+- **Direct-to-City Marketplace**: Peer-to-peer exchange removing predatory intermediaries and ensuring price transparency through the **Verification Engine**.
 - **Hybrid Financial Gateway (The SACCO Bridge)**: A critical link between blockchain transparency and traditional finance. While transactions are verified on Solana, payouts are routed through SACCOs and local banks via existing ACH/SWIFT/Mobile Money rails.
-- **Institutional Treasury (Altitude/Squads)**: Multi-signature governance for cooperative funds, allowing government and donors to oversee fund allocation with 100% auditability while maintaining traditional payout workflows.
+- **Institutional Treasury (Squads Protocol)**: Multi-signature governance for cooperative funds, allowing government and donors to oversee fund allocation with 100% auditability while maintaining traditional payout workflows.
 - **Web2.5 Onboarding (Privy)**: Seamless phone/email login for farmers, creating instant digital identities without requiring crypto knowledge.
 
 ## Technical Moat
 - **Verification Engine**: A proprietary service that cross-references marketplace transactions with official KNBS/NDMA data to ensure "Fairness Index" compliance.
-- **On-chain Auditability**: Every allocation decision is immutable on the Solana ledger, solving the "Governance Opacity" problem for government disbursements.
+- **On-chain Auditability**: Every allocation decision is immutable on the Solana ledger, solving the "Governance Opacity" problem for municipal fund oversight.
 - **Mobile-First Infrastructure**: Optimized for low-bandwidth environments to ensure the platform works on any smartphone across Kenya.
 
 ## Vision & Scalability
