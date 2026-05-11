@@ -12,9 +12,9 @@
 *Visual: Screenshot of the KilimoLink Dashboard and the 'Fairness Index' indicator.*
 **Script**: "Our platform uses the Solana blockchain to provide instant, auditable transactions. We integrate directly with KNBS data to provide a Price Fairness Index—ensuring that every Shilling spent is a Shilling earned by the right person."
 
-## Slide 4: Institutional Governance
-*Visual: The Altitude/Squads interface showing a multisig balance.*
-**Script**: "For cooperatives and city councils, we offer institutional-grade treasury management. Using Squads V4, funds are governed by multi-signature protocols, providing 100% auditability and direct SWIFT payouts to farmers."
+## Slide 4: Institutional Governance (The SACCO Bridge)
+*Visual: A diagram showing funds moving from Government → KilimoLink Multisig → SACCO → Farmer Bank Account.*
+**Script**: "We aren't asking the government to pay in crypto. We use Solana as a transparent ledger for auditability. Once a disbursement is approved via our multisig, the funds are routed through local SACCOs and banks via SWIFT and ACH, ensuring every Shilling is tracked but paid in KES."
 
 ## Slide 5: The "Magic" (Privy)
 *Visual: A farmer logging in with just an email and a wallet being created.*

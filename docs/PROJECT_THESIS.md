@@ -10,16 +10,16 @@ Urban food systems in East Africa suffer from three systemic failures:
 3. **Governance Opacity**: Municipal agricultural funds often lack real-time auditability, leading to misallocation.
 
 ## The Solution: KilimoLink Protocol
-KilimoLink transforms the agricultural supply chain into a verifiable data stream through a modular architecture:
+KilimoLink transforms the agricultural supply chain into a verifiable data stream:
 - **Direct-to-City Marketplace**: Peer-to-peer exchange removing predatory intermediaries.
-- **Data-Agnostic Oracle Integration**: While currently optimized for KNBS (Kenya National Bureau of Statistics), the engine is designed to ingest any official statistical data to provide "Fairness Index" compliance across different jurisdictions.
-- **Institutional Treasury (Altitude/Squads)**: Multi-signature governance for cooperative funds with business-grade yield and global payout capabilities (ACH/SWIFT).
-- **Web2.5 Onboarding (Privy)**: Seamless email-to-wallet transition for farmers, creating instant digital identities.
+- **Hybrid Financial Gateway (The SACCO Bridge)**: A critical link between blockchain transparency and traditional finance. While transactions are verified on Solana, payouts are routed through SACCOs and local banks via existing ACH/SWIFT/Mobile Money rails.
+- **Institutional Treasury (Altitude/Squads)**: Multi-signature governance for cooperative funds, allowing government and donors to oversee fund allocation with 100% auditability while maintaining traditional payout workflows.
+- **Web2.5 Onboarding (Privy)**: Seamless phone/email login for farmers, creating instant digital identities without requiring crypto knowledge.
 
 ## Technical Moat
-- **Modular Verification Engine**: A proprietary service that cross-references marketplace transactions with historical statistical data. Its plug-and-play adapter system allows for rapid deployment in new regions.
-- **On-chain Auditability**: Every transaction and governance decision is immutable on the Solana ledger.
-- **Resilient Infrastructure**: Multi-node RPC strategy ensuring 99.9% uptime for critical market operations.
+- **Verification Engine**: A proprietary service that cross-references marketplace transactions with official KNBS/NDMA data to ensure "Fairness Index" compliance.
+- **On-chain Auditability**: Every allocation decision is immutable on the Solana ledger, solving the "Governance Opacity" problem for government disbursements.
+- **Mobile-First Infrastructure**: Optimized for low-bandwidth environments to ensure the platform works on any smartphone across Kenya.
 
 ## Vision & Scalability
 To become the primary financial operating system for the African urban-rural nexus. Our modular design allows KilimoLink to scale from Nairobi to any emerging market where price asymmetry and identity deficits hinder agricultural growth.
