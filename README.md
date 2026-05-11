@@ -8,7 +8,7 @@ At its core, **KilimoLink** is a functional bridge between the city and the farm
 ## Key Components
 - **The Marketplace**: A direct-to-consumer platform for urban residents to buy produce from local farmers.
 - **Climate Tracking**: Real-time measurement of carbon emissions saved by choosing local sourcing over long-distance imports.
-- **Governance Dashboard**: A multi-role administrative tool for city officials to oversee agricultural cooperatives and manage funds via Squads multisig.
+- **Governance Dashboard**: A multi-role administrative tool for cooperative managers to oversee internal fund allocation and manage member disbursements via Squads multisig.
 - **Identity & Verification**: Secure, wallet-based verification for farmers and businesses to ensure trust and accountability.
 
 ## 2026 Developer Stack
@@ -49,7 +49,7 @@ https://github.com/geraldkombo/KilimoLink
 Explore the full depth of the KilimoLink protocol:
 - **[Project Thesis](file:///docs/PROJECT_THESIS.md)**: Our vision for the African urban-rural nexus.
 - **[Pitch Deck Content](file:///docs/PITCH_DECK_CONTENT.md)**: Strategy and slides for institutional investors.
-- **[Official Mandates](file:///docs/OFFICIAL_MANDATES.md)**: Alignment with Kenya government (NDMA, KNBS) and UN SDGs.
+- **[Cooperative Standards](file:///docs/OFFICIAL_MANDATES.md)**: Alignment with SACCO frameworks and UN SDGs.
 - **[API Reference](file:///docs/API_REFERENCE.md)**: Detailed documentation for developers and integrators.
 - **[User Manual](file:///docs/USER_MANUAL.md)**: Step-by-step guide for farmers and agribusinesses.
 - **[Security Audit](file:///docs/SECURITY_AUDIT.md)**: MAESTRO-style threat model and data protection (DPA 2019).

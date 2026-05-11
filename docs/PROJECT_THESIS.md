@@ -15,6 +15,7 @@ KilimoLink transforms the agricultural supply chain into a verifiable data strea
 - **Value Addition Hub**: A specialized training and resource portal focused on transforming raw produce into high-value products to increase farmer margins.
 - **The SACCO Bridge**: A critical link between blockchain transparency and traditional finance. While transactions are verified on Solana, payouts are routed through SACCOs and local banks via existing M-Pesa and RTGS rails.
 - **Web2.5 Onboarding (Privy)**: Seamless phone/email login for farmers, creating instant digital identities without requiring crypto knowledge.
+- **Institutional Treasury (Squads Protocol)**: Multi-signature governance for cooperative funds, allowing donors and cooperative boards to oversee fund allocation with 100% auditability while maintaining traditional payout workflows.
 
 ## Technical Moat
 - **Verification Engine**: A proprietary service that cross-references marketplace transactions with historical price data to ensure "Fairness Index" compliance.

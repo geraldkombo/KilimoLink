@@ -27,14 +27,6 @@ This document records the standards and cooperative frameworks that inform imple
   - keep a stubbed “tax compliance” section (no secrets, no live KRA integration)
   - structure invoices for future eTIMS compatibility (QR, invoice identifiers, immutability)
 
-## General Government Portals (service entry points)
-
-**Source**
-- https://gok.kenya.go.ke/
-
-**Implementation notes for this project**
-- Use these portals as canonical entry points to sector ministries when building “official source” documentation and when validating the provenance of requirements.
-
 ## International Alignment (UN SDGs)
 
 **Key requirements / interpretation**

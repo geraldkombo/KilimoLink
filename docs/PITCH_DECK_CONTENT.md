@@ -14,7 +14,7 @@
 
 ## Slide 4: Cooperative Governance (The SACCO Bridge)
 *Visual: A diagram showing funds moving from Cooperatives → KilimoLink Multisig → SACCO → Farmer Bank Account.*
-**Script**: "We aren't asking for government intervention. We work directly with SACCOs and cooperatives. We use Solana as a transparent ledger for internal auditability. Once a payout is approved, it flows through existing SACCO rails via RTGS and M-Pesa, ensuring every Shilling is tracked but paid in KES."
+**Script**: "We focus on empowering local SACCOs and cooperatives directly. We use Solana as a transparent ledger for internal auditability. Once a payout is approved, it flows through existing SACCO rails via RTGS and M-Pesa, ensuring every Shilling is tracked but paid in KES."
 
 ## Slide 5: The "Magic" (Privy)
 *Visual: A farmer logging in with just an email and a wallet being created.*
