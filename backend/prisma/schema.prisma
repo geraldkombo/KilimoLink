@@ -3,49 +3,90 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-  directUrl = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
-enum BusinessType {
-  CROPS
-  LIVESTOCK
-  VALUE_ADDITION
+enum Role {
+  FARMER
+  BUYER
+  ADMIN
 }
 
 enum OrderStatus {
   PENDING
-  ACCEPTED
-  DISPATCHED
+  CONFIRMED
   DELIVERED
-  REJECTED
-}
-
-enum AdminRole {
-  SUPER_ADMIN
-  COUNTY_ADMIN
-  SUPPORT
+  CANCELLED
 }
 
 model User {
-  id        String   @id @default(uuid())
-  phone     String   @unique
-  consentSms Boolean @default(false)
-  consentPush Boolean @default(false)
-  consentAt DateTime?
-  deletedAt DateTime?
+  id        String   @id @default(cuid())
+  email     String   @unique
+  phone     String?
+  name      String
+  role      Role     @default(FARMER)
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  business  Business?
+  
+  products  Product[]
+  orders    Order[]
+  
+  // Keep relations for existing modules if they still exist
   otps      OtpChallenge[]
   notifications NotificationLog[]
-  reviews Review[]
 }
 
+model Product {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  price       Float
+  quantity    Float
+  category    String        // Vegetables, Fruits, Dairy, Grains, Other 
+  imageUrl    String?
+  location    Json?         // { lat: Float, lng: Float, address: String? } 
+  farmerId    String
+  farmer      User          @relation(fields: [farmerId], references: [id])
+  createdAt   DateTime      @default(now())
+  
+  orderItems  OrderItem[]
+}
+
+model Order {
+  id             String      @id @default(cuid())
+  buyerId        String
+  buyer          User        @relation(fields: [buyerId], references: [id])
+  status         OrderStatus @default(PENDING)
+  paymentMethod  String?     // "MOCK", "CRYPTO", "CASH" 
+  paymentRef     String?
+  totalAmount    Float
+  createdAt      DateTime    @default(now())
+  
+  items          OrderItem[]
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Float
+  price     Float
+}
+
+model ImpactMetric {
+  id              String   @id @default(cuid())
+  date            DateTime @default(now())
+  ordersCompleted Int
+  co2SavedKg      Float
+  wasteDivertedKg Float
+  greenSpaceM2    Float
+}
+
+// Keep these for existing auth/admin functionality
 model OtpChallenge {
-  id        String   @id @default(uuid())
+  id        String   @id @default(cuid())
   phone     String
   codeHash  String
   expiresAt DateTime
@@ -58,7 +99,7 @@ model OtpChallenge {
 }
 
 model OtpVerifyThrottle {
-  id          String   @id @default(uuid())
+  id          String   @id @default(cuid())
   phone       String
   failures    Int      @default(0)
   lockedUntil DateTime?
@@ -68,102 +109,11 @@ model OtpVerifyThrottle {
   @@unique([phone])
 }
 
-model Business {
-  id              String       @id @default(uuid())
-  userId          String       @unique
-  youthLed        Boolean      @default(false)
-  womenLed        Boolean      @default(false)
-  agpoCertificate String?
-  businessType    BusinessType
-  sector          String
-  county          String
-  businessSize    String
-  jobsCreated     Int          @default(0)
-  incomeIncrease  Int          @default(0)
-  emissionsReduced Float       @default(0)
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
-
-  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  products      Product[]
-}
-
-model Product {
-  id          String   @id @default(uuid())
-  businessId  String
-  name        String
-  category    String
-  priceKes    Int
-  quantity    Int
-  unit        String
-  description String
-  county      String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
-  images   ProductImage[]
-  orderItems OrderItem[]
-  reviews  Review[]
-}
-
-model ProductImage {
-  id        String   @id @default(uuid())
-  productId String
-  url       String
-  sortOrder Int      @default(0)
-
-  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-}
-
-model Order {
-  id               String      @id @default(uuid())
-  status           OrderStatus @default(PENDING)
-  buyerName        String
-  buyerPhone       String?
-  buyerOrganization String?
-  buyerUserId      String?
-  deliveryLocation String
-  county           String
-  totalAmount      Int         @default(0)
-  createdAt        DateTime    @default(now())
-  updatedAt        DateTime    @updatedAt
-
-  items            OrderItem[]
-}
-
-model OrderItem {
-  id        String @id @default(uuid())
-  orderId   String
-  productId String
-  quantity  Int
-  unitPrice Int
-
-  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product Product @relation(fields: [productId], references: [id], onDelete: Restrict)
-
-  @@unique([orderId, productId])
-}
-
-model Review {
-  id        String   @id @default(uuid())
-  productId String
-  userId    String
-  rating    Int
-  comment   String?
-  createdAt DateTime @default(now())
-
-  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([productId, createdAt])
-}
-
 model AdminUser {
-  id              String    @id @default(uuid())
+  id              String    @id @default(cuid())
   email           String    @unique
   passwordHash    String
-  role            AdminRole
+  role            String    @default("ADMIN")
   county          String?
   totpSecretEnc   String?
   createdAt       DateTime  @default(now())
@@ -174,7 +124,7 @@ model AdminUser {
 }
 
 model AdminLoginThrottle {
-  id          String   @id @default(uuid())
+  id          String   @id @default(cuid())
   adminEmail  String
   ip          String?
   failures    Int      @default(0)
@@ -189,7 +139,7 @@ model AdminLoginThrottle {
 }
 
 model AuditLog {
-  id        String   @id @default(uuid())
+  id        String   @id @default(cuid())
   adminId   String
   action    String
   entityType String
@@ -213,7 +163,7 @@ enum NotificationStatus {
 }
 
 model NotificationLog {
-  id        String              @id @default(uuid())
+  id        String              @id @default(cuid())
   userId    String?
   phone     String?
   channel   NotificationChannel

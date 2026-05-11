@@ -10,6 +10,6 @@ export class AdminAuthController {
 
   @Post('login')
   login(@Req() req: { ip?: string }, @Body() dto: AdminLoginDto) {
-    return this.auth.login(dto.email, dto.password, dto.totp, req.ip);
+    return this.auth.login(dto.email, dto.password, req.ip);
   }
 }

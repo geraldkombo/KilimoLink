@@ -1,37 +1,39 @@
-# Cloud Deployment Guide (Railway & Vercel)
+# Production Deployment Guide: KilimoLink
 
-Once your code is on GitHub, follow these steps to go live.
+This guide outlines the steps to deploy KilimoLink to **Railway (Backend)** and **Vercel (Frontend)** for the Innovate4Cities 2026 demo.
 
 ## 1. Backend: Railway Deployment
-Railway will host your NestJS API and PostgreSQL database.
+Railway is recommended for the NestJS/Prisma backend.
 
-1.  **Login to [Railway.app](https://railway.app/)** and click "New Project" -> "Deploy from GitHub repo".
-2.  **Select the `KilimoLink` repository**.
-3.  **Add a Database**: Click "New" -> "Database" -> "Add PostgreSQL".
-4.  **Configure Environment Variables**: Go to the "Variables" tab of your backend service and add:
-    - `DATABASE_URL`: (Railway will automatically provide this if you added the PG database).
-    - `JWT_SECRET`: (Use a long random string).
-    - `DOCUMENTS_MASTER_KEY_BASE64`: (Use the one from your local `.env`).
-    - `SOLANA_RPC_URL`: `https://cool-sparkling-putty.solana-devnet.quiknode.pro/193e15a0bf88b4b6cb225aed43ff6c92b221fd42`
-    - `SOLANA_WSS_URL`: `wss://cool-sparkling-putty.solana-devnet.quiknode.pro/193e15a0bf88b4b6cb225aed43ff6c92b221fd42`
-    - `PORT`: `3000`
-5.  **Root Directory**: Ensure the "Root Directory" in settings is set to `/backend`.
+### Steps:
+1. **Connect GitHub**: Log in to [Railway.app](https://railway.app) and connect the `KilimoLink` repository.
+2. **Setup Database**: 
+   - Add a **PostgreSQL** plugin to your Railway project.
+   - Railway will automatically provide a `DATABASE_URL`.
+3. **Configure Environment Variables**:
+   - `DATABASE_URL`: (Automatically set by Railway Postgres).
+   - `JWT_SECRET`: Generate a strong random string.
+   - `MOCK_PAYMENTS`: `false` (for real mode).
+   - `DEEPSEEK_API_KEY`: `sk-be19eb78057a4cc393f7c2f35ef560d3`.
+   - `PORT`: `3000`.
+4. **Build Command**: `pnpm install && cd backend && npx prisma generate && npx prisma migrate deploy && pnpm run build`.
+5. **Start Command**: `cd backend && pnpm run start:prod`.
 
 ## 2. Frontend: Vercel Deployment
-Vercel will host your React/Vite application.
+Vercel is the optimal choice for the React/Vite frontend.
 
-1.  **Login to [Vercel.com](https://vercel.com/)** and click "Add New" -> "Project".
-2.  **Import your `KilimoLink` repository**.
-3.  **Configure Project Settings**:
-    - **Framework Preset**: Vite.
-    - **Root Directory**: `web`.
-4.  **Add Environment Variables**:
-    - `VITE_API_BASE_URL`: (Your Railway backend URL + `/api/v1`, e.g., `https://backend-production.up.railway.app/api/v1`).
-    - `VITE_SOLANA_RPC_URL`: `https://cool-sparkling-putty.solana-devnet.quiknode.pro/193e15a0bf88b4b6cb225aed43ff6c92b221fd42`
-    - `VITE_PRIVY_APP_ID`: `cmp000ywe01mm0cldpk8r2kt7`
-5.  **Click Deploy**.
+### Steps:
+1. **Connect GitHub**: Log in to [Vercel.com](https://vercel.com) and import the `KilimoLink` repository.
+2. **Root Directory**: Set to `web`.
+3. **Configure Environment Variables**:
+   - `VITE_API_BASE_URL`: The URL of your Railway backend (e.g., `https://kilimolink-api.up.railway.app/api/v1`).
+   - `VITE_PRIVY_APP_ID`: `cmp000ywe01mm0cldpk8r2kt7`.
+4. **Framework Preset**: Select `Vite`.
+5. **Install Command**: `pnpm install`.
+6. **Build Command**: `pnpm run build`.
 
 ## 3. Post-Deployment Verification
-- Visit your Vercel URL to see the app.
-- Try logging in with Privy (Email/Phone).
-- Visit `https://your-backend.railway.app/docs` to see the live Swagger API documentation.
+1. Visit your Vercel URL.
+2. Ensure the "Nearby Produce" section loads (requires Backend API connection).
+3. Test a login via Privy.
+4. Verify the Admin Impact Dashboard shows real-time data from the production database.

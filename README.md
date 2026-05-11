@@ -1,60 +1,47 @@
-# KilimoLink: Decentralized Urban-Rural Exchange
+# KilimoLink: Hyperlocal Urban Food Resilience
 
-**KilimoLink** is a transparent marketplace and climate-action tracker designed to connect urban consumers directly with climate-resilient local producers across East Africa.
+**KilimoLink** is a direct-to-city marketplace designed for the **Innovate4Cities 2026** challenge. It connects urban residents with nearby farmers to reduce food waste and transport emissions.
 
-## What it Is
-At its core, **KilimoLink** is a functional bridge between the city and the farm. It solves the lack of transparency in the agricultural supply chain by using the Solana blockchain to verify transactions, track carbon impact, and manage municipal agricultural funds.
+## 🎯 Our Mission
+To build climate-resilient cities by decentralizing food supply chains and empowering urban agricultural producers in informal settlements.
 
-## Key Components
-- **The Marketplace**: A direct-to-consumer platform for urban residents to buy produce from local farmers.
-- **Climate Tracking**: Real-time measurement of carbon emissions saved by choosing local sourcing over long-distance imports.
-- **Governance Dashboard**: A simplified administrative tool for cooperative and market managers to oversee trade volume, price fairness, and user verification.
-- **Proof of Trade**: A Solana-based ledger that records marketplace transactions to help farmers build a digital credit history.
+## ✨ Key Features
+- **📍 Geolocation Market**: Find produce within walking distance of your home.
+- **🌱 Impact Dashboard**: Real-time tracking of CO2 savings and waste diversion.
+- **🤖 AI Price Suggestion**: Fair trade pricing powered by DeepSeek AI.
+- **💳 Hybrid Payments**: Instant mock payments or Solana devnet settlements.
 
-## 2026 Developer Stack
-- **Backend**: NestJS, Prisma, PostgreSQL (Neon), BullMQ (Redis).
-- **Frontend**: React (Vite), Material UI, TanStack Query.
-- **Blockchain Protocol**: Solana (Quiknode Premium RPC).
-- **Identity & Onboarding**: 
-    - **Privy**: Email-to-Wallet onboarding for urban farmers.
-    - **Phantom Connect**: Native wallet support for experienced users.
-- **Financial Operations**: **Altitude** (by Squads) for business-grade treasury, APY yield, and ACH/SWIFT payouts.
+## 🚀 Tech Stack
+- **Frontend**: React (Vite), Material UI, Leaflet, Recharts.
+- **Backend**: NestJS, Prisma, OpenAI (DeepSeek).
+- **Auth**: Privy (Email-to-Wallet).
+- **Hosting**: Vercel (Web), Railway (API).
 
-## Network Resilience
-Due to recent Devnet resets, **KilimoLink** is configured to prioritize **Quiknode Premium RPC** endpoints with automatic fallbacks to public nodes, ensuring the marketplace remains operational during network maintenance periods.
+## 🛠️ Quick Start
 
-## Quickstart (Local)
-
-1. **Install dependencies**:
+1. **Clone & Install**:
    ```bash
    pnpm install
    ```
 
-2. **Setup Environment**:
-   Create a `.env` file in `backend/` (see `backend/.env` for values provided by the Colosseum resources).
+2. **Database Setup**:
+   ```bash
+   cd backend
+   npx prisma generate
+   npx prisma db push
+   ```
 
-3. **Run Services**:
+3. **Run Dev**:
    ```bash
    pnpm dev
    ```
 
-API: http://localhost:3000/api/v1  
-Swagger: http://localhost:3000/docs  
-Web: http://localhost:5173
+## 📄 Documentation
+- [I4C Submission](docs/I4C26_SUBMISSION.md)
+- [Demo Script](docs/DEMO_SCRIPT.md)
+- [Technical Overview](docs/TECHNICAL_OVERVIEW.md)
 
-## GitHub Repository
-https://github.com/geraldkombo/KilimoLink
-
-## Documentation
-Explore the full depth of the KilimoLink protocol:
-- **[Project Thesis](file:///docs/PROJECT_THESIS.md)**: Our vision for the African urban-rural nexus.
-- **[Pitch Deck Content](file:///docs/PITCH_DECK_CONTENT.md)**: Strategy and slides for institutional investors.
-- **[Cooperative Standards](file:///docs/OFFICIAL_MANDATES.md)**: Alignment with SACCO frameworks and UN SDGs.
-- **[API Reference](file:///docs/API_REFERENCE.md)**: Detailed documentation for developers and integrators.
-- **[User Manual](file:///docs/USER_MANUAL.md)**: Step-by-step guide for farmers and agribusinesses.
-- **[Security Audit](file:///docs/SECURITY_AUDIT.md)**: MAESTRO-style threat model and data protection (DPA 2019).
-
-## Colosseum Hackathon Resources
-This project leverages the official Colosseum developer tools:
-- **Colosseum Copilot**: For deep ecosystem research and market gap analysis.
-- **Colosseum Resources**: For identifying optimal Solana build paths and sponsor integrations.
+## 🏆 Hackathon Context
+Built for **Innovate4Cities 2026** and the **Colosseum Agent Hackathon**.
+- **City Resilience**: Focus on informal settlements and hyperlocal logistics.
+- **Solana Integration**: Leveraging Privy for seamless on-chain identity and payments.
