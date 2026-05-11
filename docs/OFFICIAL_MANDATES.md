@@ -1,55 +1,16 @@
-# Official Mandates (Kenya)
+# Cooperative & Private Standards
 
-This document records official Kenya government requirements and mandates that inform implementation choices in this repository. URLs are included for traceability.
+This document records the standards and cooperative frameworks that inform implementation choices in KilimoLink.
 
-## NDMA (Drought phases + early warning)
-
-**Source**
-- https://ndma.go.ke/drought-information/
-- https://ndma.go.ke/drought-situation-brief/
+## SACCO & Cooperative Frameworks
 
 **Key requirements / interpretation**
-- NDMA operates a drought early warning system and publishes drought status using five phases: **Normal, Alert, Alarm, Emergency, Recovery**.
-- NDMA publishes regular drought updates/bulletins intended to inform early action and recommended interventions.
+- Cooperatives require transparent oversight of internal funds and member disbursements.
+- SACCOs prioritize member savings and credit history for loan eligibility.
 
 **Implementation notes for this project**
-- Map the drought phase model to:
-  - county-level alerts (SMS/push, opt-in only)
-  - donor reporting (aggregated counts of alerted businesses by county)
-  - optional market “disruption indicators” for price/availability analytics (aggregated only)
-
-## WASREB / Majidata (water & sanitation georeferenced monitoring)
-
-**Source**
-- https://www.majidata.go.ke/
-
-**Key requirements / interpretation**
-- Majidata describes itself as a **national monitoring and georeferenced information system** for water and sanitation services.
-- Majidata references **Water Act 2016 Section 111**, stating WASREB is mandated to establish a national monitoring and georeferenced information system for water and sanitation services.
-
-**Implementation notes for this project**
-- Where “location-aware” reporting is introduced (e.g., market linkage, buyer delivery), treat location data as sensitive:
-  - minimize collection
-  - aggregate for donor views
-  - store with clear retention rules
-
-## Ministry of Agriculture (ASDSP II / value chain commercialization)
-
-**Source**
-- https://asdsp.kilimo.go.ke/who-we-are/
-- https://drive.kilimo.go.ke/participating-counties
-
-**Key requirements / interpretation**
-- ASDSP II emphasizes commercialization of agriculture through:
-  - productivity improvements in priority value chains
-  - entrepreneurial skills strengthening
-  - improved market access for value chain actors
-- DRIVE highlights county-level coordination and support, including enabling women and youth participation and refining business proposals.
-
-**Implementation notes for this project**
-- Align core modules to these mandates:
-  - Training hub (entrepreneurial + market readiness)
-  - Market linkage (product listing + buyer orders)
+- Use Solana as a transparent internal ledger for SACCO-managed funds.
+- Align training to "Value Addition" standards (processing, packaging, branding) to improve member productivity.
 
 ## Kenya Revenue Authority (eTIMS / electronic invoicing)
 
@@ -78,12 +39,10 @@ This document records official Kenya government requirements and mandates that i
 
 **Key requirements / interpretation**
 KilimoLink directly contributes to several United Nations Sustainable Development Goals:
-- **SDG 1: No Poverty**: By increasing farmer income through direct market access.
 - **SDG 2: Zero Hunger**: By improving supply chain efficiency and food security.
-- **SDG 5: Gender Equality**: By prioritizing women-led agribusinesses (captured in profile).
-- **SDG 8: Decent Work and Economic Growth**: By providing training and grants to youth.
+- **SDG 8: Decent Work and Economic Growth**: By providing market access and skill development.
 - **SDG 12: Responsible Consumption and Production**: Through price transparency and reduced waste.
 
 **Implementation notes for this project**
-- Use these tags in donor reporting and grant application metadata to align with international funding priorities.
+- Use these tags in donor reporting to align with international funding priorities.
 

@@ -9,12 +9,12 @@
 **Script**: "We aren't just building a marketplace; we are building a liquidity layer for the urban-rural nexus. A market that verifies itself."
 
 ## Slide 3: The Product
-*Visual: Screenshot of the KilimoLink Dashboard and the 'Fairness Index' indicator.*
-**Script**: "Our platform uses the Solana blockchain to provide instant, auditable transactions. We integrate directly with KNBS data to provide a Price Fairness Index—ensuring that every Shilling spent is a Shilling earned by the right person."
+*Visual: Screenshot of the KilimoLink Dashboard showing 'Raw Produce' vs 'Value Added' price comparison.*
+**Script**: "Our platform uses the Solana blockchain to provide instant, auditable transactions. We go beyond simple trade by incentivizing value addition—training farmers to process and brand their goods, doubling their margins while ensuring urban consumers get high-quality, verified products."
 
-## Slide 4: Institutional Governance (The SACCO Bridge)
-*Visual: A diagram showing funds moving from Government → KilimoLink Multisig → SACCO → Farmer Bank Account.*
-**Script**: "We aren't asking the government to pay in crypto. We use Solana as a transparent ledger for auditability. Once a disbursement is approved via our multisig, the funds are routed through local SACCOs and banks via RTGS and M-Pesa, ensuring every Shilling is tracked but paid in KES."
+## Slide 4: Cooperative Governance (The SACCO Bridge)
+*Visual: A diagram showing funds moving from Cooperatives → KilimoLink Multisig → SACCO → Farmer Bank Account.*
+**Script**: "We aren't asking for government intervention. We work directly with SACCOs and cooperatives. We use Solana as a transparent ledger for internal auditability. Once a payout is approved, it flows through existing SACCO rails via RTGS and M-Pesa, ensuring every Shilling is tracked but paid in KES."
 
 ## Slide 5: The "Magic" (Privy)
 *Visual: A farmer logging in with just an email and a wallet being created.*

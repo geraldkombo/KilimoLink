@@ -15,9 +15,9 @@ Update:
 - Business size
 - Optional AGPO certificate reference
 
-## 3. Training Hub
+## 3. Value-Addition Hub
 
-Browse courses and lessons, then track completion progress.
+Browse courses and resources focused on processing, packaging, and branding to increase your business margins.
 
 ## 4. Market Linkage
 
