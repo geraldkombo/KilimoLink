@@ -1,29 +1,32 @@
 # FOR IMMEDIATE RELEASE
 
-**KilimoLink Launches Hyperlocal Marketplace to Bolster Urban Food Resilience for Innovate4Cities 2026**
+# KilimoLink Unveils Hyperlocal Marketplace to Revolutionize Urban Food Resilience for Innovate4Cities 2026
 
-**NAIROBI, KENYA | MAY 11, 2026** — Resilience Action Network Africa (RANA) is proud to announce the launch of **KilimoLink**, a decentralized marketplace designed to bridge the gap between urban informal settlements and local agricultural producers. Built for the Innovate4Cities 2026 global summit, KilimoLink addresses the critical nexus of food security, waste reduction, and climate action.
+**The platform bridges East Africa’s "informal settlement gap" using geolocation-aware logistics, AI-driven fair pricing, and real-time climate impact tracking.**
 
-As cities across East Africa face mounting climate pressures, KilimoLink provides a concrete tool for "Urban Social Ecology"—a concept championed by global experts like **Vanessa Mavila (Eboko Foundation)**. By prioritizing "Ultra-Local" sourcing within a 5km radius, the platform directly reduces the carbon footprint of urban logistics while empowering youth and women entrepreneurs in the agricultural sector.
+**NAIROBI, KENYA | MAY 11, 2026** — KilimoLink, a pioneering digital exchange for urban agriculture, today announced the launch of its hyperlocal marketplace. Developed for the **Innovate4Cities 2026** global challenge, the platform provides a technological implementation of "Urban Social Ecology" frameworks—connecting producers in informal settlements directly with urban consumers to eliminate food waste and transport-related CO2 emissions.
 
-"KilimoLink is more than a marketplace; it is a resilience engine," says **Ann Njeru, Communications Director at RANA**. "By providing farmers with a digital footprint and verifiable impact data, we are unlocking the potential for institutional investment in resilient agriculture, aligning perfectly with the mandates of funds like the **Acumen Resilient Agriculture Fund (ARAF)**."
+As cities across Africa face rapid urbanization and climate instability, KilimoLink offers a functional bridge between the city and the farm. The platform is designed to align with the mandates of global resilience foundations and institutional investors focused on climate-resilient agriculture.
 
-### Key Innovations for City Resilience:
-- **Hyperlocal Geolocation**: A custom Leaflet-powered engine that identifies the nearest food sources to minimize transport emissions.
-- **Real-Time Impact Tracking**: A transparent dashboard measuring CO2 saved, waste diverted, and urban green space preserved.
-- **On-Chain Identity via Privy**: Providing informal vendors with a secure email-to-wallet bridge, enabling them to participate in the global digital economy.
-- **AI-Driven Fair Trade**: Leveraging DeepSeek-V3 to suggest fair market prices, protecting both vulnerable urban consumers and rural producers.
+"KilimoLink is more than a marketplace; it is a city-wide resilience engine," said **Gerald Kombo**, Creative Strategist and Lead Researcher. "By prioritizing 'Ultra-Local' sourcing within a 5km radius, we are not just selling produce—we are mapping urban green spaces and providing a digital footprint for farmers who were previously invisible to the global economy."
 
-The launch follows high-level engagements with investment leaders including **Rebecca Mincy (ARAF)**, highlighting the platform's readiness for scale and its alignment with global environmental justice frameworks.
+### **Key Technical Innovations:**
+- **Hyperlocal Geolocation Engine**: Custom Leaflet-powered maps identify the nearest food sources, minimizing "food miles" and decarbonizing urban logistics.
+- **AI-Powered Fair Trade Oracle**: Integration with **DeepSeek-V3** provides farmers with real-time market pricing guidance, protecting both producers and vulnerable urban consumers.
+- **On-Chain Identity via Privy**: A seamless Web2-to-Web3 bridge (Email-to-Wallet) allows informal vendors to build verifiable transaction histories without technical friction.
+- **Real-Time Impact Dashboard**: A transparent data layer for city planners and investors, tracking CO2 saved, waste diverted (kg), and urban green space (m²) preserved.
 
-**About RANA:**
-Resilience Action Network Africa (RANA) is a leading advocacy and action network dedicated to building climate-resilient communities across the African continent. Through innovation and community-driven initiatives, RANA transforms global climate goals into local realities.
+### **Alignment with Global Mandates:**
+KilimoLink’s deployment focuses on the "Informal Settlements" prize action bonus, providing a scalable model for territorial transformation. The platform’s data-driven approach directly serves the reporting requirements of resilience funds, offering verifiable metrics for climate-resilient agribusiness.
+
+**About KilimoLink:**
+KilimoLink is a decentralized urban-rural exchange dedicated to building climate-resilient cities. Through innovation in geolocation and on-chain identity, KilimoLink transforms urban food systems into sustainable, community-driven ecosystems.
 
 **Media Contact:**
 Ann Njeru  
-Communications Director, RANA  
+Communications Director, Resilience Action Network Africa (RANA)  
 ann.njeru@ranafrica.org  
 +254 720 796 723  
 [www.ranafrica.org](http://www.ranafrica.org)
 
-### #Innovate4Cities #UrbanResilience #KilimoLink #ClimateActionAfrica #FoodSecurity
+### **#Innovate4Cities #UrbanResilience #KilimoLink #ClimateAction #AgriTech #Nairobi2026 #FoodSecurity**
