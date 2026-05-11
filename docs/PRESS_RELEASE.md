@@ -23,10 +23,7 @@ KilimoLink’s deployment focuses on the "Informal Settlements" prize action bon
 KilimoLink is a decentralized urban-rural exchange dedicated to building climate-resilient cities. Through innovation in geolocation and on-chain identity, KilimoLink transforms urban food systems into sustainable, community-driven ecosystems.
 
 **Media Contact:**
-Ann Njeru  
-Communications Director, Resilience Action Network Africa (RANA)  
-ann.njeru@ranafrica.org  
-+254 720 796 723  
-[www.ranafrica.org](http://www.ranafrica.org)
+press@kilimolink.demo  
+[www.kilimolink.demo](http://www.kilimolink.demo)
 
 ### **#Innovate4Cities #UrbanResilience #KilimoLink #ClimateAction #AgriTech #Nairobi2026 #FoodSecurity**

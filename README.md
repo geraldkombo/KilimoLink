@@ -40,6 +40,8 @@ To build climate-resilient cities by decentralizing food supply chains and empow
 - [I4C Submission](docs/I4C26_SUBMISSION.md)
 - [Demo Script](docs/DEMO_SCRIPT.md)
 - [Technical Overview](docs/TECHNICAL_OVERVIEW.md)
+- [Press Release](docs/PRESS_RELEASE.md)
+- [Strategic Proposal](docs/STRATEGIC_PROPOSAL.md)
 
 ## 🏆 Hackathon Context
 Built for **Innovate4Cities 2026** and the **Colosseum Agent Hackathon**.
