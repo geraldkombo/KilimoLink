@@ -20,9 +20,9 @@
 *Visual: A farmer logging in with just an email and a wallet being created.*
 **Script**: "We’ve solved the 'crypto barrier'. With our Privy integration, a farmer in Limuru can join the global economy using just their email. No seed phrases, no friction—just instant digital identity."
 
-## Slide 6: Traction & Scale
-*Visual: Map of Nairobi's supply routes with KilimoLink hubs.*
-**Script**: "Starting with Nairobi, we are scaling to become the financial operating system for East Africa's food security."
+## Slide 6: Traction & Scale (Innovate4Cities 2026)
+*Visual: A map of Nairobi supply routes with an "AI Optimization" overlay.*
+**Script**: "KilimoLink is a core solution for the **Innovate4Cities 2026** challenge. By leveraging AI to optimize urban supply chains and reduce the carbon footprint of city food systems, we are building the resilient urban infrastructure of the future. Starting with Nairobi, we are scaling to become the climate-resilient financial operating system for the global urban-rural nexus."
 
 ## Slide 7: The Road Ahead (Global Scalability)
 *Visual: A world map highlighting emerging markets with similar urban-rural gaps (Lagos, Jakarta, Mumbai).*

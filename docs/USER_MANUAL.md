@@ -17,7 +17,7 @@ Update:
 
 ## 3. Value-Addition Hub
 
-Browse courses and resources focused on processing, packaging, and branding to increase your business margins.
+Access expert-led courses and resources focused on processing, packaging, and branding. These materials are curated by **private agribusiness mentors and successful value-addition entrepreneurs** to help you increase your profit margins and reach urban consumers more effectively.
 
 ## 4. Market Linkage
 
