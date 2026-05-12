@@ -10,6 +10,20 @@
     <meta property="og:description" content="Verifiable market linkage between city centers and climate-resilient cultivators." />
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <style>
+      /* Ensure Privy OTP inputs and other form fields are clearly visible */
+      input[type="text"], input[type="tel"], input[type="number"], input[type="email"] {
+        border: 1px solid #ccc !important;
+        background-color: #fff !important;
+        color: #000 !important;
+      }
+      /* Fix for potentially invisible OTP code boxes */
+      [data-privy-otp-input] {
+        border: 2px solid #2e7d32 !important;
+        background: white !important;
+        color: black !important;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>

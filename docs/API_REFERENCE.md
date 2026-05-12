@@ -20,13 +20,6 @@ Swagger/OpenAPI: `/docs`
 - `POST /users/me/consent` (Bearer token) `{ consentSms, consentPush }`
 - `DELETE /users/me` (Bearer token)
 
-## Training
-
-- `GET /training/courses`
-- `GET /training/courses/:id`
-- `POST /training/:id/progress` (Bearer token) `{ percent }`
-- `GET /training/courses/:id/certificate` (Bearer token) → PDF
-
 ## Market
 
 - `GET /products?category=&county=&minPrice=&maxPrice=&search=`

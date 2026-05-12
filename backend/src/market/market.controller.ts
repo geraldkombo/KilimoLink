@@ -3,6 +3,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { MarketService } from './market.service';
 import { CurrentUser, JwtUser } from '../common/auth/current-user.decorator';
 import { JwtAuthGuard } from '../common/auth/jwt-auth.guard';
+import { CreateProductDto } from './dto/create-product.dto';
 
 @ApiTags('market')
 @Controller('products')
@@ -12,7 +13,7 @@ export class MarketController {
   @Post()
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  createProduct(@CurrentUser() user: JwtUser, @Body() body: any) {
+  createProduct(@CurrentUser() user: JwtUser, @Body() body: CreateProductDto) {
     return this.marketService.createProduct(user.userId, body);
   }
 

@@ -47,6 +47,7 @@ function Root() {
             theme: 'light',
             accentColor: '#2e7d32',
             logo: 'https://kilimolink.vercel.app/logo.png',
+            showWalletLoginFirst: false,
           },
           embeddedWallets: {
             createOnLogin: 'users-without-wallets',

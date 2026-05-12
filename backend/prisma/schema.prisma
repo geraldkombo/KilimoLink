@@ -84,6 +84,16 @@ model ImpactMetric {
   greenSpaceM2    Float
 }
 
+model ResilienceLog {
+  id          String   @id @default(cuid())
+  type        String   // "REGULATORY", "EXPERIMENT", "MARKET_SHIFT"
+  title       String
+  description String
+  impact      String   // "POSITIVE", "NEGATIVE", "NEUTRAL"
+  status      String   // "MONITORED", "RESOLVED", "IN_PROGRESS"
+  createdAt   DateTime @default(now())
+}
+
 // Keep these for existing auth/admin functionality
 model OtpChallenge {
   id        String   @id @default(cuid())

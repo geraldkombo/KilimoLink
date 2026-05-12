@@ -6,19 +6,19 @@ This project is a reference implementation intended to support Kenya’s Data Pr
 
 - Phone number for authentication (OTP)
 - Business profile attributes (sector, county, youth/women-led flags)
-- Training progress and market transactions
+- Market transactions (orders and listings)
 
 ## Security Controls
 
 - OTP verification for users
-- Rate limiting (OTP and monthly grant applications)
+- Rate limiting (OTP and API requests)
 - Encryption at rest for uploaded documents (AES-256-GCM)
 - Admin authentication with MFA (TOTP)
 - Audit logs for admin actions
 
 ## Data Retention
 
-- Grant applications: 3 years (recommended policy for implementers)
+- Market transactions: 7 years (statutory requirement)
 - User profiles: retained until account deletion request
 
 ## Consent

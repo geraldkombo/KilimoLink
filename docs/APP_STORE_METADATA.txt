@@ -1,4 +1,4 @@
 Title: KilimoLink: Urban-Rural Exchange
 Short description: A Solana-powered marketplace and climate-action tracker connecting urban consumers directly with local farmers.
 Keywords: KilimoLink, Solana, marketplace, climate action, food security, Kenya, East Africa, direct trade, carbon tracking
-Support email: shikunyi@proton.me
+Support email: kilimolink@proton.me

@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AdminService } from './admin.service';
 import { JwtAuthGuard } from '../common/auth/jwt-auth.guard';
@@ -47,5 +47,15 @@ export class AdminController {
   @Post('seed')
   seedData() {
     return this.adminService.seedDemoData();
+  }
+
+  @Get('resilience')
+  getResilience() {
+    return this.adminService.listResilienceLogs();
+  }
+
+  @Post('resilience')
+  createResilience(@Body() body: any) {
+    return this.adminService.createResilienceLog(body);
   }
 }

@@ -23,7 +23,7 @@ KilimoLink’s deployment focuses on the "Informal Settlements" prize action bon
 KilimoLink is a decentralized urban-rural exchange dedicated to building climate-resilient cities. Through innovation in geolocation and on-chain identity, KilimoLink transforms urban food systems into sustainable, community-driven ecosystems.
 
 **Media Contact:**
-press@kilimolink.demo  
-[www.kilimolink.demo](http://www.kilimolink.demo)
+kilimolink@proton.me  
+[kilimolink-resilience.vercel.app](https://kilimolink-resilience.vercel.app)
 
 ### **#Innovate4Cities #UrbanResilience #KilimoLink #ClimateAction #AgriTech #Nairobi2026 #FoodSecurity**

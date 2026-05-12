@@ -67,7 +67,19 @@ export class AdminService {
     return this.prisma.user.delete({ where: { id } });
   }
 
-  async listAuditLogs(adminId: string) {
+  async listResilienceLogs() {
+    return this.prisma.resilienceLog.findMany({
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  async createResilienceLog(dto: any) {
+    return this.prisma.resilienceLog.create({
+      data: dto,
+    });
+  }
+
+  async seedDemoData() {listAuditLogs(adminId: string) {
     return this.prisma.auditLog.findMany({
       where: { adminId },
       orderBy: { createdAt: 'desc' },

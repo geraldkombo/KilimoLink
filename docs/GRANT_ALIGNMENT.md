@@ -1,29 +1,46 @@
-# Grant Alignment
+# Strategic Opportunity Mapping
 
-## Pepea KilimoLink (KES 300K)
+## 1. High-Probability Matches (Top 5)
 
-- Grant discovery + filters by county/sector/amount/deadline
-- Application submission with document upload and status tracking
-- Deadline alerts (queue-ready SMS/push)
+### **Breet Builder Grant ($10k | 31 May 2026)**
+- **Fit**: Our **Privy-powered Web3 identity** system.
+- **Value Prop**: We provide "Invisible Web3" to informal farmers, allowing them to build an on-chain credit history without needing to understand blockchain. This perfectly aligns with Breet's focus on user-centric builder innovation.
 
-## NYOTA (World Bank)
+### **Internews Innovation Pilot ($5k–30k | 30 June 2026)**
+- **Fit**: Our **AI Price Oracle (DeepSeek)** and information transparency.
+- **Value Prop**: We combat market misinformation and price manipulation in informal settlements by providing a verified, AI-driven data feed for food prices during climate shocks.
 
-- Training completion tracking to support eligibility and youth employment outcomes
-- Aggregated metrics for reporting
+### **Solana Foundation / Colosseum (Rolling)**
+- **Fit**: Our **On-Chain Transactions** and **Solana-powered Identity**.
+- **Value Prop**: KilimoLink is a real-world use case for Solana’s high speed and low fees. We map real-world assets (produce and land) to the Solana ecosystem, proving that Web3 can solve food security in Africa.
 
-## MESPT (KES 7.2B MSME)
+### **World Bank FLLoCA / KJET ($30M+ pool | Rolling)**
+- **Fit**: Our **Hyperlocal Geolocation (Leaflet)** and **CO2 Tracking**.
+- **Value Prop**: We implement the "Locally Led Climate Action" (FLLoCA) mandate by reducing food miles. Our dashboard provides the verifiable data (kg of waste saved, CO2 reduced) that these funds require for reporting.
 
-- MSME profile capture and application workflows
-- Admin review and audit logs for decision accountability
+### **D-Prize Global Challenge (up to $20k | 17 May 2026)**
+- **Fit**: Our **Distribution Logic** and "Informal Settlement Gap" focus.
+- **Value Prop**: We solve the "last-mile distribution" problem for agriculture in Nairobi's densest areas. This is a classic "poverty-ending technology distribution" play that D-Prize loves.
 
-## Green Climate Fund (GCF)
+## 2. Strategic Fit by Category
 
-- Climate-smart training category
-- Impact metrics placeholders (jobs, income, emissions reduced) at business level
+### **Climate & Resilience**
+- **GEF Small Grants ($150k)**: Focus on our urban green space mapping.
+- **KCB GCF Green Financing**: Focus on our large-scale carbon reduction metrics.
 
-## IGAD Youth Climate / Resilience
+### **Digital Innovation & Youth**
+- **Qualcomm Make in Africa**: Focus on our mobile-first, geolocation-aware marketplace.
+- **Futurize Incubator**: Focus on our "Urban Social Ecology" framework.
 
-- Drought early warning integration (NDMA-aligned) for climate-smart livestock/crop management
-- Impact tracking for emissions reduction and jobs created in the green economy
-- Cross-border trade facilitation placeholders for regional resilience metrics
+### **FinTech & Inclusion**
+- **Circle Developer Grants**: Focus on using **USDC** for instant, cross-border or local micro-payments for farmers.
+- **UNCDF DigiKen**: Focus on our digital footprint enabling future loan guarantees.
+
+---
+
+## 3. Immediate Action Timeline
+- **11 May 2026 (Today)**: SlovakAid Small Grants (Final Review) & Futurize Incubator.
+- **17 May 2026**: D-Prize Global Challenge (Submission Window).
+- **31 May 2026**: Breet Builder Grant (Target Submission).
+- **June 2026**: Innovate4Cities Summit & Internews Pilot.
 

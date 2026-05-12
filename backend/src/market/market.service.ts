@@ -1,12 +1,13 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../common/prisma/prisma.service';
 import { Role } from '@prisma/client';
+import { CreateProductDto } from './dto/create-product.dto';
 
 @Injectable()
 export class MarketService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async createProduct(farmerId: string, dto: any) {
+  async createProduct(farmerId: string, dto: CreateProductDto) {
     const user = await this.prisma.user.findUnique({ where: { id: farmerId } });
     if (!user || user.role !== Role.FARMER) {
       throw new BadRequestException('Only farmers can create products');
@@ -20,7 +21,7 @@ export class MarketService {
         quantity: dto.quantity,
         category: dto.category,
         imageUrl: dto.imageUrl,
-        location: dto.location,
+        location: dto.location as any,
         farmerId: farmerId,
       },
     });
