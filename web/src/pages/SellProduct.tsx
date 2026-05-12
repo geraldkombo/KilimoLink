@@ -1,18 +1,20 @@
-import { useState, useCallback } from 'react';
-import { Box, Button, Container, Grid, Paper, TextField, Typography, MenuItem, Select, FormControl, InputLabel, IconButton, Fade, Divider, CircularProgress, Tooltip, InputAdornment } from '@mui/material';
+import { useState, useCallback, useEffect } from 'react';
+import { Box, Button, Container, Grid, Paper, TextField, Typography, MenuItem, Select, FormControl, InputLabel, IconButton, Fade, Divider, CircularProgress, Tooltip, InputAdornment, Alert } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import { api } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import 'leaflet/dist/leaflet.css';
 
 // Institutional Intelligence: Protocol-Driven Description Generator
-const generateAIDescription = (title: string, category: string) => {
+// Grounded in API_REFERENCE.md Future Extensions: KNBS-aligned Oracle & NDMA Alerts
+const generateAIDescription = (title: string, category: string, marketData?: any) => {
   const protocols: Record<string, string[]> = {
     'Vegetables': [
-      `Verified local produce: ${title}. Optimized for hyperlocal food resilience with zero middle-man delays. Harvested specifically for urban center delivery protocols.`,
+      `Verified local produce: ${title}. ${marketData?.priceAlert ? 'Current market demand is high.' : ''} Optimized for hyperlocal food resilience with zero middle-man delays. Harvested specifically for urban center delivery protocols.`,
       `Sector-leading quality ${title}. Grown under sustainable urban greening frameworks. Ensures maximum liquidity for local producers and fresh delivery for consumers.`,
     ],
     'Fruits': [
@@ -24,7 +26,7 @@ const generateAIDescription = (title: string, category: string) => {
       `Fresh ${title} from verified urban farms. Every unit sold contributes to the preservation of active green space within city limits.`,
     ],
     'Grains': [
-      `Strategic food security asset: ${title}. Sorted and verified according to institutional resilience standards. Optimized for long-term urban supply stability.`,
+      `Strategic food security asset: ${title}. ${marketData?.disruptionAlert ? 'Disruption Alert: NDMA Drought Phase Monitoring Active.' : ''} Sorted and verified according to institutional resilience standards.`,
       `Hyperlocal grains: ${title}. Part of our "Execution over Incentives" model, ensuring fair value for producers and verified quality for urban markets.`,
     ],
     'Other': [
@@ -52,6 +54,7 @@ export function SellProduct() {
   const [loading, setLoading] = useState(false);
   const [generating, setGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [marketInsights, setMarketInsights] = useState<any>(null);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -62,6 +65,26 @@ export function SellProduct() {
     location: { lat: -1.286389, lng: 36.817223, address: '' }
   });
 
+  // Data Integration: Fetch Market Oracle Data (KNBS/NDMA aligned as per API_REFERENCE.md)
+  useEffect(() => {
+    const fetchOracleData = async () => {
+      try {
+        // Simulation of GET /oracle/prices and /market/disruption-alerts
+        const [prices, alerts] = await Promise.all([
+          api.get('/oracle/prices?product=' + formData.category),
+          api.get('/market/disruption-alerts')
+        ]);
+        setMarketInsights({
+          recommendedPrice: prices.data?.average || 150,
+          disruption: alerts.data?.active || false
+        });
+      } catch (e) {
+        console.warn('Oracle data unavailable, using local intelligence protocols.');
+      }
+    };
+    if (formData.category) fetchOracleData();
+  }, [formData.category]);
+
   const handleGenerateAI = useCallback(() => {
     if (!formData.title) {
       setError('Please enter a product title first to use AI assistance.');
@@ -70,12 +93,12 @@ export function SellProduct() {
     setGenerating(true);
     // Simulate AI thinking time
     setTimeout(() => {
-      const aiDesc = generateAIDescription(formData.title, formData.category);
+      const aiDesc = generateAIDescription(formData.title, formData.category, marketInsights);
       setFormData(prev => ({ ...prev, description: aiDesc }));
       setGenerating(false);
       setError(null);
     }, 800);
-  }, [formData.title, formData.category]);
+  }, [formData.title, formData.category, marketInsights]);
 
   const getListingQuality = () => {
     let score = 0;
@@ -122,6 +145,14 @@ export function SellProduct() {
           <Paper sx={{ p: 2, mb: 4, bgcolor: '#fff5f5', color: '#c53030', borderRadius: 3, border: '1px solid #feb2b2', display: 'flex', alignItems: 'center', gap: 2 }}>
             <Typography variant="body2" sx={{ fontWeight: 600 }}>{error}</Typography>
           </Paper>
+        </Fade>
+      )}
+
+      {marketInsights?.disruption && (
+        <Fade in>
+          <Alert severity="warning" icon={<WarningAmberIcon />} sx={{ mb: 4, borderRadius: 3, fontWeight: 700 }}>
+            Market Disruption Alert: NDMA Drought Phase Monitoring is active for your region. Consider adjusting quantity and price accordingly.
+          </Alert>
         </Fade>
       )}
 
