@@ -1,16 +1,47 @@
 import { useState, useCallback, useEffect } from 'react';
-import { Box, Button, Container, Grid, Paper, TextField, Typography, MenuItem, Select, FormControl, InputLabel, IconButton, Fade, Divider, CircularProgress, Tooltip, InputAdornment, Alert } from '@mui/material';
+import { Box, Button, Container, Grid, Paper, TextField, Typography, MenuItem, Select, FormControl, InputLabel, IconButton, Fade, Divider, CircularProgress, Tooltip, InputAdornment, Alert, Stack, Chip } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
-import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
+import MyLocationIcon from '@mui/icons-material/MyLocation';
+import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from 'react-leaflet';
+import L from 'leaflet';
 import { api } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import 'leaflet/dist/leaflet.css';
 
+// Fix for Leaflet default icon issues in React
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+let DefaultIcon = L.icon({
+    iconUrl: icon,
+    shadowUrl: iconShadow,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41]
+});
+L.Marker.prototype.options.icon = DefaultIcon;
+
+function LocationPicker({ onLocationSelect, position, setPosition }: { onLocationSelect: (loc: { lat: number, lng: number }) => void, position: any, setPosition: any }) {
+  const map = useMap();
+  
+  useMapEvents({
+    click(e) {
+      setPosition(e.latlng);
+      onLocationSelect({ lat: e.latlng.lat, lng: e.latlng.lng });
+    }
+  });
+
+  useEffect(() => {
+    if (position) {
+      map.flyTo(position, map.getZoom());
+    }
+  }, [position, map]);
+
+  return position ? <Marker position={[position.lat, position.lng]} /> : null;
+}
+
 // Institutional Intelligence: Protocol-Driven Description Generator
-// Grounded in API_REFERENCE.md Future Extensions: KNBS-aligned Oracle & NDMA Alerts
 const generateAIDescription = (title: string, category: string, marketData?: any) => {
   const protocols: Record<string, string[]> = {
     'Vegetables': [
@@ -38,23 +69,13 @@ const generateAIDescription = (title: string, category: string, marketData?: any
   return categoryProtocols[Math.floor(Math.random() * categoryProtocols.length)];
 };
 
-function LocationPicker({ onLocationSelect }: { onLocationSelect: (loc: { lat: number, lng: number }) => void }) {
-  const [position, setPosition] = useState<{ lat: number, lng: number } | null>(null);
-  useMapEvents({
-    click(e) {
-      setPosition(e.latlng);
-      onLocationSelect({ lat: e.latlng.lat, lng: e.latlng.lng });
-    }
-  });
-  return position ? <Marker position={[position.lat, position.lng]} /> : null;
-}
-
 export function SellProduct() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [generating, setGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [marketInsights, setMarketInsights] = useState<any>(null);
+  const [mapPosition, setMapPosition] = useState<{ lat: number, lng: number } | null>(null);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -64,6 +85,16 @@ export function SellProduct() {
     imageUrl: '',
     location: { lat: -1.286389, lng: 36.817223, address: '' }
   });
+
+  const handleUseCurrentLocation = () => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition((pos) => {
+        const loc = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+        setMapPosition(loc);
+        setFormData(prev => ({ ...prev, location: { ...prev.location, ...loc, address: 'Current Location' } }));
+      });
+    }
+  };
 
   // Data Integration: Fetch Market Oracle Data (KNBS/NDMA aligned as per API_REFERENCE.md)
   useEffect(() => {
@@ -244,6 +275,19 @@ export function SellProduct() {
                   )
                 }}
               />
+              {marketInsights?.recommendedPrice && (
+                <Box sx={{ mt: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Typography variant="caption" sx={{ fontWeight: 700, color: '#2e7d32' }}>
+                    KNBS Oracle Suggestion: KES {marketInsights.recommendedPrice}
+                  </Typography>
+                  <Chip 
+                    label="Apply" 
+                    size="small" 
+                    onClick={() => setFormData({ ...formData, price: marketInsights.recommendedPrice.toString() })}
+                    sx={{ height: 20, fontSize: '0.65rem', cursor: 'pointer', bgcolor: '#e8f5e9', color: '#2e7d32', fontWeight: 'bold' }}
+                  />
+                </Box>
+              )}
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -297,14 +341,25 @@ export function SellProduct() {
             </Grid>
             <Grid item xs={12}>
               <Divider sx={{ my: 2 }} />
-              <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: '#666' }}>FARM LOCATION</Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-                Click on the map to precisely mark your farm location. This enables hyperlocal discovery for buyers within 5km.
-              </Typography>
-              <Box sx={{ height: '350px', width: '100%', borderRadius: 4, overflow: 'hidden', border: '1px solid #eee', boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.05)' }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1, flexWrap: 'wrap', gap: 1 }}>
+                <Box>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#666' }}>FARM LOCATION</Typography>
+                  <Typography variant="caption" color="text.secondary">Click on the map or use your current location.</Typography>
+                </Box>
+                <Button 
+                  size="small" 
+                  variant="outlined" 
+                  startIcon={<MyLocationIcon />} 
+                  onClick={handleUseCurrentLocation}
+                  sx={{ borderRadius: 2, textTransform: 'none', fontWeight: 'bold' }}
+                >
+                  Use My Current Location
+                </Button>
+              </Box>
+              <Box sx={{ height: { xs: '250px', md: '350px' }, width: '100%', borderRadius: 4, overflow: 'hidden', border: '1px solid #eee', position: 'relative' }}>
                 <MapContainer center={[-1.286389, 36.817223]} zoom={13} style={{ height: '100%', width: '100%' }}>
                   <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                  <LocationPicker onLocationSelect={(loc) => setFormData({ ...formData, location: { ...formData.location, ...loc } })} />
+                  <LocationPicker onLocationSelect={(loc) => setFormData({ ...formData, location: { ...formData.location, ...loc } })} position={mapPosition} setPosition={setMapPosition} />
                 </MapContainer>
               </Box>
             </Grid>
