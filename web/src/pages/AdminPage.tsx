@@ -280,52 +280,77 @@ export function AdminPage() {
             <Box sx={{ mb: 4, p: 3, bgcolor: '#f1f8e9', borderRadius: 4, border: '1px solid #c5e1a5' }}>
               <Typography variant="h6" sx={{ fontWeight: 800, color: '#1b5e20', mb: 1 }}>Ecosystem Resilience & Institutional Intelligence</Typography>
               <Typography variant="body2" color="text.secondary">
-                Strategic monitoring of regulatory frameworks, cross-border experiments, and market signals. Verified through field-level execution and sector-leading operational protocols.
+                Strategic monitoring of regulatory frameworks, cross-border experiments, and market signals. All intelligence is derived from verified sector pioneers and global operational protocols.
               </Typography>
             </Box>
           </Grid>
-          {resilienceLogs.length === 0 ? (
-            <Grid item xs={12}>
-              <Paper sx={{ p: 8, textAlign: 'center', borderRadius: 5, border: '1px dashed #ccc' }}>
-                <Typography variant="h6" color="text.secondary">No resilience signals logged yet.</Typography>
-                <Button 
-                  variant="contained" 
-                  sx={{ mt: 2, bgcolor: '#1b5e20' }}
-                  onClick={async () => {
-                    await api.post('/admin/resilience', {
-                      type: 'REGULATORY',
-                      title: 'Digital Service Tax Update',
-                      description: 'New guidelines on platform service fees in Kenya. Execution-first approach remains stable.',
-                      impact: 'NEUTRAL',
-                      status: 'MONITORED'
-                    });
-                    fetchData();
-                  }}
-                >
-                  Log Sample Signal
-                </Button>
-              </Paper>
+          
+          <Grid item xs={12} md={4}>
+            <Paper sx={{ p: 3, borderRadius: 5, bgcolor: '#fafafa', border: '1px solid #eee' }}>
+              <Typography variant="subtitle2" sx={{ fontWeight: 800, mb: 2, color: '#666' }}>INTELLIGENCE SOURCES</Typography>
+              <Stack spacing={2}>
+                <Box sx={{ p: 2, bgcolor: 'white', borderRadius: 3, border: '1px solid #eee' }}>
+                  <Typography variant="body2" sx={{ fontWeight: 700 }}>Glovo Co-Founder Transcripts</Typography>
+                  <Typography variant="caption" color="text.secondary">Primary source for African operational execution and liquidity-first protocols.</Typography>
+                </Box>
+                <Box sx={{ p: 2, bgcolor: 'white', borderRadius: 3, border: '1px solid #eee' }}>
+                  <Typography variant="body2" sx={{ fontWeight: 700 }}>Innovate4Cities Framework</Typography>
+                  <Typography variant="caption" color="text.secondary">Regulatory alignment for 2026 urban resilience targets.</Typography>
+                </Box>
+                <Box sx={{ p: 2, bgcolor: 'white', borderRadius: 3, border: '1px solid #eee' }}>
+                  <Typography variant="body2" sx={{ fontWeight: 700 }}>Solana Ecosystem Theses</Typography>
+                  <Typography variant="caption" color="text.secondary">Infrastructure standards for Proof-of-Trade and decentralization.</Typography>
+                </Box>
+              </Stack>
+            </Paper>
+          </Grid>
+
+          <Grid item xs={12} md={8}>
+            <Grid container spacing={3}>
+              {resilienceLogs.length === 0 ? (
+                <Grid item xs={12}>
+                  <Paper sx={{ p: 8, textAlign: 'center', borderRadius: 5, border: '1px dashed #ccc' }}>
+                    <Typography variant="h6" color="text.secondary">No resilience signals logged yet.</Typography>
+                    <Button 
+                      variant="contained" 
+                      sx={{ mt: 2, bgcolor: '#1b5e20' }}
+                      onClick={async () => {
+                        await api.post('/admin/resilience', {
+                          type: 'REGULATORY',
+                          title: 'Digital Service Tax Update',
+                          description: 'New guidelines on platform service fees in Kenya. Execution-first approach remains stable.',
+                          impact: 'NEUTRAL',
+                          status: 'MONITORED'
+                        });
+                        fetchData();
+                      }}
+                    >
+                      Log Sample Signal
+                    </Button>
+                  </Paper>
+                </Grid>
+              ) : (
+                resilienceLogs.map((log) => (
+                  <Grid item xs={12} md={6} key={log.id}>
+                    <Card sx={{ borderRadius: 4, borderLeft: `6px solid ${log.impact === 'POSITIVE' ? '#2e7d32' : log.impact === 'NEGATIVE' ? '#d32f2f' : '#fbc02d'}` }}>
+                      <CardContent>
+                        <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
+                          <Chip label={log.type} size="small" sx={{ fontWeight: 'bold' }} />
+                          <Typography variant="caption" color="text.secondary">{new Date(log.createdAt).toLocaleDateString()}</Typography>
+                        </Stack>
+                        <Typography variant="h6" sx={{ fontWeight: 800, mb: 1 }}>{log.title}</Typography>
+                        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>{log.description}</Typography>
+                        <Stack direction="row" spacing={1}>
+                          <Chip label={log.status} size="small" variant="outlined" color={log.status === 'RESOLVED' ? 'success' : 'warning'} />
+                          <Chip label={log.impact} size="small" variant="outlined" />
+                        </Stack>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                ))
+              )}
             </Grid>
-          ) : (
-            resilienceLogs.map((log) => (
-              <Grid item xs={12} md={6} key={log.id}>
-                <Card sx={{ borderRadius: 4, borderLeft: `6px solid ${log.impact === 'POSITIVE' ? '#2e7d32' : log.impact === 'NEGATIVE' ? '#d32f2f' : '#fbc02d'}` }}>
-                  <CardContent>
-                    <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
-                      <Chip label={log.type} size="small" sx={{ fontWeight: 'bold' }} />
-                      <Typography variant="caption" color="text.secondary">{new Date(log.createdAt).toLocaleDateString()}</Typography>
-                    </Stack>
-                    <Typography variant="h6" sx={{ fontWeight: 800, mb: 1 }}>{log.title}</Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>{log.description}</Typography>
-                    <Stack direction="row" spacing={1}>
-                      <Chip label={log.status} size="small" variant="outlined" color={log.status === 'RESOLVED' ? 'success' : 'warning'} />
-                      <Chip label={log.impact} size="small" variant="outlined" />
-                    </Stack>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))
-          )}
+          </Grid>
         </Grid>
       )}
     </Container>

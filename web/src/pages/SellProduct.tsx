@@ -8,32 +8,32 @@ import { api } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import 'leaflet/dist/leaflet.css';
 
-// AI Innovation: Description Generator Helper
+// Institutional Intelligence: Protocol-Driven Description Generator
 const generateAIDescription = (title: string, category: string) => {
-  const templates: Record<string, string[]> = {
+  const protocols: Record<string, string[]> = {
     'Vegetables': [
-      `Freshly harvested ${title} grown using sustainable urban farming methods. Perfect for healthy salads and traditional Kenyan stews.`,
-      `Nutrient-rich ${title} from our local garden. Hand-picked this morning to ensure maximum freshness for your family.`,
+      `Verified local produce: ${title}. Optimized for hyperlocal food resilience with zero middle-man delays. Harvested specifically for urban center delivery protocols.`,
+      `Sector-leading quality ${title}. Grown under sustainable urban greening frameworks. Ensures maximum liquidity for local producers and fresh delivery for consumers.`,
     ],
     'Fruits': [
-      `Sweet and juicy ${title}, naturally ripened under the Nairobi sun. No artificial pesticides used.`,
-      `Premium quality ${title}, bursting with flavor and vitamins. Great for fresh juices or as a healthy snack.`,
+      `Hyperlocal ${title} optimized for carbon-neutral transport. Following sector-leading operational protocols to ensure field-to-table freshness within 30-40 minutes.`,
+      `Premium ${title} cultivated within the urban resilience framework. A "white canvas" product reflecting the entrepreneurial energy and raw potential of local agriculture.`,
     ],
     'Dairy': [
-      `Pure, farm-fresh ${title} produced with the highest hygiene standards. Rich in nutrients and delivered chilled.`,
-      `Local artisanal ${title}, made with care. Supports our neighborhood circular economy.`,
+      `Institutional-grade ${title}. Produced under strict hygiene and liquidity protocols. Supporting the neighborhood circular economy through direct-to-consumer execution.`,
+      `Fresh ${title} from verified urban farms. Every unit sold contributes to the preservation of active green space within city limits.`,
     ],
     'Grains': [
-      `High-grade ${title}, carefully dried and sorted. Ideal for long-term storage and traditional recipes.`,
-      `Locally sourced ${title}, promoting food security in our community. Excellent texture and taste.`,
+      `Strategic food security asset: ${title}. Sorted and verified according to institutional resilience standards. Optimized for long-term urban supply stability.`,
+      `Hyperlocal grains: ${title}. Part of our "Execution over Incentives" model, ensuring fair value for producers and verified quality for urban markets.`,
     ],
     'Other': [
-      `Quality ${title} from a local producer you can trust. Sustainable and fresh.`,
-      `Direct from the farm: ${title}. Supporting hyperlocal food resilience.`,
+      `Verified ${title} from a sector-aligned producer. Built on a framework of trust and operational excellence.`,
+      `Hyperlocal ${title} for future-city resilience. Executed according to the "stuff we control"—quality and ground-level logistics.`,
     ]
   };
-  const categoryTemplates = templates[category] || templates['Other'];
-  return categoryTemplates[Math.floor(Math.random() * categoryTemplates.length)];
+  const categoryProtocols = protocols[category] || protocols['Other'];
+  return categoryProtocols[Math.floor(Math.random() * categoryProtocols.length)];
 };
 
 function LocationPicker({ onLocationSelect }: { onLocationSelect: (loc: { lat: number, lng: number }) => void }) {
