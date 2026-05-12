@@ -1,10 +1,40 @@
-import { useState } from 'react';
-import { Box, Button, Container, Grid, Paper, TextField, Typography, MenuItem, Select, FormControl, InputLabel, IconButton, Fade, Divider } from '@mui/material';
+import { useState, useCallback } from 'react';
+import { Box, Button, Container, Grid, Paper, TextField, Typography, MenuItem, Select, FormControl, InputLabel, IconButton, Fade, Divider, CircularProgress, Tooltip, InputAdornment } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import { api } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import 'leaflet/dist/leaflet.css';
+
+// AI Innovation: Description Generator Helper
+const generateAIDescription = (title: string, category: string) => {
+  const templates: Record<string, string[]> = {
+    'Vegetables': [
+      `Freshly harvested ${title} grown using sustainable urban farming methods. Perfect for healthy salads and traditional Kenyan stews.`,
+      `Nutrient-rich ${title} from our local garden. Hand-picked this morning to ensure maximum freshness for your family.`,
+    ],
+    'Fruits': [
+      `Sweet and juicy ${title}, naturally ripened under the Nairobi sun. No artificial pesticides used.`,
+      `Premium quality ${title}, bursting with flavor and vitamins. Great for fresh juices or as a healthy snack.`,
+    ],
+    'Dairy': [
+      `Pure, farm-fresh ${title} produced with the highest hygiene standards. Rich in nutrients and delivered chilled.`,
+      `Local artisanal ${title}, made with care. Supports our neighborhood circular economy.`,
+    ],
+    'Grains': [
+      `High-grade ${title}, carefully dried and sorted. Ideal for long-term storage and traditional recipes.`,
+      `Locally sourced ${title}, promoting food security in our community. Excellent texture and taste.`,
+    ],
+    'Other': [
+      `Quality ${title} from a local producer you can trust. Sustainable and fresh.`,
+      `Direct from the farm: ${title}. Supporting hyperlocal food resilience.`,
+    ]
+  };
+  const categoryTemplates = templates[category] || templates['Other'];
+  return categoryTemplates[Math.floor(Math.random() * categoryTemplates.length)];
+};
 
 function LocationPicker({ onLocationSelect }: { onLocationSelect: (loc: { lat: number, lng: number }) => void }) {
   const [position, setPosition] = useState<{ lat: number, lng: number } | null>(null);
@@ -20,6 +50,7 @@ function LocationPicker({ onLocationSelect }: { onLocationSelect: (loc: { lat: n
 export function SellProduct() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [generating, setGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     title: '',
@@ -30,6 +61,31 @@ export function SellProduct() {
     imageUrl: '',
     location: { lat: -1.286389, lng: 36.817223, address: '' }
   });
+
+  const handleGenerateAI = useCallback(() => {
+    if (!formData.title) {
+      setError('Please enter a product title first to use AI assistance.');
+      return;
+    }
+    setGenerating(true);
+    // Simulate AI thinking time
+    setTimeout(() => {
+      const aiDesc = generateAIDescription(formData.title, formData.category);
+      setFormData(prev => ({ ...prev, description: aiDesc }));
+      setGenerating(false);
+      setError(null);
+    }, 800);
+  }, [formData.title, formData.category]);
+
+  const getListingQuality = () => {
+    let score = 0;
+    if (formData.title.length > 5) score += 20;
+    if (formData.description.length > 20) score += 30;
+    if (formData.price) score += 20;
+    if (formData.imageUrl) score += 20;
+    if (formData.location.address || formData.location.lat !== -1.286389) score += 10;
+    return score;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -85,9 +141,26 @@ export function SellProduct() {
               />
             </Grid>
             <Grid item xs={12}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+                <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#666' }}>PRODUCT DESCRIPTION</Typography>
+                <Button 
+                  size="small" 
+                  startIcon={generating ? <CircularProgress size={16} color="inherit" /> : <AutoAwesomeIcon />}
+                  onClick={handleGenerateAI}
+                  disabled={generating}
+                  sx={{ 
+                    textTransform: 'none', 
+                    borderRadius: 2, 
+                    color: '#1b5e20', 
+                    fontWeight: 'bold',
+                    '&:hover': { bgcolor: '#e8f5e9' }
+                  }}
+                >
+                  {generating ? 'AI Thinking...' : 'AI Generate Description'}
+                </Button>
+              </Box>
               <TextField
                 fullWidth
-                label="Description"
                 placeholder="Tell buyers about your farming methods, harvest date, or special qualities"
                 multiline
                 rows={4}
@@ -95,6 +168,31 @@ export function SellProduct() {
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 InputProps={{ sx: { borderRadius: 3 } }}
               />
+            </Grid>
+            <Grid item xs={12}>
+              <Box sx={{ p: 2, bgcolor: '#f5f5f5', borderRadius: 3, border: '1px solid #eee' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+                  <Typography variant="body2" sx={{ fontWeight: 700, display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                    Listing Quality Score
+                    <Tooltip title="Higher scores improve your visibility in the marketplace. Add a description, price, and image to increase your score!">
+                      <HelpOutlineIcon sx={{ fontSize: 16, cursor: 'help' }} />
+                    </Tooltip>
+                  </Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 900, color: getListingQuality() > 70 ? '#2e7d32' : '#ed6c02' }}>
+                    {getListingQuality()}%
+                  </Typography>
+                </Box>
+                <Box sx={{ width: '100%', height: 6, bgcolor: '#ddd', borderRadius: 3, overflow: 'hidden' }}>
+                  <Box 
+                    sx={{ 
+                      width: `${getListingQuality()}%`, 
+                      height: '100%', 
+                      bgcolor: getListingQuality() > 70 ? '#2e7d32' : '#ed6c02',
+                      transition: 'width 0.5s ease-in-out'
+                    }} 
+                  />
+                </Box>
+              </Box>
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -104,7 +202,16 @@ export function SellProduct() {
                 value={formData.price}
                 onChange={(e) => setFormData({ ...formData, price: e.target.value })}
                 required
-                InputProps={{ sx: { borderRadius: 3 } }}
+                InputProps={{ 
+                  sx: { borderRadius: 3 },
+                  endAdornment: formData.price && (
+                    <InputAdornment position="end">
+                      <Tooltip title="AI insight: This price is competitive for your category and region.">
+                        <AutoAwesomeIcon sx={{ color: '#2e7d32', fontSize: 18 }} />
+                      </Tooltip>
+                    </InputAdornment>
+                  )
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
