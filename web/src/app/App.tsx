@@ -290,7 +290,7 @@ export function AppContent() {
   useEffect(() => {
     if (authenticated && user?.wallet?.address) {
       const fetchBalances = async () => {
-        const data = await solanaService.getStablecoinBalances(user.wallet.address);
+        const data = await solanaService.getStablecoinBalances(user.wallet!.address!);
         setBalances(data);
       };
       fetchBalances();

@@ -168,7 +168,7 @@ export function AdminPage() {
           <Grid container spacing={4}>
             <Grid item xs={12} md={8}>
               <PremiumCard title="Market Resilience Growth" subtitle="Supply vs Demand Liquidity (KG Equivalent)">
-                <ResponsiveContainer width="100%" height="300">
+                <ResponsiveContainer width="100%" height={300}>
                   <AreaChart data={impactHistory}>
                     <defs>
                       <linearGradient id="colorSupply" x1="0" y1="0" x2="0" y2="1">
@@ -190,8 +190,8 @@ export function AdminPage() {
             </Grid>
             
             <Grid item xs={12} md={4}>
-              <PremiumCard title="Price Volatility" subtitle="Index by Category">
-                <ResponsiveContainer width="100%" height="300">
+              <PremiumCard title="Price Stability" subtitle="Current market status">
+                <ResponsiveContainer width="100%" height={300}>
                   <PieChart>
                     <Pie
                       data={[
@@ -286,7 +286,7 @@ export function AdminPage() {
 
             <Grid item xs={12} md={8}>
               <PremiumCard title="Growth Experiments" subtitle="Control vs Test Groups">
-                <ResponsiveContainer width="100%" height="300">
+                <ResponsiveContainer width="100%" height={300}>
                   <BarChart data={[
                     { day: 'Mon', control: 120, test: 145 },
                     { day: 'Tue', control: 150, test: 180 },
