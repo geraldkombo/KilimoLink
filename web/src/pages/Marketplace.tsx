@@ -8,10 +8,10 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { PremiumMarketCard } from '../components/PremiumMarketCard';
 
+import { useProducts } from '../app/ProductContext';
+
 export function Marketplace() {
-  const [products, setProducts] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { products, loading, error, fetchProducts, searchProducts } = useProducts();
   const [coords, setCoords] = useState<{ lat: number, lng: number } | null>(null);
   const [search, setSearch] = useState('');
 
@@ -19,40 +19,23 @@ export function Marketplace() {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
-          setCoords({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+          const newCoords = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+          setCoords(newCoords);
+          fetchProducts(newCoords);
         },
         (err) => {
           console.warn("Location access denied or failed", err);
+          fetchProducts();
         }
       );
+    } else {
+      fetchProducts();
     }
-  }, []);
-
-  const fetchProducts = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const url = coords ? `/products?lat=${coords.lat}&lng=${coords.lng}` : '/products';
-      const res = await api.get(url);
-      setProducts(res.data);
-    } catch (err) {
-      console.error('Failed to fetch products', err);
-      setError('Failed to load products. Please check your connection.');
-    } finally {
-      setLoading(false);
-    }
-  }, [coords]);
-
-  useEffect(() => {
-    fetchProducts();
   }, [fetchProducts]);
 
   const filteredProducts = useMemo(() => {
-    return products.filter(p => 
-      p.title.toLowerCase().includes(search.toLowerCase()) ||
-      p.category.toLowerCase().includes(search.toLowerCase())
-    );
-  }, [products, search]);
+    return searchProducts(search);
+  }, [searchProducts, search]);
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
