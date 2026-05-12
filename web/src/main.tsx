@@ -45,8 +45,8 @@ function Root() {
           loginMethods: ['email', 'wallet', 'google'],
           appearance: {
             theme: 'light',
-            accentColor: '#2e7d32',
-            logo: 'https://kilimolink.vercel.app/logo.png',
+            accentColor: '#064e3b',
+            logo: '/handshake.jpg', // Using the primary visual as logo for now
             showWalletLoginFirst: false,
           },
           embeddedWallets: {

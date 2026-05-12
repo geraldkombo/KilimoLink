@@ -352,7 +352,7 @@ export function AppContent() {
               )}
               <Button color="inherit" component={Link} to="/market" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Market</Button>
               <Button color="inherit" component={Link} to="/orders" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Orders</Button>
-              {authenticated && (
+              {authenticated && user?.email?.address === 'admin@kilimolink.demo' && (
                 <Button color="inherit" component={Link} to="/admin" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Admin</Button>
               )}
               <Box sx={{ ml: 2 }}>
@@ -393,7 +393,7 @@ export function AppContent() {
               <ListItemText primary="My Orders" primaryTypographyProps={{ fontWeight: 700 }} />
             </ListItemButton>
           </ListItem>
-          {authenticated && (
+          {authenticated && user?.email?.address === 'admin@kilimolink.demo' && (
             <ListItem disablePadding>
               <ListItemButton component={Link} to="/admin" onClick={() => setMobileMenuOpen(false)}>
                 <ListItemText primary="Admin Oversight" primaryTypographyProps={{ fontWeight: 700 }} />

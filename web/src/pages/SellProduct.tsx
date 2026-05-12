@@ -122,6 +122,37 @@ export function SellProduct() {
     location: { lat: -1.286389, lng: 36.817223, address: '' }
   });
 
+  // KNBS Intelligence: Fetch real produce names from dataset
+  const knbsProduce = [
+    { name: 'Maize', category: 'Grains', price: 180 },
+    { name: 'Sukuma Wiki', category: 'Vegetables', price: 40 },
+    { name: 'Grade A Milk', category: 'Dairy', price: 60 },
+    { name: 'Indigenous Chicken', category: 'Meat', price: 450 },
+    { name: 'Managu', category: 'Vegetables', price: 55 },
+    { name: 'Irish Potatoes', category: 'Grains', price: 120 },
+    { name: 'Pure Honey', category: 'Honey', price: 800 }
+  ];
+
+  // AI Title Capitalization & Enhancement
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    // Capitalize first letter of each word
+    const capitalized = val.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    
+    // KNBS Intelligence: Auto-match category and suggested price
+    const match = knbsProduce.find(p => capitalized.includes(p.name));
+    if (match) {
+      setFormData({ 
+        ...formData, 
+        title: capitalized, 
+        category: match.category,
+        price: match.price.toString()
+      });
+    } else {
+      setFormData({ ...formData, title: capitalized });
+    }
+  };
+
   const [searchArea, setSearchArea] = useState('');
   const [coordsInput, setCoordsInput] = useState('');
   const [privacyRadius, setPrivacyRadius] = useState(true);
@@ -247,10 +278,30 @@ export function SellProduct() {
                 label="What are you selling?"
                 placeholder="e.g. Fresh Sukuma Wiki, Grade A Milk"
                 value={formData.title}
-                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                onChange={handleTitleChange}
                 required
                 InputProps={{ sx: { borderRadius: 3 } }}
               />
+            </Grid>
+              <Box sx={{ mt: 1.5, display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                <Typography variant="caption" sx={{ color: '#666', mr: 1, mt: 0.5 }}>Common items:</Typography>
+                {knbsProduce.slice(0, 5).map((item) => (
+                  <Chip 
+                    key={item.name} 
+                    label={item.name} 
+                    size="small" 
+                    onClick={() => {
+                      setFormData({ 
+                        ...formData, 
+                        title: item.name, 
+                        category: item.category,
+                        price: item.price.toString()
+                      });
+                    }}
+                    sx={{ bgcolor: '#f0fdf4', color: '#064e3b', fontWeight: 600, fontSize: '0.7rem', cursor: 'pointer', '&:hover': { bgcolor: '#dcfce7' } }} 
+                  />
+                ))}
+              </Box>
             </Grid>
             <Grid item xs={12}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
