@@ -272,35 +272,35 @@ export function SellProduct() {
         <Box component="form" onSubmit={handleSubmit}>
           <Grid container spacing={4}>
             <Grid item xs={12}>
-              <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: '#064e3b' }}>PRODUCT DETAILS</Typography>
-              <TextField
-                fullWidth
-                label="What are you selling?"
-                placeholder="e.g. Fresh Sukuma Wiki, Grade A Milk"
-                value={formData.title}
-                onChange={handleTitleChange}
-                required
-                InputProps={{ sx: { borderRadius: 3 } }}
-              />
-              <Box sx={{ mt: 1.5, display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                <Typography variant="caption" sx={{ color: '#666', mr: 1, mt: 0.5 }}>Common items:</Typography>
-                {knbsProduce.slice(0, 5).map((item) => (
-                  <Chip 
-                    key={item.name} 
-                    label={item.name} 
-                    size="small" 
-                    onClick={() => {
+              <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: '#064e3b' }}>PRODUCT DETAILS (KNBS VERIFIED)</Typography>
+              <FormControl fullWidth required>
+                <InputLabel>What are you selling?</InputLabel>
+                <Select
+                  value={formData.title}
+                  label="What are you selling?"
+                  onChange={(e) => {
+                    const item = knbsProduce.find(p => p.name === e.target.value);
+                    if (item) {
                       setFormData({ 
                         ...formData, 
                         title: item.name, 
                         category: item.category,
                         price: item.price.toString()
                       });
-                    }}
-                    sx={{ bgcolor: '#f0fdf4', color: '#064e3b', fontWeight: 600, fontSize: '0.7rem', cursor: 'pointer', '&:hover': { bgcolor: '#dcfce7' } }} 
-                  />
-                ))}
-              </Box>
+                    }
+                  }}
+                  sx={{ borderRadius: 3 }}
+                >
+                  {knbsProduce.map((item) => (
+                    <MenuItem key={item.name} value={item.name}>
+                      {item.name} — Verified {item.category}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <Typography variant="caption" sx={{ mt: 1, color: '#059669', fontWeight: 600 }}>
+                  ✓ Institutional intelligence: Only verified KNBS produce can be listed for urban trade.
+                </Typography>
+              </FormControl>
             </Grid>
             <Grid item xs={12}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
@@ -337,25 +337,18 @@ export function SellProduct() {
                 label="Price (KES)"
                 type="number"
                 value={formData.price}
-                onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                disabled
                 required
                 InputProps={{ 
-                  sx: { borderRadius: 3 }
+                  sx: { borderRadius: 3, bgcolor: '#f9fafb' },
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <GppGoodIcon sx={{ color: '#059669', fontSize: 18 }} />
+                    </InputAdornment>
+                  )
                 }}
+                helperText="Fixed market price from KNBS dataset"
               />
-              {marketInsights?.recommendedPrice && (
-                <Box sx={{ mt: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <Typography variant="caption" sx={{ fontWeight: 700, color: '#064e3b' }}>
-                    Suggested Price: KES {marketInsights.recommendedPrice}
-                  </Typography>
-                  <Chip 
-                    label="Use This" 
-                    size="small" 
-                    onClick={() => setFormData({ ...formData, price: marketInsights.recommendedPrice.toString() })}
-                    sx={{ height: 20, fontSize: '0.65rem', cursor: 'pointer', bgcolor: '#f0fdf4', color: '#064e3b', fontWeight: 'bold' }}
-                  />
-                </Box>
-              )}
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -369,22 +362,24 @@ export function SellProduct() {
               />
             </Grid>
             <Grid item xs={12}>
-              <FormControl fullWidth>
+              <FormControl fullWidth disabled>
                 <InputLabel>Category</InputLabel>
                 <Select
                   value={formData.category}
                   label="Category"
-                  onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                  sx={{ borderRadius: 3 }}
+                  sx={{ borderRadius: 3, bgcolor: '#f9fafb' }}
                 >
-                  <MenuItem value="Dairy">Dairy (Milk, Eggs, etc.)</MenuItem>
-                  <MenuItem value="Vegetables">Vegetables (Sukuma, Spinach, etc.)</MenuItem>
-                  <MenuItem value="Fruits">Fruits (Mangoes, Oranges, etc.)</MenuItem>
-                  <MenuItem value="Grains">Grains (Maize, Rice, etc.)</MenuItem>
-                  <MenuItem value="Meat">Meat (Beef, Chicken, etc.)</MenuItem>
+                  <MenuItem value="Dairy">Dairy</MenuItem>
+                  <MenuItem value="Vegetables">Vegetables</MenuItem>
+                  <MenuItem value="Fruits">Fruits</MenuItem>
+                  <MenuItem value="Grains">Grains</MenuItem>
+                  <MenuItem value="Meat">Meat</MenuItem>
                   <MenuItem value="Honey">Honey & Bee Products</MenuItem>
                   <MenuItem value="Other">Other Items</MenuItem>
                 </Select>
+                <Typography variant="caption" sx={{ mt: 1 }}>
+                  Category is automatically assigned based on produce type.
+                </Typography>
               </FormControl>
             </Grid>
             <Grid item xs={12}>
