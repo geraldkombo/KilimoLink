@@ -182,7 +182,7 @@ export function App() {
             <Stack direction="row" spacing={1} alignItems="center">
               <Button color="inherit" component={Link} to="/market" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Market</Button>
               <Button color="inherit" component={Link} to="/orders" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Orders</Button>
-              {user?.role === 'ADMIN' && (
+              {authenticated && (
                 <Button color="inherit" component={Link} to="/admin" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Admin</Button>
               )}
               <Box sx={{ ml: 2 }}>
