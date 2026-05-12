@@ -145,31 +145,6 @@ function HomePage() {
                 src="https://images.unsplash.com/photo-1590682680695-43b964a3ae17?auto=format&fit=crop&w=800&q=80" 
                 sx={{ width: '100%', borderRadius: 6, boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}
               />
-              <Box 
-                sx={{ 
-                  position: 'absolute', 
-                  bottom: -20, 
-                  right: -20, 
-                  width: '60%', 
-                  bgcolor: 'white', 
-                  p: 1, 
-                  borderRadius: 4, 
-                  boxShadow: '0 10px 30px rgba(0,0,0,0.15)',
-                  border: '4px solid #fff'
-                }}
-              >
-                <Box 
-                  component="img" 
-                  src="/handshake.jpg"
-                  onError={(e: any) => {
-                    e.target.src = 'https://images.unsplash.com/photo-1521791136364-798a7bc0d262?auto=format&fit=crop&w=800&q=80';
-                  }}
-                  sx={{ width: '100%', borderRadius: 3 }}
-                />
-                <Typography variant="caption" sx={{ display: 'block', mt: 1, textAlign: 'center', fontWeight: 'bold', color: '#1b5e20' }}>
-                  Strategic Alignment with Sector Pioneers
-                </Typography>
-              </Box>
             </Box>
           </Grid>
         </Grid>
@@ -202,13 +177,14 @@ export function App() {
               to="/" 
               sx={{ flexGrow: 1, fontWeight: '900', letterSpacing: -1, color: '#1b5e20', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 1 }}
             >
-              <PublicIcon sx={{ fontSize: 32 }} />
               KILIMOLINK
             </Typography>
             <Stack direction="row" spacing={1} alignItems="center">
               <Button color="inherit" component={Link} to="/market" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Market</Button>
               <Button color="inherit" component={Link} to="/orders" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Orders</Button>
-              <Button color="inherit" component={Link} to="/admin" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Admin</Button>
+              {user?.role === 'ADMIN' && (
+                <Button color="inherit" component={Link} to="/admin" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Admin</Button>
+              )}
               <Box sx={{ ml: 2 }}>
                 {!authenticated ? (
                   <Button variant="contained" color="success" onClick={login} sx={{ textTransform: 'none', borderRadius: 3, px: 4, py: 1, fontWeight: 'bold', boxShadow: 'none' }}>
@@ -262,10 +238,10 @@ export function App() {
               </Grid>
               <Grid item xs={12} md={4}>
                 <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 2 }}>Contact</Typography>
-                <Typography variant="body2" color="text.secondary">info@kilimolink.app</Typography>
+                <Typography variant="body2" color="text.secondary">geraldshikunyi@gmail.com</Typography>
                 <Typography variant="body2" color="text.secondary">Nairobi, Kenya</Typography>
                 <Typography variant="caption" color="text.secondary" sx={{ mt: 2, display: 'block', opacity: 0.5 }}>
-                  Build v1.0.4 - Institutional Intelligence
+                  Build v1.0.5 - Institutional Intelligence
                 </Typography>
               </Grid>
             </Grid>

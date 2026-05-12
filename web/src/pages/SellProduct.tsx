@@ -274,13 +274,25 @@ export function SellProduct() {
               </FormControl>
             </Grid>
             <Grid item xs={12}>
+              <Divider sx={{ my: 2 }} />
+              <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: '#666' }}>PRODUCT IMAGE</Typography>
               <TextField
                 fullWidth
                 label="Image URL"
-                placeholder="Paste a link to a high-quality photo of your produce"
+                placeholder="Paste a link to a photo of your produce (e.g. from Google Photos or Imgur)"
                 value={formData.imageUrl}
                 onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                InputProps={{ sx: { borderRadius: 3 } }}
+                helperText="For this demo, please paste a direct link to an image file."
+                InputProps={{ 
+                  sx: { borderRadius: 3 },
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Tooltip title="Direct image links work best.">
+                        <HelpOutlineIcon sx={{ fontSize: 18 }} />
+                      </Tooltip>
+                    </InputAdornment>
+                  )
+                }}
               />
             </Grid>
             <Grid item xs={12}>

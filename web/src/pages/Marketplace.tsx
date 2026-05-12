@@ -122,10 +122,11 @@ export function Marketplace() {
           ))}
         </Grid>
       ) : error ? (
-        <Box sx={{ textAlign: 'center', py: 12, bgcolor: '#fff5f5', borderRadius: 6, border: '1px solid #feb2b2' }}>
-          <Typography color="error" variant="h6" gutterBottom>{error}</Typography>
-          <Button variant="contained" color="error" onClick={() => window.location.reload()} sx={{ mt: 2, borderRadius: 2 }}>
-            Retry Loading
+        <Box sx={{ textAlign: 'center', py: 8, bgcolor: '#f9f9f9', borderRadius: 4, border: '1px solid #eee' }}>
+          <Typography color="text.secondary" variant="h6" gutterBottom>No produce listed in your area yet.</Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 4 }}>Be the first to list fresh produce and help build urban food resilience!</Typography>
+          <Button variant="contained" component={Link} to="/sell" sx={{ bgcolor: '#1b5e20', px: 4, py: 1.5, borderRadius: 3 }}>
+            List Your Produce
           </Button>
         </Box>
       ) : filteredProducts.length === 0 ? (
