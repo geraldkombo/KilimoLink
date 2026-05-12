@@ -98,7 +98,7 @@ export function AdminPage() {
         }}
       >
         <Tab label="Impact Analytics" />
-        <Tab label="User Ecosystem" />
+        <Tab label="Growth Engine (AARRR)" />
         <Tab label="Market Oversight" />
         <Tab label="Institutional Intelligence" />
       </Tabs>
@@ -193,51 +193,77 @@ export function AdminPage() {
       )}
 
       {tab === 1 && (
-        <TableContainer component={Paper} sx={{ borderRadius: 5, boxShadow: '0 10px 30px rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.05)' }}>
-          <Table>
-            <TableHead sx={{ bgcolor: '#fcfcfc' }}>
-              <TableRow>
-                <TableCell sx={{ fontWeight: 800 }}>User</TableCell>
-                <TableCell sx={{ fontWeight: 800 }}>Role</TableCell>
-                <TableCell sx={{ fontWeight: 800 }}>Joined</TableCell>
-                <TableCell sx={{ fontWeight: 800 }}>Activity</TableCell>
-                <TableCell align="right" sx={{ fontWeight: 800 }}>Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {users.map((user) => (
-                <TableRow key={user.id} sx={{ '&:hover': { bgcolor: '#f9f9f9' } }}>
-                  <TableCell>
-                    <Box>
-                      <Typography variant="body1" sx={{ fontWeight: 700 }}>{user.name}</Typography>
-                      <Typography variant="body2" color="text.secondary">{user.email}</Typography>
-                    </Box>
-                  </TableCell>
-                  <TableCell>
-                    <Chip 
-                      label={user.role} 
-                      size="small" 
-                      sx={{ 
-                        fontWeight: 700, 
-                        bgcolor: user.role === 'ADMIN' ? '#fff3e0' : user.role === 'FARMER' ? '#e8f5e9' : '#e3f2fd',
-                        color: user.role === 'ADMIN' ? '#ef6c00' : user.role === 'FARMER' ? '#2e7d32' : '#1565c0'
-                      }} 
-                    />
-                  </TableCell>
-                  <TableCell>{new Date(user.createdAt).toLocaleDateString()}</TableCell>
-                  <TableCell>
-                    <Box sx={{ width: '100%', bgcolor: '#eee', height: 4, borderRadius: 2 }}>
-                      <Box sx={{ width: `${Math.random() * 100}%`, bgcolor: '#2e7d32', height: '100%', borderRadius: 2 }} />
-                    </Box>
-                  </TableCell>
-                  <TableCell align="right">
-                    <IconButton color="error" size="small"><DeleteIcon /></IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <Grid container spacing={4}>
+          <Grid item xs={12}>
+            <Box sx={{ mb: 4, p: 3, bgcolor: '#f3e5f5', borderRadius: 4, border: '1px solid #ce93d8' }}>
+              <Typography variant="h6" sx={{ fontWeight: 800, color: '#4a148c', mb: 1 }}>Algorithmic Growth Funnel (Triple-A, Triple-R)</Typography>
+              <Typography variant="body2" color="text.secondary">
+                Moving beyond 19th-century AIDA models to a modern signal-first growth engine. Tracking activation and retention as the primary levers for sustainable scale.
+              </Typography>
+            </Box>
+          </Grid>
+
+          {[
+            { label: 'Awareness', value: '12.4k', sub: 'Reach', color: '#9c27b0' },
+            { label: 'Acquisition', value: '2.1k', sub: 'Installs', color: '#673ab7' },
+            { label: 'Activation', value: '68%', sub: 'First List/Buy', color: '#3f51b5' },
+            { label: 'Retention', value: '42%', sub: 'Week 4', color: '#2196f3' },
+            { label: 'Referral', value: '12%', sub: 'K-Factor', color: '#03a9f4' },
+            { label: 'Revenue', value: 'KES 450k', sub: 'GMV', color: '#00bcd4' },
+          ].map((metric, idx) => (
+            <Grid item xs={6} md={2} key={idx}>
+              <Paper sx={{ p: 2, textAlign: 'center', borderRadius: 4, borderTop: `4px solid ${metric.color}` }}>
+                <Typography variant="caption" sx={{ fontWeight: 700, color: 'text.secondary', display: 'block' }}>{metric.label.toUpperCase()}</Typography>
+                <Typography variant="h5" sx={{ fontWeight: 900, my: 1 }}>{metric.value}</Typography>
+                <Typography variant="caption" color="text.secondary">{metric.sub}</Typography>
+              </Paper>
+            </Grid>
+          ))}
+
+          <Grid item xs={12} md={8}>
+            <Paper sx={{ p: 4, borderRadius: 5, height: 400, boxShadow: '0 10px 30px rgba(0,0,0,0.03)' }}>
+              <Typography variant="h6" sx={{ fontWeight: 800, mb: 4 }}>Growth Loop: Activation vs. Acquisition</Typography>
+              <ResponsiveContainer width="100%" height="80%">
+                <BarChart data={[
+                  { day: 'Mon', acq: 120, act: 80 },
+                  { day: 'Tue', acq: 150, act: 110 },
+                  { day: 'Wed', acq: 200, act: 140 },
+                  { day: 'Thu', acq: 180, act: 130 },
+                  { day: 'Fri', acq: 250, act: 190 },
+                  { day: 'Sat', acq: 300, act: 240 },
+                  { day: 'Sun', acq: 280, act: 210 },
+                ]}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eee" />
+                  <XAxis dataKey="day" axisLine={false} tickLine={false} />
+                  <YAxis axisLine={false} tickLine={false} />
+                  <Tooltip cursor={{fill: 'transparent'}} />
+                  <Bar dataKey="acq" fill="#ce93d8" radius={[4, 4, 0, 0]} name="Acquisition" />
+                  <Bar dataKey="act" fill="#4a148c" radius={[4, 4, 0, 0]} name="Activation" />
+                </BarChart>
+              </ResponsiveContainer>
+            </Paper>
+          </Grid>
+
+          <Grid item xs={12} md={4}>
+            <Paper sx={{ p: 3, borderRadius: 5, bgcolor: '#fafafa' }}>
+              <Typography variant="subtitle2" sx={{ fontWeight: 800, mb: 2 }}>ATTRIBUTION BRIDGE</Typography>
+              <Stack spacing={2}>
+                <Box sx={{ p: 2, bgcolor: 'white', borderRadius: 3, border: '1px solid #eee' }}>
+                  <Typography variant="body2" sx={{ fontWeight: 700 }}>Meta Ads Integration</Typography>
+                  <Typography variant="caption" color="text.secondary">Correct tracking active. Signal strength: High.</Typography>
+                </Box>
+                <Box sx={{ p: 2, bgcolor: 'white', borderRadius: 3, border: '1px solid #eee' }}>
+                  <Typography variant="body2" sx={{ fontWeight: 700 }}>Google App Campaigns</Typography>
+                  <Typography variant="caption" color="text.secondary">Attributing LTV to iOS users (High Potential).</Typography>
+                </Box>
+                <Box sx={{ p: 2, bgcolor: 'white', borderRadius: 3, border: '1px solid #eee' }}>
+                  <Typography variant="body2" sx={{ fontWeight: 700 }}>TikTok Referral Loop</Typography>
+                  <Typography variant="caption" color="text.secondary">Organic K-Factor tracking enabled.</Typography>
+                </Box>
+              </Stack>
+            </Paper>
+          </Grid>
+        </Grid>
       )}
 
       {tab === 2 && (
@@ -287,19 +313,39 @@ export function AdminPage() {
           
           <Grid item xs={12} md={4}>
             <Paper sx={{ p: 3, borderRadius: 5, bgcolor: '#fafafa', border: '1px solid #eee' }}>
+              <Typography variant="subtitle2" sx={{ fontWeight: 800, mb: 2, color: '#666' }}>STRATEGIC FRAMEWORKS</Typography>
+              <Stack spacing={2}>
+                <Box sx={{ p: 2, bgcolor: 'white', borderRadius: 3, border: '1px solid #eee' }}>
+                  <Typography variant="body2" sx={{ fontWeight: 700 }}>AARRR Funnel</Typography>
+                  <Typography variant="caption" color="text.secondary">Moving beyond AIDA to track Activation and Retention.</Typography>
+                </Box>
+                <Box sx={{ p: 2, bgcolor: 'white', borderRadius: 3, border: '1px solid #eee' }}>
+                  <Typography variant="body2" sx={{ fontWeight: 700 }}>Mental & Physical Availability</Typography>
+                  <Typography variant="caption" color="text.secondary">Ensuring KilimoLink is the first choice for urban food.</Typography>
+                </Box>
+                <Box sx={{ p: 2, bgcolor: 'white', borderRadius: 3, border: '1px solid #eee' }}>
+                  <Typography variant="body2" sx={{ fontWeight: 700 }}>The 60:40 Rule</Typography>
+                  <Typography variant="caption" color="text.secondary">Balancing brand building with sales activation.</Typography>
+                </Box>
+              </Stack>
+            </Paper>
+          </Grid>
+
+          <Grid item xs={12} md={4}>
+            <Paper sx={{ p: 3, borderRadius: 5, bgcolor: '#fafafa', border: '1px solid #eee' }}>
               <Typography variant="subtitle2" sx={{ fontWeight: 800, mb: 2, color: '#666' }}>INTELLIGENCE SOURCES</Typography>
               <Stack spacing={2}>
                 <Box sx={{ p: 2, bgcolor: 'white', borderRadius: 3, border: '1px solid #eee' }}>
                   <Typography variant="body2" sx={{ fontWeight: 700 }}>Glovo Co-Founder Transcripts</Typography>
-                  <Typography variant="caption" color="text.secondary">Primary source for African operational execution and liquidity-first protocols.</Typography>
+                  <Typography variant="caption" color="text.secondary">Primary source for African operational execution.</Typography>
                 </Box>
                 <Box sx={{ p: 2, bgcolor: 'white', borderRadius: 3, border: '1px solid #eee' }}>
-                  <Typography variant="body2" sx={{ fontWeight: 700 }}>Innovate4Cities Framework</Typography>
-                  <Typography variant="caption" color="text.secondary">Regulatory alignment for 2026 urban resilience targets.</Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 700 }}>Growth & Marketing Science</Typography>
+                  <Typography variant="caption" color="text.secondary">Hacking Growth (Sean Ellis) & Future Demand (James Hurman).</Typography>
                 </Box>
                 <Box sx={{ p: 2, bgcolor: 'white', borderRadius: 3, border: '1px solid #eee' }}>
                   <Typography variant="body2" sx={{ fontWeight: 700 }}>Solana Ecosystem Theses</Typography>
-                  <Typography variant="caption" color="text.secondary">Infrastructure standards for Proof-of-Trade and decentralization.</Typography>
+                  <Typography variant="caption" color="text.secondary">Infrastructure for decentralized Proof-of-Trade.</Typography>
                 </Box>
               </Stack>
             </Paper>
