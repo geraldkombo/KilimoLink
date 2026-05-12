@@ -5,7 +5,10 @@ import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
-import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from 'react-leaflet';
+import SearchIcon from '@mui/icons-material/Search';
+import GppGoodIcon from '@mui/icons-material/GppGood';
+import ContentPasteIcon from '@mui/icons-material/ContentPaste';
+import { MapContainer, TileLayer, Marker, useMapEvents, useMap, Circle } from 'react-leaflet';
 import L from 'leaflet';
 import { api } from '../services/api';
 import { useNavigate } from 'react-router-dom';
@@ -22,7 +25,19 @@ let DefaultIcon = L.icon({
 });
 L.Marker.prototype.options.icon = DefaultIcon;
 
-function LocationPicker({ onLocationSelect, position, setPosition }: { onLocationSelect: (loc: { lat: number, lng: number }) => void, position: any, setPosition: any }) {
+// Nairobi Neighborhoods for Search Simulation
+const NAIROBI_NEIGHBORHOODS = [
+  { name: 'Westlands', lat: -1.2675, lng: 36.8120 },
+  { name: 'Kilimani', lat: -1.2901, lng: 36.7830 },
+  { name: 'Kasarani', lat: -1.2201, lng: 36.8961 },
+  { name: 'Karen', lat: -1.3200, lng: 36.7000 },
+  { name: 'Eastlands', lat: -1.2858, lng: 36.8833 },
+  { name: 'Nairobi CBD', lat: -1.286389, lng: 36.817223 },
+  { name: 'Langata', lat: -1.3333, lng: 36.7667 },
+  { name: 'Embakasi', lat: -1.3000, lng: 36.9167 },
+];
+
+function LocationPicker({ onLocationSelect, position, setPosition, privacyMode }: { onLocationSelect: (loc: { lat: number, lng: number }) => void, position: any, setPosition: any, privacyMode: boolean }) {
   const map = useMap();
   
   useMapEvents({
@@ -38,30 +53,42 @@ function LocationPicker({ onLocationSelect, position, setPosition }: { onLocatio
     }
   }, [position, map]);
 
-  return position ? <Marker position={[position.lat, position.lng]} /> : null;
+  return position ? (
+    <>
+      {privacyMode ? (
+        <Circle 
+          center={[position.lat, position.lng]} 
+          radius={500} 
+          pathOptions={{ color: '#1b5e20', fillColor: '#1b5e20', fillOpacity: 0.2 }} 
+        />
+      ) : (
+        <Marker position={[position.lat, position.lng]} />
+      )}
+    </>
+  ) : null;
 }
 
 // Institutional Intelligence: Protocol-Driven Description Generator
 const generateAIDescription = (title: string, category: string, marketData?: any) => {
   const protocols: Record<string, string[]> = {
     'Vegetables': [
-      `Verified local produce: ${title}. ${marketData?.priceAlert ? 'Current market demand is high.' : ''} Optimized for hyperlocal food resilience with zero middle-man delays. Harvested specifically for urban center delivery protocols.`,
-      `Sector-leading quality ${title}. Grown under sustainable urban greening frameworks. Ensures maximum liquidity for local producers and fresh delivery for consumers.`,
+      `Verified local produce: ${title}. ${marketData?.priceAlert ? 'Current market demand is high.' : ''} Shelf-life optimized: field-to-table in <4h. Protocol-verified for urban centers.`,
+      `Sector-leading quality ${title}. Grown under sustainable urban greening frameworks. Delivery window: Same-day local fulfillment via hyperlocal fulfillment centers.`,
     ],
     'Fruits': [
-      `Hyperlocal ${title} optimized for carbon-neutral transport. Following sector-leading operational protocols to ensure field-to-table freshness within 30-40 minutes.`,
-      `Premium ${title} cultivated within the urban resilience framework. A "white canvas" product reflecting the entrepreneurial energy and raw potential of local agriculture.`,
+      `Hyperlocal ${title} optimized for carbon-neutral transport. Operational constraint: 30-40 min transport max to ensure peak nutrient density and freshness.`,
+      `Premium ${title} cultivated within the urban resilience framework. Strategic liquidity asset: verified supply for high-demand urban neighborhoods.`,
     ],
     'Dairy': [
-      `Institutional-grade ${title}. Produced under strict hygiene and liquidity protocols. Supporting the neighborhood circular economy through direct-to-consumer execution.`,
-      `Fresh ${title} from verified urban farms. Every unit sold contributes to the preservation of active green space within city limits.`,
+      `Institutional-grade ${title}. Produced under strict hygiene and cold-chain liquidity protocols. Fulfillment protocol: Batch-verified for 1-hour urban delivery cycles.`,
+      `Fresh ${title} from verified urban farms. Operational integrity: 100% traceability from farm pin to consumer doorstep.`,
     ],
     'Grains': [
-      `Strategic food security asset: ${title}. ${marketData?.disruptionAlert ? 'Disruption Alert: NDMA Drought Phase Monitoring Active.' : ''} Sorted and verified according to institutional resilience standards.`,
-      `Hyperlocal grains: ${title}. Part of our "Execution over Incentives" model, ensuring fair value for producers and verified quality for urban markets.`,
+      `Strategic food security asset: ${title}. ${marketData?.disruptionAlert ? 'Disruption Alert: NDMA Drought Phase Monitoring Active.' : ''} Verified for 12-month storage stability in urban resilience hubs.`,
+      `Hyperlocal grains: ${title}. Part of our "Execution over Incentives" model, ensuring fair value for producers and zero-delay urban market liquidity.`,
     ],
     'Other': [
-      `Verified ${title} from a sector-aligned producer. Built on a framework of trust and operational excellence.`,
+      `Verified ${title} from a sector-aligned producer. Operational protocol: Validated via on-chain Proof-of-Trade history.`,
       `Hyperlocal ${title} for future-city resilience. Executed according to the "stuff we control"—quality and ground-level logistics.`,
     ]
   };
@@ -86,12 +113,38 @@ export function SellProduct() {
     location: { lat: -1.286389, lng: 36.817223, address: '' }
   });
 
+  const [searchArea, setSearchArea] = useState('');
+  const [coordsInput, setCoordsInput] = useState('');
+  const [privacyRadius, setPrivacyRadius] = useState(true);
+
+  const handleSearchArea = (areaName: string) => {
+    const area = NAIROBI_NEIGHBORHOODS.find(n => n.name === areaName);
+    if (area) {
+      const loc = { lat: area.lat, lng: area.lng };
+      setMapPosition(loc);
+      setFormData(prev => ({ ...prev, location: { ...prev.location, ...loc, address: areaName } }));
+      setSearchArea(areaName);
+      setCoordsInput(`${area.lat.toFixed(6)}, ${area.lng.toFixed(6)}`);
+    }
+  };
+
+  const handleCoordsPaste = (val: string) => {
+    setCoordsInput(val);
+    const parts = val.split(',').map(p => parseFloat(p.trim()));
+    if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
+      const loc = { lat: parts[0], lng: parts[1] };
+      setMapPosition(loc);
+      setFormData(prev => ({ ...prev, location: { ...prev.location, ...loc, address: 'Pasted Coordinates' } }));
+    }
+  };
+
   const handleUseCurrentLocation = () => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition((pos) => {
         const loc = { lat: pos.coords.latitude, lng: pos.coords.longitude };
         setMapPosition(loc);
         setFormData(prev => ({ ...prev, location: { ...prev.location, ...loc, address: 'Current Location' } }));
+        setCoordsInput(`${loc.lat.toFixed(6)}, ${loc.lng.toFixed(6)}`);
       });
     }
   };
@@ -341,27 +394,90 @@ export function SellProduct() {
             </Grid>
             <Grid item xs={12}>
               <Divider sx={{ my: 2 }} />
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1, flexWrap: 'wrap', gap: 1 }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, flexWrap: 'wrap', gap: 2 }}>
                 <Box>
-                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#666' }}>FARM LOCATION</Typography>
-                  <Typography variant="caption" color="text.secondary">Click on the map or use your current location.</Typography>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#666' }}>FARM LOCATION & SECURITY</Typography>
+                  <Typography variant="caption" color="text.secondary">Select neighborhood, click map, or paste coordinates.</Typography>
                 </Box>
-                <Button 
-                  size="small" 
-                  variant="outlined" 
-                  startIcon={<MyLocationIcon />} 
-                  onClick={handleUseCurrentLocation}
-                  sx={{ borderRadius: 2, textTransform: 'none', fontWeight: 'bold' }}
-                >
-                  Use My Current Location
-                </Button>
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <Chip 
+                    icon={<GppGoodIcon />} 
+                    label={privacyRadius ? "Privacy Enabled" : "Exact Location"} 
+                    onClick={() => setPrivacyRadius(!privacyRadius)}
+                    color={privacyRadius ? "success" : "default"}
+                    variant={privacyRadius ? "filled" : "outlined"}
+                    size="small"
+                    sx={{ fontWeight: 'bold' }}
+                  />
+                  <TextField
+                    select
+                    size="small"
+                    label="Quick Area"
+                    value={searchArea}
+                    onChange={(e) => handleSearchArea(e.target.value)}
+                    sx={{ width: 140, '& .MuiInputBase-root': { borderRadius: 2 } }}
+                  >
+                    {NAIROBI_NEIGHBORHOODS.map((option) => (
+                      <MenuItem key={option.name} value={option.name}>
+                        {option.name}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                  <Button 
+                    size="small" 
+                    variant="outlined" 
+                    startIcon={<MyLocationIcon />} 
+                    onClick={handleUseCurrentLocation}
+                    sx={{ borderRadius: 2, textTransform: 'none', fontWeight: 'bold' }}
+                  >
+                    GPS
+                  </Button>
+                </Stack>
               </Box>
-              <Box sx={{ height: { xs: '250px', md: '350px' }, width: '100%', borderRadius: 4, overflow: 'hidden', border: '1px solid #eee', position: 'relative' }}>
+
+              <TextField
+                fullWidth
+                size="small"
+                label="Paste Coordinates (lat, lng)"
+                placeholder="-1.286, 36.817"
+                value={coordsInput}
+                onChange={(e) => handleCoordsPaste(e.target.value)}
+                sx={{ mb: 2 }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <ContentPasteIcon sx={{ fontSize: 18, color: '#666' }} />
+                    </InputAdornment>
+                  ),
+                  sx: { borderRadius: 3 }
+                }}
+              />
+
+              <Box sx={{ 
+                height: { xs: '300px', md: '400px' }, 
+                width: '100%', 
+                borderRadius: 5, 
+                overflow: 'hidden', 
+                border: '4px solid #f5f5f5', 
+                position: 'relative',
+                boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.05)'
+              }}>
                 <MapContainer center={[-1.286389, 36.817223]} zoom={13} style={{ height: '100%', width: '100%' }}>
                   <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                  <LocationPicker onLocationSelect={(loc) => setFormData({ ...formData, location: { ...formData.location, ...loc } })} position={mapPosition} setPosition={setMapPosition} />
+                  <LocationPicker 
+                    onLocationSelect={(loc) => {
+                      setFormData({ ...formData, location: { ...formData.location, ...loc } });
+                      setCoordsInput(`${loc.lat.toFixed(6)}, ${loc.lng.toFixed(6)}`);
+                    }} 
+                    position={mapPosition} 
+                    setPosition={setMapPosition} 
+                    privacyMode={privacyRadius}
+                  />
                 </MapContainer>
               </Box>
+              <Typography variant="caption" sx={{ mt: 1, display: 'block', color: 'text.secondary', fontStyle: 'italic' }}>
+                {privacyRadius ? "Privacy Radius active: Buyers see a general area (500m), protecting your exact farm location from unauthorized surveillance." : "Exact location active: Use this only for public collection points."}
+              </Typography>
             </Grid>
             <Grid item xs={12} sx={{ mt: 2 }}>
               <Button 

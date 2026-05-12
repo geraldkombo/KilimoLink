@@ -36,5 +36,12 @@ KilimoLink’s strategy is informed by real-world execution data from Kenya’s 
 - **Global Tech for Local Markets**: We recognize the importance of developing a tech stack that is robust enough for global standards but flexible enough to be "super local." This includes developing core group tech right here in Kenya for the world.
 - **Strategic Partnership & Trust**: We build with a focus on long-term institutional trust and relationship management, ensuring sustainable growth through high-level sector alignment.
 
+## Growth Engine Strategy: Signal-First Foundation
+Following the AARRR framework (Awareness, Acquisition, Activation, Retention, Referral, Revenue), KilimoLink focuses on:
+- **Activation-First Growth**: We prioritize "Activation"—the actual first listing or purchase—over simple app installs. This ensures we are not operating in a 19th-century AIDA model but a modern growth loop.
+- **Correct Tracking & Signal**: Everything ties back to "Correct Tracking." We use data as a signal for human decisions and to feed our algorithmic growth engine, correlating spend to value across Meta, Google, and TikTok.
+- **Mental and Physical Availability**: We follow the laws of "Mental and Physical Availability" to ensure KilimoLink is the first choice for urban food needs.
+- **The 60:40 Rule**: We balance long-term brand building (60%) with short-term sales activation (40%) to avoid the "performance trap" and build future demand.
+
 ## Vision & Scalability
 To become the primary financial operating system for the African urban-rural nexus. Our modular design allows KilimoLink to scale from Nairobi to any emerging market where price asymmetry and identity deficits hinder agricultural growth.

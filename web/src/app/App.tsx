@@ -1,4 +1,7 @@
-import { AppBar, Box, Button, Container, Toolbar, Typography, Stack, useTheme, useMediaQuery, Paper, Grid, Divider } from '@mui/material';
+import { useState, useEffect, useMemo } from 'react';
+import { AppBar, Box, Button, Container, Toolbar, Typography, Stack, useTheme, useMediaQuery, Paper, Grid, Divider, IconButton, Drawer, List, ListItem, ListItemText, ListItemButton } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import { usePrivy } from '@privy-io/react-auth';
 import { AdminPage } from '../pages/AdminPage';
@@ -8,31 +11,50 @@ import { ProductDetail } from '../pages/ProductDetail';
 import { OrdersPage } from '../pages/OrdersPage';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import PublicIcon from '@mui/icons-material/Public';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import { solanaService } from '../services/solanaService';
 
 function HomePage() {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
     <Box>
       <Box sx={{ 
-        py: { xs: 8, md: 12 }, 
-        px: 4,
+        py: { xs: 6, md: 12 }, 
+        px: { xs: 2, md: 4 },
         textAlign: 'center', 
         background: 'linear-gradient(135deg, #1b5e20 0%, #2e7d32 50%, #4caf50 100%)', 
         borderRadius: { xs: 4, md: 8 }, 
         color: 'white', 
-        mb: 8,
+        mb: { xs: 4, md: 8 },
         boxShadow: '0 20px 40px rgba(27, 94, 32, 0.2)',
         position: 'relative',
         overflow: 'hidden'
       }}>
         <Box sx={{ position: 'relative', zIndex: 1 }}>
-          <Typography variant="h2" gutterBottom sx={{ fontWeight: 900, fontSize: { xs: '2.5rem', md: '4rem' }, letterSpacing: '-0.02em' }}>
-            KilimoLink
+            <Typography variant="h2" gutterBottom sx={{ 
+              fontWeight: 900, 
+              fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem' }, 
+              letterSpacing: '-0.06em',
+              fontFamily: '"Inter", "Roboto", sans-serif',
+              textTransform: 'uppercase',
+              lineHeight: 1
+            }}>
+              KilimoLink
+            </Typography>
+          <Typography variant="h5" sx={{ 
+            mb: { xs: 4, md: 6 }, 
+            opacity: 0.9, 
+            maxWidth: '800px', 
+            mx: 'auto', 
+            fontWeight: 400, 
+            lineHeight: 1.6,
+            fontSize: { xs: '1.1rem', md: '1.5rem' }
+          }}>
+            The Urban-Rural Liquidity Layer. Connecting urban centers directly with climate-smart local cultivators for future-city resilience.
           </Typography>
-          <Typography variant="h5" sx={{ mb: 6, opacity: 0.9, maxWidth: '800px', mx: 'auto', fontWeight: 400, lineHeight: 1.6 }}>
-            Hyperlocal Food Resilience for Future Cities. Connecting urban centers directly with climate-smart local cultivators.
-          </Typography>
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3} justifyContent="center">
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center" sx={{ px: 2 }}>
             <Button 
               variant="contained" 
               size="large" 
@@ -43,7 +65,7 @@ function HomePage() {
                 bgcolor: 'white', 
                 color: '#1b5e20', 
                 px: 4, 
-                py: 2, 
+                py: { xs: 1.5, md: 2 }, 
                 fontSize: '1.1rem',
                 fontWeight: 'bold',
                 borderRadius: 3,
@@ -51,7 +73,7 @@ function HomePage() {
                 transition: 'all 0.2s'
               }}
             >
-              Explore Marketplace
+              Marketplace
             </Button>
             <Button 
               variant="outlined" 
@@ -62,7 +84,7 @@ function HomePage() {
               startIcon={<AddCircleIcon />}
               sx={{ 
                 px: 4, 
-                py: 2, 
+                py: { xs: 1.5, md: 2 }, 
                 fontSize: '1.1rem',
                 fontWeight: 'bold',
                 borderRadius: 3,
@@ -71,7 +93,7 @@ function HomePage() {
                 transition: 'all 0.2s'
               }}
             >
-              Sell Your Produce
+              List Produce
             </Button>
           </Stack>
         </Box>
@@ -80,14 +102,14 @@ function HomePage() {
         <Box sx={{ position: 'absolute', bottom: -100, left: -100, width: 300, height: 300, bgcolor: 'rgba(255,255,255,0.05)', borderRadius: '50%' }} />
       </Box>
 
-      <Typography variant="h3" align="center" gutterBottom sx={{ fontWeight: 800, mb: 2, letterSpacing: '-0.01em' }}>
+      <Typography variant="h3" align="center" gutterBottom sx={{ fontWeight: 800, mb: 2, letterSpacing: '-0.01em', fontSize: { xs: '1.75rem', md: '3rem' } }}>
         Innovate4Cities 2026 Focus
       </Typography>
-      <Typography variant="body1" align="center" sx={{ mb: 6, color: 'text.secondary', maxWidth: '700px', mx: 'auto' }}>
-        Our platform is built to solve the most pressing challenges of urban food systems through decentralized technology.
+      <Typography variant="body1" align="center" sx={{ mb: 6, color: 'text.secondary', maxWidth: '700px', mx: 'auto', px: 2 }}>
+        Solving the most pressing challenges of urban food systems through decentralized technology and institutional intelligence.
       </Typography>
 
-      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' }, gap: 4, mb: 10 }}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' }, gap: { xs: 2, md: 4 }, mb: 10 }}>
         {[
           {
             title: "Food Waste Reduction",
@@ -116,25 +138,25 @@ function HomePage() {
         ))}
       </Box>
 
-      <Box sx={{ mb: 10, p: { xs: 4, md: 8 }, bgcolor: '#fafafa', borderRadius: 8, border: '1px solid #eee' }}>
-        <Grid container spacing={6} alignItems="center">
+      <Box sx={{ mb: 10, p: { xs: 3, md: 8 }, bgcolor: '#fafafa', borderRadius: 8, border: '1px solid #eee' }}>
+        <Grid container spacing={{ xs: 4, md: 6 }} alignItems="center">
           <Grid item xs={12} md={6}>
-            <Typography variant="h3" sx={{ fontWeight: 900, mb: 3, letterSpacing: '-0.02em' }}>Sector-Leading Execution</Typography>
+            <Typography variant="h3" sx={{ fontWeight: 900, mb: 3, letterSpacing: '-0.02em', fontSize: { xs: '1.75rem', md: '3rem' } }}>Institutional Intelligence</Typography>
             <Typography variant="body1" sx={{ color: '#555', lineHeight: 1.8, mb: 4, fontSize: '1.1rem' }}>
-              Kenya is at a unique intersection of young talent, digital hunger, and magnificent potential. We believe the future of food systems is a blank canvas, and we are painting it with sector-leading, hyperlocal execution and institutional intelligence.
+              We are building a "trust layer" for the urban-rural nexus. By leveraging institutional intelligence and sector-leading execution, we solve the "Ghost in the Supply Chain"—eliminating price asymmetry and providing identity for rural producers.
             </Typography>
             <Stack spacing={2}>
               <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-                <Box sx={{ width: 40, height: 40, borderRadius: '50%', bgcolor: '#e8f5e9', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#2e7d32', fontWeight: 'bold' }}>✓</Box>
-                <Typography variant="body1" sx={{ fontWeight: 700 }}>Execution over Artificial Incentives</Typography>
+                <Box sx={{ width: 32, height: 32, borderRadius: '50%', bgcolor: '#e8f5e9', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#2e7d32', fontWeight: 'bold', flexShrink: 0 }}>✓</Box>
+                <Typography variant="body1" sx={{ fontWeight: 700, fontSize: '0.95rem' }}>Execution over Artificial Incentives</Typography>
               </Box>
               <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-                <Box sx={{ width: 40, height: 40, borderRadius: '50%', bgcolor: '#e8f5e9', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#2e7d32', fontWeight: 'bold' }}>✓</Box>
-                <Typography variant="body1" sx={{ fontWeight: 700 }}>Institutional Intelligence & Strategic Growth</Typography>
+                <Box sx={{ width: 32, height: 32, borderRadius: '50%', bgcolor: '#e8f5e9', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#2e7d32', fontWeight: 'bold', flexShrink: 0 }}>✓</Box>
+                <Typography variant="body1" sx={{ fontWeight: 700, fontSize: '0.95rem' }}>On-Chain Proof-of-Trade Identity</Typography>
               </Box>
               <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-                <Box sx={{ width: 40, height: 40, borderRadius: '50%', bgcolor: '#e8f5e9', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#2e7d32', fontWeight: 'bold' }}>✓</Box>
-                <Typography variant="body1" sx={{ fontWeight: 700 }}>Resilient Operational Frameworks</Typography>
+                <Box sx={{ width: 32, height: 32, borderRadius: '50%', bgcolor: '#e8f5e9', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#2e7d32', fontWeight: 'bold', flexShrink: 0 }}>✓</Box>
+                <Typography variant="body1" sx={{ fontWeight: 700, fontSize: '0.95rem' }}>Hyperlocal Resilience & Global Standards</Typography>
               </Box>
             </Stack>
           </Grid>
@@ -142,20 +164,40 @@ function HomePage() {
             <Box sx={{ position: 'relative' }}>
               <Box 
                 component="img" 
-                src="https://images.unsplash.com/photo-1590682680695-43b964a3ae17?auto=format&fit=crop&w=800&q=80" 
-                sx={{ width: '100%', borderRadius: 6, boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}
+                src="/handshake.jpg" 
+                alt="Founder with Sector Leaders"
+                sx={{ 
+                  width: '100%', 
+                  borderRadius: 6, 
+                  boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+                  aspectRatio: { xs: '4/3', md: '16/10' },
+                  objectFit: 'cover'
+                }}
               />
+              <Box sx={{ 
+                position: 'absolute', 
+                bottom: { xs: -10, md: -20 }, 
+                right: { xs: -10, md: -20 }, 
+                p: 2, 
+                bgcolor: 'white', 
+                borderRadius: 4, 
+                boxShadow: '0 10px 30px rgba(0,0,0,0.1)', 
+                border: '1px solid #eee',
+                maxWidth: '200px'
+              }}>
+                <Typography variant="caption" sx={{ fontWeight: 900, color: '#1b5e20', display: 'block', lineHeight: 1.2 }}>INSTITUTIONAL INTELLIGENCE</Typography>
+              </Box>
             </Box>
           </Grid>
         </Grid>
       </Box>
 
-      <Box sx={{ py: 8, px: 4, bgcolor: '#1b5e20', borderRadius: 6, color: 'white', display: 'flex', flexDirection: { xs: 'column', md: 'row' }, alignItems: 'center', justifyContent: 'space-between', gap: 4 }}>
+      <Box sx={{ py: { xs: 6, md: 8 }, px: { xs: 3, md: 4 }, bgcolor: '#1b5e20', borderRadius: 6, color: 'white', display: 'flex', flexDirection: { xs: 'column', md: 'row' }, alignItems: 'center', justifyContent: 'space-between', gap: 4, textAlign: { xs: 'center', md: 'left' } }}>
         <Box>
-          <Typography variant="h4" sx={{ fontWeight: 800, mb: 1 }}>Ready to join the revolution?</Typography>
-          <Typography variant="h6" sx={{ opacity: 0.8, fontWeight: 400 }}>Join 500+ urban farmers already transforming city food systems.</Typography>
+          <Typography variant="h4" sx={{ fontWeight: 800, mb: 1, fontSize: { xs: '1.5rem', md: '2.125rem' } }}>Ready to join the revolution?</Typography>
+          <Typography variant="h6" sx={{ opacity: 0.8, fontWeight: 400, fontSize: { xs: '1rem', md: '1.25rem' } }}>Join 500+ urban farmers already transforming city food systems.</Typography>
         </Box>
-        <Button variant="contained" size="large" sx={{ bgcolor: 'white', color: '#1b5e20', px: 6, py: 2, fontWeight: 'bold', borderRadius: 3, '&:hover': { bgcolor: '#f5f5f5' } }}>
+        <Button variant="contained" size="large" sx={{ bgcolor: 'white', color: '#1b5e20', px: 6, py: 2, fontWeight: 'bold', borderRadius: 3, '&:hover': { bgcolor: '#f5f5f5' }, width: { xs: '100%', md: 'auto' } }}>
           Get Started Now
         </Button>
       </Box>
@@ -165,40 +207,145 @@ function HomePage() {
 
 export function App() {
   const { login, authenticated, user, logout } = usePrivy();
+  const [balances, setBalances] = useState<any[]>([]);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  useEffect(() => {
+    if (authenticated && user?.wallet?.address) {
+      const fetchBalances = async () => {
+        const data = await solanaService.getStablecoinBalances(user.wallet.address);
+        setBalances(data);
+      };
+      fetchBalances();
+    } else {
+      setBalances([]);
+    }
+  }, [authenticated, user]);
+
+  const totalUSDC = useMemo(() => {
+    return balances
+      .filter(b => b.symbol === 'USDC')
+      .reduce((acc, curr) => acc + (curr.balance || 0), 0);
+  }, [balances]);
 
   return (
     <BrowserRouter>
       <Box sx={{ flexGrow: 1, minHeight: '100vh', bgcolor: '#fcfcfc', display: 'flex', flexDirection: 'column' }}>
         <AppBar position="sticky" elevation={0} sx={{ bgcolor: 'rgba(255,255,255,0.8)', backdropFilter: 'blur(10px)', borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
-          <Toolbar sx={{ height: 80 }}>
+          <Toolbar sx={{ height: 80, justifyContent: 'space-between' }}>
             <Typography 
               variant="h5" 
               component={Link} 
               to="/" 
-              sx={{ flexGrow: 1, fontWeight: '900', letterSpacing: -1, color: '#1b5e20', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 1 }}
+              sx={{ 
+                fontWeight: '900', 
+                letterSpacing: '-0.05em', 
+                color: '#1b5e20', 
+                textDecoration: 'none', 
+                fontFamily: '"Inter", "Roboto", sans-serif',
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: 1 
+              }}
             >
               KILIMOLINK
             </Typography>
-            <Stack direction="row" spacing={1} alignItems="center">
-              <Button color="inherit" component={Link} to="/market" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Market</Button>
-              <Button color="inherit" component={Link} to="/orders" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Orders</Button>
-              {authenticated && (
-                <Button color="inherit" component={Link} to="/admin" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Admin</Button>
-              )}
-              <Box sx={{ ml: 2 }}>
-                {!authenticated ? (
-                  <Button variant="contained" color="success" onClick={login} sx={{ textTransform: 'none', borderRadius: 3, px: 4, py: 1, fontWeight: 'bold', boxShadow: 'none' }}>
-                    Connect
-                  </Button>
-                ) : (
-                  <Button variant="outlined" color="success" onClick={logout} sx={{ textTransform: 'none', borderRadius: 3, px: 3, py: 1, fontWeight: 'bold' }}>
-                    {user?.email?.address?.split('@')[0] || 'Farmer'}
-                  </Button>
+
+            {isMobile ? (
+              <IconButton onClick={() => setMobileMenuOpen(true)} sx={{ color: '#1b5e20' }}>
+                <MenuIcon />
+              </IconButton>
+            ) : (
+              <Stack direction="row" spacing={1} alignItems="center">
+                {authenticated && totalUSDC > 0 && (
+                  <Box sx={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: 1, 
+                    bgcolor: '#e8f5e9', 
+                    px: 2, 
+                    py: 0.75, 
+                    borderRadius: 3,
+                    border: '1px solid #c8e6c9'
+                  }}>
+                    <AccountBalanceWalletIcon sx={{ fontSize: 18, color: '#2e7d32' }} />
+                    <Typography variant="body2" sx={{ fontWeight: 800, color: '#1b5e20' }}>
+                      {totalUSDC.toLocaleString()} USDC
+                    </Typography>
+                  </Box>
                 )}
-              </Box>
-            </Stack>
+                <Button color="inherit" component={Link} to="/market" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Market</Button>
+                <Button color="inherit" component={Link} to="/orders" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Orders</Button>
+                {authenticated && (
+                  <Button color="inherit" component={Link} to="/admin" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Admin</Button>
+                )}
+                <Box sx={{ ml: 2 }}>
+                  {!authenticated ? (
+                    <Button variant="contained" color="success" onClick={login} sx={{ textTransform: 'none', borderRadius: 3, px: 4, py: 1, fontWeight: 'bold', boxShadow: 'none' }}>
+                      Connect
+                    </Button>
+                  ) : (
+                    <Button variant="outlined" color="success" onClick={logout} sx={{ textTransform: 'none', borderRadius: 3, px: 3, py: 1, fontWeight: 'bold' }}>
+                      {user?.email?.address?.split('@')[0] || 'Farmer'}
+                    </Button>
+                  )}
+                </Box>
+              </Stack>
+            )}
           </Toolbar>
         </AppBar>
+
+        <Drawer
+          anchor="right"
+          open={mobileMenuOpen}
+          onClose={() => setMobileMenuOpen(false)}
+          PaperProps={{ sx: { width: '280px', p: 2 } }}
+        >
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+            <IconButton onClick={() => setMobileMenuOpen(false)}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
+          <List>
+            <ListItem disablePadding>
+              <ListItemButton component={Link} to="/market" onClick={() => setMobileMenuOpen(false)}>
+                <ListItemText primary="Marketplace" primaryTypographyProps={{ fontWeight: 700 }} />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton component={Link} to="/orders" onClick={() => setMobileMenuOpen(false)}>
+                <ListItemText primary="My Orders" primaryTypographyProps={{ fontWeight: 700 }} />
+              </ListItemButton>
+            </ListItem>
+            {authenticated && (
+              <ListItem disablePadding>
+                <ListItemButton component={Link} to="/admin" onClick={() => setMobileMenuOpen(false)}>
+                  <ListItemText primary="Admin Oversight" primaryTypographyProps={{ fontWeight: 700 }} />
+                </ListItemButton>
+              </ListItem>
+            )}
+            <Divider sx={{ my: 2 }} />
+            <ListItem sx={{ flexDirection: 'column', gap: 2 }}>
+              {!authenticated ? (
+                <Button fullWidth variant="contained" color="success" onClick={login} sx={{ borderRadius: 3, py: 1.5, fontWeight: 'bold' }}>
+                  Connect Wallet
+                </Button>
+              ) : (
+                <>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, width: '100%', p: 2, bgcolor: '#f5f5f5', borderRadius: 3 }}>
+                    <AccountBalanceWalletIcon sx={{ color: '#1b5e20' }} />
+                    <Typography variant="body2" sx={{ fontWeight: 800 }}>{totalUSDC} USDC</Typography>
+                  </Box>
+                  <Button fullWidth variant="outlined" color="error" onClick={logout} sx={{ borderRadius: 3, py: 1.5, fontWeight: 'bold' }}>
+                    Logout
+                  </Button>
+                </>
+              )}
+            </ListItem>
+          </List>
+        </Drawer>
 
         <Container sx={{ py: 6, flexGrow: 1 }}>
           <Routes>

@@ -6,6 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { PremiumMarketCard } from '../components/PremiumMarketCard';
 
 export function Marketplace() {
   const [products, setProducts] = useState<any[]>([]);
@@ -143,89 +144,7 @@ export function Marketplace() {
         <Grid container spacing={4}>
           {filteredProducts.map((p, idx) => (
             <Grid item xs={12} sm={6} md={4} key={p.id}>
-              <Fade in timeout={300 + idx * 100}>
-                <Card sx={{ 
-                  height: '100%', 
-                  borderRadius: 5, 
-                  border: '1px solid rgba(0,0,0,0.05)',
-                  boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
-                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', 
-                  '&:hover': { 
-                    transform: 'translateY(-8px)', 
-                    boxShadow: '0 12px 30px rgba(0,0,0,0.08)',
-                    borderColor: '#1b5e20'
-                  } 
-                }}>
-                  <Box sx={{ position: 'relative' }}>
-                    <CardMedia
-                      component="img"
-                      height="220"
-                      image={p.imageUrl || 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80'}
-                      alt={p.title}
-                      sx={{ filter: 'brightness(0.95)' }}
-                    />
-                    <Chip 
-                      label={p.category} 
-                      size="small" 
-                      sx={{ 
-                        position: 'absolute', 
-                        top: 16, 
-                        right: 16, 
-                        bgcolor: 'rgba(255,255,255,0.9)', 
-                        backdropFilter: 'blur(4px)',
-                        fontWeight: 'bold',
-                        color: '#1b5e20'
-                      }} 
-                    />
-                  </Box>
-                  <CardContent sx={{ p: 3 }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
-                      <Typography variant="h6" sx={{ fontWeight: 800, lineHeight: 1.2, flex: 1 }}>
-                        {p.title}
-                      </Typography>
-                      <Typography variant="h6" sx={{ fontWeight: 900, color: '#1b5e20', ml: 2 }}>
-                        KES {p.price}
-                      </Typography>
-                    </Box>
-                    
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-                      {p.quantity} units available • Harvested recently
-                    </Typography>
-
-                    <Stack direction="row" spacing={1} sx={{ mb: 3 }}>
-                      <Chip 
-                        icon={<LocationOnIcon sx={{ fontSize: '14px !important' }} />}
-                        label={p.distance !== undefined ? `${p.distance.toFixed(1)} km` : 'Local'} 
-                        size="small" 
-                        color={p.distance < 5 ? "success" : "default"}
-                        variant={p.distance < 5 ? "filled" : "outlined"}
-                        sx={{ fontWeight: 600 }}
-                      />
-                      {p.distance < 2 && (
-                        <Chip label="Ultra Local" size="small" sx={{ bgcolor: '#e8f5e9', color: '#2e7d32', fontWeight: 600, border: 'none' }} />
-                      )}
-                    </Stack>
-
-                    <Button 
-                      fullWidth 
-                      variant="contained" 
-                      component={Link}
-                      to={`/product/${p.id}`}
-                      sx={{ 
-                        borderRadius: 3, 
-                        py: 1.5, 
-                        bgcolor: '#f5f5f5', 
-                        color: '#333', 
-                        boxShadow: 'none',
-                        fontWeight: 'bold',
-                        '&:hover': { bgcolor: '#1b5e20', color: 'white', boxShadow: 'none' }
-                      }}
-                    >
-                      View Details
-                    </Button>
-                  </CardContent>
-                </Card>
-              </Fade>
+              <PremiumMarketCard product={p} delay={idx * 100} />
             </Grid>
           ))}
         </Grid>
