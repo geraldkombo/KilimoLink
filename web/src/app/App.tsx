@@ -160,7 +160,7 @@ function HomePage() {
               >
                 <Box 
                   component="img" 
-                  src="https://raw.githubusercontent.com/geraldshikunyi/AgriBizPlatform_FINAL/main/docs/handshake.jpg"
+                  src="/handshake.jpg"
                   onError={(e: any) => {
                     e.target.src = 'https://images.unsplash.com/photo-1521791136364-798a7bc0d262?auto=format&fit=crop&w=800&q=80';
                   }}
@@ -264,6 +264,9 @@ export function App() {
                 <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 2 }}>Contact</Typography>
                 <Typography variant="body2" color="text.secondary">info@kilimolink.app</Typography>
                 <Typography variant="body2" color="text.secondary">Nairobi, Kenya</Typography>
+                <Typography variant="caption" color="text.secondary" sx={{ mt: 2, display: 'block', opacity: 0.5 }}>
+                  Build v1.0.4 - Institutional Intelligence
+                </Typography>
               </Grid>
             </Grid>
             <Divider sx={{ my: 4 }} />
