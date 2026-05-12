@@ -238,10 +238,10 @@ export function App() {
               </Grid>
               <Grid item xs={12} md={4}>
                 <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 2 }}>Contact</Typography>
-                <Typography variant="body2" color="text.secondary">geraldshikunyi@gmail.com</Typography>
+                <Typography variant="body2" color="text.secondary">kilimolink@proton.me</Typography>
                 <Typography variant="body2" color="text.secondary">Nairobi, Kenya</Typography>
                 <Typography variant="caption" color="text.secondary" sx={{ mt: 2, display: 'block', opacity: 0.5 }}>
-                  Build v1.0.5 - Institutional Intelligence
+                  Build v1.0.6 - Institutional Intelligence
                 </Typography>
               </Grid>
             </Grid>
