@@ -75,15 +75,18 @@ function HomePage() {
             sx={{ 
               mb: { xs: 4, md: 6 }, 
               color: '#374151',
-              maxWidth: '800px', 
+              maxWidth: '900px', 
               mx: 'auto', 
               fontWeight: 500, 
-              lineHeight: 1.4,
-              fontSize: { xs: '1.2rem', md: '1.75rem' },
-              letterSpacing: '-0.02em'
+              lineHeight: 1.5,
+              fontSize: { xs: '1.1rem', md: '1.5rem' },
+              letterSpacing: '-0.01em'
             }}
           >
-            Direct farm-to-city trade. No middlemen. Just fresh produce and fair prices for Kenya's future.
+            Direct farm-to-city trade. No middlemen. Just fresh produce and fair prices.
+            <Box component="span" sx={{ display: 'block', mt: 1, fontWeight: 800, color: '#059669', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+              Built for the Innovate4Cities 2026 Challenge
+            </Box>
           </MotionTypography>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center" sx={{ px: 2 }}>
             <Button 
@@ -159,18 +162,18 @@ function HomePage() {
             bottom: { xs: 20, md: 40 }, 
             left: { xs: 20, md: 40 }, 
             right: { xs: 20, md: 'auto' },
-            p: 3, 
-            bgcolor: 'rgba(255,255,255,0.9)', 
-            backdropFilter: 'blur(10px)',
-            borderRadius: 4, 
-            boxShadow: '0 20px 40px rgba(0,0,0,0.1)', 
-            border: '1px solid rgba(255,255,255,0.5)',
-            maxWidth: { xs: 'none', md: '500px' }
+            p: 4, 
+            bgcolor: 'rgba(255,255,255,0.95)', 
+            backdropFilter: 'blur(12px)',
+            borderRadius: 6, 
+            boxShadow: '0 30px 60px rgba(0,0,0,0.12)', 
+            border: '1px solid rgba(255,255,255,0.8)',
+            maxWidth: { xs: 'none', md: '600px' }
           }}>
-            <Typography variant="h6" sx={{ fontWeight: 900, color: '#064e3b', mb: 1, letterSpacing: '-0.02em' }}>
+            <Typography variant="h6" sx={{ fontWeight: 950, color: '#064e3b', mb: 1.5, letterSpacing: '-0.03em', lineHeight: 1.2 }}>
               Institutional intelligence from global founders backing Kenya's food future
             </Typography>
-            <Typography variant="body2" sx={{ color: '#4b5563', lineHeight: 1.6 }}>
+            <Typography variant="body1" sx={{ color: '#4b5563', lineHeight: 1.7, fontWeight: 500 }}>
               We are rebuilding the trust layer between urban demand and rural supply, ensuring every transaction strengthens our food system.
             </Typography>
           </Box>
@@ -437,8 +440,11 @@ export function AppContent() {
           <Grid container spacing={4}>
             <Grid item xs={12} md={4}>
               <Typography variant="h6" sx={{ fontWeight: 900, color: '#064e3b', mb: 2 }}>KILIMOLINK</Typography>
-              <Typography variant="body2" color="text.secondary">
-                KilimoLink is a transparent marketplace and climate-action tracker connecting urban consumers with local producers. Built for the Innovate4Cities 2026 challenge.
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                KilimoLink is a transparent marketplace and climate-action tracker connecting urban consumers with local producers.
+              </Typography>
+              <Typography variant="caption" sx={{ fontWeight: 800, color: '#059669', textTransform: 'uppercase' }}>
+                Built for the Innovate4Cities 2026 challenge
               </Typography>
             </Grid>
             <Grid item xs={6} md={2}>
