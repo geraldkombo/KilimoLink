@@ -79,7 +79,7 @@ export class AdminService {
     });
   }
 
-  async seedDemoData() {listAuditLogs(adminId: string) {
+  async listAuditLogs(adminId: string) {
     return this.prisma.auditLog.findMany({
       where: { adminId },
       orderBy: { createdAt: 'desc' },

@@ -27,14 +27,14 @@ export const PremiumMarketCard = ({ product, delay = 0 }: PremiumMarketCardProps
     <Fade in timeout={300 + delay}>
       <Card sx={{ 
         height: '100%', 
-        borderRadius: 5, 
+        borderRadius: 6, 
         border: '1px solid rgba(0,0,0,0.05)',
         boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
-        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', 
+        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)', 
         '&:hover': { 
-          transform: 'translateY(-8px)', 
-          boxShadow: '0 12px 30px rgba(0,0,0,0.08)',
-          borderColor: '#1b5e20'
+          transform: 'translateY(-10px)', 
+          boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+          borderColor: '#064e3b'
         } 
       }}>
         <Box sx={{ position: 'relative' }}>
@@ -52,46 +52,49 @@ export const PremiumMarketCard = ({ product, delay = 0 }: PremiumMarketCardProps
               position: 'absolute', 
               top: 16, 
               right: 16, 
-              bgcolor: 'rgba(255,255,255,0.9)', 
-              backdropFilter: 'blur(4px)',
-              fontWeight: 'bold',
-              color: '#1b5e20',
-              border: 'none'
+              bgcolor: 'rgba(255,255,255,0.95)', 
+              backdropFilter: 'blur(8px)',
+              fontWeight: 800,
+              color: '#064e3b',
+              border: 'none',
+              fontSize: '0.7rem',
+              textTransform: 'uppercase'
             }} 
           />
         </Box>
         <CardContent sx={{ p: 3 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
             <Box sx={{ flex: 1 }}>
-              <Typography variant="h6" sx={{ fontWeight: 800, lineHeight: 1.2, letterSpacing: '-0.01em', display: 'flex', alignItems: 'center', gap: 0.5 }}>
+              <Typography variant="h6" sx={{ fontWeight: 900, lineHeight: 1.2, letterSpacing: '-0.02em', display: 'flex', alignItems: 'center', gap: 0.5, color: '#111827' }}>
                 {product.title}
-                <VerifiedIcon sx={{ fontSize: 16, color: '#1b5e20' }} />
+                <VerifiedIcon sx={{ fontSize: 18, color: '#059669' }} />
               </Typography>
-              <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 700 }}>
-                Protocol Trace: #TRC-{product.id.substring(0, 4).toUpperCase()}
+              <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600 }}>
+                Verified Local Farmer
               </Typography>
             </Box>
-            <Typography variant="h6" sx={{ fontWeight: 900, color: '#1b5e20', ml: 2 }}>
+            <Typography variant="h6" sx={{ fontWeight: 900, color: '#064e3b', ml: 2 }}>
               KES {product.price}
             </Typography>
           </Box>
           
           <Typography variant="body2" color="text.secondary" sx={{ mb: 3, fontWeight: 500 }}>
-            {product.quantity} units available • Harvested recently
+            {product.quantity} units available • Direct from farm
           </Typography>
 
           <Stack direction="row" spacing={1} sx={{ mb: 3 }}>
             <Chip 
               icon={<LocationOnIcon sx={{ fontSize: '14px !important' }} />}
-              label={product.distance !== undefined ? `${product.distance.toFixed(1)} km` : 'Local'} 
+              label={product.distance !== undefined ? `${product.distance.toFixed(1)} km away` : 'Nearby'} 
               size="small" 
-              color={product.distance && product.distance < 5 ? "success" : "default"}
-              variant={product.distance && product.distance < 5 ? "filled" : "outlined"}
-              sx={{ fontWeight: 700, borderRadius: 2 }}
+              sx={{ 
+                fontWeight: 700, 
+                borderRadius: 2,
+                bgcolor: '#f0fdf4',
+                color: '#064e3b',
+                border: '1px solid #dcfce7'
+              }}
             />
-            {product.distance && product.distance < 2 && (
-              <Chip label="Ultra Local" size="small" sx={{ bgcolor: '#e8f5e9', color: '#2e7d32', fontWeight: 700, borderRadius: 2 }} />
-            )}
           </Stack>
 
           <Button 
@@ -102,12 +105,12 @@ export const PremiumMarketCard = ({ product, delay = 0 }: PremiumMarketCardProps
             sx={{ 
               borderRadius: 3, 
               py: 1.5, 
-              bgcolor: '#f5f5f5', 
-              color: '#333', 
+              bgcolor: '#064e3b', 
+              color: 'white', 
               boxShadow: 'none',
               fontWeight: 800,
               textTransform: 'none',
-              '&:hover': { bgcolor: '#1b5e20', color: 'white', boxShadow: 'none' }
+              '&:hover': { bgcolor: '#065f46', boxShadow: '0 4px 12px rgba(6, 78, 59, 0.2)' }
             }}
           >
             View Details

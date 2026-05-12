@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
-import { Box, Button, Container, Grid, Paper, Typography, Chip, Switch, FormControlLabel, Divider, Alert, CircularProgress, IconButton, Fade, Stack } from '@mui/material';
+import { CircularProgress, Link, IconButton, Fade, Stack } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useParams, useNavigate, Link as RouterLink } from 'react-router-dom';
+import { Box, Button, Container, Grid, Paper, Typography, Chip, Switch, FormControlLabel, Divider, Alert } from '@mui/material';
 import { api } from '../services/api';
 import { usePrivy } from '@privy-io/react-auth';
 
@@ -71,85 +72,99 @@ export function ProductDetail() {
   };
 
   if (fetching) return (
-    <Container sx={{ py: 12, textAlign: 'center' }}>
-      <CircularProgress color="success" />
-      <Typography sx={{ mt: 2 }}>Fetching product details...</Typography>
+    <Container sx={{ py: 15, textAlign: 'center' }}>
+      <CircularProgress sx={{ color: '#064e3b' }} />
+      <Typography sx={{ mt: 3, fontWeight: 700, color: '#374151' }}>Fetching product details...</Typography>
     </Container>
   );
 
   if (error || !product) return (
-    <Container sx={{ py: 12, textAlign: 'center' }}>
-      <Typography color="error" variant="h5" sx={{ fontWeight: 800, mb: 3 }}>{error || 'Product not found'}</Typography>
-      <Button variant="contained" component={Link} to="/market" sx={{ bgcolor: '#1b5e20', borderRadius: 3, px: 4 }}>
+    <Container sx={{ py: 15, textAlign: 'center' }}>
+      <Typography color="#991b1b" variant="h4" sx={{ fontWeight: 900, mb: 4 }}>{error || 'Product not found'}</Typography>
+      <Button variant="contained" component={RouterLink} to="/market" sx={{ bgcolor: '#064e3b', borderRadius: 4, px: 6, py: 1.5, fontWeight: 900 }}>
         Back to Marketplace
       </Button>
     </Container>
   );
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Box sx={{ mb: 4 }}>
-        <IconButton onClick={() => navigate(-1)} sx={{ bgcolor: '#f5f5f5', mb: 2 }}>
+    <Container maxWidth="lg" sx={{ py: 6 }}>
+      <Box sx={{ mb: 6 }}>
+        <IconButton onClick={() => navigate(-1)} sx={{ bgcolor: '#f0fdf4', color: '#064e3b', '&:hover': { bgcolor: '#dcfce7' }, mb: 2 }}>
           <ArrowBackIcon />
         </IconButton>
       </Box>
 
       {success && (
         <Fade in>
-          <Alert severity="success" sx={{ mb: 4, borderRadius: 4, fontWeight: 700 }}>
+          <Alert severity="success" sx={{ mb: 6, borderRadius: 4, fontWeight: 800, bgcolor: '#ecfdf5', color: '#065f46', border: '1px solid #dcfce7' }}>
             Order placed successfully! Redirecting to your orders...
           </Alert>
         </Fade>
       )}
 
-      <Grid container spacing={8}>
+      <Grid container spacing={10}>
         <Grid item xs={12} md={6}>
-          <Paper elevation={0} sx={{ borderRadius: 8, overflow: 'hidden', boxShadow: '0 20px 60px rgba(0,0,0,0.1)', border: '1px solid rgba(0,0,0,0.05)' }}>
-            <img 
-              src={product.imageUrl || 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80'} 
-              alt={product.title}
-              style={{ width: '100%', height: '500px', objectFit: 'cover', display: 'block' }}
-            />
-          </Paper>
+          <Box sx={{ position: 'sticky', top: 100 }}>
+            <Paper elevation={0} sx={{ borderRadius: 8, overflow: 'hidden', boxShadow: '0 40px 80px rgba(0,0,0,0.12)', border: '1px solid rgba(0,0,0,0.05)' }}>
+              <img 
+                src={product.imageUrl || 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80'} 
+                alt={product.title}
+                style={{ width: '100%', height: 'auto', maxHeight: '600px', objectFit: 'cover', display: 'block' }}
+              />
+            </Paper>
+          </Box>
         </Grid>
         <Grid item xs={12} md={6}>
           <Box>
-            <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
-              <Chip label={product.category} sx={{ fontWeight: 700, bgcolor: '#e8f5e9', color: '#2e7d32', border: 'none' }} />
-              <Chip label="Fresh Harvest" variant="outlined" sx={{ fontWeight: 700 }} />
+            <Stack direction="row" spacing={1.5} sx={{ mb: 3 }}>
+              <Chip 
+                label={product.category} 
+                sx={{ fontWeight: 800, bgcolor: '#f0fdf4', color: '#064e3b', border: 'none', px: 1 }} 
+              />
+              <Chip 
+                label="Direct from Farm" 
+                variant="outlined" 
+                sx={{ fontWeight: 700, borderColor: '#d1d5db', color: '#374151' }} 
+              />
             </Stack>
 
-            <Typography variant="h2" sx={{ fontWeight: 900, mb: 1, letterSpacing: '-0.03em' }}>{product.title}</Typography>
-            <Typography variant="h3" sx={{ fontWeight: 900, color: '#1b5e20', mb: 4 }}>
+            <Typography variant="h2" sx={{ fontWeight: 950, mb: 1, letterSpacing: '-0.05em', color: '#111827', lineHeight: 1.1 }}>
+              {product.title}
+            </Typography>
+            <Typography variant="h3" sx={{ fontWeight: 900, color: '#064e3b', mb: 5, letterSpacing: '-0.02em' }}>
               KES {product.price}
             </Typography>
             
-            <Typography variant="body1" sx={{ color: '#555', lineHeight: 1.8, fontSize: '1.1rem', mb: 4 }}>
-              {product.description || 'This high-quality produce is sourced directly from urban farmers committed to sustainable agriculture and food resilience.'}
+            <Typography variant="body1" sx={{ color: '#4b5563', lineHeight: 1.8, fontSize: '1.2rem', mb: 5, fontWeight: 400 }}>
+              {product.description || 'This fresh produce is sourced directly from a local farmer committed to quality and sustainability.'}
             </Typography>
 
-            <Divider sx={{ my: 4 }} />
+            <Divider sx={{ my: 5 }} />
 
-            <Box sx={{ mb: 4, display: 'flex', alignItems: 'center', gap: 2 }}>
-              <Box sx={{ width: 48, height: 48, borderRadius: '50%', bgcolor: '#f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>
+            <Box sx={{ mb: 5, display: 'flex', alignItems: 'center', gap: 3, p: 3, bgcolor: '#f9fafb', borderRadius: 6 }}>
+              <Box sx={{ width: 60, height: 60, borderRadius: '50%', bgcolor: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
                 👨‍🌾
               </Box>
               <Box>
-                <Typography variant="subtitle2" color="text.secondary" sx={{ fontWeight: 700 }}>FARMER INFO</Typography>
-                <Typography variant="h6" sx={{ fontWeight: 800 }}>{product.farmer?.name || 'Local Farmer'}</Typography>
-                <Typography variant="body2" color="text.secondary">{product.location?.address || 'Nairobi, Kenya'}</Typography>
+                <Typography variant="caption" sx={{ fontWeight: 800, color: '#6b7280', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Farmer</Typography>
+                <Typography variant="h5" sx={{ fontWeight: 900, color: '#111827' }}>{product.farmer?.name || 'Local Producer'}</Typography>
+                <Typography variant="body2" sx={{ color: '#4b5563', fontWeight: 500 }}>{product.location?.address || 'Nairobi, Kenya'}</Typography>
               </Box>
             </Box>
 
-            <Paper variant="outlined" sx={{ p: 3, mb: 4, borderRadius: 5, bgcolor: '#fcfcfc', border: '1px solid #eee' }}>
+            <Paper elevation={0} sx={{ p: 4, mb: 5, borderRadius: 6, bgcolor: '#f0fdf4', border: '1px solid #dcfce7' }}>
               <FormControlLabel
-                control={<Switch checked={useCrypto} onChange={(e) => setUseCrypto(e.target.checked)} color="success" />}
-                label={<Typography sx={{ fontWeight: 700 }}>Pay with Solana (Devnet Demo)</Typography>}
+                control={<Switch checked={useCrypto} onChange={(e) => setUseCrypto(e.target.checked)} sx={{ 
+                  '& .MuiSwitch-switchBase.Mui-checked': { color: '#059669' },
+                  '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': { bgcolor: '#059669' }
+                }} />}
+                label={<Typography sx={{ fontWeight: 800, color: '#064e3b' }}>Pay with Solana</Typography>}
               />
-              <Typography variant="body2" sx={{ mt: 1, color: 'text.secondary' }}>
+              <Typography variant="body2" sx={{ mt: 1.5, color: '#065f46', fontWeight: 500, lineHeight: 1.5 }}>
                 {useCrypto 
-                  ? '0.001 SOL will be transferred securely to the farmer.' 
-                  : 'A mock payment reference will be generated for this transaction.'}
+                  ? 'Your transaction will be processed instantly on the Solana network for maximum transparency.' 
+                  : 'Place your order and pay through our standard secure checkout process.'}
               </Typography>
             </Paper>
 
@@ -161,18 +176,20 @@ export function ProductDetail() {
               disabled={loading}
               sx={{ 
                 py: 2.5, 
-                borderRadius: 5, 
-                bgcolor: '#1b5e20', 
-                fontSize: '1.2rem', 
-                fontWeight: 900,
-                boxShadow: '0 10px 30px rgba(27, 94, 32, 0.2)',
-                '&:hover': { bgcolor: '#2e7d32', boxShadow: '0 15px 40px rgba(27, 94, 32, 0.3)' }
+                borderRadius: 4, 
+                bgcolor: '#064e3b', 
+                fontSize: '1.3rem', 
+                fontWeight: 950,
+                textTransform: 'none',
+                boxShadow: '0 15px 30px rgba(6, 78, 59, 0.25)',
+                '&:hover': { bgcolor: '#065f46', transform: 'translateY(-2px)', boxShadow: '0 20px 40px rgba(6, 78, 59, 0.3)' },
+                transition: 'all 0.3s'
               }}
             >
-              {loading ? 'Processing Transaction...' : 'Confirm and Place Order'}
+              {loading ? <CircularProgress size={28} color="inherit" /> : 'Confirm Order'}
             </Button>
-            <Typography variant="caption" display="block" align="center" sx={{ mt: 2, color: 'text.secondary' }}>
-              Secure transaction powered by Solana & Privy.
+            <Typography variant="caption" display="block" align="center" sx={{ mt: 3, color: '#6b7280', fontWeight: 500 }}>
+              Secure transaction powered by decentralized technology.
             </Typography>
           </Box>
         </Grid>

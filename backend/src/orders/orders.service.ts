@@ -1,12 +1,13 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../common/prisma/prisma.service';
 import { OrderStatus } from '@prisma/client';
+import { CreateOrderDto } from './dto/create-order.dto';
 
 @Injectable()
 export class OrdersService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async createOrder(buyerId: string, dto: any) {
+  async createOrder(buyerId: string, dto: CreateOrderDto) {
     const product = await this.prisma.product.findUnique({ where: { id: dto.productId } });
     if (!product) {
       throw new BadRequestException('Product not found');

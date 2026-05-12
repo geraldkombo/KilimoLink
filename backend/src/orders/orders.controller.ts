@@ -3,6 +3,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { OrdersService } from './orders.service';
 import { CurrentUser, JwtUser } from '../common/auth/current-user.decorator';
 import { JwtAuthGuard } from '../common/auth/jwt-auth.guard';
+import { CreateOrderDto } from './dto/create-order.dto';
 
 @ApiTags('orders')
 @Controller('orders')
@@ -12,7 +13,7 @@ export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
   @Post()
-  createOrder(@CurrentUser() user: JwtUser, @Body() body: any) {
+  createOrder(@CurrentUser() user: JwtUser, @Body() body: CreateOrderDto) {
     return this.ordersService.createOrder(user.userId, body);
   }
 

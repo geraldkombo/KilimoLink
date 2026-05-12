@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
-import { Box, Button, Container, Grid, Paper, TextField, Typography, MenuItem, Select, FormControl, InputLabel, IconButton, Fade, Divider, CircularProgress, Tooltip, InputAdornment, Alert, Stack, Chip } from '@mui/material';
+import { IconButton, Fade, Divider } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Box, Button, Container, Grid, Paper, TextField, Typography, MenuItem, Select, FormControl, InputLabel, CircularProgress, Tooltip, InputAdornment, Alert, Stack, Chip } from '@mui/material';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
@@ -68,32 +69,40 @@ function LocationPicker({ onLocationSelect, position, setPosition, privacyMode }
   ) : null;
 }
 
-// Institutional Intelligence: Protocol-Driven Description Generator
+// Plain Language Description Generator
 const generateAIDescription = (title: string, category: string, marketData?: any) => {
-  const protocols: Record<string, string[]> = {
+  const templates: Record<string, string[]> = {
+    'Dairy': [
+      `Pure, fresh ${title} from healthy local cows. Clean, safe, and delivered cold to your neighborhood.`,
+      `Farm-fresh ${title}. We follow strict hygiene rules to make sure you get the best quality every day.`,
+    ],
     'Vegetables': [
-      `Verified local produce: ${title}. ${marketData?.priceAlert ? 'Current market demand is high.' : ''} Shelf-life optimized: field-to-table in <4h. Protocol-verified for urban centers.`,
-      `Sector-leading quality ${title}. Grown under sustainable urban greening frameworks. Delivery window: Same-day local fulfillment via hyperlocal fulfillment centers.`,
+      `Freshly harvested ${title}. Grown locally using organic methods. Picked this morning for the best taste and nutrition.`,
+      `Quality ${title} from our local garden. We don't use harsh chemicals, and we deliver fast to keep it crisp.`,
     ],
     'Fruits': [
-      `Hyperlocal ${title} optimized for carbon-neutral transport. Operational constraint: 30-40 min transport max to ensure peak nutrient density and freshness.`,
-      `Premium ${title} cultivated within the urban resilience framework. Strategic liquidity asset: verified supply for high-demand urban neighborhoods.`,
-    ],
-    'Dairy': [
-      `Institutional-grade ${title}. Produced under strict hygiene and cold-chain liquidity protocols. Fulfillment protocol: Batch-verified for 1-hour urban delivery cycles.`,
-      `Fresh ${title} from verified urban farms. Operational integrity: 100% traceability from farm pin to consumer doorstep.`,
+      `Sweet and juicy ${title}. Ripened naturally on the tree and brought straight to the city. Perfect for healthy snacks.`,
+      `Local ${title} full of flavor. We handle our fruit with care so it reaches you in perfect condition.`,
     ],
     'Grains': [
-      `Strategic food security asset: ${title}. ${marketData?.disruptionAlert ? 'Disruption Alert: NDMA Drought Phase Monitoring Active.' : ''} Verified for 12-month storage stability in urban resilience hubs.`,
-      `Hyperlocal grains: ${title}. Part of our "Execution over Incentives" model, ensuring fair value for producers and zero-delay urban market liquidity.`,
+      `High-quality ${title} harvested from our recent crop. Cleaned, dried, and ready for your kitchen.`,
+      `Local ${title} grown with care. Great for long-term storage or immediate use in your favorite meals.`,
+    ],
+    'Meat': [
+      `Quality ${title} from locally raised livestock. Processed with care and delivered fresh to your neighborhood.`,
+      `Premium ${title} sourced directly from trusted local farmers. Safe, clean, and nutritious for your family.`,
+    ],
+    'Honey': [
+      `Pure, raw ${title} harvested from local bee colonies. Natural, unprocessed, and full of health benefits.`,
+      `Local ${title} with a unique floral flavor. Perfect for sweetening your drinks or as a healthy spread.`,
     ],
     'Other': [
-      `Verified ${title} from a sector-aligned producer. Operational protocol: Validated via on-chain Proof-of-Trade history.`,
-      `Hyperlocal ${title} for future-city resilience. Executed according to the "stuff we control"—quality and ground-level logistics.`,
+      `Fresh ${title} produced with care on our local farm. Quality you can trust, delivered directly to you.`,
+      `High-quality ${title} from a verified local producer. Simple, honest food for Kenya's future.`,
     ]
   };
-  const categoryProtocols = protocols[category] || protocols['Other'];
-  return categoryProtocols[Math.floor(Math.random() * categoryProtocols.length)];
+  const categoryTemplates = templates[category] || templates['Other'];
+  return categoryTemplates[Math.floor(Math.random() * categoryTemplates.length)];
 };
 
 export function SellProduct() {
@@ -149,11 +158,10 @@ export function SellProduct() {
     }
   };
 
-  // Data Integration: Fetch Market Oracle Data (KNBS/NDMA aligned as per API_REFERENCE.md)
+  // Data Integration: Fetch Market Oracle Data
   useEffect(() => {
     const fetchOracleData = async () => {
       try {
-        // Simulation of GET /oracle/prices and /market/disruption-alerts
         const [prices, alerts] = await Promise.all([
           api.get('/oracle/prices?product=' + formData.category),
           api.get('/market/disruption-alerts')
@@ -163,7 +171,7 @@ export function SellProduct() {
           disruption: alerts.data?.active || false
         });
       } catch (e) {
-        console.warn('Oracle data unavailable, using local intelligence protocols.');
+        console.warn('Oracle data unavailable, using standard pricing.');
       }
     };
     if (formData.category) fetchOracleData();
@@ -171,11 +179,10 @@ export function SellProduct() {
 
   const handleGenerateAI = useCallback(() => {
     if (!formData.title) {
-      setError('Please enter a product title first to use AI assistance.');
+      setError('Please enter a product title first.');
       return;
     }
     setGenerating(true);
-    // Simulate AI thinking time
     setTimeout(() => {
       const aiDesc = generateAIDescription(formData.title, formData.category, marketInsights);
       setFormData(prev => ({ ...prev, description: aiDesc }));
@@ -183,16 +190,6 @@ export function SellProduct() {
       setError(null);
     }, 800);
   }, [formData.title, formData.category, marketInsights]);
-
-  const getListingQuality = () => {
-    let score = 0;
-    if (formData.title.length > 5) score += 20;
-    if (formData.description.length > 20) score += 30;
-    if (formData.price) score += 20;
-    if (formData.imageUrl) score += 20;
-    if (formData.location.address || formData.location.lat !== -1.286389) score += 10;
-    return score;
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -207,7 +204,7 @@ export function SellProduct() {
       navigate('/market');
     } catch (err: any) {
       console.error('Failed to create product', err);
-      setError(err.response?.data?.message || 'Failed to list product. Please ensure you are logged in as a farmer.');
+      setError(err.response?.data?.message || 'Failed to list product. Please ensure you are logged in.');
     } finally {
       setLoading(false);
     }
@@ -219,7 +216,7 @@ export function SellProduct() {
         <IconButton onClick={() => navigate(-1)} sx={{ bgcolor: '#f5f5f5' }}>
           <ArrowBackIcon />
         </IconButton>
-        <Typography variant="h4" sx={{ fontWeight: 900, letterSpacing: '-0.02em' }}>
+        <Typography variant="h4" sx={{ fontWeight: 900, letterSpacing: '-0.02em', color: '#064e3b' }}>
           List Your Produce
         </Typography>
       </Box>
@@ -235,7 +232,7 @@ export function SellProduct() {
       {marketInsights?.disruption && (
         <Fade in>
           <Alert severity="warning" icon={<WarningAmberIcon />} sx={{ mb: 4, borderRadius: 3, fontWeight: 700 }}>
-            Market Disruption Alert: NDMA Drought Phase Monitoring is active for your region. Consider adjusting quantity and price accordingly.
+            Market Notice: There are currently weather or transport delays in your area. You might want to adjust your prices.
           </Alert>
         </Fade>
       )}
@@ -244,11 +241,11 @@ export function SellProduct() {
         <Box component="form" onSubmit={handleSubmit}>
           <Grid container spacing={4}>
             <Grid item xs={12}>
-              <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: '#666' }}>PRODUCT DETAILS</Typography>
+              <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: '#064e3b' }}>PRODUCT DETAILS</Typography>
               <TextField
                 fullWidth
-                label="Product Title"
-                placeholder="e.g. Fresh Organic Kale"
+                label="What are you selling?"
+                placeholder="e.g. Fresh Sukuma Wiki, Grade A Milk"
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                 required
@@ -257,7 +254,7 @@ export function SellProduct() {
             </Grid>
             <Grid item xs={12}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-                <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#666' }}>PRODUCT DESCRIPTION</Typography>
+                <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#064e3b' }}>DESCRIPTION</Typography>
                 <Button 
                   size="small" 
                   startIcon={generating ? <CircularProgress size={16} color="inherit" /> : <AutoAwesomeIcon />}
@@ -266,48 +263,23 @@ export function SellProduct() {
                   sx={{ 
                     textTransform: 'none', 
                     borderRadius: 2, 
-                    color: '#1b5e20', 
+                    color: '#064e3b', 
                     fontWeight: 'bold',
-                    '&:hover': { bgcolor: '#e8f5e9' }
+                    '&:hover': { bgcolor: '#f0fdf4' }
                   }}
                 >
-                  {generating ? 'AI Thinking...' : 'AI Generate Description'}
+                  {generating ? 'Writing...' : 'Help me write this'}
                 </Button>
               </Box>
               <TextField
                 fullWidth
-                placeholder="Tell buyers about your farming methods, harvest date, or special qualities"
+                placeholder="Tell buyers about your produce. When was it harvested? How was it grown?"
                 multiline
                 rows={4}
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 InputProps={{ sx: { borderRadius: 3 } }}
               />
-            </Grid>
-            <Grid item xs={12}>
-              <Box sx={{ p: 2, bgcolor: '#f5f5f5', borderRadius: 3, border: '1px solid #eee' }}>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-                  <Typography variant="body2" sx={{ fontWeight: 700, display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                    Listing Quality Score
-                    <Tooltip title="Higher scores improve your visibility in the marketplace. Add a description, price, and image to increase your score!">
-                      <HelpOutlineIcon sx={{ fontSize: 16, cursor: 'help' }} />
-                    </Tooltip>
-                  </Typography>
-                  <Typography variant="body2" sx={{ fontWeight: 900, color: getListingQuality() > 70 ? '#2e7d32' : '#ed6c02' }}>
-                    {getListingQuality()}%
-                  </Typography>
-                </Box>
-                <Box sx={{ width: '100%', height: 6, bgcolor: '#ddd', borderRadius: 3, overflow: 'hidden' }}>
-                  <Box 
-                    sx={{ 
-                      width: `${getListingQuality()}%`, 
-                      height: '100%', 
-                      bgcolor: getListingQuality() > 70 ? '#2e7d32' : '#ed6c02',
-                      transition: 'width 0.5s ease-in-out'
-                    }} 
-                  />
-                </Box>
-              </Box>
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -318,26 +290,19 @@ export function SellProduct() {
                 onChange={(e) => setFormData({ ...formData, price: e.target.value })}
                 required
                 InputProps={{ 
-                  sx: { borderRadius: 3 },
-                  endAdornment: formData.price && (
-                    <InputAdornment position="end">
-                      <Tooltip title="AI insight: This price is competitive for your category and region.">
-                        <AutoAwesomeIcon sx={{ color: '#2e7d32', fontSize: 18 }} />
-                      </Tooltip>
-                    </InputAdornment>
-                  )
+                  sx: { borderRadius: 3 }
                 }}
               />
               {marketInsights?.recommendedPrice && (
                 <Box sx={{ mt: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <Typography variant="caption" sx={{ fontWeight: 700, color: '#2e7d32' }}>
-                    KNBS Oracle Suggestion: KES {marketInsights.recommendedPrice}
+                  <Typography variant="caption" sx={{ fontWeight: 700, color: '#064e3b' }}>
+                    Suggested Price: KES {marketInsights.recommendedPrice}
                   </Typography>
                   <Chip 
-                    label="Apply" 
+                    label="Use This" 
                     size="small" 
                     onClick={() => setFormData({ ...formData, price: marketInsights.recommendedPrice.toString() })}
-                    sx={{ height: 20, fontSize: '0.65rem', cursor: 'pointer', bgcolor: '#e8f5e9', color: '#2e7d32', fontWeight: 'bold' }}
+                    sx={{ height: 20, fontSize: '0.65rem', cursor: 'pointer', bgcolor: '#f0fdf4', color: '#064e3b', fontWeight: 'bold' }}
                   />
                 </Box>
               )}
@@ -345,7 +310,7 @@ export function SellProduct() {
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
-                label="Quantity Available"
+                label="How much do you have?"
                 type="number"
                 value={formData.quantity}
                 onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
@@ -362,47 +327,63 @@ export function SellProduct() {
                   onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                   sx={{ borderRadius: 3 }}
                 >
-                  <MenuItem value="Vegetables">Vegetables</MenuItem>
-                  <MenuItem value="Fruits">Fruits</MenuItem>
-                  <MenuItem value="Dairy">Dairy</MenuItem>
-                  <MenuItem value="Grains">Grains</MenuItem>
-                  <MenuItem value="Other">Other</MenuItem>
+                  <MenuItem value="Dairy">Dairy (Milk, Eggs, etc.)</MenuItem>
+                  <MenuItem value="Vegetables">Vegetables (Sukuma, Spinach, etc.)</MenuItem>
+                  <MenuItem value="Fruits">Fruits (Mangoes, Oranges, etc.)</MenuItem>
+                  <MenuItem value="Grains">Grains (Maize, Rice, etc.)</MenuItem>
+                  <MenuItem value="Meat">Meat (Beef, Chicken, etc.)</MenuItem>
+                  <MenuItem value="Honey">Honey & Bee Products</MenuItem>
+                  <MenuItem value="Other">Other Items</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
             <Grid item xs={12}>
               <Divider sx={{ my: 2 }} />
-              <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: '#666' }}>PRODUCT IMAGE</Typography>
+              <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: '#064e3b' }}>PRODUCT PHOTO</Typography>
               <TextField
                 fullWidth
-                label="Image URL"
-                placeholder="Paste a link to a photo of your produce (e.g. from Google Photos or Imgur)"
+                label="Photo Link"
+                placeholder="Paste a link to a photo of your produce"
                 value={formData.imageUrl}
                 onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                helperText="For this demo, please paste a direct link to an image file."
+                helperText="Tip: You can upload your photo to Google Photos or Imgur and paste the link here."
                 InputProps={{ 
                   sx: { borderRadius: 3 },
                   startAdornment: (
                     <InputAdornment position="start">
-                      <Tooltip title="Direct image links work best.">
-                        <HelpOutlineIcon sx={{ fontSize: 18 }} />
-                      </Tooltip>
+                      <HelpOutlineIcon sx={{ fontSize: 18, color: '#064e3b' }} />
                     </InputAdornment>
                   )
                 }}
               />
+              <Box sx={{ mt: 1.5, display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                <Typography variant="caption" sx={{ color: '#666', mr: 1, mt: 0.5 }}>Quick samples:</Typography>
+                {[
+                  { label: 'Kale/Sukuma', url: 'https://images.unsplash.com/photo-1524179091875-bf99a9a6af97?auto=format&fit=crop&w=800&q=80' },
+                  { label: 'Fresh Milk', url: 'https://images.unsplash.com/photo-1550583724-1255818c0533?auto=format&fit=crop&w=800&q=80' },
+                  { label: 'Maize/Corn', url: 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=800&q=80' },
+                ].map((chip) => (
+                  <Chip 
+                    key={chip.label} 
+                    label={chip.label} 
+                    size="small" 
+                    onClick={() => setFormData({ ...formData, imageUrl: chip.url })}
+                    sx={{ bgcolor: '#f0fdf4', color: '#064e3b', fontWeight: 600, fontSize: '0.7rem', cursor: 'pointer', '&:hover': { bgcolor: '#dcfce7' } }} 
+                  />
+                ))}
+              </Box>
             </Grid>
             <Grid item xs={12}>
               <Divider sx={{ my: 2 }} />
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, flexWrap: 'wrap', gap: 2 }}>
                 <Box>
-                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#666' }}>FARM LOCATION & SECURITY</Typography>
-                  <Typography variant="caption" color="text.secondary">Select neighborhood, click map, or paste coordinates.</Typography>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#064e3b' }}>FARM LOCATION</Typography>
+                  <Typography variant="caption" color="text.secondary">Where can buyers find your produce?</Typography>
                 </Box>
                 <Stack direction="row" spacing={1} alignItems="center">
                   <Chip 
                     icon={<GppGoodIcon />} 
-                    label={privacyRadius ? "Privacy Enabled" : "Exact Location"} 
+                    label={privacyRadius ? "Privacy On" : "Exact Location"} 
                     onClick={() => setPrivacyRadius(!privacyRadius)}
                     color={privacyRadius ? "success" : "default"}
                     variant={privacyRadius ? "filled" : "outlined"}
@@ -428,9 +409,9 @@ export function SellProduct() {
                     variant="outlined" 
                     startIcon={<MyLocationIcon />} 
                     onClick={handleUseCurrentLocation}
-                    sx={{ borderRadius: 2, textTransform: 'none', fontWeight: 'bold' }}
+                    sx={{ borderRadius: 2, textTransform: 'none', fontWeight: 'bold', color: '#064e3b', borderColor: '#064e3b' }}
                   >
-                    GPS
+                    Use GPS
                   </Button>
                 </Stack>
               </Box>
@@ -438,7 +419,7 @@ export function SellProduct() {
               <TextField
                 fullWidth
                 size="small"
-                label="Paste Coordinates (lat, lng)"
+                label="Coordinates (Optional)"
                 placeholder="-1.286, 36.817"
                 value={coordsInput}
                 onChange={(e) => handleCoordsPaste(e.target.value)}
@@ -458,7 +439,7 @@ export function SellProduct() {
                 width: '100%', 
                 borderRadius: 5, 
                 overflow: 'hidden', 
-                border: '4px solid #f5f5f5', 
+                border: '4px solid #f0fdf4', 
                 position: 'relative',
                 boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.05)'
               }}>
@@ -476,7 +457,7 @@ export function SellProduct() {
                 </MapContainer>
               </Box>
               <Typography variant="caption" sx={{ mt: 1, display: 'block', color: 'text.secondary', fontStyle: 'italic' }}>
-                {privacyRadius ? "Privacy Radius active: Buyers see a general area (500m), protecting your exact farm location from unauthorized surveillance." : "Exact location active: Use this only for public collection points."}
+                {privacyRadius ? "Privacy Mode: Buyers only see your general area (500m), protecting your farm's exact spot." : "Exact location: Buyers will see exactly where you are located."}
               </Typography>
             </Grid>
             <Grid item xs={12} sx={{ mt: 2 }}>
@@ -488,20 +469,17 @@ export function SellProduct() {
                 disabled={loading}
                 sx={{ 
                   py: 2, 
-                  bgcolor: '#1b5e20', 
-                  fontSize: '1.1rem',
-                  fontWeight: 800,
+                  bgcolor: '#064e3b', 
+                  fontSize: '1.2rem',
+                  fontWeight: 900,
                   borderRadius: 4,
-                  boxShadow: '0 10px 30px rgba(27, 94, 32, 0.2)',
-                  '&:hover': { bgcolor: '#2e7d32', boxShadow: '0 15px 40px rgba(27, 94, 32, 0.3)' },
+                  boxShadow: '0 10px 30px rgba(6, 78, 59, 0.2)',
+                  '&:hover': { bgcolor: '#065f46', boxShadow: '0 15px 40px rgba(6, 78, 59, 0.3)' },
                   '&:disabled': { bgcolor: '#ccc' }
                 }}
               >
-                {loading ? 'Processing...' : 'List Product for Sale'}
+                {loading ? <CircularProgress size={24} color="inherit" /> : 'List My Produce Now'}
               </Button>
-              <Typography variant="caption" display="block" align="center" sx={{ mt: 2, color: 'text.secondary' }}>
-                By listing, you agree to provide fresh, high-quality produce to your local community.
-              </Typography>
             </Grid>
           </Grid>
         </Box>

@@ -2,10 +2,14 @@ import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../common/prisma/prisma.service';
 import { Role } from '@prisma/client';
 import { CreateProductDto } from './dto/create-product.dto';
+import { RedisService } from '../common/redis/redis.service';
 
 @Injectable()
 export class MarketService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly redis: RedisService,
+  ) {}
 
   async createProduct(farmerId: string, dto: CreateProductDto) {
     const user = await this.prisma.user.findUnique({ where: { id: farmerId } });
@@ -13,7 +17,7 @@ export class MarketService {
       throw new BadRequestException('Only farmers can create products');
     }
 
-    return this.prisma.product.create({
+    const product = await this.prisma.product.create({
       data: {
         title: dto.title,
         description: dto.description,
@@ -25,13 +29,27 @@ export class MarketService {
         farmerId: farmerId,
       },
     });
+
+    // Invalidate product list cache
+    await this.redis.del('products:all');
+    
+    return product;
   }
 
   async listProducts(lat?: number, lng?: number) {
-    const products = await this.prisma.product.findMany({
-      include: { farmer: true },
-      orderBy: { createdAt: 'desc' },
-    });
+    const cacheKey = 'products:all';
+    let products: any[];
+
+    const cached = await this.redis.get(cacheKey);
+    if (cached) {
+      products = JSON.parse(cached);
+    } else {
+      products = await this.prisma.product.findMany({
+        include: { farmer: true },
+        orderBy: { createdAt: 'desc' },
+      });
+      await this.redis.set(cacheKey, JSON.stringify(products), 300); // Cache for 5 mins
+    }
 
     if (lat !== undefined && lng !== undefined) {
       return products

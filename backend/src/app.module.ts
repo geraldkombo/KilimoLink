@@ -8,6 +8,7 @@ import { AiModule } from './ai/ai.module';
 import { AuthModule } from './auth/auth.module';
 import { NotificationsModule } from './common/notifications/notifications.module';
 import { PrismaModule } from './common/prisma/prisma.module';
+import { RedisModule } from './common/redis/redis.module';
 import { HealthModule } from './health/health.module';
 import { MarketModule } from './market/market.module';
 import { OrdersModule } from './orders/orders.module';
@@ -25,6 +26,7 @@ import { UsersModule } from './users/users.module';
     TerminusModule,
     NotificationsModule,
     PrismaModule,
+    RedisModule,
     AuthModule,
     UsersModule,
     MarketModule,

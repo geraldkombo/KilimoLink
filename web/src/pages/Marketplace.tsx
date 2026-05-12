@@ -55,19 +55,19 @@ export function Marketplace() {
   }, [products, search]);
 
   return (
-    <Container maxWidth="lg" sx={{ py: 2 }}>
-      <Box sx={{ mb: 6 }}>
-        <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 4 }}>
-          <IconButton component={Link} to="/" sx={{ bgcolor: '#f5f5f5' }}>
+    <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Box sx={{ mb: 8 }}>
+        <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 6 }}>
+          <IconButton component={Link} to="/" sx={{ bgcolor: '#f0fdf4', color: '#064e3b', '&:hover': { bgcolor: '#dcfce7' } }}>
             <ArrowBackIcon />
           </IconButton>
-          <Typography variant="h4" sx={{ fontWeight: 900, letterSpacing: '-0.02em' }}>
-            Nearby Produce
+          <Typography variant="h3" sx={{ fontWeight: 900, letterSpacing: '-0.04em', color: '#064e3b' }}>
+            Local Produce
           </Typography>
         </Stack>
 
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12} md={6}>
+        <Grid container spacing={3} alignItems="center">
+          <Grid item xs={12} md={7}>
             <TextField
               fullWidth
               placeholder="Search for kale, milk, or traditional greens..."
@@ -76,19 +76,33 @@ export function Marketplace() {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <SearchIcon color="action" />
+                    <SearchIcon sx={{ color: '#064e3b' }} />
                   </InputAdornment>
                 ),
-                sx: { borderRadius: 4, bgcolor: 'white' }
+                sx: { 
+                  borderRadius: 4, 
+                  bgcolor: 'white',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.03)',
+                  border: '1px solid rgba(0,0,0,0.05)',
+                  '& fieldset': { border: 'none' }
+                }
               }}
             />
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={5}>
             <Stack direction="row" spacing={2} justifyContent={{ md: 'flex-end' }}>
               <Button 
                 variant="outlined" 
                 startIcon={<FilterListIcon />}
-                sx={{ borderRadius: 3, px: 3, color: '#333', borderColor: '#ddd' }}
+                sx={{ 
+                  borderRadius: 4, 
+                  px: 3, 
+                  color: '#374151', 
+                  borderColor: '#d1d5db',
+                  fontWeight: 700,
+                  textTransform: 'none',
+                  '&:hover': { borderColor: '#064e3b', bgcolor: '#f0fdf4' }
+                }}
               >
                 Filters
               </Button>
@@ -96,7 +110,16 @@ export function Marketplace() {
                 variant="contained" 
                 component={Link} 
                 to="/sell" 
-                sx={{ bgcolor: '#1b5e20', borderRadius: 3, px: 4, '&:hover': { bgcolor: '#2e7d32' } }}
+                sx={{ 
+                  bgcolor: '#064e3b', 
+                  borderRadius: 4, 
+                  px: 4, 
+                  fontWeight: 800,
+                  textTransform: 'none',
+                  boxShadow: '0 10px 20px rgba(6, 78, 59, 0.2)',
+                  '&:hover': { bgcolor: '#065f46', transform: 'translateY(-2px)' },
+                  transition: 'all 0.2s'
+                }}
               >
                 Sell Your Produce
               </Button>
@@ -104,10 +127,10 @@ export function Marketplace() {
           </Grid>
         </Grid>
 
-        <Box sx={{ mt: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
-          <LocationOnIcon sx={{ fontSize: 16, color: coords ? '#2e7d32' : '#666' }} />
-          <Typography variant="body2" color="text.secondary">
-            {coords ? 'Prioritizing local food within 5km' : 'Enable location for hyperlocal results'}
+        <Box sx={{ mt: 3, display: 'flex', alignItems: 'center', gap: 1.5, p: 2, bgcolor: '#f0fdf4', borderRadius: 3, width: 'fit-content' }}>
+          <LocationOnIcon sx={{ fontSize: 20, color: '#059669' }} />
+          <Typography variant="body2" sx={{ fontWeight: 700, color: '#064e3b' }}>
+            {coords ? 'Showing fresh produce within 5km of your location' : 'Enable location to see the closest produce'}
           </Typography>
         </Box>
       </Box>
@@ -116,27 +139,27 @@ export function Marketplace() {
         <Grid container spacing={4}>
           {[1, 2, 3, 4, 5, 6].map((i) => (
             <Grid item xs={12} sm={6} md={4} key={i}>
-              <Skeleton variant="rectangular" height={200} sx={{ borderRadius: 4, mb: 2 }} />
-              <Skeleton width="60%" height={32} sx={{ mb: 1 }} />
-              <Skeleton width="40%" height={24} />
+              <Skeleton variant="rectangular" height={220} sx={{ borderRadius: 6, mb: 2 }} />
+              <Skeleton width="60%" height={32} sx={{ mb: 1, borderRadius: 2 }} />
+              <Skeleton width="40%" height={24} sx={{ borderRadius: 2 }} />
             </Grid>
           ))}
         </Grid>
       ) : error ? (
-        <Box sx={{ textAlign: 'center', py: 8, bgcolor: '#f9f9f9', borderRadius: 4, border: '1px solid #eee' }}>
-          <Typography color="text.secondary" variant="h6" gutterBottom>No produce listed in your area yet.</Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 4 }}>Be the first to list fresh produce and help build urban food resilience!</Typography>
-          <Button variant="contained" component={Link} to="/sell" sx={{ bgcolor: '#1b5e20', px: 4, py: 1.5, borderRadius: 3 }}>
-            List Your Produce
+        <Box sx={{ textAlign: 'center', py: 12, bgcolor: '#f9fafb', borderRadius: 8, border: '1px solid #e5e7eb' }}>
+          <Typography color="#374151" variant="h5" sx={{ fontWeight: 800, mb: 2 }}>Something went wrong</Typography>
+          <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>We couldn't load the marketplace. Please try again.</Typography>
+          <Button variant="contained" onClick={fetchProducts} sx={{ bgcolor: '#064e3b', px: 6, py: 1.5, borderRadius: 4, fontWeight: 800 }}>
+            Try Again
           </Button>
         </Box>
       ) : filteredProducts.length === 0 ? (
-        <Box sx={{ textAlign: 'center', py: 12, bgcolor: '#f9f9f9', borderRadius: 6, border: '1px dashed #ddd' }}>
-          <Typography variant="h5" sx={{ fontWeight: 700, mb: 1 }}>No produce found</Typography>
-          <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-            {search ? `We couldn't find anything matching "${search}"` : 'Be the first to list produce in your neighborhood!'}
+        <Box sx={{ textAlign: 'center', py: 15, bgcolor: '#f9fafb', borderRadius: 8, border: '2px dashed #e5e7eb' }}>
+          <Typography variant="h4" sx={{ fontWeight: 900, mb: 2, color: '#064e3b', letterSpacing: '-0.02em' }}>No produce found</Typography>
+          <Typography variant="h6" color="text.secondary" sx={{ mb: 5, fontWeight: 500 }}>
+            {search ? `We couldn't find anything matching "${search}"` : 'There are no listings in your area yet. Be the first!'}
           </Typography>
-          <Button variant="contained" component={Link} to="/sell" sx={{ bgcolor: '#1b5e20', px: 4, py: 1.5, borderRadius: 3 }}>
+          <Button variant="contained" component={Link} to="/sell" sx={{ bgcolor: '#064e3b', px: 6, py: 2, borderRadius: 4, fontWeight: 900, fontSize: '1.1rem' }}>
             List Your Produce
           </Button>
         </Box>
@@ -144,7 +167,7 @@ export function Marketplace() {
         <Grid container spacing={4}>
           {filteredProducts.map((p, idx) => (
             <Grid item xs={12} sm={6} md={4} key={p.id}>
-              <PremiumMarketCard product={p} delay={idx * 100} />
+              <PremiumMarketCard product={p} delay={idx * 50} />
             </Grid>
           ))}
         </Grid>
