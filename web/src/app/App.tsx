@@ -18,6 +18,7 @@ import { motion } from 'framer-motion';
 import { BackgroundArt } from '../components/BackgroundArt';
 import { UIProvider, useUI } from './UIContext';
 import { ProductProvider } from './ProductContext';
+import { setAuthToken } from '../services/api';
 
 const MotionBox = motion(Box);
 const MotionTypography = motion(Typography);
@@ -284,11 +285,23 @@ function HomePage() {
 }
 
 export function AppContent() {
-  const { login, authenticated, user, logout } = usePrivy();
+  const { login, authenticated, user, logout, getAccessToken } = usePrivy();
   const [balances, setBalances] = useState<any[]>([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  useEffect(() => {
+    const syncToken = async () => {
+      if (authenticated) {
+        const token = await getAccessToken();
+        setAuthToken(token);
+      } else {
+        setAuthToken(null);
+      }
+    };
+    syncToken();
+  }, [authenticated, getAccessToken]);
 
   useEffect(() => {
     if (authenticated && user?.wallet?.address) {

@@ -282,7 +282,6 @@ export function SellProduct() {
                 required
                 InputProps={{ sx: { borderRadius: 3 } }}
               />
-            </Grid>
               <Box sx={{ mt: 1.5, display: 'flex', gap: 1, flexWrap: 'wrap' }}>
                 <Typography variant="caption" sx={{ color: '#666', mr: 1, mt: 0.5 }}>Common items:</Typography>
                 {knbsProduce.slice(0, 5).map((item) => (
