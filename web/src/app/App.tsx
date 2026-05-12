@@ -1,4 +1,4 @@
-import { AppBar, Box, Button, Container, Toolbar, Typography, Stack, useTheme, useMediaQuery, Paper } from '@mui/material';
+import { AppBar, Box, Button, Container, Toolbar, Typography, Stack, useTheme, useMediaQuery, Paper, Grid, Divider } from '@mui/material';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import { usePrivy } from '@privy-io/react-auth';
 import { AdminPage } from '../pages/AdminPage';
