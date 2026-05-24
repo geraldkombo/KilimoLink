@@ -1,6 +1,25 @@
 {
   "name": "kilimolink-platform-final",
   "private": true,
+  "description": "KilimoLink is a Solana-powered urban-rural marketplace that connects city consumers directly with local farmers for climate-resilient food trade.",
+  "author": "KilimoLinkResilience",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KilimoLinkResilience/KilimoLink.git"
+  },
+  "homepage": "https://github.com/KilimoLinkResilience/KilimoLink",
+  "keywords": [
+    "KilimoLink",
+    "Solana",
+    "marketplace",
+    "food security",
+    "climate resilience",
+    "agritech",
+    "Kenya",
+    "urban farming",
+    "carbon tracking"
+  ],
   "engines": {
     "node": ">=18.0.0"
   },
