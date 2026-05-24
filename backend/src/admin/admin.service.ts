@@ -161,7 +161,8 @@ export class AdminService {
       return { success: true, message: `Successfully seeded ${productsData.length} products from official datasets.` };
     } catch (error) {
       console.error('Seeding failed:', error);
-      throw new Error('Failed to seed from datasets: ' + error.message);
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      throw new Error('Failed to seed from datasets: ' + message);
     }
   }
 }

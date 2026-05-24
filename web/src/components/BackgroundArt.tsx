@@ -1,23 +1,51 @@
 import React from 'react';
 import Sketch from 'react-p5';
-import p5Types from 'p5';
 
 interface BackgroundArtProps {
   seed?: number;
 }
+
+type P5Vector = {
+  x: number;
+  y: number;
+  add: (vector: P5Vector) => void;
+  limit: (max: number) => void;
+  mult: (value: number) => void;
+  setMag: (value: number) => void;
+};
+
+type P5Instance = {
+  width: number;
+  height: number;
+  windowWidth: number;
+  windowHeight: number;
+  frameCount: number;
+  TWO_PI: number;
+  random: (max: number) => number;
+  randomSeed: (seed: number) => void;
+  noiseSeed: (seed: number) => void;
+  noise: (x: number, y: number, z?: number) => number;
+  createVector: (x?: number, y?: number) => P5Vector;
+  createCanvas: (width: number, height: number) => { parent: (element: Element) => void };
+  background: (r: number, g: number, b: number) => void;
+  stroke: (r: number, g: number, b: number, a?: number) => void;
+  strokeWeight: (weight: number) => void;
+  point: (x: number, y: number) => void;
+  resizeCanvas: (width: number, height: number) => void;
+};
 
 export const BackgroundArt: React.FC<BackgroundArtProps> = ({ seed = 2026 }) => {
   const particles: Particle[] = [];
   const numParticles = 100;
 
   class Particle {
-    pos: p5Types.Vector;
-    vel: p5Types.Vector;
-    acc: p5Types.Vector;
+    pos: P5Vector;
+    vel: P5Vector;
+    acc: P5Vector;
     maxSpeed: number;
-    p5: p5Types;
+    p5: P5Instance;
 
-    constructor(p5: p5Types) {
+    constructor(p5: P5Instance) {
       this.p5 = p5;
       this.pos = p5.createVector(p5.random(p5.width), p5.random(p5.height));
       this.vel = p5.createVector(0, 0);
@@ -37,7 +65,7 @@ export const BackgroundArt: React.FC<BackgroundArtProps> = ({ seed = 2026 }) => 
       if (this.pos.y < 0) this.pos.y = this.p5.height;
     }
 
-    follow(vectors: p5Types.Vector[], scl: number, cols: number) {
+    follow(vectors: P5Vector[], scl: number, cols: number) {
       const x = Math.floor(this.pos.x / scl);
       const y = Math.floor(this.pos.y / scl);
       const index = x + y * cols;
@@ -45,7 +73,7 @@ export const BackgroundArt: React.FC<BackgroundArtProps> = ({ seed = 2026 }) => 
       this.applyForce(force);
     }
 
-    applyForce(force: p5Types.Vector) {
+    applyForce(force: P5Vector) {
       this.acc.add(force);
     }
 
@@ -56,7 +84,7 @@ export const BackgroundArt: React.FC<BackgroundArtProps> = ({ seed = 2026 }) => 
     }
   }
 
-  const setup = (p5: p5Types, canvasParentRef: Element) => {
+  const setup = (p5: P5Instance, canvasParentRef: Element) => {
     p5.createCanvas(p5.windowWidth, p5.windowHeight).parent(canvasParentRef);
     p5.randomSeed(seed);
     p5.noiseSeed(seed);
@@ -66,7 +94,7 @@ export const BackgroundArt: React.FC<BackgroundArtProps> = ({ seed = 2026 }) => 
     p5.background(252, 252, 252); // Off-white
   };
 
-  const draw = (p5: p5Types) => {
+  const draw = (p5: P5Instance) => {
     const scl = 20;
     const cols = Math.floor(p5.width / scl);
     const rows = Math.floor(p5.height / scl);
@@ -93,7 +121,7 @@ export const BackgroundArt: React.FC<BackgroundArtProps> = ({ seed = 2026 }) => 
     }
   };
 
-  const windowResized = (p5: p5Types) => {
+  const windowResized = (p5: P5Instance) => {
     p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
   };
 

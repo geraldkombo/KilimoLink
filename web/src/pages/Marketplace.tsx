@@ -132,7 +132,7 @@ export function Marketplace() {
         <Box sx={{ textAlign: 'center', py: 12, bgcolor: '#f9fafb', borderRadius: 8, border: '1px solid #e5e7eb' }}>
           <Typography color="#374151" variant="h5" sx={{ fontWeight: 800, mb: 2 }}>Something went wrong</Typography>
           <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>We couldn't load the marketplace. Please try again.</Typography>
-          <Button variant="contained" onClick={fetchProducts} sx={{ bgcolor: '#064e3b', px: 6, py: 1.5, borderRadius: 4, fontWeight: 800 }}>
+          <Button variant="contained" onClick={() => void fetchProducts()} sx={{ bgcolor: '#064e3b', px: 6, py: 1.5, borderRadius: 4, fontWeight: 800 }}>
             Try Again
           </Button>
         </Box>

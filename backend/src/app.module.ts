@@ -11,6 +11,7 @@ import { PrismaModule } from './common/prisma/prisma.module';
 import { RedisModule } from './common/redis/redis.module';
 import { HealthModule } from './health/health.module';
 import { MarketModule } from './market/market.module';
+import { OracleModule } from './oracle/oracle.module';
 import { OrdersModule } from './orders/orders.module';
 import { UsersModule } from './users/users.module';
 
@@ -30,6 +31,7 @@ import { UsersModule } from './users/users.module';
     AuthModule,
     UsersModule,
     MarketModule,
+    OracleModule,
     OrdersModule,
     AdminModule,
     AiModule,

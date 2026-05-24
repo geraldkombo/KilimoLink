@@ -5,7 +5,7 @@ export class CreateProductDto {
   @ApiProperty({ example: 'Fresh Organic Kale' })
   @IsString()
   @IsNotEmpty()
-  title: string;
+  title!: string;
 
   @ApiProperty({ example: 'Grown in urban vertical farms.' })
   @IsString()
@@ -14,16 +14,16 @@ export class CreateProductDto {
 
   @ApiProperty({ example: 30 })
   @IsNumber()
-  price: number;
+  price!: number;
 
   @ApiProperty({ example: 100 })
   @IsNumber()
-  quantity: number;
+  quantity!: number;
 
   @ApiProperty({ example: 'Vegetables' })
   @IsString()
   @IsNotEmpty()
-  category: string;
+  category!: string;
 
   @ApiProperty({ example: 'https://images.unsplash.com/...' })
   @IsString()
@@ -32,7 +32,7 @@ export class CreateProductDto {
 
   @ApiProperty({ example: { lat: -1.28, lng: 36.81, address: 'Nairobi' } })
   @IsObject()
-  location: {
+  location!: {
     lat: number;
     lng: number;
     address?: string;

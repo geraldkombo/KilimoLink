@@ -5,11 +5,11 @@ export class CreateOrderDto {
   @ApiProperty({ example: 'prod_123' })
   @IsString()
   @IsNotEmpty()
-  productId: string;
+  productId!: string;
 
   @ApiProperty({ example: 2 })
   @IsNumber()
-  quantity: number;
+  quantity!: number;
 
   @ApiProperty({ example: 'CRYPTO' })
   @IsString()

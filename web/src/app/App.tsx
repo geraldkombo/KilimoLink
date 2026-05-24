@@ -18,7 +18,8 @@ import { motion } from 'framer-motion';
 import { BackgroundArt } from '../components/BackgroundArt';
 import { UIProvider, useUI } from './UIContext';
 import { ProductProvider } from './ProductContext';
-import { setAuthToken } from '../services/api';
+import { api, setAuthToken } from '../services/api';
+import { applyToken, saveToken } from '../services/auth';
 
 const MotionBox = motion(Box);
 const MotionTypography = motion(Typography);
@@ -292,16 +293,40 @@ export function AppContent() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   useEffect(() => {
+    applyToken('user');
+  }, []);
+
+  useEffect(() => {
     const syncToken = async () => {
-      if (authenticated) {
-        const token = await getAccessToken();
-        setAuthToken(token);
-      } else {
+      if (!authenticated) {
+        saveToken('user', null);
         setAuthToken(null);
+        return;
       }
+
+      await getAccessToken();
+
+      const email = user?.email?.address ?? `${user?.wallet?.address || 'wallet-user'}@privy.kilimolink`;
+      const name =
+        user?.email?.address?.split('@')[0] ||
+        user?.wallet?.address?.slice(0, 8) ||
+        'Farmer';
+
+      const response = await api.post('/auth/login-email', {
+        email,
+        name,
+      });
+
+      const token = response.data?.token;
+      saveToken('user', token);
+      setAuthToken(token);
     };
-    syncToken();
-  }, [authenticated, getAccessToken]);
+    syncToken().catch((error) => {
+      console.error('Failed to sync backend auth token', error);
+      saveToken('user', null);
+      setAuthToken(null);
+    });
+  }, [authenticated, getAccessToken, user]);
 
   useEffect(() => {
     if (authenticated && user?.wallet?.address) {
@@ -377,7 +402,16 @@ export function AppContent() {
                     Connect
                   </Button>
                 ) : (
-                  <Button variant="outlined" color="success" onClick={logout} sx={{ textTransform: 'none', borderRadius: 3, px: 3, py: 1, fontWeight: 'bold' }}>
+                  <Button
+                    variant="outlined"
+                    color="success"
+                    onClick={() => {
+                      saveToken('user', null);
+                      setAuthToken(null);
+                      logout();
+                    }}
+                    sx={{ textTransform: 'none', borderRadius: 3, px: 3, py: 1, fontWeight: 'bold' }}
+                  >
                     {user?.email?.address?.split('@')[0] || 'Farmer'}
                   </Button>
                 )}
@@ -428,7 +462,17 @@ export function AppContent() {
                   <AccountBalanceWalletIcon sx={{ color: '#064e3b' }} />
                   <Typography variant="body2" sx={{ fontWeight: 800 }}>{totalUSDC} USDC</Typography>
                 </Box>
-                <Button fullWidth variant="outlined" color="error" onClick={logout} sx={{ borderRadius: 3, py: 1.5, fontWeight: 'bold' }}>
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  color="error"
+                  onClick={() => {
+                    saveToken('user', null);
+                    setAuthToken(null);
+                    logout();
+                  }}
+                  sx={{ borderRadius: 3, py: 1.5, fontWeight: 'bold' }}
+                >
                   Logout
                 </Button>
               </>
