@@ -18,7 +18,7 @@ KilimoLink is a decentralized, climate-resilient food marketplace designed for t
 - **Caching**: Redis layer caches all product listings for < 50ms response times.
 
 ### 2. Trust Layer
-- **Institutional Intelligence**: Direct links between global founders and Kenyan farmers.
+- **Direct Connections**: Direct links between global founders and Kenyan farmers.
 - **Proof-of-Trade**: On-chain verification of every transaction.
 - **Security**: Strict input validation (DTOs), JWT-based auth, and secret management.
 

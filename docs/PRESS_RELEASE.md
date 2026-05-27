@@ -6,7 +6,7 @@
 
 **NAIROBI, KENYA | MAY 11, 2026** — KilimoLink, a pioneering digital exchange for urban agriculture, today announced the launch of its hyperlocal marketplace. Developed for the **Innovate4Cities 2026** global challenge, the platform provides a technological implementation of "Urban Social Ecology" frameworks—connecting producers in informal settlements directly with urban consumers to eliminate food waste and transport-related CO2 emissions.
 
-As cities across Africa face rapid urbanization and climate instability, KilimoLink offers a functional bridge between the city and the farm. The platform is designed to align with the mandates of global resilience foundations and institutional investors focused on climate-resilient agriculture.
+As cities across Africa face rapid urbanization and climate instability, KilimoLink offers a functional bridge between the city and the farm. The platform is designed to align with the mandates of global resilience foundations and impact-focused investors.
 
 "KilimoLink is more than a marketplace; it is a city-wide resilience engine," said **Gerald Kombo**, Creative Strategist and Lead Researcher. "By prioritizing 'Ultra-Local' sourcing within a 5km radius, we are not just selling produce—we are mapping urban green spaces and providing a digital footprint for farmers who were previously invisible to the global economy."
 

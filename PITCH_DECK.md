@@ -11,7 +11,7 @@
 ### SLIDE 2: The Solution
 - **KilimoLink**: A direct-to-city liquidity layer.
 - **Technology**: Solana-backed trust, Redis-powered speed, and AI-driven insights.
-- **Execution**: Institutional intelligence from global founders.
+- **Execution**: Real-world experience from global founders.
 
 ### SLIDE 3: Visual Identity
 - **Premium Design**: Moving beyond generic AI aesthetics.

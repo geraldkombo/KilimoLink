@@ -32,9 +32,9 @@ KilimoLink’s strategy is informed by real-world execution data from Kenya’s 
 - **Hyperlocal Resilience**: Kenya is unique in its adoption of micro-fulfillment and digital supermarket chains. KilimoLink leverages this "white canvas moment" by turning every local farm into a decentralized fulfillment center.
 - **Regulatory Resilience**: We focus on the "stuff we control"—good execution and onboarding users—while remaining agile to the unpredictable regulatory environment typical of emerging markets.
 - **The "Kilimo Ecosystem" Vision**: Our legacy is not just the orders processed, but the ecosystem of agricultural entrepreneurs we spawn. We aim to be a talent incubator for the next generation of Kenyan agritech.
-- **Institutional Intelligence & Group Tech**: Inspired by global delivery leaders, we leverage "institutional intelligence" and group-scale technology. By sharing strategic experiments and verified results across our network, we avoid redundant mistakes and scale proven successes faster.
+- **Shared Knowledge & Group Tech**: Inspired by global delivery leaders, we leverage shared knowledge and group-scale technology. By sharing strategic experiments and verified results across our network, we avoid redundant mistakes and scale proven successes faster.
 - **Global Tech for Local Markets**: We recognize the importance of developing a tech stack that is robust enough for global standards but flexible enough to be "super local." This includes developing core group tech right here in Kenya for the world.
-- **Strategic Partnership & Trust**: We build with a focus on long-term institutional trust and relationship management, ensuring sustainable growth through high-level sector alignment.
+- **Strategic Partnership & Trust**: We build with a focus on long-term relationships and trust, ensuring sustainable growth through high-level sector alignment.
 
 ## Growth Engine Strategy: Signal-First Foundation
 Following the AARRR framework (Awareness, Acquisition, Activation, Retention, Referral, Revenue), KilimoLink focuses on:

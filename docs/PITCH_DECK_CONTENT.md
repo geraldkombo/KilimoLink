@@ -14,7 +14,7 @@
 
 ## Slide 4: Financial Empowerment (Proof of Trade)
 *Visual: A farmer showing their phone with a 'Credit Score' based on their last 10 successful trades.*
-**Script**: "We don't need complex institutional bridges. We use Solana to record every successful trade. This 'Proof of Trade' becomes the farmer's collateral. While they get paid in M-Pesa today, they are building the digital history they need to access formal credit tomorrow."
+**Script**: "We don't need complex financial bridges. We use Solana to record every successful trade. This 'Proof of Trade' becomes the farmer's collateral. While they get paid in M-Pesa today, they are building the digital history they need to access formal credit tomorrow."
 
 ## Slide 5: The "Magic" (Privy)
 *Visual: A farmer logging in with just an email and a wallet being created.*
@@ -26,9 +26,9 @@
 
 ## Slide 7: The Road Ahead (Global Scalability)
 *Visual: A world map highlighting emerging markets with similar urban-rural gaps (Lagos, Jakarta, Mumbai).*
-**Script**: "The problem we are solving isn't unique to Kenya. Our protocol—from the verification engine to the institutional treasury—is built for global export. We are building the infrastructure for the next billion participants in the global food economy."
+**Script**: "The problem we are solving isn't unique to Kenya. Our protocol—from the verification engine to the treasury system—is built for global export. We are building the infrastructure for the next billion participants in the global food economy."
 
 ---
 
 ## 30-Second Elevator Pitch
-"KilimoLink is a decentralized exchange protocol that connects urban consumers directly with rural producers. We solve the trust gap in the supply chain by using Solana for on-chain verification and official statistical data to guarantee fair pricing. With institutional-grade governance and seamless phone/email onboarding, we are building a financial operating system for the global urban-rural nexus, starting in Nairobi."
+"KilimoLink is a decentralized exchange protocol that connects urban consumers directly with rural producers. We solve the trust gap in the supply chain by using Solana for on-chain verification and official statistical data to guarantee fair pricing. With secure governance and seamless phone/email onboarding, we are building a financial operating system for the global urban-rural nexus, starting in Nairobi."
