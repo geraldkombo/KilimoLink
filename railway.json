@@ -1,10 +1,11 @@
 {
-  "$schema": "https://railway.app/railway.schema.json",
+  "$schema": "https://railway.com/railway.schema.json",
   "build": {
-    "builder": "NIXPACKS",
-    "buildCommand": "pnpm install && cd backend && npx prisma generate && npx prisma migrate deploy && pnpm run build"
+    "builder": "RAILPACK",
+    "buildCommand": "cd backend && npx prisma generate && pnpm run build"
   },
   "deploy": {
+    "preDeployCommand": "cd backend && npx prisma migrate deploy",
     "startCommand": "cd backend && node dist/main.js",
     "healthcheckPath": "/api/v1/health",
     "healthcheckTimeout": 120,
