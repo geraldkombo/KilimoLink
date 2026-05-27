@@ -256,6 +256,7 @@ export function createMockPrismaService() {
     notificationLog: mockQuery('notificationLog'),
     $connect: async () => undefined,
     $disconnect: async () => undefined,
+    $queryRaw: async () => [{ 1: 1 }],
     onModuleInit: async () => undefined,
     onModuleDestroy: async () => undefined,
   };

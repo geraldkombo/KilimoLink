@@ -68,21 +68,18 @@ jobs:
 
       - name: Lint backend
         run: pnpm --filter @kilimolink/backend lint
-        continue-on-error: true
 
       - name: Run backend tests
         run: pnpm --filter @kilimolink/backend test --reporter default
 
       - name: Lint frontend
         run: pnpm --filter @kilimolink/web lint
-        continue-on-error: true
 
       - name: Build frontend
         run: pnpm --filter @kilimolink/web build
 
       - name: Run frontend tests
         run: pnpm --filter @kilimolink/web test
-        continue-on-error: true
 
       - name: Build backend
         run: pnpm --filter @kilimolink/backend build

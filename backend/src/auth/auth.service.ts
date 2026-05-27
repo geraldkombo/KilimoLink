@@ -43,10 +43,10 @@ export class AuthService {
 
   async verifyOtp(phone: string, code: string) {
     const user = await this.prisma.user.upsert({
-      where: { email: `${phone}@kilimolink.com` }, // Mock email from phone
+      where: { email: `${phone}@kilimolink.demo` }, // Mock email from phone
       update: {},
       create: { 
-        email: `${phone}@kilimolink.com`, 
+        email: `${phone}@kilimolink.demo`, 
         name: `User ${phone}`, 
         phone 
       }

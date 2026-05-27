@@ -99,8 +99,9 @@ describe('Market (e2e)', () => {
       .get('/api/v1/products')
       .expect(200);
 
-    expect(Array.isArray(res.body)).toBe(true);
-    expect(res.body.length).toBeGreaterThanOrEqual(1);
+    expect(res.body.products).toBeDefined();
+    expect(Array.isArray(res.body.products)).toBe(true);
+    expect(res.body.total).toBeGreaterThanOrEqual(1);
   });
 
   it('GET /api/v1/products with lat/lng sorts by distance', async () => {

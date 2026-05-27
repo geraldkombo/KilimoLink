@@ -15,7 +15,10 @@ interface ProductContextType {
   products: Product[];
   loading: boolean;
   error: string | null;
-  fetchProducts: (coords?: { lat: number; lng: number }) => Promise<void>;
+  total: number;
+  page: number;
+  totalPages: number;
+  fetchProducts: (coords?: { lat: number; lng: number }, pageNum?: number) => Promise<void>;
   searchProducts: (query: string) => Product[];
 }
 
@@ -25,14 +28,29 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
-  const fetchProducts = useCallback(async (coords?: { lat: number; lng: number }) => {
+  const fetchProducts = useCallback(async (coords?: { lat: number; lng: number }, pageNum = 1) => {
     setLoading(true);
     setError(null);
     try {
-      const url = coords ? `/products?lat=${coords.lat}&lng=${coords.lng}` : '/products';
+      let url = `/products?page=${pageNum}&limit=50`;
+      if (coords) url += `&lat=${coords.lat}&lng=${coords.lng}`;
       const res = await api.get(url);
-      setProducts(res.data);
+      const data = res.data;
+      if (Array.isArray(data)) {
+        setProducts(data);
+        setTotal(data.length);
+        setPage(1);
+        setTotalPages(1);
+      } else {
+        setProducts(data.products || []);
+        setTotal(data.total || 0);
+        setPage(data.page || 1);
+        setTotalPages(data.totalPages || 0);
+      }
     } catch (err) {
       console.error('Failed to fetch products', err);
       setError('Failed to load products. Please check your connection.');
@@ -52,7 +70,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
   }, [products]);
 
   return (
-    <ProductContext.Provider value={{ products, loading, error, fetchProducts, searchProducts }}>
+    <ProductContext.Provider value={{ products, loading, error, total, page, totalPages, fetchProducts, searchProducts }}>
       {children}
     </ProductContext.Provider>
   );

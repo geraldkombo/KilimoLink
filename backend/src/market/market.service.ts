@@ -37,8 +37,9 @@ export class MarketService {
     return product;
   }
 
-  async listProducts(lat?: number, lng?: number) {
-    const cacheKey = 'products:all';
+  async listProducts(lat?: number, lng?: number, page = 1, limit = 50) {
+    const skip = (page - 1) * limit;
+    const cacheKey = `products:page${page}:limit${limit}`;
     let products: any[];
 
     const cached = await this.redis.get(cacheKey);
@@ -46,10 +47,12 @@ export class MarketService {
       products = JSON.parse(cached);
     } else {
       products = await this.prisma.product.findMany({
+        skip,
+        take: limit,
         include: { farmer: true },
         orderBy: { createdAt: 'desc' },
       });
-      await this.redis.set(cacheKey, JSON.stringify(products), 300); // Cache for 5 mins
+      await this.redis.set(cacheKey, JSON.stringify(products), 300);
     }
 
     if (lat !== undefined && lng !== undefined) {
@@ -61,7 +64,8 @@ export class MarketService {
         .sort((a, b) => (a.distance || 0) - (b.distance || 0));
     }
 
-    return products;
+    const total = await this.prisma.product.count();
+    return { products, total, page, limit, totalPages: Math.ceil(total / limit) };
   }
 
   async getProductById(productId: string) {

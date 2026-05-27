@@ -3,6 +3,8 @@ import type { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { RedisService } from '../src/common/redis/redis.service';
+import { PrismaService } from '../src/common/prisma/prisma.service';
+import { createMockPrismaService } from './prisma-mock';
 
 describe('App (e2e)', () => {
   let app: INestApplication;
@@ -13,6 +15,8 @@ describe('App (e2e)', () => {
     })
       .overrideProvider(RedisService)
       .useValue({ get: async () => null, set: async () => undefined, del: async () => undefined })
+      .overrideProvider(PrismaService)
+      .useValue(createMockPrismaService())
       .compile();
 
     app = moduleRef.createNestApplication();

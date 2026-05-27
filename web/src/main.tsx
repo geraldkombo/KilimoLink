@@ -32,7 +32,7 @@ function Root() {
     <React.StrictMode>
       {/* Privy handles auth — email for farmers, wallet for crypto users */}
       <PrivyProvider
-        appId={import.meta.env.VITE_PRIVY_APP_ID || 'cmp000ywe01mm0cldpk8r2kt7'}
+        appId={import.meta.env.VITE_PRIVY_APP_ID}
         config={{
           loginMethods: ['email', 'wallet'],
           appearance: {

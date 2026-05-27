@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { OrdersService } from './orders.service';
 import { CurrentUser, JwtUser } from '../common/auth/current-user.decorator';
@@ -18,7 +18,15 @@ export class OrdersController {
   }
 
   @Get()
-  getUserOrders(@CurrentUser() user: JwtUser) {
-    return this.ordersService.getUserOrders(user.userId);
+  getUserOrders(
+    @CurrentUser() user: JwtUser,
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
+  ) {
+    return this.ordersService.getUserOrders(
+      user.userId,
+      page ? Math.max(1, Number(page)) : 1,
+      limit ? Math.min(100, Math.max(1, Number(limit))) : 20,
+    );
   }
 }

@@ -101,6 +101,6 @@ describe('Orders (e2e)', () => {
       .set('Authorization', `Bearer ${buyerToken}`)
       .expect(200);
 
-    expect(Array.isArray(res.body)).toBe(true);
+    expect(Array.isArray(res.body.orders)).toBe(true);
   });
 });
