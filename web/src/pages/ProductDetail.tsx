@@ -22,16 +22,11 @@ export function ProductDetail() {
       setFetching(true);
       setError(null);
       try {
-        const res = await api.get(`/products`);
-        const p = res.data.find((item: any) => item.id === id);
-        if (p) {
-          setProduct(p);
-        } else {
-          setError('Product not found.');
-        }
-      } catch (err) {
+        const res = await api.get(`/products/${id}`);
+        setProduct(res.data);
+      } catch (err: any) {
         console.error('Failed to fetch product', err);
-        setError('Failed to load product details.');
+        setError(err.response?.status === 404 ? 'Product not found.' : 'Failed to load product details.');
       } finally {
         setFetching(false);
       }
@@ -65,7 +60,7 @@ export function ProductDetail() {
       setTimeout(() => navigate('/orders'), 2000);
     } catch (err: any) {
       console.error('Order failed', err);
-      alert(err.response?.data?.message || 'Failed to place order.');
+      setError(err.response?.data?.message || 'Failed to place order.');
     } finally {
       setLoading(false);
     }

@@ -42,11 +42,11 @@ function Root() {
       <PrivyProvider
         appId={import.meta.env.VITE_PRIVY_APP_ID || 'cmp000ywe01mm0cldpk8r2kt7'}
         config={{
-          loginMethods: ['email', 'wallet', 'google'],
+          loginMethods: ['email', 'wallet'],
           appearance: {
             theme: 'light',
             accentColor: '#064e3b',
-            logo: '/handshake.jpg', // Using the primary visual as logo for now
+            logo: '/handshake.jpg',
             showWalletLoginFirst: false,
           },
           embeddedWallets: {

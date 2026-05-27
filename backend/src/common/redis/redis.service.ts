@@ -11,6 +11,10 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
   constructor(private readonly configService: ConfigService) {}
 
   async onModuleInit() {
+    if (process.env.DISABLE_REDIS === 'true') {
+      this.isAvailable = false;
+      return;
+    }
     this.client = new Redis({
       host: this.configService.get('REDIS_HOST', 'localhost'),
       port: this.configService.get('REDIS_PORT', 6379),
@@ -40,7 +44,9 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
   }
 
   onModuleDestroy() {
-    this.client.disconnect();
+    if (this.client) {
+      this.client.disconnect();
+    }
   }
 
   async get(key: string): Promise<string | null> {

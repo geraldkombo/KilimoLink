@@ -1,7 +1,8 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../common/prisma/prisma.service';
 import { Role } from '@prisma/client';
 import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
 import { RedisService } from '../common/redis/redis.service';
 
 @Injectable()
@@ -61,6 +62,54 @@ export class MarketService {
     }
 
     return products;
+  }
+
+  async getProductById(productId: string) {
+    const product = await this.prisma.product.findUnique({
+      where: { id: productId },
+      include: { farmer: true },
+    });
+    if (!product) throw new NotFoundException('Product not found');
+    return product;
+  }
+
+  async getMyProducts(farmerId: string) {
+    return this.prisma.product.findMany({
+      where: { farmerId },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  async updateProduct(productId: string, farmerId: string, dto: UpdateProductDto) {
+    const product = await this.prisma.product.findUnique({ where: { id: productId } });
+    if (!product) throw new NotFoundException('Product not found');
+    if (product.farmerId !== farmerId) throw new BadRequestException('You can only edit your own products');
+
+    const updated = await this.prisma.product.update({
+      where: { id: productId },
+      data: {
+        ...(dto.title !== undefined && { title: dto.title }),
+        ...(dto.description !== undefined && { description: dto.description }),
+        ...(dto.price !== undefined && { price: dto.price }),
+        ...(dto.quantity !== undefined && { quantity: dto.quantity }),
+        ...(dto.category !== undefined && { category: dto.category }),
+        ...(dto.imageUrl !== undefined && { imageUrl: dto.imageUrl }),
+        ...(dto.location !== undefined && { location: dto.location as any }),
+      },
+    });
+
+    await this.redis.del('products:all');
+    return updated;
+  }
+
+  async deleteProduct(productId: string, farmerId: string) {
+    const product = await this.prisma.product.findUnique({ where: { id: productId } });
+    if (!product) throw new NotFoundException('Product not found');
+    if (product.farmerId !== farmerId) throw new BadRequestException('You can only delete your own products');
+
+    await this.prisma.product.delete({ where: { id: productId } });
+    await this.redis.del('products:all');
+    return { success: true };
   }
 
   private calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number | null {

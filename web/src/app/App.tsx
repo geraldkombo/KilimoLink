@@ -1,14 +1,19 @@
-import { useState, useEffect, useMemo } from 'react';
-import { Grid, Divider } from '@mui/material';
+import { useState, useEffect, useMemo, useRef } from 'react';
+import { Grid, Divider, Dialog, DialogTitle, DialogContent, DialogActions, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 import { AppBar, Box, Button, Container, Toolbar, Typography, Stack, useTheme, useMediaQuery, Paper, IconButton, Drawer, List, ListItem, ListItemText, ListItemButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
-import { BrowserRouter, Link, Route, Routes, useNavigate } from 'react-router-dom';
+import PersonIcon from '@mui/icons-material/Person';
+import StorefrontIcon from '@mui/icons-material/Storefront';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { BrowserRouter, Link, Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { usePrivy } from '@privy-io/react-auth';
+import { AnimatePresence } from 'framer-motion';
 import { AdminPage } from '../pages/AdminPage';
 import { Marketplace } from '../pages/Marketplace';
 import { SellProduct } from '../pages/SellProduct';
 import { ProductDetail } from '../pages/ProductDetail';
+import { MyProducts } from '../pages/MyProducts';
 import { OrdersPage } from '../pages/OrdersPage';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -19,9 +24,8 @@ import { BackgroundArt } from '../components/BackgroundArt';
 import { UIProvider, useUI } from './UIContext';
 import { ProductProvider } from './ProductContext';
 import { api, setAuthToken } from '../services/api';
-import { applyToken, saveToken } from '../services/auth';
+import { applyToken, saveToken, loadRole, saveRole, isOnboardingDone, setOnboardingDone, clearAllAuth } from '../services/auth';
 
-const MotionBox = motion(Box);
 const MotionTypography = motion(Typography);
 const MotionPaper = motion(Paper);
 
@@ -285,12 +289,33 @@ function HomePage() {
   );
 }
 
+const MotionBox = motion(Box);
+
+function PageTransition({ children }: { children: React.ReactNode }) {
+  return (
+    <MotionBox
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -12 }}
+      transition={{ duration: 0.3, ease: 'easeOut' }}
+    >
+      {children}
+    </MotionBox>
+  );
+}
+
 export function AppContent() {
   const { login, authenticated, user, logout, getAccessToken } = usePrivy();
   const [balances, setBalances] = useState<any[]>([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [currentRole, setCurrentRole] = useState<string | null>(loadRole());
+  const [onboardingOpen, setOnboardingOpen] = useState(false);
+  const [selectedRole, setSelectedRole] = useState<string>('FARMER');
+  const [loginError, setLoginError] = useState<string | null>(null);
+  const [syncKey, setSyncKey] = useState(0);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const location = useLocation();
 
   useEffect(() => {
     applyToken('user');
@@ -301,10 +326,16 @@ export function AppContent() {
       if (!authenticated) {
         saveToken('user', null);
         setAuthToken(null);
+        setCurrentRole(null);
         return;
       }
 
-      await getAccessToken();
+      try {
+        await getAccessToken();
+      } catch {
+        setLoginError('Could not complete authentication. Try again.');
+        return;
+      }
 
       const email = user?.email?.address ?? `${user?.wallet?.address || 'wallet-user'}@privy.kilimolink`;
       const name =
@@ -312,21 +343,66 @@ export function AppContent() {
         user?.wallet?.address?.slice(0, 8) ||
         'Farmer';
 
+      const savedRole = loadRole();
+      if (!isOnboardingDone() && !savedRole) {
+        setSelectedRole('FARMER');
+        setOnboardingOpen(true);
+        return;
+      }
+
+      try {
+        const response = await api.post('/auth/login-email', {
+          email,
+          name,
+          role: savedRole || 'FARMER',
+        });
+
+        const token = response.data?.token;
+        const role = response.data?.user?.role || savedRole || 'FARMER';
+        saveToken('user', token);
+        saveRole(role);
+        setAuthToken(token);
+        setCurrentRole(role);
+        setLoginError(null);
+      } catch {
+        setLoginError('Could not connect to the server. Please try again later.');
+        clearAllAuth();
+        setCurrentRole(null);
+      }
+    };
+    syncToken();
+  }, [authenticated, getAccessToken, user, syncKey]);
+
+  const handleOnboardingConfirm = async () => {
+    setOnboardingOpen(false);
+    setOnboardingDone(true);
+    saveRole(selectedRole);
+
+    const email = user?.email?.address ?? `${user?.wallet?.address || 'wallet-user'}@privy.kilimolink`;
+    const name =
+      user?.email?.address?.split('@')[0] ||
+      user?.wallet?.address?.slice(0, 8) ||
+      'Farmer';
+
+    try {
       const response = await api.post('/auth/login-email', {
         email,
         name,
+        role: selectedRole,
       });
-
       const token = response.data?.token;
+      const role = response.data?.user?.role || selectedRole;
       saveToken('user', token);
+      saveRole(role);
       setAuthToken(token);
-    };
-    syncToken().catch((error) => {
-      console.error('Failed to sync backend auth token', error);
-      saveToken('user', null);
-      setAuthToken(null);
-    });
-  }, [authenticated, getAccessToken, user]);
+      setCurrentRole(role);
+      setLoginError(null);
+      setSyncKey(k => k + 1);
+    } catch (err) {
+      console.error('Failed to complete onboarding', err);
+      setLoginError('Onboarding failed. Please try again.');
+    }
+  };
 
   useEffect(() => {
     if (authenticated && user?.wallet?.address) {
@@ -374,6 +450,26 @@ export function AppContent() {
             </IconButton>
           ) : (
             <Stack direction="row" spacing={1} alignItems="center">
+              {authenticated && currentRole && (
+                <Box sx={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: 0.5, 
+                  bgcolor: currentRole === 'FARMER' ? '#f0fdf4' : '#eff6ff', 
+                  px: 1.5, 
+                  py: 0.5, 
+                  borderRadius: 2,
+                }}>
+                  {currentRole === 'FARMER' ? (
+                    <StorefrontIcon sx={{ fontSize: 16, color: '#059669' }} />
+                  ) : (
+                    <ShoppingCartIcon sx={{ fontSize: 16, color: '#2563eb' }} />
+                  )}
+                  <Typography variant="caption" sx={{ fontWeight: 800, color: currentRole === 'FARMER' ? '#064e3b' : '#1e40af' }}>
+                    {currentRole}
+                  </Typography>
+                </Box>
+              )}
               {authenticated && totalUSDC > 0 && (
                 <Box sx={{ 
                   display: 'flex', 
@@ -392,6 +488,9 @@ export function AppContent() {
                 </Box>
               )}
               <Button color="inherit" component={Link} to="/market" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Market</Button>
+              {authenticated && currentRole === 'FARMER' && (
+                <Button color="inherit" component={Link} to="/my-products" sx={{ color: '#333', fontWeight: 600, px: 2 }}>My Products</Button>
+              )}
               <Button color="inherit" component={Link} to="/orders" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Orders</Button>
               {authenticated && user?.email?.address === 'admin@kilimolink.demo' && (
                 <Button color="inherit" component={Link} to="/admin" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Admin</Button>
@@ -443,6 +542,13 @@ export function AppContent() {
               <ListItemText primary="My Orders" primaryTypographyProps={{ fontWeight: 700 }} />
             </ListItemButton>
           </ListItem>
+          {authenticated && currentRole === 'FARMER' && (
+            <ListItem disablePadding>
+              <ListItemButton component={Link} to="/my-products" onClick={() => setMobileMenuOpen(false)}>
+                <ListItemText primary="My Products" primaryTypographyProps={{ fontWeight: 700 }} />
+              </ListItemButton>
+            </ListItem>
+          )}
           {authenticated && user?.email?.address === 'admin@kilimolink.demo' && (
             <ListItem disablePadding>
               <ListItemButton component={Link} to="/admin" onClick={() => setMobileMenuOpen(false)}>
@@ -481,16 +587,121 @@ export function AppContent() {
         </List>
       </Drawer>
 
-      <Container sx={{ py: 6, flexGrow: 1 }}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/market" element={<Marketplace />} />
-          <Route path="/sell" element={<SellProduct />} />
-          <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/orders" element={<OrdersPage />} />
-          <Route path="/admin" element={<AdminPage />} />
-        </Routes>
-      </Container>
+      <Dialog open={onboardingOpen} maxWidth="sm" fullWidth PaperProps={{ sx: { borderRadius: 4, p: 2 } }}>
+        <DialogTitle sx={{ fontWeight: 900, color: '#064e3b', textAlign: 'center', fontSize: '1.5rem' }}>
+          Welcome to KilimoLink
+        </DialogTitle>
+        <DialogContent>
+          <Typography sx={{ textAlign: 'center', mb: 4, color: '#4b5563' }}>
+            Are you here to buy fresh produce or sell your farm products?
+          </Typography>
+          <RadioGroup value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)} sx={{ gap: 2 }}>
+            <Paper
+              elevation={0}
+              onClick={() => setSelectedRole('FARMER')}
+              sx={{
+                p: 3,
+                borderRadius: 3,
+                border: '2px solid',
+                borderColor: selectedRole === 'FARMER' ? '#064e3b' : '#e5e7eb',
+                bgcolor: selectedRole === 'FARMER' ? '#f0fdf4' : 'white',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 2,
+                transition: 'all 0.2s',
+                '&:hover': { borderColor: '#064e3b', bgcolor: '#f0fdf4' },
+              }}
+            >
+              <FormControlLabel
+                value="FARMER"
+                control={<Radio sx={{ '&.Mui-checked': { color: '#064e3b' } }} />}
+                label={
+                  <Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <StorefrontIcon sx={{ color: '#064e3b' }} />
+                      <Typography sx={{ fontWeight: 800, color: '#064e3b' }}>I'm a Farmer</Typography>
+                    </Box>
+                    <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+                      List your produce, set prices, and sell directly to city consumers.
+                    </Typography>
+                  </Box>
+                }
+                sx={{ m: 0, width: '100%' }}
+              />
+            </Paper>
+            <Paper
+              elevation={0}
+              onClick={() => setSelectedRole('BUYER')}
+              sx={{
+                p: 3,
+                borderRadius: 3,
+                border: '2px solid',
+                borderColor: selectedRole === 'BUYER' ? '#064e3b' : '#e5e7eb',
+                bgcolor: selectedRole === 'BUYER' ? '#f0fdf4' : 'white',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 2,
+                transition: 'all 0.2s',
+                '&:hover': { borderColor: '#064e3b', bgcolor: '#f0fdf4' },
+              }}
+            >
+              <FormControlLabel
+                value="BUYER"
+                control={<Radio sx={{ '&.Mui-checked': { color: '#064e3b' } }} />}
+                label={
+                  <Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <ShoppingCartIcon sx={{ color: '#064e3b' }} />
+                      <Typography sx={{ fontWeight: 800, color: '#064e3b' }}>I'm a Buyer</Typography>
+                    </Box>
+                    <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+                      Browse and buy fresh local produce directly from verified farmers.
+                    </Typography>
+                  </Box>
+                }
+                sx={{ m: 0, width: '100%' }}
+              />
+            </Paper>
+          </RadioGroup>
+        </DialogContent>
+        <DialogActions sx={{ px: 3, pb: 3 }}>
+          <Button
+            fullWidth
+            variant="contained"
+            size="large"
+            onClick={handleOnboardingConfirm}
+            sx={{ bgcolor: '#064e3b', py: 1.5, borderRadius: 3, fontWeight: 800, '&:hover': { bgcolor: '#065f46' } }}
+          >
+            Continue
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+        <Container sx={{ py: 6, flexGrow: 1 }}>
+          {loginError && (
+            <Box sx={{ mb: 3, p: 2, bgcolor: '#fef2f2', borderRadius: 3, border: '1px solid #fecaca', textAlign: 'center' }}>
+              <Typography sx={{ color: '#991b1b', fontWeight: 600, fontSize: '0.9rem' }}>{loginError}</Typography>
+              <Button size="small" sx={{ mt: 1, color: '#059669', fontWeight: 700, textTransform: 'none' }} onClick={() => { clearAllAuth(); logout(); }}>
+                Sign out and try again
+              </Button>
+            </Box>
+          )}
+          <AnimatePresence mode="wait">
+            <MotionBox key={location.pathname} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }}>
+              <Routes location={location}>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/market" element={<Marketplace />} />
+                <Route path="/sell" element={<SellProduct />} />
+                <Route path="/product/:id" element={<ProductDetail />} />
+                <Route path="/orders" element={<OrdersPage />} />
+                <Route path="/my-products" element={<MyProducts />} />
+                <Route path="/admin" element={<AdminPage />} />
+              </Routes>
+            </MotionBox>
+          </AnimatePresence>
+        </Container>
 
       <Box component="footer" sx={{ py: 6, borderTop: '1px solid #eee', bgcolor: 'white', mt: 'auto' }}>
         <Container maxWidth="lg">
@@ -509,6 +720,7 @@ export function AppContent() {
               <Stack spacing={1}>
                 <Link to="/market" style={{ textDecoration: 'none', color: '#666', fontSize: '0.875rem' }}>Marketplace</Link>
                 <Link to="/sell" style={{ textDecoration: 'none', color: '#666', fontSize: '0.875rem' }}>Sell Produce</Link>
+                <Link to="/my-products" style={{ textDecoration: 'none', color: '#666', fontSize: '0.875rem' }}>My Products</Link>
                 <Link to="/orders" style={{ textDecoration: 'none', color: '#666', fontSize: '0.875rem' }}>My Orders</Link>
               </Stack>
             </Grid>

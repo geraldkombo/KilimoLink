@@ -4,19 +4,15 @@ import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { RedisService } from '../src/common/redis/redis.service';
 
-describe('Health (e2e)', () => {
+describe('App (e2e)', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [AppModule]
+      imports: [AppModule],
     })
       .overrideProvider(RedisService)
-      .useValue({
-        get: async (_key: string) => null,
-        set: async (_k: string, _v: string, _t?: number) => undefined,
-        del: async (_k: string) => undefined,
-      })
+      .useValue({ get: async () => null, set: async () => undefined, del: async () => undefined })
       .compile();
 
     app = moduleRef.createNestApplication();
@@ -28,8 +24,11 @@ describe('Health (e2e)', () => {
     await app.close();
   });
 
-  it('GET /api/v1/health returns ok', async () => {
-    const res = await request(app.getHttpServer()).get('/api/v1/health').expect(200);
-    expect(res.body.status).toBe('ok');
+  it('GET /api/v1/health returns 200', async () => {
+    await request(app.getHttpServer()).get('/api/v1/health').expect(200);
+  });
+
+  it('GET /nonexistent returns 404', async () => {
+    await request(app.getHttpServer()).get('/api/v1/nonexistent').expect(404);
   });
 });

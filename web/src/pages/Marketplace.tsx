@@ -1,13 +1,12 @@
-import { useEffect, useState, useMemo, useCallback } from 'react';
-import { Box, Card, CardContent, CardMedia, Container, Grid, Typography, Chip, Button, TextField, InputAdornment, Stack, Skeleton, Fade, IconButton } from '@mui/material';
-import { api } from '../services/api';
+import { useEffect, useState, useMemo } from 'react';
+import { Box, Container, Grid, Typography, Chip, Button, TextField, InputAdornment, Stack, Skeleton, Fade, IconButton } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { PremiumMarketCard } from '../components/PremiumMarketCard';
-
 import { useProducts } from '../app/ProductContext';
 
 export function Marketplace() {
@@ -147,9 +146,9 @@ export function Marketplace() {
           </Button>
         </Box>
       ) : (
-        <Grid container spacing={4}>
+        <Grid container spacing={4} component={motion.div} initial="hidden" animate="visible" variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.05 } } }}>
           {filteredProducts.map((p, idx) => (
-            <Grid item xs={12} sm={6} md={4} key={p.id}>
+            <Grid item xs={12} sm={6} md={4} key={p.id} component={motion.div} variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
               <PremiumMarketCard product={p} delay={idx * 50} />
             </Grid>
           ))}

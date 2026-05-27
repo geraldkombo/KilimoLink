@@ -1,6 +1,8 @@
 import { useState, useCallback, useEffect } from 'react';
 import { IconButton, Fade, Divider } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import StorefrontIcon from '@mui/icons-material/Storefront';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { Box, Button, Container, Grid, Paper, TextField, Typography, MenuItem, Select, FormControl, InputLabel, CircularProgress, Tooltip, InputAdornment, Alert, Stack, Chip } from '@mui/material';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
@@ -12,8 +14,10 @@ import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { MapContainer, TileLayer, Marker, useMapEvents, useMap, Circle } from 'react-leaflet';
 import L from 'leaflet';
+import { usePrivy } from '@privy-io/react-auth';
 import { api } from '../services/api';
-import { useNavigate } from 'react-router-dom';
+import { loadRole } from '../services/auth';
+import { useNavigate, Link } from 'react-router-dom';
 import 'leaflet/dist/leaflet.css';
 
 // Fix for Leaflet default icon issues in React
@@ -110,7 +114,10 @@ import { useProducts } from '../app/ProductContext';
 
 export function SellProduct() {
   const navigate = useNavigate();
+  const { login, authenticated } = usePrivy();
   const { fetchProducts } = useProducts();
+  const userRole = loadRole();
+  const isFarmer = authenticated && userRole === 'FARMER';
   // Institutional Intelligence: KNBS, AFA, and KALRO Unified Dataset (May 2026 Updated)
   const institutionalIntelligence = [
     // Grains
@@ -273,11 +280,66 @@ export function SellProduct() {
       navigate('/market');
     } catch (err: any) {
       console.error('Failed to create product', err);
-      setError(err.response?.data?.message || 'Failed to list product. Please ensure you are logged in.');
+      const msg = err.response?.data?.message || 'Failed to list product. Please try again.';
+      setError(msg);
     } finally {
       setLoading(false);
     }
   };
+
+  if (!authenticated) {
+    return (
+      <Container maxWidth="sm">
+        <Box sx={{ textAlign: 'center', py: 12 }}>
+          <LockOpenIcon sx={{ fontSize: 64, color: '#064e3b', mb: 3 }} />
+          <Typography variant="h4" sx={{ fontWeight: 900, color: '#064e3b', mb: 2 }}>
+            Sign In to List Produce
+          </Typography>
+          <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
+            Connect your wallet or email to start selling directly to city consumers.
+          </Typography>
+          <Button
+            variant="contained"
+            size="large"
+            onClick={login}
+            sx={{ bgcolor: '#064e3b', px: 6, py: 2, borderRadius: 4, fontWeight: 800, fontSize: '1.1rem' }}
+          >
+            Connect Now
+          </Button>
+          <Box sx={{ mt: 3 }}>
+            <Button component={Link} to="/market" sx={{ color: '#059669', fontWeight: 600 }}>
+              Browse the marketplace instead
+            </Button>
+          </Box>
+        </Box>
+      </Container>
+    );
+  }
+
+  if (!isFarmer) {
+    return (
+      <Container maxWidth="sm">
+        <Box sx={{ textAlign: 'center', py: 12 }}>
+          <StorefrontIcon sx={{ fontSize: 64, color: '#064e3b', mb: 3 }} />
+          <Typography variant="h4" sx={{ fontWeight: 900, color: '#064e3b', mb: 2 }}>
+            Farmers Only
+          </Typography>
+          <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
+            You're signed in as a buyer. Switch to a farmer account to list your produce.
+          </Typography>
+          <Button
+            variant="contained"
+            size="large"
+            component={Link}
+            to="/market"
+            sx={{ bgcolor: '#064e3b', px: 6, py: 2, borderRadius: 4, fontWeight: 800, fontSize: '1.1rem' }}
+          >
+            Browse the Market
+          </Button>
+        </Box>
+      </Container>
+    );
+  }
 
   return (
     <Container maxWidth="md">

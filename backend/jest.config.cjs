@@ -1,11 +1,15 @@
 module.exports = {
   moduleFileExtensions: ['js', 'json', 'ts'],
   rootDir: '.',
-  testRegex: '.*\\.e2e-spec\\.ts$',
+  testRegex: '.*\\.(e2e-)?spec\\.ts$',
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest'
   },
   testEnvironment: 'node',
-  setupFiles: ['<rootDir>/test/jest.setup.ts']
+  testTimeout: 30000,
+  setupFiles: ['<rootDir>/test/jest.setup.ts'],
+  moduleNameMapper: {
+    '^src/(.*)$': '<rootDir>/src/$1'
+  }
 };
 

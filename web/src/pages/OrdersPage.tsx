@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Box, Container, Typography, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Chip, Stack, Button, CircularProgress, IconButton } from '@mui/material';
+import { motion } from 'framer-motion';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { api } from '../services/api';
 import { useNavigate } from 'react-router-dom';
@@ -67,7 +68,7 @@ export function OrdersPage() {
           </Button>
         </Box>
       ) : (
-        <TableContainer component={Paper} sx={{ borderRadius: 6, boxShadow: '0 10px 30px rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.05)', overflow: 'hidden' }}>
+        <TableContainer component={motion.div} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} sx={{ borderRadius: 6, boxShadow: '0 10px 30px rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.05)', overflow: 'hidden' }}>
           <Table>
             <TableHead sx={{ bgcolor: '#f9fafb' }}>
               <TableRow>

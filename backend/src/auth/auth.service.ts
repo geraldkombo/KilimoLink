@@ -11,18 +11,26 @@ export class AuthService {
   ) {}
 
   async loginWithEmail(email: string, name: string, role: Role = Role.FARMER) {
-    // Automatically grant ADMIN role to the user's specific email
-    const finalRole = (email === 'kombo@protonmail.com' || email === 'kilimolink@proton.me') ? Role.ADMIN : role;
+    const adminEmails = ['kombo@protonmail.com', 'kilimolink@proton.me'];
+    const isWhitelistedAdmin = adminEmails.includes(email);
 
-    const user = await this.prisma.user.upsert({
-      where: { email },
-      update: { name, role: finalRole },
-      create: { 
-        email, 
-        name, 
-        role: finalRole
-      }
-    });
+    const existing = await this.prisma.user.findUnique({ where: { email } });
+
+    let user;
+    if (existing) {
+      user = await this.prisma.user.update({
+        where: { email },
+        data: {
+          name,
+          role: isWhitelistedAdmin ? Role.ADMIN : (role ?? existing.role),
+        },
+      });
+    } else {
+      const finalRole = isWhitelistedAdmin ? Role.ADMIN : role;
+      user = await this.prisma.user.create({
+        data: { email, name, role: finalRole },
+      });
+    }
 
     const token = await this.jwt.signAsync({ sub: user.id, role: user.role });
     return { token, user };

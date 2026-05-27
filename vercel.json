@@ -1,7 +1,14 @@
 {
   "version": 2,
   "framework": "vite",
+  "buildCommand": "cd web && npx vite build",
+  "outputDirectory": "web/dist",
+  "installCommand": "pnpm install",
   "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "$VITE_API_BASE_URL/$1"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"
