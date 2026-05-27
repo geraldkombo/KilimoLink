@@ -376,7 +376,8 @@ export function AppContent() {
   const handleOnboardingConfirm = async () => {
     setOnboardingOpen(false);
     setOnboardingDone(true);
-    saveRole(selectedRole);
+    const role = selectedRole === 'BOTH' ? 'FARMER' : selectedRole;
+    saveRole(role);
 
     const email = user?.email?.address ?? `${user?.wallet?.address || 'wallet-user'}@privy.kilimolink`;
     const name =
@@ -388,14 +389,14 @@ export function AppContent() {
       const response = await api.post('/auth/login-email', {
         email,
         name,
-        role: selectedRole,
+        role,
       });
       const token = response.data?.token;
-      const role = response.data?.user?.role || selectedRole;
+      const serverRole = response.data?.user?.role || role;
       saveToken('user', token);
-      saveRole(role);
+      saveRole(serverRole);
       setAuthToken(token);
-      setCurrentRole(role);
+      setCurrentRole(serverRole);
       setLoginError(null);
       setSyncKey(k => k + 1);
     } catch (err) {
@@ -595,7 +596,7 @@ export function AppContent() {
           <Typography sx={{ textAlign: 'center', mb: 4, color: '#4b5563' }}>
             Are you here to buy fresh produce or sell your farm products?
           </Typography>
-          <RadioGroup value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)} sx={{ gap: 2 }}>
+            <RadioGroup value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)} sx={{ gap: 2 }}>
             <Paper
               elevation={0}
               onClick={() => setSelectedRole('FARMER')}
@@ -658,6 +659,41 @@ export function AppContent() {
                     </Box>
                     <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
                       Browse and buy fresh local produce directly from verified farmers.
+                    </Typography>
+                  </Box>
+                }
+                sx={{ m: 0, width: '100%' }}
+              />
+            </Paper>
+            <Paper
+              elevation={0}
+              onClick={() => setSelectedRole('BOTH')}
+              sx={{
+                p: 3,
+                borderRadius: 3,
+                border: '2px solid',
+                borderColor: selectedRole === 'BOTH' ? '#064e3b' : '#e5e7eb',
+                bgcolor: selectedRole === 'BOTH' ? '#f0fdf4' : 'white',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 2,
+                transition: 'all 0.2s',
+                '&:hover': { borderColor: '#064e3b', bgcolor: '#f0fdf4' },
+              }}
+            >
+              <FormControlLabel
+                value="BOTH"
+                control={<Radio sx={{ '&.Mui-checked': { color: '#064e3b' } }} />}
+                label={
+                  <Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <StorefrontIcon sx={{ color: '#064e3b' }} />
+                      <ShoppingCartIcon sx={{ color: '#064e3b', ml: -0.5 }} />
+                      <Typography sx={{ fontWeight: 800, color: '#064e3b' }}>I'm Both</Typography>
+                    </Box>
+                    <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+                      Sell your produce and buy from other farmers — the full marketplace experience.
                     </Typography>
                   </Box>
                 }
