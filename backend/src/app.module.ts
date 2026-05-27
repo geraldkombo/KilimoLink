@@ -5,6 +5,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { TerminusModule } from '@nestjs/terminus';
 import { AdminModule } from './admin/admin.module';
 import { AiModule } from './ai/ai.module';
+import { ImpactModule } from './impact/impact.module';
 import { AuthModule } from './auth/auth.module';
 import { NotificationsModule } from './common/notifications/notifications.module';
 import { PrismaModule } from './common/prisma/prisma.module';
@@ -35,6 +36,7 @@ import { UsersModule } from './users/users.module';
     OrdersModule,
     AdminModule,
     AiModule,
+    ImpactModule,
     HealthModule,
   ],
   providers: [

@@ -33,6 +33,11 @@ function HomePage() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const navigate = useNavigate();
+  const [impact, setImpact] = useState<any>(null);
+
+  useEffect(() => {
+    api.get('/impact').then(r => setImpact(r.data)).catch(() => {});
+  }, []);
 
   return (
     <Box sx={{ position: 'relative' }}>
@@ -236,6 +241,60 @@ function HomePage() {
             </Grid>
           ))}
         </Grid>
+
+        {/* Impact Section */}
+        <MotionBox
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          sx={{ mb: 15 }}
+        >
+          <Typography variant="h3" align="center" gutterBottom sx={{ fontWeight: 900, mb: 2, letterSpacing: '-0.04em', color: '#064e3b' }}>
+            Our Impact
+          </Typography>
+          <Typography variant="body1" align="center" sx={{ mb: 8, color: '#4b5563', maxWidth: '700px', mx: 'auto', fontSize: '1.25rem' }}>
+            Real results from real transactions on KilimoLink.
+          </Typography>
+          <Grid container spacing={4}>
+            {[
+              { label: 'Carbon Offset', value: impact ? `${(impact.co2SavedKg / 1000).toFixed(1)}t` : '—', unit: 'CO₂ saved', color: '#064e3b', icon: '🌱' },
+              { label: 'Waste Reduction', value: impact ? `${Math.round(impact.wasteDivertedKg)}kg` : '—', unit: 'diverted from landfill', color: '#ef6c00', icon: '♻️' },
+              { label: 'Urban Farming', value: impact ? `${impact.greenSpaceM2}m²` : '—', unit: 'green space cultivated', color: '#1565c0', icon: '🏙️' },
+            ].map((item, idx) => (
+              <Grid item xs={12} md={4} key={idx}>
+                <MotionPaper
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.15 }}
+                  elevation={0}
+                  sx={{
+                    p: { xs: 4, md: 5 },
+                    textAlign: 'center',
+                    bgcolor: 'white',
+                    borderRadius: 6,
+                    border: '1px solid rgba(0,0,0,0.05)',
+                    height: '100%',
+                    transition: 'transform 0.3s',
+                    '&:hover': { transform: 'translateY(-6px)', boxShadow: '0 20px 40px rgba(0,0,0,0.06)' },
+                  }}
+                >
+                  <Typography variant="h2" sx={{ mb: 2, lineHeight: 1 }}>{item.icon}</Typography>
+                  <Typography variant="h3" sx={{ fontWeight: 900, color: item.color, mb: 1, fontSize: { xs: '2.5rem', md: '3rem' }, letterSpacing: '-0.04em' }}>
+                    {item.value}
+                  </Typography>
+                  <Typography variant="body1" sx={{ fontWeight: 800, color: '#374151', mb: 0.5 }}>
+                    {item.label}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {item.unit}
+                  </Typography>
+                </MotionPaper>
+              </Grid>
+            ))}
+          </Grid>
+        </MotionBox>
 
         <MotionBox 
           initial={{ opacity: 0 }}
