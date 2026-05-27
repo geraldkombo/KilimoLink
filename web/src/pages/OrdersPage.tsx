@@ -17,7 +17,7 @@ export function OrdersPage() {
       setError(null);
       try {
         const res = await api.get('/orders');
-        setOrders(res.data);
+        setOrders(res.data.orders ?? res.data ?? []);
       } catch (err) {
         console.error('Failed to fetch orders', err);
         setError('Failed to load orders. Please ensure you are logged in.');
