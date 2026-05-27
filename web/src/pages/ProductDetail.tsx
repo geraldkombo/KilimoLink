@@ -6,6 +6,15 @@ import { Box, Button, Container, Grid, Paper, Typography, Chip, Switch, FormCont
 import { api } from '../services/api';
 import { usePrivy } from '@privy-io/react-auth';
 
+const CATEGORY_IMAGES: Record<string, string> = {
+  Vegetables: 'https://images.unsplash.com/photo-1524179091875-bf99a9a6af97?auto=format&fit=crop&w=800&q=80',
+  Fruits: 'https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80',
+  Dairy: 'https://images.unsplash.com/photo-1550583724-1255818c0533?auto=format&fit=crop&w=800&q=80',
+  Grains: 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=800&q=80',
+  Meat: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=800&q=80',
+  Honey: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80',
+};
+
 export function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -103,7 +112,7 @@ export function ProductDetail() {
           <Box sx={{ position: 'sticky', top: 100 }}>
             <Paper elevation={0} sx={{ borderRadius: 8, overflow: 'hidden', boxShadow: '0 40px 80px rgba(0,0,0,0.12)', border: '1px solid rgba(0,0,0,0.05)' }}>
               <img 
-                src={product.imageUrl || 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80'} 
+                src={product.imageUrl || CATEGORY_IMAGES[product.category] || 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80'} 
                 alt={product.title}
                 style={{ width: '100%', height: 'auto', maxHeight: '600px', objectFit: 'cover', display: 'block' }}
               />

@@ -22,6 +22,15 @@ interface PremiumMarketCardProps {
  * Composition Pattern: Specialized Card for the Marketplace.
  * Grounded in 'frontend-design' and 'composition-patterns' skills.
  */
+const CATEGORY_IMAGES: Record<string, string> = {
+  Vegetables: 'https://images.unsplash.com/photo-1524179091875-bf99a9a6af97?auto=format&fit=crop&w=800&q=80',
+  Fruits: 'https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80',
+  Dairy: 'https://images.unsplash.com/photo-1550583724-1255818c0533?auto=format&fit=crop&w=800&q=80',
+  Grains: 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=800&q=80',
+  Meat: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=800&q=80',
+  Honey: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80',
+};
+
 export const PremiumMarketCard = ({ product, delay = 0 }: PremiumMarketCardProps) => {
   return (
     <Fade in timeout={300 + delay}>
@@ -41,7 +50,7 @@ export const PremiumMarketCard = ({ product, delay = 0 }: PremiumMarketCardProps
           <CardMedia
             component="img"
             height="220"
-            image={product.imageUrl || 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80'}
+            image={product.imageUrl || CATEGORY_IMAGES[product.category] || 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80'}
             alt={product.title}
             sx={{ filter: 'brightness(0.95)' }}
           />

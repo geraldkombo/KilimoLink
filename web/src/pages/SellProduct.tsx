@@ -270,8 +270,18 @@ export function SellProduct() {
     setLoading(true);
     setError(null);
     try {
+      let location = formData.location;
+      if (privacyRadius && location) {
+        const offset = 0.0045;
+        location = {
+          ...location,
+          lat: location.lat + (Math.random() - 0.5) * 2 * offset,
+          lng: location.lng + (Math.random() - 0.5) * 2 * offset,
+        };
+      }
       await api.post('/products', {
         ...formData,
+        location,
         price: Number(formData.price),
         quantity: Number(formData.quantity)
       });
@@ -520,6 +530,9 @@ export function SellProduct() {
                   { label: 'Kale/Sukuma', url: 'https://images.unsplash.com/photo-1524179091875-bf99a9a6af97?auto=format&fit=crop&w=800&q=80' },
                   { label: 'Fresh Milk', url: 'https://images.unsplash.com/photo-1550583724-1255818c0533?auto=format&fit=crop&w=800&q=80' },
                   { label: 'Maize/Corn', url: 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=800&q=80' },
+                  { label: 'Mixed Fruits', url: 'https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80' },
+                  { label: 'Meat/Beef', url: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=800&q=80' },
+                  { label: 'Honey', url: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80' },
                 ].map((chip) => (
                   <Chip 
                     key={chip.label} 
