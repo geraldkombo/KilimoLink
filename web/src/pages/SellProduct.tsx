@@ -371,7 +371,7 @@ export function SellProduct() {
         <Box component="form" onSubmit={handleSubmit}>
           <Grid container spacing={4}>
             <Grid item xs={12}>
-              <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: '#064e3b' }}>PRODUCT DETAILS (KNBS VERIFIED)</Typography>
+              <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: '#064e3b' }}>PRODUCT DETAILS</Typography>
               <FormControl fullWidth required>
                 <InputLabel>What are you selling?</InputLabel>
                 <Select
@@ -401,7 +401,7 @@ export function SellProduct() {
                 </Select>
                 <Typography variant="caption" sx={{ mt: 1, color: '#059669', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 0.5 }}>
                   <GppGoodIcon sx={{ fontSize: 14 }} />
-                  Unified Intelligence: KNBS Pricing + AFA Standards + KALRO Variety Verification.
+                  Prices updated with current market data from verified sources.
                 </Typography>
               </FormControl>
             </Grid>
