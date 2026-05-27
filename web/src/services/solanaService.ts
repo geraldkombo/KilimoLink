@@ -1,8 +1,4 @@
-/**
- * Solana Integration Service
- * Grounded in 'institutional-intelligence' and 'security-best-practices'.
- * Optimized for high-integrity connection and liquidity oversight.
- */
+/** Solana connection service */
 
 class SolanaService {
   private rpcUrl: string;

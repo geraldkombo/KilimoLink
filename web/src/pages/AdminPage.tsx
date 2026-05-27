@@ -94,7 +94,7 @@ export function AdminPage() {
               Platform Oversight
             </Typography>
             <Typography variant="h6" color="text.secondary" sx={{ fontWeight: 500 }}>
-              Managing Kenya's food resilience with direct technology.
+              Monitor users, products, and platform activity.
             </Typography>
           </Box>
           <Stack direction="row" spacing={2}>
@@ -167,7 +167,7 @@ export function AdminPage() {
         {tab === 0 && (
           <Grid container spacing={4}>
             <Grid item xs={12} md={8}>
-              <PremiumCard title="Market Resilience Growth" subtitle="Supply vs Demand Liquidity (KG Equivalent)">
+              <PremiumCard title="Trading Activity" subtitle="Supply vs Demand (kg)">
                 <ResponsiveContainer width="100%" height={300}>
                   <AreaChart data={impactHistory}>
                     <defs>
@@ -424,21 +424,21 @@ export function AdminPage() {
           <Grid container spacing={4}>
             <Grid item xs={12}>
               <Box sx={{ mb: 4, p: 3, bgcolor: '#f0fdf4', borderRadius: 4, border: '1px solid #dcfce7' }}>
-                <Typography variant="h6" sx={{ fontWeight: 800, color: '#064e3b', mb: 1 }}>Strategic Resilience</Typography>
+                <Typography variant="h6" sx={{ fontWeight: 800, color: '#064e3b', mb: 1 }}>Market Updates</Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Monitoring market signals and institutional intelligence.
+                  Recent activity and signals from the platform.
                 </Typography>
               </Box>
             </Grid>
             
             <Grid item xs={12} md={6}>
               <Paper sx={{ p: 4, borderRadius: 6, bgcolor: '#f9fafb', border: '1px solid #e5e7eb' }}>
-                <Typography variant="subtitle2" sx={{ fontWeight: 800, mb: 3, color: '#374151' }}>STRATEGIC FRAMEWORKS</Typography>
+                <Typography variant="subtitle2" sx={{ fontWeight: 800, mb: 3, color: '#374151' }}>PLATFORM METRICS</Typography>
                 <Stack spacing={2}>
                   {[
-                    { title: 'AARRR Funnel', desc: 'Tracking Activation and Retention.' },
-                    { title: 'Market Availability', desc: 'Ensuring KilimoLink is the first choice.' },
-                    { title: '60:40 Rule', desc: 'Balancing brand and sales activation.' },
+                    { title: 'Total Users', desc: 'Active farmers and buyers on the platform.' },
+                    { title: 'Products Listed', desc: 'Total produce available for purchase.' },
+                    { title: 'Orders Completed', desc: 'Successful transactions to date.' },
                   ].map((f, i) => (
                     <Box key={i} sx={{ p: 2, bgcolor: 'white', borderRadius: 3, border: '1px solid #f3f4f6' }}>
                       <Typography variant="body2" sx={{ fontWeight: 700 }}>{f.title}</Typography>
@@ -454,7 +454,7 @@ export function AdminPage() {
                 {resilienceLogs.length === 0 ? (
                   <Grid item xs={12}>
                     <Paper sx={{ p: 8, textAlign: 'center', borderRadius: 6, border: '2px dashed #e5e7eb' }}>
-                      <Typography color="text.secondary">No resilience signals logged.</Typography>
+                      <Typography color="text.secondary">No activity logs yet.</Typography>
                     </Paper>
                   </Grid>
                 ) : (

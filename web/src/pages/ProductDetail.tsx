@@ -132,7 +132,7 @@ export function ProductDetail() {
             </Typography>
             
             <Typography variant="body1" sx={{ color: '#4b5563', lineHeight: 1.8, fontSize: '1.2rem', mb: 5, fontWeight: 400 }}>
-              {product.description || 'This fresh produce is sourced directly from a local farmer committed to quality and sustainability.'}
+              {product.description || 'Fresh produce sourced directly from a local farmer.'}
             </Typography>
 
             <Divider sx={{ my: 5 }} />

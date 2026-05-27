@@ -15,12 +15,7 @@ import '@solana/wallet-adapter-react-ui/styles.css';
 const queryClient = new QueryClient();
 
 function Root() {
-  /**
-   * NETWORK RESILIENCE: 
-   * Since Devnets are unstable, we use a prioritized list of RPCs.
-   * 1. Your Quiknode Premium RPC (most reliable)
-   * 2. Public Devnet (fallback)
-   */
+  // Use Quicknode RPC if available, fall back to public devnet
   const endpoint = useMemo(() => {
     const qn = import.meta.env.VITE_SOLANA_RPC_URL;
     return qn || clusterApiUrl('devnet');
@@ -35,10 +30,7 @@ function Root() {
 
   return (
     <React.StrictMode>
-      {/* 
-        INNOVATION: Privy allows for Email/Phone login for farmers 
-        who don't have Phantom wallets yet.
-      */}
+      {/* Privy handles auth — email for farmers, wallet for crypto users */}
       <PrivyProvider
         appId={import.meta.env.VITE_PRIVY_APP_ID || 'cmp000ywe01mm0cldpk8r2kt7'}
         config={{

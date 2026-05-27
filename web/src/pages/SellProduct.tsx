@@ -118,8 +118,8 @@ export function SellProduct() {
   const { fetchProducts } = useProducts();
   const userRole = loadRole();
   const isFarmer = authenticated && userRole === 'FARMER';
-  // Institutional Intelligence: KNBS, AFA, and KALRO Unified Dataset (May 2026 Updated)
-  const institutionalIntelligence = [
+  // Price guide based on current market data
+  const priceGuide = [
     // Grains
     { name: 'Maize (White)', category: 'Grains', price: 185, source: 'KNBS', variety: 'H614', health: 'Optimal' },
     { name: 'Maize (Yellow)', category: 'Grains', price: 175, source: 'KNBS', variety: 'Pioneer', health: 'Optimal' },
@@ -168,7 +168,7 @@ export function SellProduct() {
       // Simulate real-time May 2026 adjustment
       const randomAdjustment = (Math.random() * 10 - 5).toFixed(0);
       if (formData.title) {
-        const item = institutionalIntelligence.find(p => p.name === formData.title);
+        const item = priceGuide.find(p => p.name === formData.title);
         if (item) {
           const newPrice = (item.price + parseInt(randomAdjustment)).toString();
           setFormData(prev => ({ ...prev, price: newPrice }));
@@ -183,8 +183,7 @@ export function SellProduct() {
     // Capitalize first letter of each word
     const capitalized = val.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     
-    // Institutional Intelligence: Auto-match category and suggested price
-    const match = institutionalIntelligence.find(p => capitalized.includes(p.name));
+    const match = priceGuide.find(p => capitalized.includes(p.name));
     if (match) {
       setFormData({ 
         ...formData, 
@@ -379,7 +378,7 @@ export function SellProduct() {
                   value={formData.title}
                   label="What are you selling?"
                   onChange={(e) => {
-                    const item = institutionalIntelligence.find(p => p.name === e.target.value);
+                    const item = priceGuide.find(p => p.name === e.target.value);
                     if (item) {
                       setFormData({ 
                         ...formData, 
@@ -391,7 +390,7 @@ export function SellProduct() {
                   }}
                   sx={{ borderRadius: 3 }}
                 >
-                  {institutionalIntelligence.map((item) => (
+                  {priceGuide.map((item) => (
                     <MenuItem key={item.name} value={item.name}>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
                         <Typography variant="body2">{item.name} — Verified {item.category}</Typography>

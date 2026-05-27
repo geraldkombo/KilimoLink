@@ -89,10 +89,7 @@ function HomePage() {
               letterSpacing: '-0.01em'
             }}
           >
-            Direct farm-to-city trade. No middlemen. Just fresh produce and fair prices.
-            <Box component="span" sx={{ display: 'block', mt: 1, fontWeight: 800, color: '#059669', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-              Built for the Innovate4Cities 2026 Challenge
-            </Box>
+            Fresh produce straight from local farms. Better prices, less waste, closer to home.
           </MotionTypography>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center" sx={{ px: 2 }}>
             <Button 
@@ -141,7 +138,7 @@ function HomePage() {
         </Box>
       </MotionBox>
 
-      {/* Primary Visual: Handshake Photo */}
+      {/* Trust Section */}
       <MotionBox 
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -153,7 +150,7 @@ function HomePage() {
           <Box 
             component="img" 
             src="/handshake.jpg" 
-            alt="Institutional Intelligence"
+            alt="Farmers and buyers connecting"
             sx={{ 
               width: '100%', 
               borderRadius: 8, 
@@ -177,10 +174,10 @@ function HomePage() {
             maxWidth: { xs: 'none', md: '600px' }
           }}>
             <Typography variant="h6" sx={{ fontWeight: 950, color: '#064e3b', mb: 1.5, letterSpacing: '-0.03em', lineHeight: 1.2 }}>
-              Institutional intelligence from global founders backing Kenya's food future
+              Know where your food comes from
             </Typography>
             <Typography variant="body1" sx={{ color: '#4b5563', lineHeight: 1.7, fontWeight: 500 }}>
-              We are rebuilding the trust layer between urban demand and rural supply, ensuring every transaction strengthens our food system.
+              Every farmer on KilimoLink is verified. Every product is listed with its source. No middlemen — just real people growing real food for your table.
             </Typography>
           </Box>
         </Box>
@@ -188,31 +185,31 @@ function HomePage() {
 
       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
         <Typography variant="h3" align="center" gutterBottom sx={{ fontWeight: 900, mb: 2, letterSpacing: '-0.04em', color: '#064e3b' }}>
-          Built for Resilience
+          How it works
         </Typography>
         <Typography variant="body1" align="center" sx={{ mb: 8, color: '#4b5563', maxWidth: '700px', mx: 'auto', fontSize: '1.25rem' }}>
-          Solving urban food challenges with simple, direct technology.
+          Simple, fast, and fair for everyone.
         </Typography>
 
         <Grid container spacing={4} sx={{ mb: 15 }}>
           {[
             {
-              title: "Zero Waste",
-              desc: "Direct farm-to-city trade means less time in transit and more fresh food on tables.",
-              icon: "🌱",
+              title: "Browse & Order",
+              desc: "Find fresh produce from farmers near you. Order directly with no markup.",
+              icon: "🛒",
               color: "#f0fdf4"
             },
             {
-              title: "Local First",
-              desc: "We prioritize products grown within your city limits to reduce carbon footprint.",
-              icon: "📍",
-              color: "#eff6ff"
+              title: "Sell Your Produce",
+              desc: "List your harvest in minutes. Set your own price and reach customers in your city.",
+              icon: "🌿",
+              color: "#fffbeb"
             },
             {
-              title: "Fair Prices",
-              desc: "By removing middlemen, farmers earn more and you pay less for better quality.",
+              title: "Fair for Everyone",
+              desc: "Farmers keep more profit. Buyers pay less. No middlemen taking a cut.",
               icon: "🤝",
-              color: "#fffbeb"
+              color: "#eff6ff"
             }
           ].map((item, idx) => (
             <Grid item xs={12} md={4} key={idx}>
@@ -259,10 +256,10 @@ function HomePage() {
           }}
         >
           <Typography variant="h2" sx={{ fontWeight: 900, mb: 2, fontSize: { xs: '2.5rem', md: '3.5rem' }, letterSpacing: '-0.04em' }}>
-            Join the food revolution.
+            Ready to get started?
           </Typography>
           <Typography variant="h5" sx={{ opacity: 0.9, fontWeight: 400, mb: 6, maxWidth: '600px', lineHeight: 1.5 }}>
-            Help us build a more resilient and transparent food system for everyone in Kenya.
+            Whether you're a farmer or a buyer, join thousands of Kenyans already trading on KilimoLink.
           </Typography>
           <Button 
             variant="contained" 
@@ -305,7 +302,7 @@ function PageTransition({ children }: { children: React.ReactNode }) {
 }
 
 export function AppContent() {
-  const { login, authenticated, user, logout, getAccessToken } = usePrivy();
+  const { login, authenticated, user, logout, getAccessToken, ready } = usePrivy();
   const [balances, setBalances] = useState<any[]>([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentRole, setCurrentRole] = useState<string | null>(loadRole());
@@ -313,6 +310,7 @@ export function AppContent() {
   const [selectedRole, setSelectedRole] = useState<string>('FARMER');
   const [loginError, setLoginError] = useState<string | null>(null);
   const [syncKey, setSyncKey] = useState(0);
+  const [authLoading, setAuthLoading] = useState(true);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const location = useLocation();
@@ -322,6 +320,9 @@ export function AppContent() {
   }, []);
 
   useEffect(() => {
+    if (!ready) return;
+    setAuthLoading(false);
+
     const syncToken = async () => {
       if (!authenticated) {
         saveToken('user', null);
@@ -371,7 +372,7 @@ export function AppContent() {
       }
     };
     syncToken();
-  }, [authenticated, getAccessToken, user, syncKey]);
+  }, [ready, authenticated, getAccessToken, user, syncKey]);
 
   const handleOnboardingConfirm = async () => {
     setOnboardingOpen(false);
@@ -493,13 +494,17 @@ export function AppContent() {
                 <Button color="inherit" component={Link} to="/my-products" sx={{ color: '#333', fontWeight: 600, px: 2 }}>My Products</Button>
               )}
               <Button color="inherit" component={Link} to="/orders" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Orders</Button>
-              {authenticated && user?.email?.address === 'admin@kilimolink.demo' && (
+              {authenticated && currentRole === 'ADMIN' && (
                 <Button color="inherit" component={Link} to="/admin" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Admin</Button>
               )}
               <Box sx={{ ml: 2 }}>
-                {!authenticated ? (
+                {authLoading ? (
+                  <Button variant="contained" color="success" disabled sx={{ textTransform: 'none', borderRadius: 3, px: 4, py: 1, fontWeight: 'bold', boxShadow: 'none' }}>
+                    Loading...
+                  </Button>
+                ) : !authenticated ? (
                   <Button variant="contained" color="success" onClick={login} sx={{ textTransform: 'none', borderRadius: 3, px: 4, py: 1, fontWeight: 'bold', boxShadow: 'none' }}>
-                    Connect
+                    Sign In
                   </Button>
                 ) : (
                   <Button
@@ -512,7 +517,7 @@ export function AppContent() {
                     }}
                     sx={{ textTransform: 'none', borderRadius: 3, px: 3, py: 1, fontWeight: 'bold' }}
                   >
-                    {user?.email?.address?.split('@')[0] || 'Farmer'}
+                    {user?.email?.address?.split('@')[0] || 'My Account'}
                   </Button>
                 )}
               </Box>
@@ -550,10 +555,10 @@ export function AppContent() {
               </ListItemButton>
             </ListItem>
           )}
-          {authenticated && user?.email?.address === 'admin@kilimolink.demo' && (
+          {authenticated && currentRole === 'ADMIN' && (
             <ListItem disablePadding>
               <ListItemButton component={Link} to="/admin" onClick={() => setMobileMenuOpen(false)}>
-                <ListItemText primary="Admin Oversight" primaryTypographyProps={{ fontWeight: 700 }} />
+                <ListItemText primary="Admin" primaryTypographyProps={{ fontWeight: 700 }} />
               </ListItemButton>
             </ListItem>
           )}
@@ -561,7 +566,7 @@ export function AppContent() {
           <ListItem sx={{ flexDirection: 'column', gap: 2 }}>
             {!authenticated ? (
               <Button fullWidth variant="contained" color="success" onClick={login} sx={{ borderRadius: 3, py: 1.5, fontWeight: 'bold' }}>
-                Connect Wallet
+                Sign In
               </Button>
             ) : (
               <>
@@ -745,10 +750,7 @@ export function AppContent() {
             <Grid item xs={12} md={4}>
               <Typography variant="h6" sx={{ fontWeight: 900, color: '#064e3b', mb: 2 }}>KILIMOLINK</Typography>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                KilimoLink is a transparent marketplace and climate-action tracker connecting urban consumers with local producers.
-              </Typography>
-              <Typography variant="caption" sx={{ fontWeight: 800, color: '#059669', textTransform: 'uppercase' }}>
-                Built for the Innovate4Cities 2026 challenge
+                KilimoLink connects you directly with local farmers. Fresh produce, fair prices, no middlemen.
               </Typography>
             </Grid>
             <Grid item xs={6} md={2}>
@@ -761,11 +763,11 @@ export function AppContent() {
               </Stack>
             </Grid>
             <Grid item xs={6} md={2}>
-              <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 2 }}>Impact</Typography>
+              <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 2 }}>For Farmers</Typography>
               <Stack spacing={1}>
-                <Typography variant="body2" color="text.secondary">Carbon Offset</Typography>
-                <Typography variant="body2" color="text.secondary">Waste Reduction</Typography>
-                <Typography variant="body2" color="text.secondary">Urban Farming</Typography>
+                <Typography variant="body2" color="text.secondary">Start Selling</Typography>
+                <Typography variant="body2" color="text.secondary">Pricing Guide</Typography>
+                <Typography variant="body2" color="text.secondary">Farmer Tips</Typography>
               </Stack>
             </Grid>
             <Grid item xs={12} md={4}>
@@ -773,13 +775,13 @@ export function AppContent() {
               <Typography variant="body2" color="text.secondary">kilimolink@proton.me</Typography>
               <Typography variant="body2" color="text.secondary">Nairobi, Kenya</Typography>
               <Typography variant="caption" color="text.secondary" sx={{ mt: 2, display: 'block', opacity: 0.5 }}>
-                Build v1.0.6 - Institutional Intelligence
+                v1.1.0
               </Typography>
             </Grid>
           </Grid>
           <Divider sx={{ my: 4 }} />
           <Typography variant="body2" color="text.secondary" align="center">
-            © 2026 KilimoLink. Built with Solana & Next.js for Future Cities.
+            © 2026 KilimoLink. Fresh from the farm, straight to your table.
           </Typography>
         </Container>
       </Box>
