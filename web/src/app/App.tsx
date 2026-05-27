@@ -182,7 +182,7 @@ function HomePage() {
               Know where your food comes from
             </Typography>
             <Typography variant="body1" sx={{ color: '#4b5563', lineHeight: 1.7, fontWeight: 500 }}>
-              Every farmer on KilimoLink is verified. Every product is listed with its source. No middlemen — just real people growing real food for your table.
+              Every farmer on KilimoLink is verified. Every product is listed with its source. No middlemen, just real people growing real food for your table.
             </Typography>
           </Box>
         </Box>
@@ -258,9 +258,9 @@ function HomePage() {
           </Typography>
           <Grid container spacing={4}>
             {[
-              { label: 'Carbon Offset', value: impact ? `${(impact.co2SavedKg / 1000).toFixed(1)}t` : '—', unit: 'CO₂ saved', color: '#064e3b', icon: '🌱' },
-              { label: 'Waste Reduction', value: impact ? `${Math.round(impact.wasteDivertedKg)}kg` : '—', unit: 'diverted from landfill', color: '#ef6c00', icon: '♻️' },
-              { label: 'Urban Farming', value: impact ? `${impact.greenSpaceM2}m²` : '—', unit: 'green space cultivated', color: '#1565c0', icon: '🏙️' },
+              { label: 'Carbon Offset', value: impact ? `${(impact.co2SavedKg / 1000).toFixed(1)}t` : '-', unit: 'CO₂ saved', color: '#064e3b', icon: '🌱' },
+              { label: 'Waste Reduction', value: impact ? `${Math.round(impact.wasteDivertedKg)}kg` : '-', unit: 'diverted from landfill', color: '#ef6c00', icon: '♻️' },
+              { label: 'Urban Farming', value: impact ? `${impact.greenSpaceM2}m²` : '-', unit: 'green space cultivated', color: '#1565c0', icon: '🏙️' },
             ].map((item, idx) => (
               <Grid item xs={12} md={4} key={idx}>
                 <MotionPaper
@@ -757,7 +757,7 @@ export function AppContent() {
                       <Typography sx={{ fontWeight: 800, color: '#064e3b' }}>I'm Both</Typography>
                     </Box>
                     <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-                      Sell your produce and buy from other farmers — the full marketplace experience.
+                      Sell your produce and buy from other farmers, the full marketplace experience.
                     </Typography>
                   </Box>
                 }

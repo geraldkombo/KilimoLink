@@ -121,28 +121,28 @@ export function SellProduct() {
   // Price guide based on current market data
   const priceGuide = [
     // Grains
-    { name: 'Maize (White)', category: 'Grains', price: 185, source: 'KNBS', variety: 'H614', health: 'Optimal' },
-    { name: 'Maize (Yellow)', category: 'Grains', price: 175, source: 'KNBS', variety: 'Pioneer', health: 'Optimal' },
-    { name: 'Rice (Basmati)', category: 'Grains', price: 240, source: 'AFA', variety: 'Mwea Pishori', health: 'High Demand' },
-    { name: 'Wheat', category: 'Grains', price: 160, source: 'KNBS', variety: 'Narok Grade A', health: 'Stable' },
+    { name: 'Maize (White)', category: 'Grains', price: 185, source: 'KNBS', variety: 'H614', health: 'Optimal', unit: 'kg', suggestedQty: 500 },
+    { name: 'Maize (Yellow)', category: 'Grains', price: 175, source: 'KNBS', variety: 'Pioneer', health: 'Optimal', unit: 'kg', suggestedQty: 400 },
+    { name: 'Rice (Basmati)', category: 'Grains', price: 240, source: 'AFA', variety: 'Mwea Pishori', health: 'High Demand', unit: 'kg', suggestedQty: 200 },
+    { name: 'Wheat', category: 'Grains', price: 160, source: 'KNBS', variety: 'Narok Grade A', health: 'Stable', unit: 'kg', suggestedQty: 600 },
     
     // Vegetables
-    { name: 'Sukuma Wiki (Kale)', category: 'Vegetables', price: 45, source: 'KNBS', variety: 'Thika Hybrid', health: 'Peak Season' },
-    { name: 'Managu (Nightshade)', category: 'Vegetables', price: 65, source: 'AFA', variety: 'Traditional', health: 'High Nutrition' },
-    { name: 'Spinach', category: 'Vegetables', price: 50, source: 'KNBS', variety: 'Giant Ford Hook', health: 'Optimal' },
-    { name: 'Cabbage', category: 'Vegetables', price: 80, source: 'KNBS', variety: 'Gloria F1', health: 'Stable' },
-    { name: 'Tomatoes', category: 'Vegetables', price: 120, source: 'AFA', variety: 'Anna F1', health: 'Weather Sensitive' },
+    { name: 'Sukuma Wiki (Kale)', category: 'Vegetables', price: 45, source: 'KNBS', variety: 'Thika Hybrid', health: 'Peak Season', unit: 'bunches', suggestedQty: 50 },
+    { name: 'Managu (Nightshade)', category: 'Vegetables', price: 65, source: 'AFA', variety: 'Traditional', health: 'High Nutrition', unit: 'bunches', suggestedQty: 30 },
+    { name: 'Spinach', category: 'Vegetables', price: 50, source: 'KNBS', variety: 'Giant Ford Hook', health: 'Optimal', unit: 'bunches', suggestedQty: 40 },
+    { name: 'Cabbage', category: 'Vegetables', price: 80, source: 'KNBS', variety: 'Gloria F1', health: 'Stable', unit: 'pieces', suggestedQty: 100 },
+    { name: 'Tomatoes', category: 'Vegetables', price: 120, source: 'AFA', variety: 'Anna F1', health: 'Weather Sensitive', unit: 'kg', suggestedQty: 80 },
     
     // Dairy & Meat
-    { name: 'Grade A Milk (Raw)', category: 'Dairy', price: 65, source: 'KNBS', variety: 'Holstein-Friesian', health: 'Tested' },
-    { name: 'Organic Eggs', category: 'Dairy', price: 20, source: 'AFA', variety: 'Kienyeji', health: 'Verified' },
-    { name: 'Indigenous Chicken', category: 'Meat', price: 550, source: 'KALRO', variety: 'Improved Kienyeji', health: 'Vaccinated' },
-    { name: 'Beef (Prime Cut)', category: 'Meat', price: 750, source: 'KNBS', variety: 'Boran Hybrid', health: 'Inspected' },
+    { name: 'Grade A Milk (Raw)', category: 'Dairy', price: 65, source: 'KNBS', variety: 'Holstein-Friesian', health: 'Tested', unit: 'litres', suggestedQty: 100 },
+    { name: 'Organic Eggs', category: 'Dairy', price: 20, source: 'AFA', variety: 'Kienyeji', health: 'Verified', unit: 'trays', suggestedQty: 20 },
+    { name: 'Indigenous Chicken', category: 'Meat', price: 550, source: 'KALRO', variety: 'Improved Kienyeji', health: 'Vaccinated', unit: 'whole birds', suggestedQty: 15 },
+    { name: 'Beef (Prime Cut)', category: 'Meat', price: 750, source: 'KNBS', variety: 'Boran Hybrid', health: 'Inspected', unit: 'kg', suggestedQty: 100 },
     
     // Special
-    { name: 'Pure Honey', category: 'Honey', price: 850, source: 'KALRO', variety: 'Acacia', health: 'Certified' },
-    { name: 'Irish Potatoes', category: 'Tubers', price: 140, source: 'KNBS', variety: 'Shangi', health: 'High Starch' },
-    { name: 'Sweet Potatoes', category: 'Tubers', price: 90, source: 'KALRO', variety: 'Orange Fleshed', health: 'High Vitamin A' }
+    { name: 'Pure Honey', category: 'Honey', price: 850, source: 'KALRO', variety: 'Acacia', health: 'Certified', unit: 'kg', suggestedQty: 10 },
+    { name: 'Irish Potatoes', category: 'Tubers', price: 140, source: 'KNBS', variety: 'Shangi', health: 'High Starch', unit: 'kg', suggestedQty: 300 },
+    { name: 'Sweet Potatoes', category: 'Tubers', price: 90, source: 'KALRO', variety: 'Orange Fleshed', health: 'High Vitamin A', unit: 'kg', suggestedQty: 250 }
   ];
 
   const [loading, setLoading] = useState(false);
@@ -189,7 +189,8 @@ export function SellProduct() {
         ...formData, 
         title: capitalized, 
         category: match.category,
-        price: match.price.toString()
+        price: match.price.toString(),
+        quantity: match.suggestedQty.toString()
       });
     } else {
       setFormData({ ...formData, title: capitalized });
@@ -394,7 +395,8 @@ export function SellProduct() {
                         ...formData, 
                         title: item.name, 
                         category: item.category,
-                        price: item.price.toString()
+                        price: item.price.toString(),
+                        quantity: item.suggestedQty.toString()
                       });
                     }
                   }}
@@ -403,7 +405,7 @@ export function SellProduct() {
                   {priceGuide.map((item) => (
                     <MenuItem key={item.name} value={item.name}>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
-                        <Typography variant="body2">{item.name} — Verified {item.category}</Typography>
+                        <Typography variant="body2">{item.name} - Verified {item.category}</Typography>
                         <Chip label={item.source} size="small" sx={{ height: 16, fontSize: '0.6rem', bgcolor: '#f0fdf4', color: '#059669', fontWeight: 900 }} />
                       </Box>
                     </MenuItem>
@@ -476,11 +478,15 @@ export function SellProduct() {
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
-                label="How much do you have?"
+                label={(() => {
+                  const item = priceGuide.find(p => p.name === formData.title);
+                  return item ? `How many ${item.unit}?` : 'How much do you have?';
+                })()}
                 type="number"
                 value={formData.quantity}
                 onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
                 required
+                helperText={formData.quantity && formData.title ? `Suggested: ${priceGuide.find(p => p.name === formData.title)?.suggestedQty ?? '-'} ${priceGuide.find(p => p.name === formData.title)?.unit ?? 'units'}` : ''}
                 InputProps={{ sx: { borderRadius: 3 } }}
               />
             </Grid>
