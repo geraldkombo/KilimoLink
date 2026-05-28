@@ -24,11 +24,11 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "dev": "pnpm -r dev",
-    "build": "pnpm -r build",
-    "start": "pnpm --filter @kilimolink/backend start",
-    "lint": "pnpm -r lint",
-    "test": "pnpm -r test"
+    "dev": "cd backend && npm run dev",
+    "build": "cd backend && npm install && npx prisma generate && npm run build",
+    "start": "node backend/dist/main.js",
+    "lint": "cd backend && npm run lint",
+    "test": "cd backend && npm test"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
