@@ -29,6 +29,8 @@ const CATEGORY_IMAGES: Record<string, string> = {
   Grains: 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=800&q=80',
   Meat: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=800&q=80',
   Honey: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80',
+  'Poultry & Eggs': 'https://images.unsplash.com/photo-1568654952584-b3c6e1d8c1f4?auto=format&fit=crop&w=800&q=80',
+  Tubers: 'https://images.unsplash.com/photo-1590164741170-4f9e5bccb33c?auto=format&fit=crop&w=800&q=80',
 };
 
 export const PremiumMarketCard = ({ product, delay = 0 }: PremiumMarketCardProps) => {

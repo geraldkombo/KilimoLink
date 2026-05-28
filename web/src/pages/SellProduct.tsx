@@ -135,9 +135,15 @@ export function SellProduct() {
     
     // Dairy & Meat
     { name: 'Grade A Milk (Raw)', category: 'Dairy', price: 65, source: 'KNBS', variety: 'Holstein-Friesian', health: 'Tested', unit: 'litres', suggestedQty: 100 },
-    { name: 'Organic Eggs', category: 'Dairy', price: 20, source: 'AFA', variety: 'Kienyeji', health: 'Verified', unit: 'trays', suggestedQty: 20 },
-    { name: 'Indigenous Chicken', category: 'Meat', price: 550, source: 'KALRO', variety: 'Improved Kienyeji', health: 'Vaccinated', unit: 'whole birds', suggestedQty: 15 },
     { name: 'Beef (Prime Cut)', category: 'Meat', price: 750, source: 'KNBS', variety: 'Boran Hybrid', health: 'Inspected', unit: 'kg', suggestedQty: 100 },
+    
+    // Poultry & Eggs
+    { name: 'Indigenous Chicken (Live)', category: 'Poultry & Eggs', price: 600, source: 'KALRO', variety: 'Improved Kienyeji', health: 'Vaccinated', unit: 'whole birds', suggestedQty: 15 },
+    { name: 'Broiler Chicken (Live)', category: 'Poultry & Eggs', price: 450, source: 'AFA', variety: 'Cobb 500', health: 'Ready in 6 wks', unit: 'whole birds', suggestedQty: 30 },
+    { name: 'Duck (Live)', category: 'Poultry & Eggs', price: 800, source: 'KALRO', variety: 'Muscovy', health: 'Hardy Breed', unit: 'whole birds', suggestedQty: 10 },
+    { name: 'Free-Range Eggs', category: 'Poultry & Eggs', price: 25, source: 'KALRO', variety: 'Kienyeji', health: 'High Omega', unit: 'trays', suggestedQty: 25 },
+    { name: 'Organic Eggs', category: 'Poultry & Eggs', price: 20, source: 'AFA', variety: 'Kienyeji', health: 'Verified', unit: 'trays', suggestedQty: 20 },
+    { name: 'Quail Eggs', category: 'Poultry & Eggs', price: 40, source: 'KALRO', variety: 'Japanese Quail', health: 'Nutrient Dense', unit: 'trays', suggestedQty: 15 },
     
     // Special
     { name: 'Pure Honey', category: 'Honey', price: 850, source: 'KALRO', variety: 'Acacia', health: 'Certified', unit: 'kg', suggestedQty: 10 },
@@ -502,7 +508,9 @@ export function SellProduct() {
                   <MenuItem value="Vegetables">Vegetables</MenuItem>
                   <MenuItem value="Fruits">Fruits</MenuItem>
                   <MenuItem value="Grains">Grains</MenuItem>
+                  <MenuItem value="Poultry & Eggs">Poultry & Eggs</MenuItem>
                   <MenuItem value="Meat">Meat</MenuItem>
+                  <MenuItem value="Tubers">Tubers</MenuItem>
                   <MenuItem value="Honey">Honey & Bee Products</MenuItem>
                   <MenuItem value="Other">Other Items</MenuItem>
                 </Select>

@@ -30,7 +30,7 @@ function Root() {
 
   return (
     <React.StrictMode>
-      {/* Privy handles auth — email for farmers, wallet for crypto users */}
+      {/* Privy handles auth - email for farmers, wallet for crypto users */}
       <PrivyProvider
         appId={import.meta.env.VITE_PRIVY_APP_ID}
         config={{
