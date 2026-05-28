@@ -26,7 +26,7 @@
   "scripts": {
     "dev": "cd backend && npm run dev",
     "build": "cd backend && npm install && npx prisma generate && npm run build",
-    "start": "node backend/dist/main.js",
+    "start": "cd backend && npx prisma db push && node dist/main.js",
     "lint": "cd backend && npm run lint",
     "test": "cd backend && npm test"
   },
