@@ -61,7 +61,11 @@ export class OrdersService {
         take: limit,
         include: {
           items: {
-            include: { product: true },
+            include: {
+              product: {
+                include: { farmer: true },
+              },
+            },
           },
           buyer: true,
         },

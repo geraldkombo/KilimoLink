@@ -30,6 +30,11 @@ export class CreateProductDto {
   @IsOptional()
   imageUrl?: string;
 
+  @ApiProperty({ example: '+254712345678' })
+  @IsString()
+  @IsOptional()
+  phone?: string;
+
   @ApiProperty({ example: { lat: -1.28, lng: 36.81, address: 'Nairobi' } })
   @IsObject()
   location!: {

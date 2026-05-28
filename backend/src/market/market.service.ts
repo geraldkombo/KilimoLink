@@ -18,6 +18,13 @@ export class MarketService {
       throw new BadRequestException('Only farmers can create products');
     }
 
+    if (dto.phone) {
+      await this.prisma.user.update({
+        where: { id: farmerId },
+        data: { phone: dto.phone },
+      });
+    }
+
     const product = await this.prisma.product.create({
       data: {
         title: dto.title,

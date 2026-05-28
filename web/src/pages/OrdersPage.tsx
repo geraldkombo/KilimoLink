@@ -70,50 +70,57 @@ export function OrdersPage() {
       ) : (
         <TableContainer component={motion.div} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} sx={{ borderRadius: 6, boxShadow: '0 10px 30px rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.05)', overflow: 'hidden' }}>
           <Table>
-            <TableHead sx={{ bgcolor: '#f9fafb' }}>
-              <TableRow>
-                <TableCell sx={{ fontWeight: 800, py: 3 }}>Order ID</TableCell>
-                <TableCell sx={{ fontWeight: 800 }}>Product</TableCell>
-                <TableCell sx={{ fontWeight: 800 }}>Amount</TableCell>
-                <TableCell sx={{ fontWeight: 800 }}>Payment</TableCell>
-                <TableCell sx={{ fontWeight: 800 }}>Status</TableCell>
-                <TableCell sx={{ fontWeight: 800 }}>Date</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {orders.map((order) => {
-                const status = getStatusColor(order.status);
-                return (
-                  <TableRow key={order.id} sx={{ '&:hover': { bgcolor: '#fcfcfc' } }}>
-                    <TableCell sx={{ fontWeight: 700, color: '#6b7280' }}>#{order.id.slice(-6).toUpperCase()}</TableCell>
-                    <TableCell sx={{ fontWeight: 800, color: '#111827' }}>
-                      {order.items[0]?.product?.title || 'Fresh Produce'}
-                      {order.items.length > 1 && (
-                        <Typography component="span" variant="caption" sx={{ ml: 1, color: '#059669', fontWeight: 700 }}>
-                          +{order.items.length - 1} more
-                        </Typography>
-                      )}
-                    </TableCell>
-                    <TableCell sx={{ fontWeight: 900, color: '#064e3b' }}>KES {order.totalAmount}</TableCell>
-                    <TableCell>
-                      <Chip label={order.paymentMethod} size="small" variant="outlined" sx={{ fontWeight: 700, borderRadius: 2 }} />
-                    </TableCell>
-                    <TableCell>
-                      <Chip 
-                        label={order.status} 
-                        size="small" 
-                        sx={{ 
-                          fontWeight: 800, 
-                          bgcolor: status.bg, 
-                          color: status.text,
-                          borderRadius: 2
-                        }} 
-                      />
-                    </TableCell>
-                    <TableCell sx={{ fontWeight: 500, color: '#6b7280' }}>{new Date(order.createdAt).toLocaleDateString()}</TableCell>
+                <TableHead sx={{ bgcolor: '#f9fafb' }}>
+                  <TableRow>
+                    <TableCell sx={{ fontWeight: 800, py: 3 }}>Order ID</TableCell>
+                    <TableCell sx={{ fontWeight: 800 }}>Product</TableCell>
+                    <TableCell sx={{ fontWeight: 800 }}>Farmer Phone</TableCell>
+                    <TableCell sx={{ fontWeight: 800 }}>Amount</TableCell>
+                    <TableCell sx={{ fontWeight: 800 }}>Status</TableCell>
+                    <TableCell sx={{ fontWeight: 800 }}>Date</TableCell>
                   </TableRow>
-                );
-              })}
+                </TableHead>
+                <TableBody>
+                  {orders.map((order) => {
+                    const status = getStatusColor(order.status);
+                    const farmerPhone = order.items[0]?.product?.farmer?.phone;
+                    return (
+                      <TableRow key={order.id} sx={{ '&:hover': { bgcolor: '#fcfcfc' } }}>
+                        <TableCell sx={{ fontWeight: 700, color: '#6b7280' }}>#{order.id.slice(-6).toUpperCase()}</TableCell>
+                        <TableCell sx={{ fontWeight: 800, color: '#111827' }}>
+                          {order.items[0]?.product?.title || 'Fresh Produce'}
+                          {order.items.length > 1 && (
+                            <Typography component="span" variant="caption" sx={{ ml: 1, color: '#059669', fontWeight: 700 }}>
+                              +{order.items.length - 1} more
+                            </Typography>
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          {farmerPhone ? (
+                            <Typography sx={{ fontWeight: 800, color: '#064e3b', fontSize: '0.9rem' }}>
+                              📞 {farmerPhone}
+                            </Typography>
+                          ) : (
+                            <Typography variant="caption" color="text.secondary">Not provided</Typography>
+                          )}
+                        </TableCell>
+                        <TableCell sx={{ fontWeight: 900, color: '#064e3b' }}>KES {order.totalAmount}</TableCell>
+                        <TableCell>
+                          <Chip 
+                            label={order.status} 
+                            size="small" 
+                            sx={{ 
+                              fontWeight: 800, 
+                              bgcolor: status.bg, 
+                              color: status.text,
+                              borderRadius: 2
+                            }} 
+                          />
+                        </TableCell>
+                        <TableCell sx={{ fontWeight: 500, color: '#6b7280' }}>{new Date(order.createdAt).toLocaleDateString()}</TableCell>
+                      </TableRow>
+                    );
+                  })}
             </TableBody>
           </Table>
         </TableContainer>

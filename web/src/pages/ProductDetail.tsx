@@ -148,16 +148,21 @@ export function ProductDetail() {
 
             <Divider sx={{ my: 5 }} />
 
-            <Box sx={{ mb: 5, display: 'flex', alignItems: 'center', gap: 3, p: 3, bgcolor: '#f9fafb', borderRadius: 6 }}>
-              <Box sx={{ width: 60, height: 60, borderRadius: '50%', bgcolor: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
-                👨‍🌾
+              <Box sx={{ mb: 5, display: 'flex', alignItems: 'center', gap: 3, p: 3, bgcolor: '#f9fafb', borderRadius: 6 }}>
+                <Box sx={{ width: 60, height: 60, borderRadius: '50%', bgcolor: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
+                  👨‍🌾
+                </Box>
+                <Box>
+                  <Typography variant="caption" sx={{ fontWeight: 800, color: '#6b7280', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Farmer</Typography>
+                  <Typography variant="h5" sx={{ fontWeight: 900, color: '#111827' }}>{product.farmer?.name || 'Local Producer'}</Typography>
+                  <Typography variant="body2" sx={{ color: '#4b5563', fontWeight: 500 }}>{product.location?.address || 'Nairobi, Kenya'}</Typography>
+                  {product.farmer?.phone && (
+                    <Typography variant="body2" sx={{ color: '#064e3b', fontWeight: 700, mt: 0.5 }}>
+                      📞 {product.farmer.phone}
+                    </Typography>
+                  )}
+                </Box>
               </Box>
-              <Box>
-                <Typography variant="caption" sx={{ fontWeight: 800, color: '#6b7280', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Farmer</Typography>
-                <Typography variant="h5" sx={{ fontWeight: 900, color: '#111827' }}>{product.farmer?.name || 'Local Producer'}</Typography>
-                <Typography variant="body2" sx={{ color: '#4b5563', fontWeight: 500 }}>{product.location?.address || 'Nairobi, Kenya'}</Typography>
-              </Box>
-            </Box>
 
             <Paper elevation={0} sx={{ p: 4, mb: 5, borderRadius: 6, bgcolor: '#f0fdf4', border: '1px solid #dcfce7' }}>
               <FormControlLabel

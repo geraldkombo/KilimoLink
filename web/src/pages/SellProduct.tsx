@@ -164,6 +164,7 @@ export function SellProduct() {
     quantity: '',
     category: 'Vegetables',
     imageUrl: '',
+    phone: '',
     location: { lat: -1.286389, lng: 36.817223, address: '' }
   });
 
@@ -557,6 +558,19 @@ export function SellProduct() {
                   />
                 ))}
               </Box>
+            </Grid>
+            <Grid item xs={12}>
+              <Divider sx={{ my: 2 }} />
+              <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: '#064e3b' }}>PHONE NUMBER</Typography>
+              <TextField
+                fullWidth
+                label="Your phone number"
+                placeholder="e.g. 0712345678"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                helperText="Buyers will call or send payment to this number. Works with M-Pesa, Airtel Money, T-Kash."
+                InputProps={{ sx: { borderRadius: 3 } }}
+              />
             </Grid>
             <Grid item xs={12}>
               <Divider sx={{ my: 2 }} />
