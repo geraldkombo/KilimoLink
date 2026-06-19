@@ -10,6 +10,12 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule, { cors: true });
     app.use(helmet());
     app.setGlobalPrefix('api/v1');
+
+    // Root route for Render health checks
+    const expressApp = app.getHttpAdapter().getInstance();
+    expressApp.get('/', (_req: any, res: any) => {
+      res.json({ status: 'ok', service: 'KilimoLink API', version: '1.0.0' });
+    });
     app.useGlobalPipes(
       new ValidationPipe({
         whitelist: true,
