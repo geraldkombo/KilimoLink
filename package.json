@@ -1,17 +1,16 @@
 {
   "name": "kilimolink-platform-final",
   "private": true,
-  "description": "KilimoLink is a Solana-powered urban-rural marketplace that connects city consumers directly with local farmers for climate-resilient food trade.",
-  "author": "KilimoLinkResilience",
+  "description": "KilimoLink is a hyperlocal urban food resilience marketplace connecting city consumers directly with local farmers.",
+  "author": "KilimoLink",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/KilimoLinkResilience/KilimoLink.git"
+    "url": "https://github.com/geraldkombo/KilimoLink.git"
   },
-  "homepage": "https://github.com/KilimoLinkResilience/KilimoLink",
+  "homepage": "https://github.com/geraldkombo/KilimoLink",
   "keywords": [
     "KilimoLink",
-    "Solana",
     "marketplace",
     "food security",
     "climate resilience",
@@ -25,20 +24,9 @@
   },
   "scripts": {
     "dev": "cd backend && npm run dev",
-    "build": "cd backend && npm install && npx prisma generate && npm run build",
+    "build": "cd backend && npm install --legacy-peer-deps && npx prisma generate && npm run build",
     "start": "cd backend && npx prisma db push && node dist/main.js",
     "lint": "cd backend && npm run lint",
     "test": "cd backend && npm test"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@nestjs/core",
-      "@prisma/client",
-      "@prisma/engines",
-      "bcrypt",
-      "esbuild",
-      "msgpackr-extract",
-      "prisma"
-    ]
   }
 }

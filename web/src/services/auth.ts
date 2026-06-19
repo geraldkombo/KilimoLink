@@ -34,8 +34,10 @@ export function setOnboardingDone(done: boolean) {
   else localStorage.setItem(onboardingDoneKey, 'true');
 }
 
-export function applyToken(kind: 'admin' | 'user') {
-  setAuthToken(loadToken(kind));
+export function applyToken(kind: 'admin' | 'user'): string | null {
+  const token = loadToken(kind);
+  setAuthToken(token);
+  return token;
 }
 
 export function clearAllAuth() {
