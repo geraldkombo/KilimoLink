@@ -6,7 +6,7 @@
 - **Stack**: NestJS (backend) + React/Vite (frontend) + PostgreSQL (database) + Redis (cache)
 - **Auth**: Privy (email-to-wallet) + JWT
 - **Payments**: Mock/Solana devnet (USDC)
-- **Hosting**: Railway (API) + Vercel (web)
+- **Hosting**: Render (API, `kilimolink.onrender.com`) + GitHub Pages (web, `geraldkombo.github.io/KilimoLink`)
 
 ## Key Rules
 
