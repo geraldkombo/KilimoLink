@@ -789,7 +789,7 @@ export function AppContent() {
               <Typography variant="body2" color="text.secondary">kilimolink@proton.me</Typography>
               <Typography variant="body2" color="text.secondary">Nairobi, Kenya</Typography>
               <Typography variant="caption" color="text.secondary" sx={{ mt: 2, display: 'block', opacity: 0.5 }}>
-                v1.1.0
+                v1.2.0
               </Typography>
             </Grid>
           </Grid>
