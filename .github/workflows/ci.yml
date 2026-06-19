@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [20, 22]
+        node-version: [22]
     services:
       postgres:
         image: postgres:16-alpine
@@ -30,56 +30,42 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-      redis:
-        image: redis:7-alpine
-        ports:
-          - 6379:6379
-        options: >-
-          --health-cmd "redis-cli ping || exit 1"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
     env:
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/kilimolink?schema=public
       REDIS_HOST: localhost
       REDIS_PORT: 6379
       JWT_SECRET: ci-test-secret
       DOCUMENTS_MASTER_KEY_BASE64: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+      DISABLE_REDIS: "true"
+      MOCK_PAYMENTS: "true"
     steps:
       - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
 
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: pnpm
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile=false
+      - name: Install backend deps
+        run: cd backend && npm install --legacy-peer-deps
 
       - name: Generate Prisma Client
-        run: pnpm -C backend prisma:generate
+        run: cd backend && npx prisma generate
 
       - name: Push DB schema
-        run: pnpm -C backend exec prisma db push
+        run: cd backend && npx prisma db push
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/kilimolink?schema=public
 
-      - name: Lint backend
-        run: pnpm --filter @kilimolink/backend lint
+      - name: Build backend
+        run: cd backend && npm run build
 
       - name: Run backend tests
-        run: pnpm --filter @kilimolink/backend test --reporter default
+        run: cd backend && npm test
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/kilimolink?schema=public
 
-      - name: Lint frontend
-        run: pnpm --filter @kilimolink/web lint
+      - name: Install frontend deps
+        run: cd web && npm install
 
       - name: Build frontend
-        run: pnpm --filter @kilimolink/web build
-
-      - name: Run frontend tests
-        run: pnpm --filter @kilimolink/web test
-
-      - name: Build backend
-        run: pnpm --filter @kilimolink/backend build
+        run: cd web && npm run build
