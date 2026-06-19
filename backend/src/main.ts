@@ -1,9 +1,22 @@
 import 'reflect-metadata';
+import http from 'node:http';
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
+
+const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
+
+// Start a bare-minimum health server on PORT immediately,
+// so Render never sees 404 even if NestJS bootstrap fails.
+const healthServer = http.createServer((_req, res) => {
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ status: 'ok', service: 'KilimoLink API', health: 'up' }));
+});
+healthServer.listen(PORT, () => {
+  console.log(`Health server listening on port ${PORT}`);
+});
 
 async function bootstrap() {
   try {
@@ -11,11 +24,6 @@ async function bootstrap() {
     app.use(helmet());
     app.setGlobalPrefix('api/v1');
 
-    // Root route for Render health checks
-    const expressApp = app.getHttpAdapter().getInstance();
-    expressApp.get('/', (_req: any, res: any) => {
-      res.json({ status: 'ok', service: 'KilimoLink API', version: '1.0.0' });
-    });
     app.useGlobalPipes(
       new ValidationPipe({
         whitelist: true,
@@ -31,11 +39,14 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('docs', app, document);
 
-    await app.listen(process.env.PORT ? Number(process.env.PORT) : 3000);
-    console.log(`KilimoLink API running on port ${process.env.PORT || 3000}`);
+    // Upgrade the health server to delegate to NestJS once it's ready.
+    healthServer.removeAllListeners('request');
+    const expressApp = app.getHttpAdapter().getInstance();
+    healthServer.on('request', (req, res) => expressApp(req, res));
+
+    console.log(`KilimoLink API running on port ${PORT}`);
   } catch (err) {
-    console.error('Failed to start KilimoLink API:', err);
-    process.exit(1);
+    console.error('NestJS bootstrap failed (health server still running):', err);
   }
 }
 
