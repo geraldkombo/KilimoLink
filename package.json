@@ -25,7 +25,7 @@
   "scripts": {
     "dev": "cd backend && npm run dev",
     "build": "cd backend && npm install --legacy-peer-deps && npx prisma generate && npm run build",
-    "start": "cd backend && npx prisma db push; node dist/main.js",
+    "start": "cd backend && node start.js",
     "lint": "cd backend && npm run lint",
     "test": "cd backend && npm test"
   }
