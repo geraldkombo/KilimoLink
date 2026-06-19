@@ -1,12 +1,11 @@
 import 'reflect-metadata';
-import type http from 'node:http';
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
 
-export async function boot(_server: http.Server) {
+async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
   app.use(helmet());
   app.setGlobalPrefix('api/v1');
@@ -26,7 +25,12 @@ export async function boot(_server: http.Server) {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 
-  const expressApp = app.getHttpAdapter().getInstance();
-  console.log('KilimoLink API running');
-  return expressApp;
+  const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
+  await app.listen(PORT);
+  console.log(`KilimoLink API running on port ${PORT}`);
 }
+
+bootstrap().catch((err) => {
+  console.error('Failed to start KilimoLink API:', err);
+  process.exit(1);
+});
