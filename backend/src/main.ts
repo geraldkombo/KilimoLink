@@ -6,7 +6,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
 
-export async function boot(server: http.Server) {
+export async function boot(_server: http.Server) {
   const app = await NestFactory.create(AppModule, { cors: true });
   app.use(helmet());
   app.setGlobalPrefix('api/v1');
@@ -26,10 +26,7 @@ export async function boot(server: http.Server) {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 
-  // Attach NestJS to the existing server
   const expressApp = app.getHttpAdapter().getInstance();
-  server.removeAllListeners('request');
-  server.on('request', (req, res) => expressApp(req, res));
-
   console.log('KilimoLink API running');
+  return expressApp;
 }
