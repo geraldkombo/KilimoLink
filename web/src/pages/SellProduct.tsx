@@ -14,7 +14,7 @@ import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { MapContainer, TileLayer, Marker, useMapEvents, useMap, Circle } from 'react-leaflet';
 import L from 'leaflet';
-import { usePrivy } from '@privy-io/react-auth';
+import { applyToken } from '../services/auth';
 import { api } from '../services/api';
 import { loadRole } from '../services/auth';
 import { useNavigate, Link } from 'react-router-dom';
@@ -114,7 +114,12 @@ import { useProducts } from '../app/ProductContext';
 
 export function SellProduct() {
   const navigate = useNavigate();
-  const { login, authenticated } = usePrivy();
+  const [authenticated, setAuthenticated] = useState(false);
+
+  useEffect(() => {
+    setAuthenticated(!!applyToken('user'));
+  }, []);
+
   const { fetchProducts } = useProducts();
   const userRole = loadRole();
   const isFarmer = authenticated && userRole === 'FARMER';
@@ -313,15 +318,16 @@ export function SellProduct() {
             Sign In to List Produce
           </Typography>
           <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-            Connect your wallet or email to start selling directly to city consumers.
+            Sign in to start selling directly to city consumers.
           </Typography>
           <Button
             variant="contained"
             size="large"
-            onClick={login}
+            component={Link}
+            to="/"
             sx={{ bgcolor: '#064e3b', px: 6, py: 2, borderRadius: 4, fontWeight: 800, fontSize: '1.1rem' }}
           >
-            Connect Now
+            Sign In
           </Button>
           <Box sx={{ mt: 3 }}>
             <Button component={Link} to="/market" sx={{ color: '#059669', fontWeight: 600 }}>

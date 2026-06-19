@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react';
 import { CircularProgress, Link, IconButton, Fade, Stack } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useParams, useNavigate, Link as RouterLink } from 'react-router-dom';
-import { Box, Button, Container, Grid, Paper, Typography, Chip, Switch, FormControlLabel, Divider, Alert } from '@mui/material';
+import { Box, Button, Container, Grid, Paper, Typography, Chip, Divider, Alert } from '@mui/material';
 import { api } from '../services/api';
-import { usePrivy } from '@privy-io/react-auth';
 
 const CATEGORY_IMAGES: Record<string, string> = {
   Vegetables: 'https://images.unsplash.com/photo-1524179091875-bf99a9a6af97?auto=format&fit=crop&w=800&q=80',
@@ -20,9 +19,7 @@ const CATEGORY_IMAGES: Record<string, string> = {
 export function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { authenticated, login, sendTransaction } = usePrivy();
   const [product, setProduct] = useState<any>(null);
-  const [useCrypto, setUseCrypto] = useState(false);
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -46,25 +43,12 @@ export function ProductDetail() {
   }, [id]);
 
   const handleOrder = async () => {
-    if (!authenticated) {
-      login();
-      return;
-    }
-
     setLoading(true);
     try {
-      if (useCrypto) {
-        const tx = await sendTransaction({
-          to: '84YBJeHew5F7NwzjLU9sqK4C7STR7XUZYugKFUscuGEd',
-          value: '1000000', 
-        });
-        if (!tx) throw new Error('Transaction failed');
-      }
-
       await api.post('/orders', {
         productId: id,
         quantity: 1,
-        paymentMethod: useCrypto ? 'CRYPTO' : 'MOCK'
+        paymentMethod: 'CASH'
       });
       
       setSuccess(true);
@@ -164,21 +148,6 @@ export function ProductDetail() {
                 </Box>
               </Box>
 
-            <Paper elevation={0} sx={{ p: 4, mb: 5, borderRadius: 6, bgcolor: '#f0fdf4', border: '1px solid #dcfce7' }}>
-              <FormControlLabel
-                control={<Switch checked={useCrypto} onChange={(e) => setUseCrypto(e.target.checked)} sx={{ 
-                  '& .MuiSwitch-switchBase.Mui-checked': { color: '#059669' },
-                  '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': { bgcolor: '#059669' }
-                }} />}
-                label={<Typography sx={{ fontWeight: 800, color: '#064e3b' }}>Pay with Solana</Typography>}
-              />
-              <Typography variant="body2" sx={{ mt: 1.5, color: '#065f46', fontWeight: 500, lineHeight: 1.5 }}>
-                {useCrypto 
-                  ? 'Your transaction will be processed instantly on the Solana network for maximum transparency.' 
-                  : 'Place your order and pay through our standard secure checkout process.'}
-              </Typography>
-            </Paper>
-
             <Button 
               fullWidth 
               variant="contained" 
@@ -200,7 +169,7 @@ export function ProductDetail() {
               {loading ? <CircularProgress size={28} color="inherit" /> : 'Confirm Order'}
             </Button>
             <Typography variant="caption" display="block" align="center" sx={{ mt: 3, color: '#6b7280', fontWeight: 500 }}>
-              Secure transaction powered by decentralized technology.
+              Pay the farmer directly via phone after ordering.
             </Typography>
           </Box>
         </Grid>

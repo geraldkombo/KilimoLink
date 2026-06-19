@@ -1,5 +1,5 @@
-import { useState, useEffect, useMemo, useRef } from 'react';
-import { Grid, Divider, Dialog, DialogTitle, DialogContent, DialogActions, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+import { useState, useEffect, useRef } from 'react';
+import { Grid, Divider, Dialog, DialogTitle, DialogContent, DialogActions, RadioGroup, FormControlLabel, Radio, TextField } from '@mui/material';
 import { AppBar, Box, Button, Container, Toolbar, Typography, Stack, useTheme, useMediaQuery, Paper, IconButton, Drawer, List, ListItem, ListItemText, ListItemButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
@@ -7,7 +7,6 @@ import PersonIcon from '@mui/icons-material/Person';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { BrowserRouter, Link, Route, Routes, useNavigate, useLocation } from 'react-router-dom';
-import { usePrivy } from '@privy-io/react-auth';
 import { AnimatePresence } from 'framer-motion';
 import { AdminPage } from '../pages/AdminPage';
 import { Marketplace } from '../pages/Marketplace';
@@ -17,8 +16,6 @@ import { MyProducts } from '../pages/MyProducts';
 import { OrdersPage } from '../pages/OrdersPage';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-import { solanaService } from '../services/solanaService';
 import { motion } from 'framer-motion';
 import { BackgroundArt } from '../components/BackgroundArt';
 import { UIProvider, useUI } from './UIContext';
@@ -258,9 +255,9 @@ function HomePage() {
           </Typography>
           <Grid container spacing={4}>
             {[
-              { label: 'Carbon Offset', value: impact ? `${(impact.co2SavedKg / 1000).toFixed(1)}t` : '-', unit: 'CO₂ saved', color: '#064e3b', icon: '🌱' },
+              { label: 'Carbon Offset', value: impact ? `${(impact.co2SavedKg / 1000).toFixed(1)}t` : '-', unit: 'CO\u2082 saved', color: '#064e3b', icon: '🌱' },
               { label: 'Waste Reduction', value: impact ? `${Math.round(impact.wasteDivertedKg)}kg` : '-', unit: 'diverted from landfill', color: '#ef6c00', icon: '♻️' },
-              { label: 'Urban Farming', value: impact ? `${impact.greenSpaceM2}m²` : '-', unit: 'green space cultivated', color: '#1565c0', icon: '🏙️' },
+              { label: 'Urban Farming', value: impact ? `${impact.greenSpaceM2}m\u00b2` : '-', unit: 'green space cultivated', color: '#1565c0', icon: '🏙️' },
             ].map((item, idx) => (
               <Grid item xs={12} md={4} key={idx}>
                 <MotionPaper
@@ -361,127 +358,76 @@ function PageTransition({ children }: { children: React.ReactNode }) {
 }
 
 export function AppContent() {
-  const { login, authenticated, user, logout, getAccessToken, ready } = usePrivy();
-  const [balances, setBalances] = useState<any[]>([]);
+  const [authenticated, setAuthenticated] = useState(false);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [loginOpen, setLoginOpen] = useState(false);
+  const [loginEmail, setLoginEmail] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentRole, setCurrentRole] = useState<string | null>(loadRole());
   const [onboardingOpen, setOnboardingOpen] = useState(false);
   const [selectedRole, setSelectedRole] = useState<string>('FARMER');
   const [loginError, setLoginError] = useState<string | null>(null);
-  const [syncKey, setSyncKey] = useState(0);
   const [authLoading, setAuthLoading] = useState(true);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const location = useLocation();
 
   useEffect(() => {
-    applyToken('user');
+    const token = applyToken('user');
+    if (token) {
+      setAuthenticated(true);
+      const email = localStorage.getItem('email');
+      if (email) setUserEmail(email);
+    }
+    setAuthLoading(false);
   }, []);
 
-  useEffect(() => {
-    if (!ready) return;
-    setAuthLoading(false);
-
-    const syncToken = async () => {
-      if (!authenticated) {
-        saveToken('user', null);
-        setAuthToken(null);
-        setCurrentRole(null);
-        return;
-      }
-
-      try {
-        await getAccessToken();
-      } catch {
-        setLoginError('Could not complete authentication. Try again.');
-        return;
-      }
-
-      const email = user?.email?.address ?? `${user?.wallet?.address || 'wallet-user'}@privy.kilimolink`;
-      const name =
-        user?.email?.address?.split('@')[0] ||
-        user?.wallet?.address?.slice(0, 8) ||
-        'Farmer';
-
-      const savedRole = loadRole();
-      if (!isOnboardingDone() && !savedRole) {
-        setSelectedRole('FARMER');
+  const handleLogin = async () => {
+    if (!loginEmail.trim()) return;
+    setLoginError(null);
+    try {
+      const response = await api.post('/auth/login-email', {
+        email: loginEmail.trim(),
+        name: loginEmail.trim().split('@')[0],
+        role: 'BUYER',
+      });
+      const token = response.data?.token;
+      const role = response.data?.user?.role || 'BUYER';
+      saveToken('user', token);
+      saveRole(role);
+      localStorage.setItem('email', loginEmail.trim());
+      setAuthToken(token);
+      setAuthenticated(true);
+      setUserEmail(loginEmail.trim());
+      setCurrentRole(role);
+      setLoginOpen(false);
+      setLoginEmail('');
+      if (!isOnboardingDone()) {
+        setSelectedRole(role);
         setOnboardingOpen(true);
-        return;
       }
+    } catch {
+      setLoginError('Could not connect to the server. Please try again.');
+    }
+  };
 
-      try {
-        const response = await api.post('/auth/login-email', {
-          email,
-          name,
-          role: savedRole || 'FARMER',
-        });
+  const handleLogout = () => {
+    saveToken('user', null);
+    setAuthToken(null);
+    clearAllAuth();
+    localStorage.removeItem('email');
+    setAuthenticated(false);
+    setUserEmail(null);
+    setCurrentRole(null);
+  };
 
-        const token = response.data?.token;
-        const role = response.data?.user?.role || savedRole || 'FARMER';
-        saveToken('user', token);
-        saveRole(role);
-        setAuthToken(token);
-        setCurrentRole(role);
-        setLoginError(null);
-      } catch {
-        setLoginError('Could not connect to the server. Please try again later.');
-        clearAllAuth();
-        setCurrentRole(null);
-      }
-    };
-    syncToken();
-  }, [ready, authenticated, getAccessToken, user, syncKey]);
-
-  const handleOnboardingConfirm = async () => {
+  const handleOnboardingConfirm = () => {
     setOnboardingOpen(false);
     setOnboardingDone(true);
     const role = selectedRole === 'BOTH' ? 'FARMER' : selectedRole;
     saveRole(role);
-
-    const email = user?.email?.address ?? `${user?.wallet?.address || 'wallet-user'}@privy.kilimolink`;
-    const name =
-      user?.email?.address?.split('@')[0] ||
-      user?.wallet?.address?.slice(0, 8) ||
-      'Farmer';
-
-    try {
-      const response = await api.post('/auth/login-email', {
-        email,
-        name,
-        role,
-      });
-      const token = response.data?.token;
-      const serverRole = response.data?.user?.role || role;
-      saveToken('user', token);
-      saveRole(serverRole);
-      setAuthToken(token);
-      setCurrentRole(serverRole);
-      setLoginError(null);
-      setSyncKey(k => k + 1);
-    } catch (err) {
-      console.error('Failed to complete onboarding', err);
-      setLoginError('Onboarding failed. Please try again.');
-    }
+    setCurrentRole(role);
   };
-
-  useEffect(() => {
-    if (authenticated && user?.wallet?.address) {
-      const fetchBalances = async () => {
-        const data = await solanaService.getStablecoinBalances(user.wallet!.address!);
-        setBalances(data);
-      };
-      fetchBalances();
-    } else {
-      setBalances([]);
-    }
-  }, [authenticated, user]);
-
-  const totalUSDC = useMemo(() => {
-    return balances
-      .filter(b => b.symbol === 'USDC')
-      .reduce((acc, curr) => acc + (curr.balance || 0), 0);
-  }, [balances]);
 
   return (
     <Box sx={{ flexGrow: 1, minHeight: '100vh', bgcolor: 'background.default', display: 'flex', flexDirection: 'column' }}>
@@ -531,23 +477,6 @@ export function AppContent() {
                   </Typography>
                 </Box>
               )}
-              {authenticated && totalUSDC > 0 && (
-                <Box sx={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: 1, 
-                  bgcolor: '#e8f5e9', 
-                  px: 2, 
-                  py: 0.75, 
-                  borderRadius: 3,
-                  border: '1px solid #c8e6c9'
-                }}>
-                  <AccountBalanceWalletIcon sx={{ fontSize: 18, color: '#2e7d32' }} />
-                  <Typography variant="body2" sx={{ fontWeight: 800, color: '#064e3b' }}>
-                    {totalUSDC.toLocaleString()} USDC
-                  </Typography>
-                </Box>
-              )}
               <Button color="inherit" component={Link} to="/market" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Market</Button>
               {authenticated && currentRole === 'FARMER' && (
                 <Button color="inherit" component={Link} to="/my-products" sx={{ color: '#333', fontWeight: 600, px: 2 }}>My Products</Button>
@@ -562,21 +491,17 @@ export function AppContent() {
                     Loading...
                   </Button>
                 ) : !authenticated ? (
-                  <Button variant="contained" color="success" onClick={login} sx={{ textTransform: 'none', borderRadius: 3, px: 4, py: 1, fontWeight: 'bold', boxShadow: 'none' }}>
+                  <Button variant="contained" color="success" onClick={() => setLoginOpen(true)} sx={{ textTransform: 'none', borderRadius: 3, px: 4, py: 1, fontWeight: 'bold', boxShadow: 'none' }}>
                     Sign In
                   </Button>
                 ) : (
                   <Button
                     variant="outlined"
                     color="success"
-                    onClick={() => {
-                      saveToken('user', null);
-                      setAuthToken(null);
-                      logout();
-                    }}
+                    onClick={handleLogout}
                     sx={{ textTransform: 'none', borderRadius: 3, px: 3, py: 1, fontWeight: 'bold' }}
                   >
-                    {user?.email?.address?.split('@')[0] || 'My Account'}
+                    {userEmail?.split('@')[0] || 'My Account'}
                   </Button>
                 )}
               </Box>
@@ -624,34 +549,64 @@ export function AppContent() {
           <Divider sx={{ my: 2 }} />
           <ListItem sx={{ flexDirection: 'column', gap: 2 }}>
             {!authenticated ? (
-              <Button fullWidth variant="contained" color="success" onClick={login} sx={{ borderRadius: 3, py: 1.5, fontWeight: 'bold' }}>
+              <Button fullWidth variant="contained" color="success" onClick={() => { setLoginOpen(true); setMobileMenuOpen(false); }} sx={{ borderRadius: 3, py: 1.5, fontWeight: 'bold' }}>
                 Sign In
               </Button>
             ) : (
-              <>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, width: '100%', p: 2, bgcolor: '#f5f5f5', borderRadius: 3 }}>
-                  <AccountBalanceWalletIcon sx={{ color: '#064e3b' }} />
-                  <Typography variant="body2" sx={{ fontWeight: 800 }}>{totalUSDC} USDC</Typography>
-                </Box>
-                <Button
-                  fullWidth
-                  variant="outlined"
-                  color="error"
-                  onClick={() => {
-                    saveToken('user', null);
-                    setAuthToken(null);
-                    logout();
-                  }}
-                  sx={{ borderRadius: 3, py: 1.5, fontWeight: 'bold' }}
-                >
-                  Logout
-                </Button>
-              </>
+              <Button
+                fullWidth
+                variant="outlined"
+                color="error"
+                onClick={() => { handleLogout(); setMobileMenuOpen(false); }}
+                sx={{ borderRadius: 3, py: 1.5, fontWeight: 'bold' }}
+              >
+                Logout
+              </Button>
             )}
           </ListItem>
         </List>
       </Drawer>
 
+      {/* Login Dialog */}
+      <Dialog open={loginOpen} onClose={() => setLoginOpen(false)} maxWidth="xs" fullWidth PaperProps={{ sx: { borderRadius: 4, p: 2 } }}>
+        <DialogTitle sx={{ fontWeight: 900, color: '#064e3b', textAlign: 'center', fontSize: '1.5rem' }}>
+          Sign In
+        </DialogTitle>
+        <DialogContent>
+          <Typography sx={{ textAlign: 'center', mb: 3, color: '#4b5563' }}>
+            Enter your email to get started.
+          </Typography>
+          <TextField
+            autoFocus
+            fullWidth
+            label="Email"
+            type="email"
+            placeholder="you@example.com"
+            value={loginEmail}
+            onChange={(e) => setLoginEmail(e.target.value)}
+            onKeyDown={(e) => { if (e.key === 'Enter') handleLogin(); }}
+            sx={{ '& .MuiOutlinedInput-root': { borderRadius: 3 } }}
+          />
+          {loginError && (
+            <Typography sx={{ mt: 2, color: '#991b1b', fontWeight: 600, textAlign: 'center', fontSize: '0.85rem' }}>
+              {loginError}
+            </Typography>
+          )}
+        </DialogContent>
+        <DialogActions sx={{ px: 3, pb: 3 }}>
+          <Button
+            fullWidth
+            variant="contained"
+            size="large"
+            onClick={handleLogin}
+            sx={{ bgcolor: '#064e3b', py: 1.5, borderRadius: 3, fontWeight: 800, '&:hover': { bgcolor: '#065f46' } }}
+          >
+            Continue
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Onboarding Dialog */}
       <Dialog open={onboardingOpen} maxWidth="sm" fullWidth PaperProps={{ sx: { borderRadius: 4, p: 2 } }}>
         <DialogTitle sx={{ fontWeight: 900, color: '#064e3b', textAlign: 'center', fontSize: '1.5rem' }}>
           Welcome to KilimoLink
@@ -783,7 +738,7 @@ export function AppContent() {
           {loginError && (
             <Box sx={{ mb: 3, p: 2, bgcolor: '#fef2f2', borderRadius: 3, border: '1px solid #fecaca', textAlign: 'center' }}>
               <Typography sx={{ color: '#991b1b', fontWeight: 600, fontSize: '0.9rem' }}>{loginError}</Typography>
-              <Button size="small" sx={{ mt: 1, color: '#059669', fontWeight: 700, textTransform: 'none' }} onClick={() => { clearAllAuth(); logout(); }}>
+              <Button size="small" sx={{ mt: 1, color: '#059669', fontWeight: 700, textTransform: 'none' }} onClick={() => { clearAllAuth(); handleLogout(); }}>
                 Sign out and try again
               </Button>
             </Box>
@@ -840,7 +795,7 @@ export function AppContent() {
           </Grid>
           <Divider sx={{ my: 4 }} />
           <Typography variant="body2" color="text.secondary" align="center">
-            © 2026 KilimoLink. Fresh from the farm, straight to your table.
+            &copy; 2026 KilimoLink. Fresh from the farm, straight to your table.
           </Typography>
         </Container>
       </Box>
