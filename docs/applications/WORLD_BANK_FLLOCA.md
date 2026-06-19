@@ -22,4 +22,4 @@ By using the **Solana** blockchain for transaction records, we provide the "Miss
 - **Stack**: NestJS, React, Prisma, Solana, Leaflet Geolocation.
 
 ## 6. Project Link
-[kilimolink-resilience.vercel.app](https://kilimolink-resilience.vercel.app)
+[geraldkombo.github.io/KilimoLink](https://geraldkombo.github.io/KilimoLink)

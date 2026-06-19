@@ -24,6 +24,6 @@ KilimoLink is a decentralized urban-rural exchange dedicated to building climate
 
 **Media Contact:**
 kilimolink@proton.me  
-[kilimolink-resilience.vercel.app](https://kilimolink-resilience.vercel.app)
+[geraldkombo.github.io/KilimoLink](https://geraldkombo.github.io/KilimoLink)
 
 ### **#Innovate4Cities #UrbanResilience #KilimoLink #ClimateAction #AgriTech #Nairobi2026 #FoodSecurity**

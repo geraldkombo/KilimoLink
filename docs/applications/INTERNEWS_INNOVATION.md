@@ -19,5 +19,5 @@ This project serves as a "Citizen Information Hub." We aren't just a marketplace
 - **Community Outreach**: Training informal vendor cooperatives on how to use the "Price Truth" dashboard ($10k).
 
 ## 6. Verification
-- **Live Site**: [kilimolink-resilience.vercel.app](https://kilimolink-resilience.vercel.app)
+- **Live Site**: [geraldkombo.github.io/KilimoLink](https://geraldkombo.github.io/KilimoLink)
 - **Technical Lead**: Gerald Kombo

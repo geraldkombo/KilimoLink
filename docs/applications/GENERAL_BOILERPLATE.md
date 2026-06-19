@@ -34,5 +34,5 @@ By 2050, 60% of Africa will live in cities. Current food systems are centralized
 ### **Contact & Links**
 - **Lead Researcher**: Gerald Kombo
 - **Email**: kilimolink@proton.me
-- **URL**: [kilimolink-resilience.vercel.app](https://kilimolink-resilience.vercel.app)
+- **URL**: [geraldkombo.github.io/KilimoLink](https://geraldkombo.github.io/KilimoLink)
 - **Repo**: [github.com/geraldkombo/KilimoLink](https://github.com/geraldkombo/KilimoLink)

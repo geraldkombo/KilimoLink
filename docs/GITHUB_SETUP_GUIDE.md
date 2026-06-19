@@ -6,7 +6,7 @@ To make your repository look as professional as possible for judges and investor
 A Solana-powered marketplace and climate-action tracker connecting urban consumers directly with local farmers across East Africa. Built with NestJS, React, and Squads V4.
 
 ## 2. Website Field
-https://kilimolink.vercel.app (Replace with your actual Vercel URL once deployed)
+https://geraldkombo.github.io/KilimoLink (GitHub Pages — set after first deployment)
 
 ## 3. Topics (Keywords)
 solana, hackathon, agribusiness, kenya, climate-action, marketplace, blockchain, squads-v4, privy, urban-agriculture, supply-chain-transparency

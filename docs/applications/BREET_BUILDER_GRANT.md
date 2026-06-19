@@ -21,5 +21,5 @@ KilimoLink uses a "Web2.5" stack:
 Breet focuses on user-centric innovation. KilimoLink is the ultimate test case for Breet’s mandate: taking complex decentralized technology and making it invisible and valuable to the world’s most vulnerable entrepreneurs.
 
 ## 6. Links
-- **Demo**: [kilimolink-resilience.vercel.app](https://kilimolink-resilience.vercel.app)
+- **Demo**: [geraldkombo.github.io/KilimoLink](https://geraldkombo.github.io/KilimoLink)
 - **GitHub**: [github.com/geraldkombo/KilimoLink](https://github.com/geraldkombo/KilimoLink)
