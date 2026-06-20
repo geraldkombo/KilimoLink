@@ -91,7 +91,7 @@ function HomePage() {
               letterSpacing: '-0.01em'
             }}
           >
-            Fresh produce straight from local farms. Better prices, less waste, closer to home.
+            Cutting food miles. Cutting cold-chain emissions. Connecting Nairobi directly to the farmers who feed it.
           </MotionTypography>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center" sx={{ px: 2 }}>
             <Button 
@@ -804,8 +804,26 @@ export function AppContent() {
 }
 
 export function App() {
+  const [online, setOnline] = useState(navigator.onLine);
+
+  useEffect(() => {
+    const on = () => setOnline(true);
+    const off = () => setOnline(false);
+    window.addEventListener('online', on);
+    window.addEventListener('offline', off);
+    return () => {
+      window.removeEventListener('online', on);
+      window.removeEventListener('offline', off);
+    };
+  }, []);
+
   return (
     <BrowserRouter>
+      {!online && (
+        <Box sx={{ bgcolor: '#f59e0b', color: 'black', textAlign: 'center', py: 0.5 }}>
+          <Typography variant="caption">You are offline. Showing last loaded data.</Typography>
+        </Box>
+      )}
       <UIProvider>
         <ProductProvider>
           <AppContent />
