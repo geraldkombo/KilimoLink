@@ -1,0 +1,123 @@
+You are an independent research agent. Your task: autonomously research and generate the BEST possible hackathon idea for a team at the AI x City Climate Action Hackathon 2026. Do NOT assume any specific track. Research ALL options and recommend the strongest idea based on real data.
+
+## HACKATHON CONTEXT
+
+**Name**: AI x City Climate Action Hackathon 2026
+**Organizers**: Global Covenant of Mayors for Climate and Energy (GCoM), UN-Habitat, Urban Transitions Mission (UTM), CHIA (University of Cambridge)
+**Launch**: I4C26 Conference, Nairobi, Kenya — June 22-23 2026
+**Finale**: September 2026, University of Cambridge (hybrid)
+**Prize**: City pairing + travel to UTM Global Summit in Viladecans, Spain + guaranteed spot at Cambridge finale
+**Timeline**: 
+- June 23 — 3-minute pitch (Ideation Sprint)
+- Aug 31 — full submission deadline
+- Sept 2026 — finale
+
+### Theme (very broad — open to all)
+"AI-driven solutions to accelerate city climate action"
+
+### 3 Priority Bonus Topics (+extra judging points)
+1. Urban Transportation
+2. Informal or Marginalised Settlements
+3. Misinformation & Disinformation
+
+### Judging Criteria (Ideation Sprint — June 23)
+1. Relevant — city-scale, climate-focused, evidence-based, AI-driven
+2. Innovative — differentiated from existing tools, brings lived experience
+3. Impactful — clear climate benefit, measurable outcomes
+4. Well-presented — clear, 3 min, jargon-free
+
+### Judging Criteria (Hackathon — Aug 31)
+1. Feasibility — practical, team capacity
+2. Viability — working prototype or visualization
+
+## THE TEAM
+
+- 5 members, all in-person at I4C26 in Nairobi
+- All Nairobi-based with lived experience of the city
+- Have an existing full-stack codebase (NestJS + React + PostgreSQL + Prisma) they built for a previous project
+- Technical skills: web development, basic AI/ML, product building
+- No one's specific background is known — do not assume any domain expertise
+- They also have free Helius/Solana credits available (optional — only use if it genuinely adds value)
+
+## RESEARCH INSTRUCTIONS
+
+Search the web LIVE and analyze EVERYTHING:
+
+### 1. Map All Possible Tracks
+Go beyond the 3 bonus topics. Research:
+- What climate + AI solutions could a Nairobi-based team build?
+- What are Nairobi's most acute climate challenges? (flooding, heat islands, food systems, energy poverty, waste management, transport emissions, air quality, water scarcity)
+- Which challenges have accessible data?
+- Which challenges have the least existing competition?
+
+### 2. Study Past Winners
+- 2024: DUCT Explorer (Singapore → Belo Horizonte, Brazil) — digital twin for urban heat risk
+- 2025: Polisense.AI (Peru → Amman, Cordoba) — AI copilot for energy poverty
+- 2025: EcoGuardian.AI (Algeria) — AI + GIS for land degradation monitoring
+- What patterns do all winners share? (focused problem, one clear user, AI + data + map)
+- What's still missing that a 2026 winner could fill?
+
+### 3. Find Real, Accessible Nairobi Data
+Search for specific datasets with working URLs:
+- Nairobi City County open data
+- Kenya Red Cross climate vulnerability data
+- APHRC urban research datasets
+- KNBS transport / environment statistics
+- Kenya Meteorological Department
+- UN-Habitat Nairobi data
+- World Bank Kenya urban data
+- WFP / FAO food system data for Nairobi
+- RCMRD (Regional Centre for Mapping of Resources for Development) — Nairobi-based, extensive geospatial data (land cover, satellite imagery, climate, flood mapping, agriculture). Check their SERVIR Eastern & Southern Africa data catalog and any open APIs
+- Any GCoM partner datasets offered to participants
+- Any other Nairobi-specific source you discover
+
+### 4. Evaluate What's Winnable
+For each possible direction, assess:
+- Quality of available data (is there enough to build?)
+- Differentiation from past winners
+- Fit with a 5-person web dev team (can they build it?)
+- Can they show a prototype by Aug 31?
+- Can they tell a compelling story in 3 minutes?
+- Does being Nairobi-based give them an edge?
+
+## OUTPUT FORMAT
+
+### Part A: Track-by-Track Analysis
+For each track you research, provide:
+- Opportunity score (1-10)
+- Data availability (1-10)
+- Build feasibility for this team (1-10)
+- Differentiation from existing solutions (1-10)
+- Key insight: why this does or doesn't work
+
+### Part B: Top 3 Ideas (ranked)
+For each of 3 best ideas:
+
+1. **Idea Name**
+2. **One-line pitch**
+3. **The Problem** — specific Nairobi climate issue, with evidence and sources
+4. **The Solution** — how it works, the AI mechanism, user flow
+5. **Target User** — a specific person/role, not "cities"
+6. **Measurable Impact** — what changes, in numbers
+7. **Data Sources** — real URLs you verified exist
+8. **Tech Stack** — specific tools and models
+9. **Why This Team Can Build It**
+10. **Differentiation** — unlike past winners and existing tools
+11. **Pitch Angle** — how to frame for 3 minutes
+12. **Prototype Roadmap** — what to build by Aug 31
+13. **Risks** — what could go wrong
+
+### Part C: Final Pick
+Your single best recommendation with:
+- Why this one
+- What to do right now (this weekend before June 22)
+- What to emphasize in the pitch
+- Optional: how to use Helius/Solana if it genuinely strengthens the idea (skip if forced)
+
+## RULES
+- Search the web for every claim — verify everything is real
+- Every data source must have a working URL you found
+- Be opinionated — pick a winner, don't be vague
+- Consider real-world constraints: Nairobi-based, small team, 4 days to pitch, 2 months to prototype
+- Past winners all focused on ONE problem with ONE user — follow that pattern
+- No fabricated team expertise — they are generalist builders who code

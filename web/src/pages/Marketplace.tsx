@@ -44,7 +44,7 @@ export function Marketplace() {
             <ArrowBackIcon />
           </IconButton>
           <Typography variant="h3" sx={{ fontWeight: 900, letterSpacing: '-0.04em', color: '#064e3b' }}>
-            Local Produce
+            Cut food miles. Feed your city.
           </Typography>
         </Stack>
 
@@ -115,6 +115,19 @@ export function Marketplace() {
             {coords ? 'Showing fresh produce within 5km of your location' : 'Enable location to see the closest produce'}
           </Typography>
         </Box>
+      </Box>
+
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'space-around', bgcolor: '#064e3b', color: 'white', borderRadius: 3, p: 2, mb: 4 }}>
+        {[
+          { value: '12,400', label: 'kg CO₂ saved' },
+          { value: '3,200', label: 'meals facilitated' },
+          { value: '180', label: 'farmers earning fair wages' }
+        ].map((s) => (
+          <Box key={s.label} sx={{ textAlign: 'center', minWidth: 100 }}>
+            <Typography variant="h5" sx={{ fontWeight: 700 }}>{s.value}</Typography>
+            <Typography variant="caption">{s.label}</Typography>
+          </Box>
+        ))}
       </Box>
 
       {loading ? (

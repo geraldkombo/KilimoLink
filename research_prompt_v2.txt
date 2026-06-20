@@ -1,0 +1,293 @@
+You are an elite research agent. Your single mission: find EVERY possible data source, API, and tool to make EVERY hackathon track score 10/10 for a Nairobi-based team. No score below 10 is acceptable. If a track scores low on data, find more data. If it scores low on differentiation, find a unique angle. Go deeper than anyone has gone before.
+
+## THE PROBLEM WITH THE FIRST ANALYSIS
+
+An earlier analysis gave these scores:
+
+| Track | Opportunity | Data | Feasibility | Differentiation |
+|-------|-------------|------|-------------|-----------------|
+| Transport | 6 | 8 | 8 | 3 |
+| Informal Settlements | 10 | 7 | 8 | 9 |
+| Air Quality | 8 | 9 | 9 | 5 |
+| Mis/Disinfo | 4 | 2 | 3 | 8 |
+| Urban Heat | 6 | 7 | 7 | 2 |
+
+**These are unacceptable. Every track must reach 10/10 across all categories.**
+
+## CRITICAL INSTRUCTION: FIND EVERYTHING YOURSELF
+
+**Do NOT wait for me to tell you what data sources exist. Your job is to discover them independently.**
+
+If I have to mention "APHRC" or "RCMRD" or "Kenya Red Cross" for you to look into them, you have failed. You should have found those yourself. Now go further.
+
+Search systematically across every category. If a category exists, find its Kenya/Nairobi-specific data:
+
+### 1. KenyA Government & Parastatal Data
+Search for every ministry, agency, and authority that publishes data in Kenya:
+- Kenya National Bureau of Statistics (KNBS) — census, economic surveys, transport statistics
+- Kenya Meteorological Department — climate data, ENACTS, rainfall, temp
+- Nairobi City County — GIS hub, open data portal, climate action plan, transport dept
+- Kenya Urban Roads Authority (KURA) — traffic data
+- Kenya National Highways Authority (KeNHA)
+- Kenya Rural Roads Authority (KeRRA)
+- Nairobi Metropolitan Area Transport Authority (NAMATA)
+- Water Resources Authority (WRA) — river levels, flood data
+- National Environment Management Authority (NEMA) — air quality, environmental data
+- Kenya Forest Service — land cover, vegetation data
+- Kenya Maritime Authority (if relevant)
+- Communication Authority of Kenya — mobile penetration, internet usage
+
+### 2. Regional Bodies Based in or Serving Nairobi
+- **RCMRD** (Regional Centre for Mapping of Resources for Development) — HQ in Nairobi. SERVIR Eastern & Southern Africa data catalog. Land cover, satellite imagery, climate, flood mapping, agriculture maps. REST APIs? Data downloads? Walk-in access?
+- IGAD Climate Prediction and Applications Centre (ICPAC) — regional climate data
+- Lake Victoria Basin Commission — water data
+
+### 3. International Organizations with Nairobi Data
+- **UN-Habitat** — HQ in Nairobi. Urban data, informal settlement mapping, city climate data
+- **UNEP** — HQ in Nairobi. Environmental data, climate data
+- **World Bank** — Kenya Urbanization Review, Kenya Climate Data Project, microdata
+- **WRI (World Resources Institute)** — Kenya GIS data, floodplains, population density, Aqueduct water risk
+- **FAO** — food systems data, agricultural supply chains, post-harvest loss data for Kenya
+- **WFP** — food security data, market price data for Nairobi, mVAM
+- **WHO** — health and climate data for Kenya
+- **UNDP** — Kenya climate resilience data
+- **UNICEF** — child health, nutrition data for Nairobi informal settlements
+- **ILO** — employment data relevant to transport sector
+
+### 4. Research & Academic Institutions
+- **APHRC** (African Population and Health Research Center) — HQ in Nairobi. NUHDSS microdata for Korogocho & Viwandani. Health, migration, poverty data.
+- **University of Nairobi** — transport research, urban planning studies
+- **Kenyatta University** — environmental data
+- **Jomo Kenyatta University of Agriculture and Technology (JKUAT)** — agri-tech, geospatial data
+- **Strathmore University** — iLab Africa, data science research
+- **International Livestock Research Institute (ILRI)** — HQ in Nairobi. Livestock, food systems data
+- **World Agroforestry (ICRAF)** — HQ in Nairobi. Land use, tree cover, climate data
+- **International Centre of Insect Physiology and Ecology (ICIPE)** — environmental data
+- **African Centre for Technology Studies (ACTS)** — climate innovation research
+- **Kenya Institute for Public Policy Research (KIPPRA)** — policy data
+- **KEMRI** — health data, disease surveillance relevant to climate
+
+### 5. Satellite & Earth Observation
+- RCMRD SERVIR catalog (specific data products)
+- Copernicus Climate Data Store — Nairobi variables
+- ESA Sentinel data (1, 2, 3, 5P) for Nairobi
+- NASA EarthData — MODIS, VIIRS, SRTM DEM for Nairobi
+- USGS EarthExplorer — Landsat archive for Nairobi
+- Google Earth Engine — any Nairobi datasets
+- ICIMOD regional data (if applicable)
+- Digital Earth Africa — Africa-specific EO data
+
+### 6. Sensor Networks & IoT
+- **sensors.AFRICA** (Code for Africa) — air quality, weather, water quality. REST API
+- **OpenAQ** — global air quality data aggregator, Nairobi stations
+- **Nairobi City County air quality network** — 50 new sensors
+- **Trans-African HydroMeteorological Observatory (TAHMO)** — weather stations in Kenya
+- **IBM/SkyMind weather data** for Nairobi
+- **PurpleAir** — community air quality sensors in Nairobi
+- **Rainfall sensors** managed by Kenya Met or WRA
+
+### 7. Transit & Mobility Data
+- **Digital Matatus** — GTFS data for matatus. Historical but foundational
+- **Ma3Route** — crowdsourced traffic data. Any API?
+- **Google Maps / Waze** — traffic data (limited access but worth exploring)
+- **Uber Movement** — mobility data for Nairobi (if available)
+- **Bolt / Little / Uber** — ride data (private, but partnership worth exploring)
+- **Kenya Railways** — commuter rail data
+- **BRT (Bus Rapid Transit) data** from NAMATA
+- **Matatu SACCOs** — any route/permit data publicly available?
+
+### 8. Health Data
+- **APHRC NUHDSS** — detailed health metrics for informal settlements
+- **DHIS2 (Kenya Health Information System)** — aggregate health facility data
+- **KEMRI** — disease surveillance data
+- **WHO Global Health Observatory** — Kenya-specific
+- **IHME (Institute for Health Metrics)** — Kenya disease burden data
+- **CHV networks** — any accessible data?
+
+### 9. Disaster & Climate Resilience Data
+- **Kenya Red Cross** — disaster response, vulnerability indices, flood incidents
+- **DRR (Disaster Risk Reduction) platform** — any Kenya DRR data portal
+- **Humanitarian Data Exchange (HDX)** — Kenya crisis data
+- **ReliefWeb** — Kenya disaster reports
+- **GFDRR (Global Facility for Disaster Reduction and Recovery)** — Kenya risk data
+- **ThinkHazard!** — Kenya hazard profiles
+- **INFORM Risk Index** — Kenya subnational risk data
+
+### 10. Financial & Economic Data
+- **Central Bank of Kenya** — economic indicators
+- **KNBS** — CPI, GDP, inflation
+- **M-Pesa (Safaricom)** — any aggregated mobility/economic data? (Difficult but worth asking)
+- **World Bank Kenya Economic Update**
+- **FSD Kenya** — financial inclusion data
+
+### 11. Civic Tech & Civil Society Data
+- **Ushahidi** — crowdsourced crisis mapping. Any existing Nairobi deployment data?
+- **Code for Africa** — open data initiatives for Kenya
+- **OpenStreetMap Kenya** — community mapping data for informal settlements
+- **MapKibera** — detailed mapping of Kibera's pathways, water points, health facilities
+- **MajiData** — water and sanitation data for Kenya
+- **Twaweza** — citizen survey data for Kenya
+- **Infotrak** — survey data for Nairobi
+- **Ipsos Kenya** — public opinion data
+
+### 12. Media & Misinformation Data
+- **Africa Check** — fact-checking database, climate misinformation examples
+- **PesaCheck** — Kenya-specific fact-checking
+- **Media Council of Kenya** — media monitoring data
+- **Portland Communications** — disinformation research
+- **GeoPoll** — mobile survey data for Kenya
+- **Social media APIs** — what's still accessible? Twitter/X API? CrowdTangle?
+
+### 13. Food Systems & Agriculture
+- **FAO** — food price data, supply chain data for Kenya
+- **WFP mVAM** — market price monitoring
+- **Twiga Foods** — B2B food distribution data for Nairobi (any public data?)
+- **Kenya Agricultural and Livestock Research Organization (KALRO)** — crop data
+- **Ministry of Agriculture** — production statistics
+- **RCMRD** — crop monitoring, yield prediction data
+- **ILRI** — livestock market data
+- **ICRAF** — tree cover, agroforestry data
+
+### 14. Water, Sanitation & Waste
+- **Nairobi City Water and Sewerage Company** — water supply data
+- **Water Resources Authority** — river flow data
+- **MajiData** — WASH data for Kenya
+- **UNICEF JMP** — sanitation data for Nairobi
+- **Nairobi County waste management** — any open data?
+
+### 15. Energy Data
+- **Kenya Power** — electricity access data for Nairobi
+- **Energy and Petroleum Regulatory Authority (EPRA)** — energy statistics
+- **Ministry of Energy** — clean cooking, solar data
+- **World Bank** — energy access data for Kenya
+- **Power Africa** — energy data for Kenya
+
+### 16. Global Open Data Platforms (Nairobi-specific)
+- **WorldPop** — population density at 100m resolution for Nairobi
+- **Global Human Settlement Layer (GHSL)** — built-up areas, population
+- **Humanitarian Data Exchange (HDX)** — Kenya datasets
+- **Zenodo / Figshare** — research datasets tagged "Nairobi"
+- **Kaggle** — datasets tagged "Nairobi" or "Kenya"
+- **Google Dataset Search** — search for Nairobi climate datasets
+- **Data.gov** — any Kenya-related data
+- **Kenya Open Data Initiative** — is it still active?
+- **CKAN / DKAN instances** — any Kenya data portals
+- **Socrata open data portals** — any Kenyan cities using this?
+- **World Bank Microdata Library** — Kenya household surveys
+- **DHS Program** — Kenya Demographic and Health Survey data
+- **Living Standards Measurement Study (LSMS)** — Kenya data
+
+### 17. Private Sector / Startup (Public or Partnered Data)
+- **Twiga Foods** — food distribution routes, volumes (approach them)
+- **Sendy** — delivery logistics data (approach them)
+- **Lynk** — household services data
+- **BRCK** — internet connectivity data
+- **Apex Porter** — delivery data
+- **M-KOPA** — solar home system data (energy access proxy)
+- **SunCulture** — solar irrigation data
+- **iProcure** — agricultural input supply chain data
+
+### 18. News & Media Archives
+- **Nation Media Group** — archive search for climate events
+- **Standard Media** — archive
+- **Citizen Digital / Royal Media** — news archive
+- **Google News Archive** — Kenya climate events
+
+### 19. Any Category You Can Think Of That I Haven't Listed
+Use your knowledge. Think about what data exists for Nairobi. Go find it.
+
+## FOR EACH TRACK, TELL ME:
+
+### Track 1: Urban Transportation
+Current score: 6/8/8/3
+What ADDITIONAL data would make this 10/10?
+- Real-time traffic data sources?
+- Matatu SACCO cooperation possibilities?
+- Emissions modeling data?
+- EV charging infrastructure data?
+- NAMATA planning documents?
+What unique angle makes differentiation 10?
+How to overcome stale GTFS data problem?
+
+### Track 2: Informal Settlements / Flooding
+Current score: 10/7/8/9
+What additional data raises 7→10 on data availability?
+- LIDAR elevation data for informal settlements?
+- High-resolution DEM sources?
+- Historical flood depth data?
+- Building footprint data for Kibera/Mukuru/Mathare?
+- Drainage network data?
+What makes feasibility 8→10?
+
+### Track 3: Air Quality / Health
+Current score: 8/9/9/5
+What makes differentiation 5→10?
+- How to differentiate from the new Nairobi City County dashboard?
+- Unique health data correlations?
+- CHV SMS integration angle?
+- Predictive model sophistication?
+What additional data raises 8→10 on opportunity?
+
+### Track 4: Mis/Disinformation
+Current score: 4/2/3/8
+This track needs the most work. How to make it viable?
+- Any existing datasets of climate misinformation in Kenya?
+- Ushahidi crowdsourced data?
+- Social media API access possibilities?
+- Media monitoring datasets?
+- How could a simple/NLP-light approach work?
+- What partnership would unlock data?
+- Can existing fact-checking orgs (Africa Check, PesaCheck) provide data?
+How to make data 2→10? Feasibility 3→10?
+
+### Track 5: Urban Heat Islands
+Current score: 6/7/7/2
+How to differentiate from DUCT Explorer (2024 winner)?
+- What makes this clearly different and better?
+- Nairobi-specific heat data?
+- Land surface temperature data sources?
+- Green infrastructure planning data?
+- What unique angle raises all scores?
+
+## ALSO RESEARCH
+
+### New Track Ideas (that might naturally score 10/10)
+- **Food Systems / Urban Agriculture** - any climate + food data for Nairobi?
+- **Water / Sanitation** - climate impacts on water access?
+- **Energy Poverty** - solar, clean cooking datasets?
+- **Waste Management** - waste-to-value, recycling data?
+- **Coastal / Riverine** - Nairobi river health data?
+
+## OUTPUT FORMAT
+
+### Section 1: Complete Data Map
+Every data source found with:
+- Full name and URL (verified working)
+- Access method (API key? Download form? Email request?)
+- Cost (free/paid and how much)
+- Update frequency (real-time/daily/static)
+- Relevance to each track
+- How to access it from Nairobi (who to call, which office to visit)
+
+### Section 2: Track Transformation Plans
+For EACH track, provide a specific plan to reach 10/10:
+- What data plugs the gap
+- What partnership unlocks access
+- What technical approach differentiates
+- What the final 10/10 idea looks like
+
+### Section 3: Ultimate Recommendation
+The single best 10/10 idea with:
+- Why every score hits 10
+- Complete data pipeline (every source, how to access, how to ingest)
+- Complete tech stack
+- Complete pitch strategy for June 23
+- Complete build roadmap for Aug 31
+
+## RULES
+- NO score below 10 is acceptable — keep researching until every track can hit 10
+- Every data source must have a real, working URL
+- Prioritize sources the team can ACCESS FROM NAIROBI (walk-in offices, local partnerships)
+- Be creative about partnerships — who can the team call or visit?
+- Consider what makes a Kenyan judge excited vs. a generic international judge
+- The team has 4 days to pitch and 2 months to build — be realistic about what's achievable

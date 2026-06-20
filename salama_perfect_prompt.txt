@@ -1,0 +1,180 @@
+You are an expert urban climate AI architect. Your task: take the SalamaPath.AI concept below and PERFECT it. Every score must reach 10/10. Leave no weakness. Research deeper.
+
+## THE CONCEPT
+
+SalamaPath.AI — an AI-powered geospatial routing engine that calculates dynamic, real-time evacuation pathways for informal settlements during flash floods.
+
+Target user: Kenya Red Cross incident commanders
+Location: Kibera, Mukuru, Mathare — Nairobi's informal settlements
+Tech stack: React + NestJS + PostgreSQL (PostGIS/pgRouting) + Python
+Timeline: Pitch June 23, prototype Aug 31
+
+### CURRENT SCORES (unacceptable — must all be 10)
+- Opportunity: 10
+- Data availability: 7 ← NEEDS FIXING
+- Build feasibility: 8 ← NEEDS FIXING
+- Differentiation: 9 ← ALMOST THERE
+
+### WHAT IT CURRENTLY LACKS (per the analysis)
+1. No high-resolution LiDAR elevation data for flood modeling
+2. Static proxy terrain models instead of real hydrological data
+3. No clear plan for real-time rainfall data ingestion
+4. The prototype relies on simulated "trigger flood" events without real data pipeline
+
+## BUDGET CONSTRAINT: ZERO ADDITIONAL SPENDING
+
+The team has NO money. They cannot pay for ANYTHING. These are their ONLY paid resources:
+1. **Helius Build Plan** — $49/mo (covered by coupon, expiring). 80M API credits unused. Solana RPC + gRPC + ZK compression available.
+2. **Their existing codebase** — NestJS, React, PostgreSQL, Prisma (self-hosted or free tier)
+
+Everything else MUST BE FREE:
+- No AWS, no Google Cloud, no Azure credits
+- No paid SMS gateways (use free tier of Africa's Talking or open alternatives)
+- No paid map services (Mapbox free tier or Leaflet/OpenStreetMap only)
+- No paid domain names or SNS (Solana Name Service)
+- No paid data subscriptions
+- No paid SMS (Africa's Talking FREE TIER or Telegram/WhatsApp bots)
+- No server costs beyond free tiers (Render free tier, Vercel, GitHub Pages)
+
+The Helius credits are their ONLY paid resource. Force the architecture to use them strategically.
+
+Search the web live and find EVERYTHING needed to make this 10/10:
+
+### 1. ELEVATION & TERRAIN DATA FOR INFORMAL SETTLEMENTS
+Search for:
+- RCMRD (Regional Centre for Mapping of Resources for Development) — they're based in Nairobi. What elevation data do they have? SERVIR catalog? DEMs? LIDAR? Walk-in access?
+- SRTM 30m DEM for Nairobi — free, global. Is 30m resolution good enough for informal settlement alleyways?
+- ALOS PALSAR 12.5m DEM — higher res, free for research
+- TanDEM-X 12m DEM
+- Any higher-resolution DEM for Kibera specifically
+- MapKibera project — did they do elevation mapping?
+- OpenStreetMap building footprints for Kibera — can infer elevation from drainage?
+- UNICEF / UN-Habitat informal settlement mapping projects
+
+### 2. REAL-TIME RAINFALL & FLOOD DATA
+Search for:
+- Kenya Meteorological Department — real-time rainfall API. Does it exist? How to access?
+- TAHMO (Trans-African HydroMeteorological Observatory) — weather stations in Nairobi. API?
+- ICPAC — regional climate data, flood forecasts
+- Global Flood Awareness System (GloFAS) — Kenya coverage
+- Copernicus Emergency Management Service (CEMS) — flood mapping for Nairobi
+- WRI Aqueduct Floods — Kenya flood hazard data
+- Kenya Red Cross — historical flood incident data. Any database?
+- Any river gauge data for Ngong and Mathare rivers (Water Resources Authority?)
+
+### 3. BUILDING & PATHWAY DATA FOR INFORMAL SETTLEMENTS
+Search for:
+- MapKibera — most detailed mapping of Kibera. What formats? What data layers?
+- OpenStreetMap — extract pedestrian pathways for Kibera, Mukuru, Mathare
+- Humanitarian OSM Team (HOT) — any Kenya mapping projects
+- RCMRD — building footprint data from satellite imagery
+- UN-Habitat — informal settlement GIS data for Nairobi
+- WorldPop — population density at building level
+- GRID3 — geospatial data for Kenya, settlement extents
+- Ecopia / Maxar — AI-generated building footprints (any free access?)
+
+### 4. REAL KIBERA/MUKURU/MATHARE FLOOD INCIDENTS
+Search for case studies and data:
+- Peer-reviewed Agent-Based Models of Kibera flood evacuations — what did they find?
+- Specific flood events (2015, 2018, 2020, 2024, 2025) — casualty numbers, locations
+- Kenya Red Cross situation reports for these events
+- ReliefWeb reports for Nairobi floods
+- News articles with specific locations and depths
+- Photos or satellite imagery of specific flooded areas
+
+### 5. KENYA RED CROSS PARTNERSHIP ANGLE
+Search for:
+- Kenya Red Cross innovation partnerships
+- Kenya Red Cross data sharing policies
+- Kenya Red Cross community health volunteer (CHV) network — how many in Nairobi informal settlements?
+- Kenya Red Cross SMS/alert systems already in place
+- Any hackathon-specific partnerships offered
+
+### 6. RCMRD DEEP DIVE
+Focus heavily here since they're in Nairobi:
+- SERVIR Eastern & Southern Africa data catalog — every data product listed
+- RCMRD's REST APIs or data services
+- RCMRD's satellite receiving station — what's available?
+- Land cover change data for Nairobi (1990-2025)
+- Flood risk mapping products
+- Agriculture monitoring data (if relevant)
+- How to request data (walk-in, online form, email)
+- Cost (free for research/students?)
+- Their physical location in Nairobi (the team can visit)
+
+### 7. TECHNICAL PERFECTION
+Research what's needed to make this truly work:
+- pgRouting — best algorithms for pedestrian evacuation routing? (Dijkstra? A*? Contraction Hierarchies?)
+- How to model flood water accumulation on a network graph
+- Real-time data pipeline architecture (rainfall API → PostGIS → routing recalculation)
+- Africa's Talking SMS API for alerts to CHVs
+- Mapbox GL JS free tier limits for the dashboard
+- Solana/Helius dMRV integration — how to reward CHVs for reporting flood status
+- How to demonstrate in a 3-minute pitch without a real flood
+
+## OUTPUT — THE PERFECTED SalamaPath.AI
+
+### Part A: Data Infrastructure
+Complete data pipeline with:
+- EVERY data source needed, with verified URLs
+- How to access each (API key, download, walk-in)
+- What format each comes in
+- How to ingest into PostGIS
+- Which are nice-to-have vs. essential for MVP
+
+### Alert System: Simple Web Form (No SMS/WhatsApp/Telegram)
+Do NOT design any SMS, WhatsApp, Telegram, or USSD integration. Keep it dead simple:
+- CHVs bookmark a mobile-optimized web page on their phone browser
+- Form fields: location (GPS auto-detect from browser), flood level (dropdown: dry/ankle/knee/waist), notes (optional)
+- Submit → hits NestJS endpoint → updates PostGIS routing penalties
+- Free, instant, no API keys, no approvals, no sandbox
+
+### Part C: Prototype Roadmap (Aug 31)
+Step-by-step build plan:
+- Week 1-2: Data collection and pipeline
+- Week 3-4: PostGIS network graph and routing engine
+- Week 5-6: Dashboard and visualization
+- Week 7-8: Integration, testing, demo prep
+- What can be built vs. what requires partnership
+
+### Part D: The 10/10 Pitch (June 23)
+- The Hook (0:00-0:30)
+- The Problem (0:30-1:00)
+- The Solution with demo strategy (1:00-2:00)
+- The Impact (2:00-2:30)
+- The Ask (2:30-3:00)
+- Key data points to cite
+- How to handle questions about "do you have real elevation data?"
+
+### Part D.5: PROJECT NAME — Simple English, Cambridge-worthy
+The name must impress at the University of Cambridge finale.
+- Plain English — no Latin, no Greek, no Swahili
+- Sounds scientific, authoritative, and important
+- Easy to pronounce for a Kenyan team on stage
+- Max 3 syllables — short and punchy
+- Tells you what it does (evacuation, routing, shelter, flood, safe passage)
+- No domain needed — free .github.io handle
+- Think: "Corridor," "Pathfinder," "SafePass," "RouteAI," "Egress," "Vanguard," "Sentinel" — or something BETTER
+- Must feel natural when a Cambridge professor says "the team behind ___"
+
+Recommend 3 options. Pick one.
+
+### Part E: Differentiation Matrix
+- vs. DUCT Explorer (2024 winner) — clearly explain why different
+- vs. Nairobi Flood Watch dashboard — clearly explain why better
+- vs. generic GIS flood maps — clearly explain the AI advantage
+- vs. any other competitor you find
+
+### Part F: Addressing Each Weakness
+For each current weakness, explain exactly how to fix it:
+1. Elevation data gap → X solution
+2. Real-time rainfall gap → Y solution
+3. Hydrological model simplicity → Z solution
+4. Demo without real flood → W strategy
+
+## RULES
+- Every claim must be verified with a real URL
+- Focus on what's achievable from Nairobi (walk-in access, local partnerships)
+- Be extremely specific about data formats and ingestion methods
+- If a data source doesn't exist, say so and propose a workaround
+- The team can physically visit RCMRD (Nairobi HQ), UN-Habitat (Nairobi), APHRC (Nairobi), KMD (Nairobi) — use this advantage

@@ -1,0 +1,242 @@
+You are an expert urban climate AI architect. Your task: take the KilimoLink concept below and PERFECT it so it WINS the AI x City Climate Action Hackathon 2026 ideation sprint. Every judging score must reach 10/10. Research deeper than anyone has before.
+
+## CRITICAL: THE WINNING FRAME
+
+KilimoLink is NOT "a farm-to-table marketplace." That is generic and does not win.
+
+**KilimoLink is an AI-powered Urban Food System Climate Intelligence platform for Nairobi City County.**
+
+The marketplace is the DATA ENGINE — it generates real-time food flow data that no one in Nairobi has today. The REAL customer is the city food system resilience officer who currently makes policy decisions with zero real-time data on where food comes from, at what cost, and how climate disruptions affect supply.
+
+This mirrors the winning pattern of past GCoM hackathon winners:
+- **DUCT Explorer (2024)**: Digital urban climate twin for heat — one city, one problem, one user (city planner)
+- **Polisense.AI (2025)**: AI energy poverty copilot — one user (local government), one problem (energy access)
+
+**KilimoLink = AI food system climate copilot for Nairobi County.**
+
+## THE CONCEPT (REFINED)
+
+KilimoLink — an AI platform that ingests real-time urban food supply chain data (via its built-in marketplace) and provides Nairobi City County with predictive analytics on food system climate resilience: supply disruption warnings, price anomaly detection in informal settlements, carbon footprint intelligence, and food desert mapping.
+
+Primary user: Nairobi City County food system resilience officer (one specific person)
+Secondary user: Urban consumers and farmers (data generators via the marketplace)
+Location: Nairobi, Kenya (city-scale)
+Tech stack: NestJS + React/Vite + PostgreSQL (Prisma) + Redis (existing)
+Timeline: Pitch June 23, prototype Aug 31
+
+### CURRENT STATE (what's built — already a huge advantage)
+The marketplace is fully built:
+- Frontend: Landing page, Marketplace, Product detail, Sell form (with GPS map, AI desc, market prices), Orders, Admin dashboard, Email login, Role onboarding
+- Backend: NestJS modules for Auth, Users, Market, Oracle, Orders, Admin (TOTP MFA), AI, Impact, Health. Prisma + PostgreSQL. Redis graceful degradation.
+- All at `https://github.com/geraldkombo/KilimoLink`
+
+What's MISSING (what this prompt must solve):
+1. The CLIMATE DATA INTELLIGENCE LAYER — the dashboard for the county officer
+2. The AI analytics engine (supply disruption, price anomaly, carbon footprint)
+3. The evidence-backed narrative for the 3-minute pitch
+4. The informal settlements bonus track connection
+5. The deployment fix (Render 404)
+
+## THE JUDGING CRITERIA (all must score 10/10)
+
+### Criterion 1: Relevant (10/10)
+**City-scale**: Nairobi-specific. One city, one food system, one climate problem.
+**Climate-focused**: Urban food systems = 30% of global emissions. Nairobi imports 70%+ of food. Food waste in Dandora = methane. Food miles = transport CO2. This IS climate action.
+**Evidence-based**: Nairobi Climate Action Plan, KNBS agri stats, FAO food loss data, IPCC food system emissions. Every claim citable.
+**AI-driven**: Not optional. Three AI features (supply prediction, price anomaly detection, carbon calculator) are core to the platform.
+
+### Criterion 2: Innovative (10/10)
+**Original**: No one in Nairobi provides real-time urban food system climate intelligence. Not Twiga (B2B distribution), not DigiFarm (farmer inputs), not M-Farm (price info only). KilimoLink's marketplace IS the data source, the analytics IS the product.
+**Lived experience**: The team is 5 Nairobi-based developers. They built this because they live the broken food system — middlemen, food waste, price spikes. They didn't ask AI for a generic idea; they built what Nairobi needs.
+**Different from AI-generated**: A generic AI would produce "a marketplace connecting farmers to consumers." The reframed KilimoLink — an urban food system climate intelligence platform for city government — is too specific, too grounded in Nairobi's reality for AI to have generated it.
+
+### Criterion 3: Impactful (10/10)
+**Measurable climate benefit**:
+- Per transaction: X kg CO2e saved (vs conventional supply chain) — quantified per order
+- Food waste reduction: Y% less waste in short supply chains = Z tons methane avoided
+- City-level: real-time data enables Nairobi County to target climate adaptation investments
+- Informal settlements: price monitoring protects Kibera/Mathare/Mukuru from food inflation shocks
+- Each metric has a real formula, real data source, real URL
+
+### Criterion 4: Well-presented (10/10)
+- 3 minutes flat
+- One clear character (the county resilience officer), one clear problem, one clear solution
+- Live demo of the WORKING app (not slides of future plans)
+- Jargon-free: "Food system climate intelligence" → "We tell the city where food is, where it's going, and when climate will break the chain."
+
+## BUDGET CONSTRAINT: ZERO ADDITIONAL SPENDING
+
+Only paid resource: Helius Build Plan ($49/mo, coupon, 80M credits unused).
+Everything else free tier: Render PostgreSQL, GitHub Pages, Leaflet/OSM maps.
+
+## WHAT GEMINI MUST SEARCH FOR AND VERIFY
+
+### 1. NAIROBI FOOD SYSTEM DATA (EVIDENCE FOR PITCH)
+
+Search for each of these — find REAL numbers with REAL URLs:
+- Nairobi Climate Action Plan — what does it say about food systems? What targets? What data gaps does it identify? Exact document URL.
+- Percentage of Nairobi's food imported from outside the county (cited range: 60-80%) — find the exact study and URL
+- FAO/WRI food loss in Kenya — "30-40% lost between farm and table" — confirm with URL
+- KNBS — number of smallholder farmers supplying Nairobi. Agricultural census data URL.
+- IPCC — food system contribution to global emissions (~31% of anthropogenic GHG)
+- Methane emissions from food waste in landfills — Dandora dumpsite food waste percentage
+- Food price inflation in Nairobi 2024-2026 — KNBS CPI data URL
+- APHRC — food insecurity rates in Kibera, Mathare, Mukuru — exact study URL
+- UN-Habitat — Nairobi population in informal settlements (~60%)
+- FAO — carbon footprint of different food supply chains (local vs. global)
+- WFP — market price monitoring data for Nairobi
+- Any GCoM/UTM resources offered to hackathon participants on urban food systems
+
+### 2. COMPETITOR GAP ANALYSIS
+
+For EACH competitor, find: what they do, their funding, their gap that KilimoLink fills:
+- **Twiga Foods** ($40M+ raised) — B2B distribution to kiosks, NOT consumer-facing, NOT climate data
+- **Tushop** — group buying, NOT individual farmer-to-consumer, NOT climate analytics
+- **M-Farm** — SMS price info only, NOT transactions, NOT real-time, basically inactive
+- **DigiFarm (Safaricom)** — farmer inputs/credit/services, NOT marketplace, NOT city-level data
+- **Selina Wamucii** — export to diaspora, NOT domestic Nairobi market
+- **Nairobi City County** — no food system data platform exists
+- **Any other African urban food tech** — find and analyze
+
+CRITICAL: How to frame "no one does what KilimoLink does" convincingly.
+
+### 3. INFORMAL SETTLEMENTS BONUS TRACK
+
+Find hard data connecting food systems to informal settlements climate vulnerability:
+- Food prices in Kibera are X% higher than Karen for same items — any study?
+- Open burning of food waste in Mukuru — emissions + health data
+- Flood impacts on food supply to Mathare — any documented cases?
+- COVID-era food distribution failures in informal settlements — lessons learned?
+- Urban agriculture in Kibera — how many grow food, what, where?
+- APHRC NUHDSS — any food security indicators for Korogocho/Viwandani?
+- How KilimoLink can specifically serve informal settlement residents: lower prices, fresher food, climate-resilient supply
+
+### 4. AI ARCHITECTURE (3 FEATURES TO BUILD BY AUG 31)
+
+Research what's achievable on free tier (Render, no GPU):
+- **Supply Disruption Predictor**: ML model using weather data (Open-Meteo free API) + historical sales patterns + KNBS seasonal calendars → predict which food products will face supply shortage in which Nairobi neighborhoods next week. Implementation: Python script on Render cron job → updates PostGIS layer → county dashboard alert.
+- **Price Anomaly Detector**: Time-series model (Prophet/StatsForecast) trained on transaction data → flag unusual price spikes in specific products/areas → early warning for county food resilience team. Implementation: TensorFlow.js in browser or lightweight Python endpoint.
+- **Per-Order Carbon Calculator**: Formula-based (not ML): food miles saved (km) × emission factor (kg CO2e/km/kg) + food waste avoided (kg) × methane factor (kg CO2e/kg). Implementation: simple JavaScript function in existing NestJS backend → display at checkout + aggregate on county dashboard.
+- If Helius credits add genuine value: ZK-compressed dMRV for carbon credits per verified short-chain transaction.
+
+### 5. THE COUNTY DASHBOARD
+
+What does the city resilience officer see? Design the analytics dashboard:
+- Live map: food flows in Nairobi — green lines from farms to consumers, red alerts where supply is disrupted
+- Price heatmap: which neighborhoods face food price spikes (red = informal settlements at risk)
+- CO2e savings: real-time aggregate of all platform transactions vs. conventional supply chain
+- Disruption alerts: "Heavy rain forecast in Kiambu — expect 30% supply drop in sukuma wiki next week"
+- Food desert index: neighborhoods with <5 active sellers within 2km — where to prioritize market access
+
+### 6. DEPLOYMENT FIX (RENDER 404)
+
+Research exact fix:
+- Render + NestJS common 404 causes
+- Render health check endpoint requirement
+- Exact DATABASE_URL, JWT_SECRET, DISABLE_REDIS, MOCK_PAYMENTS env vars
+- Build command: `cd backend && npm install && npm run build`
+- Start command: `cd backend && npm run start:prod`
+- Any PORT binding issues on Render free tier
+- How to check Render logs to verify fix
+
+### 7. LIVED EXPERIENCE — THE TEAM ADVANTAGE
+
+The orientation emphasized: "bring your personal lived experience... your unique knowledge of the city."
+- 5 Nairobi-based developers who have experienced food inflation, middlemen exploitation, and supply disruptions firsthand
+- They built the platform themselves (not a generic AI idea)
+- They know which markets, which matatu routes, which neighborhoods
+- This is NOT a solution from Silicon Valley — it's from Nairobi, for Nairobi
+- How to express this in the pitch without it sounding like a generic "we're local" claim
+
+## OUTPUT — THE WINNING KILIMOLINK (EVERYTHING FOR 10/10)
+
+### Part A: The Perfect Pitch Script (3 minutes, word-for-word)
+
+Structure following JP's advice (FOCUS + DIFFERENTIATE):
+- **0:00-0:40 — The Hook with a Person**: "Meet Grace. She's the food system resilience officer at Nairobi City County. Every day she asks: where is our food coming from? Is it safe? Will climate disrupt it next week? She has no answer."
+- **0:40-1:15 — The Problem with Evidence**: "Nairobi imports 70% of its food. 40% is lost before it reaches a plate. Food waste in Dandora generates methane. When floods hit, Grace has no data on which supply chains are broken. She's flying blind." (cite Nairobi Climate Action Plan, FAO with specific URLs)
+- **1:15-2:00 — The Solution with LIVE Demo**: "We built KilimoLink. [Open app] This is a marketplace connecting farmers directly to consumers. [Show listing, show order] But the real product is this: [Switch to county dashboard] real-time food flow intelligence for Grace. Every transaction generates data on origin, price, route. Here's the supply disruption alert for next week's rain in Kiambu."
+- **2:00-2:30 — The AI & Climate Impact**: "Three AI engines: supply prediction uses weather data to forecast shortages; price anomaly detection flags food inflation in informal settlements before it hurts families; carbon calculator shows 2.3kg CO2e saved per order versus the supermarket chain." (show live calculation)
+- **2:30-2:50 — The Evidence**: "Nairobi Climate Action Plan targets 30% food system emission reduction. KilimoLink delivers the data to measure it. KNBS confirms 50,000+ smallholder farmers within 100km of Nairobi. We've already built the platform."
+- **2:50-3:00 — The Ask**: "We want to pilot with Nairobi County. Give Grace the dashboard. And take this to the Cambridge finale."
+
+### Part B: Live Demo Strategy (What to Show on Screen)
+
+You have 3 minutes. You MUST show the WORKING app (JP said viability = prototype helps):
+- Screen 1: KilimoLink marketplace — browse products, filter by neighborhood, show a farmer's listing with phone number (5 seconds — "this is the data engine")
+- Screen 2: Click into a product — show the carbon badge: "2.3kg CO2e saved" (5 seconds — "every transaction measures climate impact")
+- Screen 3: The COUNTY DASHBOARD — map with food flow lines, price heatmap, disruption alerts (20 seconds — "this is what Grace sees")
+- Screen 4: AI alert detail: "Supply disruption predicted: Kiambu corridor — heavy rain Jan 15-17 — expected 30% drop in tomato supply" (10 seconds — "AI predicting climate impact")
+- The remaining 2:20 is YOU speaking, not the screen
+
+### Part C: Evidence Document (Citeable Sources for Pitch)
+
+Every claim with a real URL the team can reference:
+
+1. "Nairobi imports ~70% of its food" → [find the exact Nairobi Climate Action Plan or study citation]
+2. "40% of food lost between farm and table in Kenya" → FAO/WRI food loss data
+3. "Food system contributes 31% of global GHG emissions" → IPCC AR6 report
+4. "Food waste in landfills generates methane" → UNEP Food Waste Index
+5. "Kibera residents pay 20-40% more for food than upper-income areas" → any study found
+6. "60% of Nairobi's population lives in informal settlements" → UN-Habitat / APHRC
+7. "50,000+ smallholder farmers supply Nairobi daily" → KNBS agricultural census
+8. "Nairobi population: 5M+ growing at 4% annually" → KNBS census
+9. "Short supply chains reduce food miles by 80% vs conventional" → peer-reviewed source
+10. "3-minute pitch winners focus on ONE user, ONE problem" → GCoM hackathon past winners analysis
+
+### Part D: Differentiation (Why KilimoLink Wins vs. All Competitors)
+
+Matrix with clear, punchy comparisons:
+- vs. **Twiga Foods** ($40M): B2B middleman to kiosks. KilimoLink = P2P direct, data transparent, climate-intelligent.
+- vs. **Tushop**: Group buying discounts. KilimoLink = individual connection + climate analytics.
+- vs. **M-Farm**: Dead SMS price info. KilimoLink = live transactions + AI predictions.
+- vs. **DigiFarm**: Inputs and credit for farmers. KilimoLink = market access and city data.
+- vs. **Generic marketplace idea**: Any AI would generate "a food marketplace." KilimoLink's real product — the CITY CLIMATE ANALYTICS DASHBOARD — is too specific for AI to invent. It comes from living in Nairobi and knowing what the county is missing.
+
+### Part E: Bonus Track Strategy — INFORMAL SETTLEMENTS (maximum points)
+
+This is where KilimoLink wins bonus points:
+- Specific informal settlement focus: Kibera, Mathare, Mukuru
+- KilimoLink provides DATA on food prices in these settlements (currently no one tracks this)
+- Farmers from peri-urban informal areas (Kiambu, Machakos) sell directly, bypassing middlemen who inflate prices 30-50%
+- Climate vulnerability: when floods hit informal settlements, food supply cuts off — KilimoLink's AI alerts the county BEFORE shortages hit
+- Food desert mapping: which informal settlement neighborhoods have NO fresh produce access? KilimoLink shows it on a map
+- This is NOT theoretical — the data comes from real transactions on the platform
+
+### Part F: Prototype Roadmap (Aug 31)
+
+What ships by August:
+- Week 1-2: Fix Render deployment + enable GitHub Pages (working app live URL)
+- Week 3-4: County analytics dashboard (map, food flows, price heatmap, disruption alerts)
+- Week 5-6: AI engines (supply predictor, price anomaly detector, carbon calculator)
+- Week 7: Informal settlements pilot — onboard 20 farmers from peri-urban areas + 100 buyers in Kibera/Mathare
+- Week 8: Testing, data seeding, pitch rehearsal for Cambridge
+
+Already built: full marketplace, auth, orders, admin, AI module, Oracle, Impact — this is NOT a paper prototype, it's a working platform.
+
+### Part G: Addressing Each Judging Weakness
+
+1. **"Not climate enough"** → Food system emissions = 31% of global GHGs. Food waste = methane. Food miles = transport CO2. KilimoLink reduces ALL THREE and GIVES THE CITY DATA TO PROVE IT.
+2. **"Where's the AI?"** → Three AI engines: supply disruption prediction, price anomaly detection, carbon calculator. All running on free tier.
+3. **"How's this different?"** → Not a marketplace. It's an urban food system CLIMATE INTELLIGENCE PLATFORM that happens to use a marketplace as its data engine. No one in Nairobi does this.
+4. **"Generic idea from AI"** → A generic AI prompt produces "a marketplace connecting farmers to consumers." KilimoLink's reframed product — city climate analytics for a specific county officer — comes from lived experience of Nairobi's food system gaps.
+5. **"No traction"** → Working platform is built. 10 seeded farmers, 5 test orders, live demo ready.
+6. **"Bonus track?"** → Informal settlements: primary focus. Data on food access, prices, and climate vulnerability in Kibera/Mathare/Mukuru.
+
+### Part H: PROJECT NAME — Keep or Rename?
+
+- KilimoLink: "Kilimo" (agriculture in Swahili) + "Link" = agricultural connection
+- Does this work for the Cambridge finale? Or does it need an English name?
+- If changing: options like "NourishAI," "FoodSight," "UrbanFeed," "FlowFood" — but KilimoLink has brand equity in the team's submissions and the existing codebase
+- Recommendation with rationale
+
+## RULES
+
+- Every single claim in the pitch must have a REAL URL the team can cite
+- The 3-minute script in Part A must be EXACT — words a Nairobi team would say on stage
+- The live demo must use the ACTUAL built app, not wireframes
+- No paid anything except Helius (use only if ZK compression genuinely adds carbon credit value)
+- The informal settlements bonus track is the PRIMARY lever for extra points — maximize it
+- The pitch must pass the "focus test": ONE user (Grace), ONE problem (no food system data), ONE solution (KilimoLink analytics)
+- The pitch must pass the "differentiation test": this is NOT what AI would generate — it comes from living in Nairobi
+- Previous winners: DUCT Explorer (one city, one heat problem, one user). Polisense (one tool for energy planners). KilimoLink follows this pattern: one city (Nairobi), one problem (food system data gap), one user (county resilience officer).
