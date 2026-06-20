@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Grid, Divider, Dialog, DialogTitle, DialogContent, DialogActions, RadioGroup, FormControlLabel, Radio, TextField } from '@mui/material';
-import { AppBar, Box, Button, Container, Toolbar, Typography, Stack, useTheme, useMediaQuery, Paper, IconButton, Drawer, List, ListItem, ListItemText, ListItemButton } from '@mui/material';
+import { AppBar, Badge, Box, Button, Container, Toolbar, Typography, Stack, useTheme, useMediaQuery, Paper, IconButton, Drawer, List, ListItem, ListItemText, ListItemButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import PersonIcon from '@mui/icons-material/Person';
@@ -140,50 +140,7 @@ function HomePage() {
         </Box>
       </MotionBox>
 
-      {/* Trust Section */}
-      <MotionBox 
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1 }}
-        sx={{ mb: 15, position: 'relative', zIndex: 1 }}
-      >
-        <Box sx={{ position: 'relative', maxWidth: '1100px', mx: 'auto', px: 2 }}>
-          <Box 
-            component="img" 
-            src="/handshake.jpg" 
-            alt="Farmers and buyers connecting"
-            sx={{ 
-              width: '100%', 
-              borderRadius: 8, 
-              boxShadow: '0 40px 80px rgba(0,0,0,0.15)',
-              aspectRatio: { xs: '4/3', md: '21/9' },
-              objectFit: 'cover',
-              border: '1px solid rgba(0,0,0,0.05)'
-            }}
-          />
-          <Box sx={{ 
-            position: 'absolute', 
-            bottom: { xs: 20, md: 40 }, 
-            left: { xs: 20, md: 40 }, 
-            right: { xs: 20, md: 'auto' },
-            p: 4, 
-            bgcolor: 'rgba(255,255,255,0.95)', 
-            backdropFilter: 'blur(12px)',
-            borderRadius: 6, 
-            boxShadow: '0 30px 60px rgba(0,0,0,0.12)', 
-            border: '1px solid rgba(255,255,255,0.8)',
-            maxWidth: { xs: 'none', md: '600px' }
-          }}>
-            <Typography variant="h6" sx={{ fontWeight: 950, color: '#064e3b', mb: 1.5, letterSpacing: '-0.03em', lineHeight: 1.2 }}>
-              Know where your food comes from
-            </Typography>
-            <Typography variant="body1" sx={{ color: '#4b5563', lineHeight: 1.7, fontWeight: 500 }}>
-              Every farmer on KilimoLink is verified. Every product is listed with its source. No middlemen, just real people growing real food for your table.
-            </Typography>
-          </Box>
-        </Box>
-      </MotionBox>
+
 
       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
         <Typography variant="h3" align="center" gutterBottom sx={{ fontWeight: 900, mb: 2, letterSpacing: '-0.04em', color: '#064e3b' }}>
@@ -255,7 +212,6 @@ function HomePage() {
           </Typography>
           <Grid container spacing={4}>
             {[
-              { label: 'Carbon Offset', value: impact ? `${(impact.co2SavedKg / 1000).toFixed(1)}t` : '-', unit: 'CO\u2082 saved', color: '#064e3b', icon: '🌱' },
               { label: 'Waste Reduction', value: impact ? `${Math.round(impact.wasteDivertedKg)}kg` : '-', unit: 'diverted from landfill', color: '#ef6c00', icon: '♻️' },
               { label: 'Urban Farming', value: impact ? `${impact.greenSpaceM2}m\u00b2` : '-', unit: 'green space cultivated', color: '#1565c0', icon: '🏙️' },
             ].map((item, idx) => (
@@ -314,8 +270,11 @@ function HomePage() {
           <Typography variant="h2" sx={{ fontWeight: 900, mb: 2, fontSize: { xs: '2.5rem', md: '3.5rem' }, letterSpacing: '-0.04em' }}>
             Ready to get started?
           </Typography>
-          <Typography variant="h5" sx={{ opacity: 0.9, fontWeight: 400, mb: 6, maxWidth: '600px', lineHeight: 1.5 }}>
-            Whether you're a farmer or a buyer, join thousands of Kenyans already trading on KilimoLink.
+          <Typography variant="h5" sx={{ opacity: 0.9, fontWeight: 400, mb: 2, maxWidth: '600px', lineHeight: 1.5 }}>
+            Farmers list produce. Buyers order directly. No middlemen.
+          </Typography>
+          <Typography variant="body2" sx={{ opacity: 0.7, fontWeight: 500, mb: 6, maxWidth: '600px', lineHeight: 1.5 }}>
+            kilimolink.onrender.com — live demo for I4C26 Nairobi
           </Typography>
           <Button 
             variant="contained" 
@@ -368,6 +327,7 @@ export function AppContent() {
   const [selectedRole, setSelectedRole] = useState<string>('FARMER');
   const [loginError, setLoginError] = useState<string | null>(null);
   const [authLoading, setAuthLoading] = useState(true);
+  const [pendingOrderCount, setPendingOrderCount] = useState(0);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const location = useLocation();
@@ -381,6 +341,25 @@ export function AppContent() {
     }
     setAuthLoading(false);
   }, []);
+
+  const fetchPendingCount = useCallback(async () => {
+    if (!authenticated) { setPendingOrderCount(0); return; }
+    try {
+      const r = await api.get('/orders', { params: { limit: 100 } });
+      const orders = r.data?.orders ?? [];
+      setPendingOrderCount(orders.filter((o: any) => o.status === 'PENDING').length);
+    } catch { /* ignore */ }
+  }, [authenticated]);
+
+  useEffect(() => { fetchPendingCount(); }, [fetchPendingCount, location.pathname]);
+
+  useEffect(() => {
+    const handler = () => fetchPendingCount();
+    window.addEventListener('orders:changed', handler);
+    return () => window.removeEventListener('orders:changed', handler);
+  }, [fetchPendingCount]);
+
+  const showDemoBanner = userEmail === 'demo@kilimolink.com' && authenticated;
 
   const handleLogin = async () => {
     if (!loginEmail.trim()) return;
@@ -431,6 +410,11 @@ export function AppContent() {
 
   return (
     <Box sx={{ flexGrow: 1, minHeight: '100vh', bgcolor: 'background.default', display: 'flex', flexDirection: 'column' }}>
+      {showDemoBanner && (
+        <Box sx={{ bgcolor: '#2e7d32', color: 'white', textAlign: 'center', py: 0.5, fontSize: 13, fontWeight: 700 }}>
+          Demo Mode — live system (kilimolink.onrender.com)
+        </Box>
+      )}
       <AppBar position="sticky" elevation={0} sx={{ bgcolor: 'rgba(255,255,255,0.8)', backdropFilter: 'blur(10px)', borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
         <Toolbar sx={{ height: 80, justifyContent: 'space-between' }}>
           <Typography 
@@ -481,7 +465,9 @@ export function AppContent() {
               {authenticated && currentRole === 'FARMER' && (
                 <Button color="inherit" component={Link} to="/my-products" sx={{ color: '#333', fontWeight: 600, px: 2 }}>My Products</Button>
               )}
-              <Button color="inherit" component={Link} to="/orders" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Orders</Button>
+              <Badge badgeContent={pendingOrderCount} color="success" sx={{ '& .MuiBadge-badge': { fontWeight: 800, fontSize: '0.65rem' } }}>
+                <Button color="inherit" component={Link} to="/orders" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Orders</Button>
+              </Badge>
               {authenticated && currentRole === 'ADMIN' && (
                 <Button color="inherit" component={Link} to="/admin" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Admin</Button>
               )}
@@ -794,7 +780,10 @@ export function AppContent() {
             </Grid>
           </Grid>
           <Divider sx={{ my: 4 }} />
-          <Typography variant="body2" color="text.secondary" align="center">
+          <Typography variant="body2" color="text.secondary" align="center" sx={{ fontWeight: 600 }}>
+            kilimolink.onrender.com — I4C26 Nairobi Live Demo
+          </Typography>
+          <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 0.5 }}>
             &copy; 2026 KilimoLink. Fresh from the farm, straight to your table.
           </Typography>
         </Container>

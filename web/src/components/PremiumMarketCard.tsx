@@ -1,8 +1,10 @@
-import { Box, Card, CardContent, CardMedia, Typography, Chip, Button, Fade, Stack } from '@mui/material';
+import { useState } from 'react';
+import { Box, Card, CardContent, CardMedia, Typography, Chip, Button, Fade, Stack, Snackbar, Alert, CircularProgress } from '@mui/material';
 import { Link } from 'react-router-dom';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import VerifiedIcon from '@mui/icons-material/Verified';
+import { api } from '../services/api';
 
 interface PremiumMarketCardProps {
   product: {
@@ -25,9 +27,9 @@ interface PremiumMarketCardProps {
  * Grounded in 'frontend-design' and 'composition-patterns' skills.
  */
 const CATEGORY_IMAGES: Record<string, string> = {
-  Vegetables: 'https://images.unsplash.com/photo-1524179091875-bf99a9a6af97?auto=format&fit=crop&w=800&q=80',
+  Vegetables: 'https://images.unsplash.com/photo-1777353245982-c34b21fc5175?auto=format&fit=crop&w=800&q=80',
   Fruits: 'https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80',
-  Dairy: 'https://images.unsplash.com/photo-1550583724-1255818c0533?auto=format&fit=crop&w=800&q=80',
+  Dairy: 'https://images.unsplash.com/photo-1601436423474-51738541c1b1?auto=format&fit=crop&w=800&q=80',
   Grains: 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=800&q=80',
   Meat: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=800&q=80',
   Honey: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80',
@@ -36,9 +38,29 @@ const CATEGORY_IMAGES: Record<string, string> = {
 };
 
 export const PremiumMarketCard = ({ product, delay = 0 }: PremiumMarketCardProps) => {
+  const [ordering, setOrdering] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+  const handleAddToCart = async () => {
+    setOrdering(true);
+    try {
+      await api.post('/orders', {
+        productId: product.id,
+        quantity: 1,
+        paymentMethod: 'CASH',
+      });
+      setSnackbarOpen(true);
+      window.dispatchEvent(new CustomEvent('orders:changed'));
+    } catch {
+      // silently fail on card level
+    } finally {
+      setOrdering(false);
+    }
+  };
+
   return (
     <Fade in timeout={300 + delay}>
-      <Card sx={{ 
+      <><Card sx={{ 
         height: '100%', 
         borderRadius: 6, 
         border: '1px solid rgba(0,0,0,0.05)',
@@ -122,26 +144,54 @@ export const PremiumMarketCard = ({ product, delay = 0 }: PremiumMarketCardProps
             />
           </Stack>
 
-          <Button 
-            fullWidth 
-            variant="contained" 
-            component={Link}
-            to={`/product/${product.id}`}
-            sx={{ 
-              borderRadius: 3, 
-              py: 1.5, 
-              bgcolor: '#064e3b', 
-              color: 'white', 
-              boxShadow: 'none',
-              fontWeight: 800,
-              textTransform: 'none',
-              '&:hover': { bgcolor: '#065f46', boxShadow: '0 4px 12px rgba(6, 78, 59, 0.2)' }
-            }}
-          >
-            View Details
-          </Button>
+          <Stack direction="row" spacing={1}>
+            <Button 
+              fullWidth 
+              variant="contained" 
+              onClick={handleAddToCart}
+              disabled={ordering}
+              startIcon={ordering ? <CircularProgress size={18} color="inherit" /> : <ShoppingCartIcon />}
+              sx={{ 
+                borderRadius: 3, 
+                py: 1.5, 
+                bgcolor: '#064e3b', 
+                color: 'white', 
+                boxShadow: 'none',
+                fontWeight: 800,
+                textTransform: 'none',
+                '&:hover': { bgcolor: '#065f46', boxShadow: '0 4px 12px rgba(6, 78, 59, 0.2)' }
+              }}
+            >
+              {ordering ? 'Ordering...' : 'Add to Cart'}
+            </Button>
+            <Button 
+              fullWidth 
+              variant="outlined"
+              component={Link}
+              to={`/product/${product.id}`}
+              sx={{ 
+                borderRadius: 3, 
+                py: 1.5, 
+                color: '#064e3b',
+                borderColor: '#064e3b',
+                fontWeight: 800,
+                textTransform: 'none',
+                '&:hover': { borderColor: '#065f46', bgcolor: '#f0fdf4' }
+              }}
+            >
+              Details
+            </Button>
+          </Stack>
         </CardContent>
       </Card>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={() => setSnackbarOpen(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert severity="success" sx={{ fontWeight: 800, borderRadius: 3 }}>Order placed!</Alert>
+      </Snackbar></>
     </Fade>
   );
 };

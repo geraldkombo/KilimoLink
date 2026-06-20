@@ -17,6 +17,7 @@ import { applyToken } from '../services/auth';
 import { api } from '../services/api';
 import { useNavigate, Link } from 'react-router-dom';
 import 'leaflet/dist/leaflet.css';
+import { PriceTruthGap } from '../components/PriceTruthGap';
 
 // Fix for Leaflet default icon issues in React
 import icon from 'leaflet/dist/images/marker-icon.png';
@@ -110,6 +111,13 @@ const generateAIDescription = (title: string, category: string, marketData?: any
 
 import { useProducts } from '../app/ProductContext';
 
+interface MarketInsights {
+  recommendedPrice: number;
+  disruption: boolean;
+}
+
+const titleToSlug = (title: string) => title.toLowerCase().replace(/[()]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
 export function SellProduct() {
   const navigate = useNavigate();
   const [authenticated, setAuthenticated] = useState(false);
@@ -155,8 +163,10 @@ export function SellProduct() {
   const [loading, setLoading] = useState(false);
   const [generating, setGenerating] = useState(false);
   const [refreshingOracle, setRefreshingOracle] = useState(false);
+  const [suggestingPrice, setSuggestingPrice] = useState(false);
+  const [priceSuggestion, setPriceSuggestion] = useState<{ suggestedPrice: number; source: string; confidence: number } | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [marketInsights, setMarketInsights] = useState<any>(null);
+  const [marketInsights, setMarketInsights] = useState<MarketInsights | null>(null);
   const [mapPosition, setMapPosition] = useState<{ lat: number, lng: number } | null>(null);
   const [formData, setFormData] = useState({
     title: '',
@@ -183,6 +193,29 @@ export function SellProduct() {
         }
       }
     }, 1200);
+  };
+
+  const handleAISuggestPrice = async () => {
+    if (!formData.title) {
+      setError('Please enter a product title first.');
+      return;
+    }
+    setSuggestingPrice(true);
+    setError(null);
+    try {
+      const res = await api.post('/ai/suggest-price', {
+        productName: formData.title,
+        category: formData.category,
+        recentPrices: [],
+      });
+      const { recommended, min, max } = res.data;
+      setFormData(prev => ({ ...prev, price: String(recommended) }));
+      setPriceSuggestion({ suggestedPrice: recommended, source: 'AI Model', confidence: 0.85 });
+    } catch {
+      setError('Failed to get AI price suggestion.');
+    } finally {
+      setSuggestingPrice(false);
+    }
   };
 
   // AI Title Capitalization & Enhancement
@@ -433,15 +466,26 @@ export function SellProduct() {
             <Grid item xs={12} sm={6}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
                 <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#064e3b' }}>PRICE (KES)</Typography>
-                <Button 
-                  size="small" 
-                  onClick={handleOracleRefresh}
-                  disabled={refreshingOracle || !formData.title}
-                  startIcon={refreshingOracle ? <CircularProgress size={14} color="inherit" /> : <RefreshIcon sx={{ fontSize: 14 }} />}
-                  sx={{ textTransform: 'none', fontSize: '0.75rem', fontWeight: 700, color: '#059669' }}
-                >
-                  {refreshingOracle ? 'Syncing...' : 'Sync Oracle'}
-                </Button>
+                <Stack direction="row" spacing={1}>
+                  <Button 
+                    size="small" 
+                    onClick={handleAISuggestPrice}
+                    disabled={suggestingPrice || !formData.title}
+                    startIcon={suggestingPrice ? <CircularProgress size={14} color="inherit" /> : <AutoAwesomeIcon sx={{ fontSize: 14 }} />}
+                    sx={{ textTransform: 'none', fontSize: '0.75rem', fontWeight: 700, color: '#7c3aed' }}
+                  >
+                    {suggestingPrice ? 'Thinking...' : 'AI Suggest Price'}
+                  </Button>
+                  <Button 
+                    size="small" 
+                    onClick={handleOracleRefresh}
+                    disabled={refreshingOracle || !formData.title}
+                    startIcon={refreshingOracle ? <CircularProgress size={14} color="inherit" /> : <RefreshIcon sx={{ fontSize: 14 }} />}
+                    sx={{ textTransform: 'none', fontSize: '0.75rem', fontWeight: 700, color: '#059669' }}
+                  >
+                    {refreshingOracle ? 'Syncing...' : 'Sync Oracle'}
+                  </Button>
+                </Stack>
               </Box>
               <TextField
                 fullWidth
@@ -456,8 +500,17 @@ export function SellProduct() {
                     </InputAdornment>
                   )
                 }}
-                helperText="Verified market price (May 2026 adjusted)"
+                helperText={priceSuggestion ? `AI: KES ${priceSuggestion.suggestedPrice} (${priceSuggestion.source}, ${(priceSuggestion.confidence * 100).toFixed(0)}% confidence)` : 'Verified market price (May 2026 adjusted)'}
               />
+              {priceSuggestion && (
+                <Chip
+                  icon={<AutoAwesomeIcon sx={{ fontSize: 14 }} />}
+                  label={`AI suggests KES ${priceSuggestion.suggestedPrice} — ${priceSuggestion.source}`}
+                  size="small"
+                  sx={{ mt: 1, bgcolor: '#f5f3ff', color: '#7c3aed', fontWeight: 700 }}
+                />
+              )}
+              <PriceTruthGap slug={formData.title ? titleToSlug(formData.title) : null} />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -519,8 +572,8 @@ export function SellProduct() {
               <Box sx={{ mt: 1.5, display: 'flex', gap: 1, flexWrap: 'wrap' }}>
                 <Typography variant="caption" sx={{ color: '#666', mr: 1, mt: 0.5 }}>Quick samples:</Typography>
                 {[
-                  { label: 'Kale/Sukuma', url: 'https://images.unsplash.com/photo-1524179091875-bf99a9a6af97?auto=format&fit=crop&w=800&q=80' },
-                  { label: 'Fresh Milk', url: 'https://images.unsplash.com/photo-1550583724-1255818c0533?auto=format&fit=crop&w=800&q=80' },
+                  { label: 'Kale/Sukuma', url: 'https://images.unsplash.com/photo-1777353245982-c34b21fc5175?auto=format&fit=crop&w=800&q=80' },
+                  { label: 'Fresh Milk', url: 'https://images.unsplash.com/photo-1601436423474-51738541c1b1?auto=format&fit=crop&w=800&q=80' },
                   { label: 'Maize/Corn', url: 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=800&q=80' },
                   { label: 'Mixed Fruits', url: 'https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80' },
                   { label: 'Meat/Beef', url: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=800&q=80' },

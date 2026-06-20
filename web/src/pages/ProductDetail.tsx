@@ -4,11 +4,12 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useParams, useNavigate, Link as RouterLink } from 'react-router-dom';
 import { Box, Button, Container, Grid, Paper, Typography, Chip, Divider, Alert } from '@mui/material';
 import { api } from '../services/api';
+import { PriceTruthGap } from '../components/PriceTruthGap';
 
 const CATEGORY_IMAGES: Record<string, string> = {
-  Vegetables: 'https://images.unsplash.com/photo-1524179091875-bf99a9a6af97?auto=format&fit=crop&w=800&q=80',
+  Vegetables: 'https://images.unsplash.com/photo-1777353245982-c34b21fc5175?auto=format&fit=crop&w=800&q=80',
   Fruits: 'https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80',
-  Dairy: 'https://images.unsplash.com/photo-1550583724-1255818c0533?auto=format&fit=crop&w=800&q=80',
+  Dairy: 'https://images.unsplash.com/photo-1601436423474-51738541c1b1?auto=format&fit=crop&w=800&q=80',
   Grains: 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=800&q=80',
   Meat: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=800&q=80',
   Honey: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80',
@@ -129,6 +130,8 @@ export function ProductDetail() {
             <Typography variant="body1" sx={{ color: '#4b5563', lineHeight: 1.8, fontSize: '1.2rem', mb: 5, fontWeight: 400 }}>
               {product.description || 'Fresh produce sourced directly from a local farmer.'}
             </Typography>
+
+            <PriceTruthGap slug={id || null} />
 
             <Divider sx={{ my: 5 }} />
 

@@ -1,11 +1,12 @@
 import { useEffect, useState, useMemo } from 'react';
-import { Box, Container, Grid, Typography, Chip, Button, TextField, InputAdornment, Stack, Skeleton, Fade, IconButton } from '@mui/material';
+import { Box, Container, Grid, Typography, Chip, Button, TextField, InputAdornment, Stack, Skeleton, Fade, IconButton, Tooltip } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { PremiumMarketCard } from '../components/PremiumMarketCard';
 import { useProducts } from '../app/ProductContext';
 import { api } from '../services/api';
@@ -15,27 +16,11 @@ export function Marketplace() {
   const [coords, setCoords] = useState<{ lat: number, lng: number } | null>(null);
   const [search, setSearch] = useState('');
   const [impact, setImpact] = useState<{ co2SavedKg: number; completedOrders: number } | null>(null);
+  const [impactLoading, setImpactLoading] = useState(true);
 
   useEffect(() => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          const newCoords = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-          setCoords(newCoords);
-          fetchProducts(newCoords);
-        },
-        (err) => {
-          console.warn("Location access denied or failed", err);
-          fetchProducts();
-        }
-      );
-    } else {
-      fetchProducts();
-    }
-  }, [fetchProducts]);
-
-  useEffect(() => {
-    api.get('/impact').then(r => setImpact(r.data)).catch(() => {});
+    setImpactLoading(true);
+    api.get('/impact').then(r => { setImpact(r.data); }).catch(() => {}).finally(() => setImpactLoading(false));
   }, []);
 
   const filteredProducts = useMemo(() => {
@@ -123,20 +108,33 @@ export function Marketplace() {
         </Box>
       </Box>
 
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'space-around', bgcolor: '#064e3b', color: 'white', borderRadius: 3, p: 2, mb: 4 }}>
-        <Box sx={{ textAlign: 'center', minWidth: 100 }}>
-          <Typography variant="h5" sx={{ fontWeight: 700 }}>{impact ? impact.co2SavedKg.toLocaleString() : '-'}</Typography>
-          <Typography variant="caption">kg CO₂ saved</Typography>
+      {impactLoading ? (
+        <Stack direction="row" spacing={2} justifyContent="center" sx={{ mb: 4 }}>
+          {[0, 1, 2].map((i) => (
+            <Skeleton key={i} variant="rounded" width={130} height={72} sx={{ borderRadius: 3 }} />
+          ))}
+        </Stack>
+      ) : (
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'space-around', bgcolor: '#064e3b', color: 'white', borderRadius: 3, p: 2, mb: 4 }}>
+          <Box sx={{ textAlign: 'center', minWidth: 100 }}>
+            <Tooltip title="Calculated per completed order: avg 300 km food miles avoided × 0.2 kg CO₂/km + waste diversion" arrow>
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0.5 }}>
+                <Typography variant="h5" sx={{ fontWeight: 700 }}>{impact ? impact.co2SavedKg.toLocaleString() : '-'}</Typography>
+                <InfoOutlinedIcon sx={{ fontSize: 14, opacity: 0.7, cursor: 'help' }} />
+              </Box>
+            </Tooltip>
+            <Typography variant="caption">kg CO₂ saved</Typography>
+          </Box>
+          <Box sx={{ textAlign: 'center', minWidth: 100 }}>
+            <Typography variant="h5" sx={{ fontWeight: 700 }}>{impact ? (impact.completedOrders * 8).toLocaleString() : '-'}</Typography>
+            <Typography variant="caption">meals facilitated</Typography>
+          </Box>
+          <Box sx={{ textAlign: 'center', minWidth: 100 }}>
+            <Typography variant="h5" sx={{ fontWeight: 700 }}>{impact ? Math.ceil(impact.completedOrders / 3).toLocaleString() : '-'}</Typography>
+            <Typography variant="caption">farmers earning fair wages</Typography>
+          </Box>
         </Box>
-        <Box sx={{ textAlign: 'center', minWidth: 100 }}>
-          <Typography variant="h5" sx={{ fontWeight: 700 }}>{impact ? (impact.completedOrders * 8).toLocaleString() : '-'}</Typography>
-          <Typography variant="caption">meals facilitated</Typography>
-        </Box>
-        <Box sx={{ textAlign: 'center', minWidth: 100 }}>
-          <Typography variant="h5" sx={{ fontWeight: 700 }}>{impact ? Math.ceil(impact.completedOrders / 3).toLocaleString() : '-'}</Typography>
-          <Typography variant="caption">farmers earning fair wages</Typography>
-        </Box>
-      </Box>
+      )}
 
       {loading ? (
         <Grid container spacing={4}>

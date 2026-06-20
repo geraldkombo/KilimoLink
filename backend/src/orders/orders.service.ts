@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, ForbiddenException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../common/prisma/prisma.service';
 import { OrderStatus } from '@prisma/client';
 import { CreateOrderDto } from './dto/create-order.dto';
@@ -45,6 +45,18 @@ export class OrdersService {
     });
 
     return { success: true, orderId: order.id };
+  }
+
+  async completeOrder(userId: string, orderId: string) {
+    const order = await this.prisma.order.findUnique({ where: { id: orderId } });
+    if (!order) throw new NotFoundException('Order not found');
+    if (order.buyerId !== userId) throw new ForbiddenException('You can only complete your own orders');
+
+    const updated = await this.prisma.order.update({
+      where: { id: orderId },
+      data: { status: OrderStatus.DELIVERED },
+    });
+    return { success: true, orderId: order.id, status: updated.status };
   }
 
   async getUserOrders(userId: string, page = 1, limit = 20) {

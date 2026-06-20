@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { OrdersService } from './orders.service';
 import { CurrentUser, JwtUser } from '../common/auth/current-user.decorator';
@@ -15,6 +15,11 @@ export class OrdersController {
   @Post()
   createOrder(@CurrentUser() user: JwtUser, @Body() body: CreateOrderDto) {
     return this.ordersService.createOrder(user.userId, body);
+  }
+
+  @Patch(':id/complete')
+  completeOrder(@CurrentUser() user: JwtUser, @Param('id') id: string) {
+    return this.ordersService.completeOrder(user.userId, id);
   }
 
   @Get()
