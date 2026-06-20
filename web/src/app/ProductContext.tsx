@@ -8,7 +8,8 @@ interface Product {
   quantity: number;
   category: string;
   imageUrl?: string;
-  location?: any;
+  farmer?: { name: string; email?: string };
+  location?: { address: string; lat: number; lng: number };
 }
 
 interface ProductContextType {

@@ -14,6 +14,8 @@ interface PremiumMarketCardProps {
     imageUrl?: string;
     distance?: number;
     verified?: boolean;
+    farmer?: { name: string };
+    location?: { address: string };
   };
   delay?: number;
 }
@@ -84,9 +86,21 @@ export const PremiumMarketCard = ({ product, delay = 0 }: PremiumMarketCardProps
                 Verified Local Farmer
               </Typography>
             </Box>
-            <Typography variant="h6" sx={{ fontWeight: 900, color: '#064e3b', ml: 2 }}>
-              KES {product.price}
-            </Typography>
+            <Box sx={{ textAlign: 'right', ml: 2 }}>
+              <Typography variant="h6" sx={{ fontWeight: 900, color: '#064e3b' }}>
+                KES {product.price}
+              </Typography>
+              {product.farmer?.name ? (
+                <Typography variant="body2" sx={{ fontWeight: 700, color: '#065f46', mt: 0.25 }}>
+                  {product.farmer.name}
+                </Typography>
+              ) : null}
+              {product.location?.address ? (
+                <Typography variant="caption" sx={{ display: 'block', color: 'text.secondary', fontWeight: 600, mt: 0.25 }}>
+                  {product.location.address}
+                </Typography>
+              ) : null}
+            </Box>
           </Box>
           
           <Typography variant="body2" color="text.secondary" sx={{ mb: 3, fontWeight: 500 }}>

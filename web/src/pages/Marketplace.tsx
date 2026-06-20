@@ -8,11 +8,13 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { PremiumMarketCard } from '../components/PremiumMarketCard';
 import { useProducts } from '../app/ProductContext';
+import { api } from '../services/api';
 
 export function Marketplace() {
   const { products, loading, error, fetchProducts, searchProducts } = useProducts();
   const [coords, setCoords] = useState<{ lat: number, lng: number } | null>(null);
   const [search, setSearch] = useState('');
+  const [impact, setImpact] = useState<{ co2SavedKg: number; ordersCompleted: number } | null>(null);
 
   useEffect(() => {
     if ("geolocation" in navigator) {
@@ -31,6 +33,10 @@ export function Marketplace() {
       fetchProducts();
     }
   }, [fetchProducts]);
+
+  useEffect(() => {
+    api.get('/impact').then(r => setImpact(r.data)).catch(() => {});
+  }, []);
 
   const filteredProducts = useMemo(() => {
     return searchProducts(search);
@@ -118,16 +124,18 @@ export function Marketplace() {
       </Box>
 
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'space-around', bgcolor: '#064e3b', color: 'white', borderRadius: 3, p: 2, mb: 4 }}>
-        {[
-          { value: '12,400', label: 'kg CO₂ saved' },
-          { value: '3,200', label: 'meals facilitated' },
-          { value: '180', label: 'farmers earning fair wages' }
-        ].map((s) => (
-          <Box key={s.label} sx={{ textAlign: 'center', minWidth: 100 }}>
-            <Typography variant="h5" sx={{ fontWeight: 700 }}>{s.value}</Typography>
-            <Typography variant="caption">{s.label}</Typography>
-          </Box>
-        ))}
+        <Box sx={{ textAlign: 'center', minWidth: 100 }}>
+          <Typography variant="h5" sx={{ fontWeight: 700 }}>{impact ? impact.co2SavedKg.toLocaleString() : '-'}</Typography>
+          <Typography variant="caption">kg CO₂ saved</Typography>
+        </Box>
+        <Box sx={{ textAlign: 'center', minWidth: 100 }}>
+          <Typography variant="h5" sx={{ fontWeight: 700 }}>{impact ? (impact.ordersCompleted * 8).toLocaleString() : '-'}</Typography>
+          <Typography variant="caption">meals facilitated</Typography>
+        </Box>
+        <Box sx={{ textAlign: 'center', minWidth: 100 }}>
+          <Typography variant="h5" sx={{ fontWeight: 700 }}>{impact ? Math.ceil(impact.ordersCompleted / 3).toLocaleString() : '-'}</Typography>
+          <Typography variant="caption">farmers earning fair wages</Typography>
+        </Box>
       </Box>
 
       {loading ? (
