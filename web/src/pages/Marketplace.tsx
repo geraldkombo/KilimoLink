@@ -14,7 +14,7 @@ export function Marketplace() {
   const { products, loading, error, fetchProducts, searchProducts } = useProducts();
   const [coords, setCoords] = useState<{ lat: number, lng: number } | null>(null);
   const [search, setSearch] = useState('');
-  const [impact, setImpact] = useState<{ co2SavedKg: number; ordersCompleted: number } | null>(null);
+  const [impact, setImpact] = useState<{ co2SavedKg: number; completedOrders: number } | null>(null);
 
   useEffect(() => {
     if ("geolocation" in navigator) {
@@ -129,11 +129,11 @@ export function Marketplace() {
           <Typography variant="caption">kg CO₂ saved</Typography>
         </Box>
         <Box sx={{ textAlign: 'center', minWidth: 100 }}>
-          <Typography variant="h5" sx={{ fontWeight: 700 }}>{impact ? (impact.ordersCompleted * 8).toLocaleString() : '-'}</Typography>
+          <Typography variant="h5" sx={{ fontWeight: 700 }}>{impact ? (impact.completedOrders * 8).toLocaleString() : '-'}</Typography>
           <Typography variant="caption">meals facilitated</Typography>
         </Box>
         <Box sx={{ textAlign: 'center', minWidth: 100 }}>
-          <Typography variant="h5" sx={{ fontWeight: 700 }}>{impact ? Math.ceil(impact.ordersCompleted / 3).toLocaleString() : '-'}</Typography>
+          <Typography variant="h5" sx={{ fontWeight: 700 }}>{impact ? Math.ceil(impact.completedOrders / 3).toLocaleString() : '-'}</Typography>
           <Typography variant="caption">farmers earning fair wages</Typography>
         </Box>
       </Box>
