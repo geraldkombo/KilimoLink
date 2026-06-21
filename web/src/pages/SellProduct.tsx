@@ -584,10 +584,21 @@ export function SellProduct() {
                     label={chip.label} 
                     size="small" 
                     onClick={() => setFormData({ ...formData, imageUrl: chip.url })}
-                    sx={{ bgcolor: '#f0fdf4', color: '#064e3b', fontWeight: 600, fontSize: '0.7rem', cursor: 'pointer', '&:hover': { bgcolor: '#dcfce7' } }} 
+                    sx={{ bgcolor: formData.imageUrl === chip.url ? '#064e3b' : '#f0fdf4', color: formData.imageUrl === chip.url ? '#fff' : '#064e3b', fontWeight: 600, fontSize: '0.7rem', cursor: 'pointer', '&:hover': { bgcolor: '#dcfce7' } }} 
                   />
                 ))}
               </Box>
+              {formData.imageUrl && (
+                <Box sx={{ mt: 2, borderRadius: 3, overflow: 'hidden', border: '2px solid #e0e0e0', maxHeight: 300 }}>
+                  <Box
+                    component="img"
+                    src={formData.imageUrl}
+                    alt="Product preview"
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                    sx={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                  />
+                </Box>
+              )}
             </Grid>
             <Grid item xs={12}>
               <Divider sx={{ my: 2 }} />
