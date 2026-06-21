@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: kilimolink-api
+    runtime: node
+    rootDir: kilimolink/backend
+    plan: free
+    buildCommand: npm ci && npx prisma generate && npm run build
+    startCommand: npm run start
+    healthCheckPath: /api/v1/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DISABLE_REDIS
+        value: "true"
+      - key: MOCK_PAYMENTS
+        value: "true"
+      - key: JWT_SECRET
+        sync: false
+      - key: DATABASE_URL
+        sync: false

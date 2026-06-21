@@ -1,63 +1,64 @@
 # KilimoLink Direct — I4C26 Pitch Script
 
-**Total time:** 3:00 | **Words:** ~440 | **Speaker:** Gerald Kombo
+**Total time:** 3:00 | **Words:** ~430 | **Speaker:** Gerald Kombo  
+**Focus test:** One city: Nairobi. One user: Nairobi County food system resilience officer. One problem: no real-time food climate intelligence.
 
 ---
 
-**:00–:25 — The Hook**
+## 0:00–0:35 — The Hook: Grace
 
-> "Every rainy season, thirty percent of Kenya's food rots before it reaches a table. Not because it's bad — because farmers don't know the right price, and city buyers can't find them. Meanwhile, families in Nairobi pay double for produce shipped hundreds of kilometers. That's not just an economic failure. It's a climate problem."
+> "Meet Grace. Grace works at Nairobi City County, responsible for food system resilience. Every week she has to answer urgent questions: where is Nairobi's food coming from, which neighborhoods are facing price spikes, and will flooding outside the city disrupt supply next week? Today, Grace has no real-time answer. She is flying blind."
 
-**[Slide: Split screen — rotting food vs. long truck convoy]**
-
----
-
-**:25–:50 — The Problem Deepens**
-
-> "Every kilogram of food that travels 300 kilometers emits carbon. Every middleman adds cost and waste. And when climate shocks hit — floods, droughts, locusts — the supply chain breaks first where it matters most: informal settlements like Kibera and Mathare. These communities pay the most, eat the worst, and are hit hardest by climate disruption."
-
-**[Slide: Photo of Kibera market + food price graph rising]**
+**[Slide: Grace at county dashboard placeholder + Nairobi food routes map]**
 
 ---
 
-**:50–1:20 — Enter KilimoLink Direct**
+## 0:35–1:05 — The Climate Problem
 
-> "We built the operating system for urban food resilience. KilimoLink Direct is a live, deployed marketplace connecting Nairobi consumers directly with local farmers. Our AI predicts fair prices from government market data — cutting waste. Our maps show exactly where food is grown and where it's needed. And it works on any phone, with or without a bank account."
+> "Nairobi depends on food moving in from surrounding counties. When heavy rain, drought, road disruption, or fuel prices hit that chain, the impact lands first in Kibera, Mathare, and Mukuru. Food waste becomes methane. Long supply routes create emissions. And price shocks decide whether families eat fresh food or skip meals. This is not only a food problem. It is urban climate risk."
 
-**[Slide: KilimoLink Direct logo + architecture flow diagram]**
-
----
-
-**:20–1:50 — Live Demo**
-
-> "Let me show you. I'm listing Sukuma Wiki — kale — a Nairobi staple. The app auto-fills the market price from our AI oracle: 45 shillings, verified by KNBS data. One click generates a description. I tap the map to show where it's grown — Kibera. I set privacy mode so the farmer's exact location is protected. And I list it. That took fifteen seconds. That's climate adaptation, live."
-
-**[Clicker runs demo in real time on projector]**
+**[Slide: Flooded road → market price spike → informal settlement household]**
 
 ---
 
-**:50–2:20 — Impact & Traction**
+## 1:05–1:45 — The Solution + Marketplace Demo
 
-> "KilimoLink Direct is live right now at kilimolink.onrender.com. Every transaction on our platform saves an estimated three kilograms of CO₂ by eliminating long food transport. We've already logged our first orders. Our AI oracle has suggested prices for over twenty produce types. And we're just getting started."
+> "We built KilimoLink: Nairobi's AI food system climate intelligence platform. The marketplace is the data engine. A farmer lists sukuma wiki, tomatoes, or potatoes. A buyer orders directly. Every transaction records origin, destination, price, quantity, and route. That creates the real-time food-flow data Nairobi does not have today."
 
-**[Slide: Impact numbers — CO₂ saved, farmers onboarded, orders completed]**
+**[Live demo: open marketplace → product listing → sell flow or product detail]**
 
----
-
-**:20–2:50 — The Technology**
-
-> "Built on NestJS with PostgreSQL, served through React, and deployed on free infrastructure. Forty-eight automated tests pass. The API documentation is live. Any developer can extend it. We didn't build this in a weekend for a pitch — we built this to last."
-
-**[Slide: Architecture diagram — Community → NestJS API → PostgreSQL → React/Leaflet]**
+> "On screen, this looks like a farmer-to-consumer marketplace. But for Grace, every listing becomes a sensor for Nairobi's food system."
 
 ---
 
-**:50–3:00 — The Ask**
+## 1:45–2:25 — County Dashboard + AI
 
-> "To scale from pilot to city-wide resilience, we need: Nairobi County GIS data to map food access gaps. A partnership with KALRO for crop yield forecasts. And your belief that the solution to urban climate resilience already exists — it's on this screen, it's running right now, and it's called KilimoLink Direct."
+> "Now Grace sees the real product: a county dashboard. She sees food flows into Nairobi, price spikes by neighborhood, informal settlements at risk, and food deserts with too few active sellers nearby. Three AI engines power it: a supply disruption predictor using weather and transaction patterns, a price anomaly detector for sudden inflation, and a carbon calculator estimating emissions saved per order through shorter supply chains and less waste."
 
-**[Slide: "Join Us" — contact info + QR code to live site]**
+**[Live demo: open `/county-dashboard` with map, heatmap, alert, CO₂ tile]**
 
 ---
 
-**[END. 3:00 — applause]**
+## 2:25–2:45 — Why We Win
+
+> "This is different from Twiga, DigiFarm, or a generic marketplace. They move food or support farmers. KilimoLink gives the city climate intelligence. We are Nairobi-based developers building from lived experience: we know the markets, the middlemen, the routes, and the neighborhoods that get ignored."
+
+**[Slide: competitor gap matrix]**
+
+---
+
+## 2:45–3:00 — The Ask
+
+> "By August 31, we will ship the county dashboard, AI alerts, and informal settlement pilot. We want to pilot with Nairobi City County. Give Grace the dashboard, and Nairobi can finally see its food system before climate breaks it."
+
+**[Slide: "Give Grace the dashboard" + QR code]**
+
+---
+
+## Claims requiring verified citations before final submission
+
+- Nairobi share of food sourced outside the county.
+- Kenya food loss percentage between farm and table.
+- Food systems share of global greenhouse gas emissions.
+- Informal settlement food insecurity and price vulnerability figures.
+- CO₂e and methane factors used by the calculator.

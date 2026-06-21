@@ -211,8 +211,8 @@ export function SellProduct() {
       const { recommended, min, max } = res.data;
       setFormData(prev => ({ ...prev, price: String(recommended) }));
       setPriceSuggestion({ suggestedPrice: recommended, source: 'AI Model', confidence: 0.85 });
-    } catch {
-      setError('Failed to get AI price suggestion.');
+    } catch (err: any) {
+      setError(err.userMessage || 'Failed to get AI price suggestion.');
     } finally {
       setSuggestingPrice(false);
     }
@@ -331,7 +331,7 @@ export function SellProduct() {
       navigate('/market');
     } catch (err: any) {
       console.error('Failed to create product', err);
-      const msg = err.response?.data?.message || 'Failed to list product. Please try again.';
+      const msg = err.response?.data?.message || err.userMessage || 'Failed to list product. Please try again.';
       setError(msg);
     } finally {
       setLoading(false);

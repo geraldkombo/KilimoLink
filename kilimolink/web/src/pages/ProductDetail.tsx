@@ -35,7 +35,7 @@ export function ProductDetail() {
         setProduct(res.data);
       } catch (err: any) {
         console.error('Failed to fetch product', err);
-        setError(err.response?.status === 404 ? 'Product not found.' : 'Failed to load product details.');
+        setError(err.response?.status === 404 ? 'Product not found.' : (err.userMessage || 'Failed to load product details.'));
       } finally {
         setFetching(false);
       }
@@ -56,7 +56,7 @@ export function ProductDetail() {
       setTimeout(() => navigate('/orders'), 2000);
     } catch (err: any) {
       console.error('Order failed', err);
-      setError(err.response?.data?.message || 'Failed to place order.');
+      setError(err.response?.data?.message || err.userMessage || 'Failed to place order.');
     } finally {
       setLoading(false);
     }
