@@ -1,4 +1,4 @@
-# ─── MASTER PROMPT: PERFECT KILIMOLINK TO WIN I4C26 ───
+# ─── MASTER PROMPT: PERFECT KILIMOLINK DIRECT TO WIN I4C26 ───
 
 Copy this ENTIRE thing to each AI (Claude, DeepSeek, Mistral, ChatGPT, Gemini). Do not summarize. Do not skip sections. Every word earns its place.
 
@@ -23,7 +23,7 @@ Copy this ENTIRE thing to each AI (Claude, DeepSeek, Mistral, ChatGPT, Gemini). 
 **Deadline:** Submit progress update by Sun June 21 12pm EAT
 
 ═══════════════════════════════════════════════════════════════
-## OUR PROJECT: KILIMOLINK
+## OUR PROJECT: KILIMOLINK DIRECT
 ═══════════════════════════════════════════════════════════════
 
 **What it is:** A hyperlocal urban food resilience marketplace connecting city consumers directly with local farmers across East Africa. Live and deployed.
@@ -70,15 +70,15 @@ Copy this ENTIRE thing to each AI (Claude, DeepSeek, Mistral, ChatGPT, Gemini). 
 ## THE ASKS — 8 DELIVERABLES
 ═══════════════════════════════════════════════════════════════
 
-### DELIVERABLE 1: REFRAME KILIMOLINK FOR THE CLIMATE NARRATIVE
+### DELIVERABLE 1: REFRAME KILIMOLINK DIRECT FOR THE CLIMATE NARRATIVE
 
-I need you to take every feature of KilimoLink and map it to a climate action benefit. This is NOT optional — the judges are scoring thematic relevance. Give me a table:
+I need you to take every feature of KilimoLink Direct and map it to a climate action benefit. This is NOT optional — the judges are scoring thematic relevance. Give me a table:
 
 | Feature | Current framing | Climate reframe | Which criterion it hits |
 |---------|----------------|-----------------|------------------------|
 | Direct farmer-to-consumer marketplace | "Cut out middlemen" | "Eliminates 300+ km of冷链 transport emissions per transaction. Food travels from farm gate to city kitchen in <2 hours instead of 3+ days through wholesale chains." | Thematic relevance, Impact |
 | AI price oracle | "Fair prices for farmers" | "AI reduces food waste by pricing produce at market-clearing rates. 30-40% of food is wasted in Kenya because farmers don't know the right price. Our ML model predicts optimal price using KNBS/AFA historical data + real-time supply." | Innovation, Impact |
-| Location picker + privacy mode | "Find nearby produce" | "Enables hyperlocal food loops. The average meal in Nairobi travels 150km. KilimoLink targets <5km. Privacy mode protects smallholder farmers in informal settlements from price exploitation." | Thematic relevance, Bonus: informal settlements |
+| Location picker + privacy mode | "Find nearby produce" | "Enables hyperlocal food loops. The average meal in Nairobi travels 150km. KilimoLink Direct targets <5km. Privacy mode protects smallholder farmers in informal settlements from price exploitation." | Thematic relevance, Bonus: informal settlements |
 | AI description generator | "Help farmers write listings" | "AI lowers barrier for farmers with low literacy. Climate adaptation tech must serve EVERYONE, not just the educated." | Innovation, Bonus: lived experience |
 | Phone-based P2P payments | "M-Pesa integration" | "No bank account needed. 80% of informal settlement residents have a phone but no bank. Financial inclusion is climate resilience." | Bonus: informal settlements |
 | Disruption alerts | "Weather/transport alerts" | "Real-time climate adaptation. When heavy rain hits, our AI alerts farmers and reroutes logistics. Climate early warning = less food waste." | Thematic relevance, Innovation |
@@ -96,7 +96,7 @@ Write a verbatim script with:
 **Required beats:**
 - :00-:25 — The hook. Start with a visceral image: "Every rainy season, 30% of Kenya's food rots while city families pay double for imported produce. That's not just an economic problem. It's a climate problem."
 - :25-:50 — The problem deepens: food miles, waste, farmer poverty, climate vulnerability. Connect to Nairobi specifically.
-- :50-1:30 — Enter KilimoLink. "We built the operating system for urban food resilience." Live demo starts here.
+- :50-1:30 — Enter KilimoLink Direct. "We built the operating system for urban food resilience." Live demo starts here.
 - 1:30-2:00 — Live demo. Show the actual app on screen. Create a product, show the map, trigger AI description. The clicker does this while presenter talks.
 - 2:00-2:30 — Impact & Traction. Numbers: "We're live. X farmers onboarding. X kg waste prevented in pilot. Our AI oracle reduces overpricing by 40%."
 - 2:30-3:00 — The ask + close. "We need: 1) Nairobi County GIS data to expand, 2) partnership with KALRO for crop yield forecasts, 3) you to believe that the solution to urban climate resilience already exists — it's on your screen right now."

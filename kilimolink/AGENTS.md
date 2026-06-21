@@ -1,7 +1,7 @@
-# KilimoLink — AI Agent Development Guide
+# KilimoLink Direct — AI Agent Development Guide
 
 ## Overview
-**KilimoLink** is a hyperlocal urban food resilience marketplace connecting city consumers directly with local farmers across East Africa.
+**KilimoLink Direct** is a hyperlocal urban food resilience marketplace connecting city consumers directly with local farmers across East Africa.
 
 - **Stack**: NestJS (backend) + React/Vite (frontend) + PostgreSQL (database) + Redis (cache)
 - **Auth**: Privy (email-to-wallet) + JWT

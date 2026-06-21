@@ -1,4 +1,4 @@
-# KilimoLink Technical Overview
+# KilimoLink Direct Technical Overview
 
 ## Architecture
 The platform follows a modern micro-services-lite architecture:

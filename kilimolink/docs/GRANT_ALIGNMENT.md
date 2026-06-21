@@ -12,7 +12,7 @@
 
 ### **Solana Foundation / Colosseum (Rolling)**
 - **Fit**: Our **On-Chain Transactions** and **Solana-powered Identity**.
-- **Value Prop**: KilimoLink is a real-world use case for Solana’s high speed and low fees. We map real-world assets (produce and land) to the Solana ecosystem, proving that Web3 can solve food security in Africa.
+- **Value Prop**: KilimoLink Direct is a real-world use case for Solana’s high speed and low fees. We map real-world assets (produce and land) to the Solana ecosystem, proving that Web3 can solve food security in Africa.
 
 ### **World Bank FLLoCA / KJET ($30M+ pool | Rolling)**
 - **Fit**: Our **Hyperlocal Geolocation (Leaflet)** and **CO2 Tracking**.

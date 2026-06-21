@@ -1,14 +1,14 @@
 # FOR IMMEDIATE RELEASE
 
-# KilimoLink Unveils Hyperlocal Marketplace to Revolutionize Urban Food Resilience for Innovate4Cities 2026
+# KilimoLink Direct Unveils Hyperlocal Marketplace to Revolutionize Urban Food Resilience for Innovate4Cities 2026
 
 **The platform bridges East Africa’s "informal settlement gap" using geolocation-aware logistics, AI-driven fair pricing, and real-time climate impact tracking.**
 
-**NAIROBI, KENYA | MAY 11, 2026** — KilimoLink, a pioneering digital exchange for urban agriculture, today announced the launch of its hyperlocal marketplace. Developed for the **Innovate4Cities 2026** global challenge, the platform provides a technological implementation of "Urban Social Ecology" frameworks—connecting producers in informal settlements directly with urban consumers to eliminate food waste and transport-related CO2 emissions.
+**NAIROBI, KENYA | MAY 11, 2026** — KilimoLink Direct, a pioneering digital exchange for urban agriculture, today announced the launch of its hyperlocal marketplace. Developed for the **Innovate4Cities 2026** global challenge, the platform provides a technological implementation of "Urban Social Ecology" frameworks—connecting producers in informal settlements directly with urban consumers to eliminate food waste and transport-related CO2 emissions.
 
-As cities across Africa face rapid urbanization and climate instability, KilimoLink offers a functional bridge between the city and the farm. The platform is designed to align with the mandates of global resilience foundations and impact-focused investors.
+As cities across Africa face rapid urbanization and climate instability, KilimoLink Direct offers a functional bridge between the city and the farm. The platform is designed to align with the mandates of global resilience foundations and impact-focused investors.
 
-"KilimoLink is more than a marketplace; it is a city-wide resilience engine," said **Gerald Kombo**, Creative Strategist and Lead Researcher. "By prioritizing 'Ultra-Local' sourcing within a 5km radius, we are not just selling produce—we are mapping urban green spaces and providing a digital footprint for farmers who were previously invisible to the global economy."
+"KilimoLink Direct is more than a marketplace; it is a city-wide resilience engine," said **Gerald Kombo**, Creative Strategist and Lead Researcher. "By prioritizing 'Ultra-Local' sourcing within a 5km radius, we are not just selling produce—we are mapping urban green spaces and providing a digital footprint for farmers who were previously invisible to the global economy."
 
 ### **Key Technical Innovations:**
 - **Hyperlocal Geolocation Engine**: Custom Leaflet-powered maps identify the nearest food sources, minimizing "food miles" and decarbonizing urban logistics.
@@ -17,13 +17,13 @@ As cities across Africa face rapid urbanization and climate instability, KilimoL
 - **Real-Time Impact Dashboard**: A transparent data layer for city planners and investors, tracking CO2 saved, waste diverted (kg), and urban green space (m²) preserved.
 
 ### **Alignment with Global Mandates:**
-KilimoLink’s deployment focuses on the "Informal Settlements" prize action bonus, providing a scalable model for territorial transformation. The platform’s data-driven approach directly serves the reporting requirements of resilience funds, offering verifiable metrics for climate-resilient agribusiness.
+KilimoLink Direct’s deployment focuses on the "Informal Settlements" prize action bonus, providing a scalable model for territorial transformation. The platform’s data-driven approach directly serves the reporting requirements of resilience funds, offering verifiable metrics for climate-resilient agribusiness.
 
 **About KilimoLink:**
-KilimoLink is a decentralized urban-rural exchange dedicated to building climate-resilient cities. Through innovation in geolocation and on-chain identity, KilimoLink transforms urban food systems into sustainable, community-driven ecosystems.
+KilimoLink Direct is a decentralized urban-rural exchange dedicated to building climate-resilient cities. Through innovation in geolocation and on-chain identity, KilimoLink Direct transforms urban food systems into sustainable, community-driven ecosystems.
 
 **Media Contact:**
 kilimolink@proton.me  
 [geraldkombo.github.io/KilimoLink](https://geraldkombo.github.io/KilimoLink)
 
-### **#Innovate4Cities #UrbanResilience #KilimoLink #ClimateAction #AgriTech #Nairobi2026 #FoodSecurity**
+### **#Innovate4Cities #UrbanResilience #KilimoLink Direct #ClimateAction #AgriTech #Nairobi2026 #FoodSecurity**

@@ -1,4 +1,4 @@
-# KilimoLink Demo Script (Innovate4Cities 2026)
+# KilimoLink Direct Demo Script (Innovate4Cities 2026)
 
 ## Phase 1: Registration & Sourcing (0:00 - 1:00)
 1. **Onboarding**: Login as a Farmer using Privy (email). Show the instant digital wallet creation.
@@ -16,4 +16,4 @@
 3. **Impact Dashboard**: Go to the Admin Dashboard. View the real-time updates to CO2 Saved and Waste Diverted charts as the order completes.
 
 ## Conclusion
-"KilimoLink is turning our cities into resilient, hyperlocal food hubs. Join us in building the green urban future."
+"KilimoLink Direct is turning our cities into resilient, hyperlocal food hubs. Join us in building the green urban future."

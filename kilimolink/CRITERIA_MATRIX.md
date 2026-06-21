@@ -1,4 +1,4 @@
-# KilimoLink — I4C26 Criteria Coverage Matrix
+# KilimoLink Direct — I4C26 Criteria Coverage Matrix
 
 Maps every pitch beat to judging criteria. ✓ = explicit hit, ~ = implied hit.
 

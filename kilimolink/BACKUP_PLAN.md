@@ -1,4 +1,4 @@
-# KilimoLink — Backup Demo Plan (No Internet)
+# KilimoLink Direct — Backup Demo Plan (No Internet)
 
 ## Tier 1: Localhost (Best Case)
 

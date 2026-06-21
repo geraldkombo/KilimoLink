@@ -1,4 +1,4 @@
-# KilimoLink — Technical Fragility Checklist
+# KilimoLink Direct — Technical Fragility Checklist
 
 ## 🔴 PRIORITY 1: Will Break the Demo
 

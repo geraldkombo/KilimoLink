@@ -1,6 +1,6 @@
 # Market & Value-Addition Standards
 
-This document records the standards and frameworks that inform implementation choices in KilimoLink.
+This document records the standards and frameworks that inform implementation choices in KilimoLink Direct.
 
 ## Value-Addition & Trade Standards
 
@@ -30,7 +30,7 @@ This document records the standards and frameworks that inform implementation ch
 ## International Alignment (UN SDGs)
 
 **Key requirements / interpretation**
-KilimoLink directly contributes to several United Nations Sustainable Development Goals:
+KilimoLink Direct directly contributes to several United Nations Sustainable Development Goals:
 - **SDG 2: Zero Hunger**: By improving supply chain efficiency and food security.
 - **SDG 8: Decent Work and Economic Growth**: By providing market access and skill development.
 - **SDG 12: Responsible Consumption and Production**: Through price transparency and reduced waste.

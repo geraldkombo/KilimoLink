@@ -1,12 +1,12 @@
-# Production Deployment Guide: KilimoLink
+# Production Deployment Guide: KilimoLink Direct
 
-This guide outlines the steps to deploy KilimoLink to **Railway (Backend)** and **Vercel (Frontend)** for the Innovate4Cities 2026 demo.
+This guide outlines the steps to deploy KilimoLink Direct to **Railway (Backend)** and **Vercel (Frontend)** for the Innovate4Cities 2026 demo.
 
 ## 1. Backend: Railway Deployment
 Railway is recommended for the NestJS/Prisma backend.
 
 ### Steps:
-1. **Connect GitHub**: Log in to [Railway.app](https://railway.app) and connect the `KilimoLink` repository.
+1. **Connect GitHub**: Log in to [Railway.app](https://railway.app) and connect the `KilimoLink Direct` repository.
 2. **Setup Database**: 
    - Add a **PostgreSQL** plugin to your Railway project.
    - Railway will automatically provide a `DATABASE_URL`.
@@ -23,7 +23,7 @@ Railway is recommended for the NestJS/Prisma backend.
 Vercel is the optimal choice for the React/Vite frontend.
 
 ### Steps:
-1. **Connect GitHub**: Log in to [Vercel.com](https://vercel.com) and import the `KilimoLink` repository.
+1. **Connect GitHub**: Log in to [Vercel.com](https://vercel.com) and import the `KilimoLink Direct` repository.
 2. **Root Directory**: Set to `web`.
 3. **Configure Environment Variables**:
    - `VITE_API_BASE_URL`: The URL of your Railway backend (e.g., `https://kilimolink-api.up.railway.app/api/v1`).

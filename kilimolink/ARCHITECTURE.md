@@ -1,7 +1,7 @@
-# KilimoLink Architecture - May 2026
+# KilimoLink Direct Architecture - May 2026
 
 ## Overview
-KilimoLink is a decentralized, climate-resilient food marketplace designed for the urban-rural nexus in Kenya. It leverages blockchain (Solana), caching (Redis), and AI to provide a high-trust, low-friction trade environment.
+KilimoLink Direct is a decentralized, climate-resilient food marketplace designed for the urban-rural nexus in Kenya. It leverages blockchain (Solana), caching (Redis), and AI to provide a high-trust, low-friction trade environment.
 
 ## Tech Stack
 - **Frontend**: React 19, Material UI, Framer Motion, p5.js

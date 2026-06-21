@@ -1,10 +1,10 @@
-# Innovate4Cities 2026 Submission: KilimoLink
+# Innovate4Cities 2026 Submission: KilimoLink Direct
 
 ## Problem
 Urban centers in East Africa face significant food security challenges. Informal settlements often rely on long, inefficient supply chains that result in high food waste (up to 40% post-harvest loss) and high transport-related CO2 emissions.
 
 ## Solution
-**KilimoLink** is a hyperlocal, direct-to-city marketplace that connects urban consumers directly with local producers. By using geolocation-priority sourcing and real-time impact tracking, we reduce food waste, lower transport emissions, and preserve urban green spaces.
+**KilimoLink Direct** is a hyperlocal, direct-to-city marketplace that connects urban consumers directly with local producers. By using geolocation-priority sourcing and real-time impact tracking, we reduce food waste, lower transport emissions, and preserve urban green spaces.
 
 ## Key Features
 - **Hyperlocal Sourcing**: Geolocation-aware marketplace that prioritizes products within walking or short-distance radius.

@@ -1,4 +1,4 @@
-# KilimoLink — I4C26 Pitch Script
+# KilimoLink Direct — I4C26 Pitch Script
 
 **Total time:** 3:00 | **Words:** ~440 | **Speaker:** Gerald Kombo
 
@@ -20,11 +20,11 @@
 
 ---
 
-**:50–1:20 — Enter KilimoLink**
+**:50–1:20 — Enter KilimoLink Direct**
 
-> "We built the operating system for urban food resilience. KilimoLink is a live, deployed marketplace connecting Nairobi consumers directly with local farmers. Our AI predicts fair prices from government market data — cutting waste. Our maps show exactly where food is grown and where it's needed. And it works on any phone, with or without a bank account."
+> "We built the operating system for urban food resilience. KilimoLink Direct is a live, deployed marketplace connecting Nairobi consumers directly with local farmers. Our AI predicts fair prices from government market data — cutting waste. Our maps show exactly where food is grown and where it's needed. And it works on any phone, with or without a bank account."
 
-**[Slide: KilimoLink logo + architecture flow diagram]**
+**[Slide: KilimoLink Direct logo + architecture flow diagram]**
 
 ---
 
@@ -38,7 +38,7 @@
 
 **:50–2:20 — Impact & Traction**
 
-> "KilimoLink is live right now at kilimolink.onrender.com. Every transaction on our platform saves an estimated three kilograms of CO₂ by eliminating long food transport. We've already logged our first orders. Our AI oracle has suggested prices for over twenty produce types. And we're just getting started."
+> "KilimoLink Direct is live right now at kilimolink.onrender.com. Every transaction on our platform saves an estimated three kilograms of CO₂ by eliminating long food transport. We've already logged our first orders. Our AI oracle has suggested prices for over twenty produce types. And we're just getting started."
 
 **[Slide: Impact numbers — CO₂ saved, farmers onboarded, orders completed]**
 
@@ -54,7 +54,7 @@
 
 **:50–3:00 — The Ask**
 
-> "To scale from pilot to city-wide resilience, we need: Nairobi County GIS data to map food access gaps. A partnership with KALRO for crop yield forecasts. And your belief that the solution to urban climate resilience already exists — it's on this screen, it's running right now, and it's called KilimoLink."
+> "To scale from pilot to city-wide resilience, we need: Nairobi County GIS data to map food access gaps. A partnership with KALRO for crop yield forecasts. And your belief that the solution to urban climate resilience already exists — it's on this screen, it's running right now, and it's called KilimoLink Direct."
 
 **[Slide: "Join Us" — contact info + QR code to live site]**
 

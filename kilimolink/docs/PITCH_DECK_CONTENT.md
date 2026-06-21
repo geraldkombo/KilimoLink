@@ -1,15 +1,15 @@
-# KilimoLink Pitch Strategy
+# KilimoLink Direct Pitch Strategy
 
 ## Slide 1: The Hook
 *Visual: A split screen showing a crowded Nairobi market and a serene farm in Kiambu.*
-**Script**: "Every morning, Nairobi wakes up to a massive logistical miracle. But behind the food on our plates is a broken financial system. Farmers are invisible, and consumers are overpaying. This is KilimoLink."
+**Script**: "Every morning, Nairobi wakes up to a massive logistical miracle. But behind the food on our plates is a broken financial system. Farmers are invisible, and consumers are overpaying. This is KilimoLink Direct."
 
 ## Slide 2: The Opportunity
 *Visual: Graph showing the growth of urban population vs. the decline in rural-to-urban transparency.*
 **Script**: "We aren't just building a marketplace; we are building a liquidity layer for the urban-rural nexus. A market that verifies itself."
 
 ## Slide 3: The Product
-*Visual: Screenshot of the KilimoLink Dashboard showing 'Raw Produce' vs 'Value Added' price comparison.*
+*Visual: Screenshot of the KilimoLink Direct Dashboard showing 'Raw Produce' vs 'Value Added' price comparison.*
 **Script**: "Our platform uses the Solana blockchain to provide instant, auditable transactions. We go beyond simple trade by incentivizing value addition—training farmers to process and brand their goods, doubling their margins while ensuring urban consumers get high-quality, verified products."
 
 ## Slide 4: Financial Empowerment (Proof of Trade)
@@ -22,7 +22,7 @@
 
 ## Slide 6: Traction & Scale (Innovate4Cities 2026)
 *Visual: A map of Nairobi supply routes with an "AI Optimization" overlay.*
-**Script**: "KilimoLink is a core solution for the **Innovate4Cities 2026** challenge. By leveraging AI to optimize urban supply chains and reduce the carbon footprint of city food systems, we are building the resilient urban infrastructure of the future. Starting with Nairobi, we are scaling to become the climate-resilient financial operating system for the global urban-rural nexus."
+**Script**: "KilimoLink Direct is a core solution for the **Innovate4Cities 2026** challenge. By leveraging AI to optimize urban supply chains and reduce the carbon footprint of city food systems, we are building the resilient urban infrastructure of the future. Starting with Nairobi, we are scaling to become the climate-resilient financial operating system for the global urban-rural nexus."
 
 ## Slide 7: The Road Ahead (Global Scalability)
 *Visual: A world map highlighting emerging markets with similar urban-rural gaps (Lagos, Jakarta, Mumbai).*
@@ -31,4 +31,4 @@
 ---
 
 ## 30-Second Elevator Pitch
-"KilimoLink is a decentralized exchange protocol that connects urban consumers directly with rural producers. We solve the trust gap in the supply chain by using Solana for on-chain verification and official statistical data to guarantee fair pricing. With secure governance and seamless phone/email onboarding, we are building a financial operating system for the global urban-rural nexus, starting in Nairobi."
+"KilimoLink Direct is a decentralized exchange protocol that connects urban consumers directly with rural producers. We solve the trust gap in the supply chain by using Solana for on-chain verification and official statistical data to guarantee fair pricing. With secure governance and seamless phone/email onboarding, we are building a financial operating system for the global urban-rural nexus, starting in Nairobi."

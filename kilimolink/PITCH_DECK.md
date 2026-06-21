@@ -1,4 +1,4 @@
-# KILIMOLINK: Kenya's Food Future
+# KILIMOLINK DIRECT: Kenya's Food Future
 ## May 2026 Transformation Pitch
 
 ---
@@ -9,7 +9,7 @@
 - **Waste**: 40% of produce rots before reaching city centers.
 
 ### SLIDE 2: The Solution
-- **KilimoLink**: A direct-to-city liquidity layer.
+- **KilimoLink Direct**: A direct-to-city liquidity layer.
 - **Technology**: Solana-backed trust, Redis-powered speed, and AI-driven insights.
 - **Execution**: Real-world experience from global founders.
 
@@ -30,4 +30,4 @@
 
 ---
 
-**KilimoLink: Execution over Artificial Incentives.**
+**KilimoLink Direct: Execution over Artificial Incentives.**

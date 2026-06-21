@@ -1,4 +1,4 @@
-# KilimoLink — Live Demo Choreography (30 seconds)
+# KilimoLink Direct — Live Demo Choreography (30 seconds)
 
 **Operator:** Shadrack | **Presenter:** Gerald | **Support:** James (slide advancer)
 
@@ -10,7 +10,7 @@
 |------|-----|--------|
 | 1 | Peter | Hit `kilimolink.onrender.com/api/v1/health` on phone — confirm 200 |
 | 2 | Gisore | Open Chrome, load `geraldkombo.github.io/KilimoLink` — fully loaded |
-| 3 | Shadrack | Log in with demo account (email: `demo@kilimolink.com`, OTP will be sent) |
+| 3 | Shadrack | Log in with demo account (email: `demo@kilimolinkdirect.com`, OTP will be sent) |
 | 4 | James | Open slide deck on second monitor, advance to "Live Demo" slide |
 | 5 | Everyone | Silence phones. Close all other tabs. |
 

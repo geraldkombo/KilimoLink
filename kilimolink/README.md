@@ -1,4 +1,4 @@
-# KilimoLink: Hyperlocal Urban Food Resilience
+# KilimoLink Direct: Hyperlocal Urban Food Resilience
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript)](https://www.typescriptlang.org/)
 [![NestJS](https://img.shields.io/badge/NestJS-11-E0234E?logo=nestjs)](https://nestjs.com/)
@@ -11,7 +11,7 @@
 [![tests](https://img.shields.io/badge/tests-30+/30+-success)](https://github.com/geraldkombo/KilimoLink/actions)
 [![CI](https://github.com/geraldkombo/KilimoLink/actions/workflows/ci.yml/badge.svg)](https://github.com/geraldkombo/KilimoLink/actions/workflows/ci.yml)
 
-**KilimoLink** is a direct-to-city marketplace designed for the **Innovate4Cities 2026** challenge. It connects urban residents with nearby farmers to reduce food waste and transport emissions across East Africa.
+**KilimoLink Direct** is a direct-to-city marketplace designed for the **Innovate4Cities 2026** challenge. It connects urban residents with nearby farmers to reduce food waste and transport emissions across East Africa.
 
 ---
 
