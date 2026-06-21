@@ -4,7 +4,7 @@ on:
   push:
     branches: [master]
     paths:
-      - 'web/**'
+      - 'kilimolink/web/**'
 
 jobs:
   deploy:
@@ -23,14 +23,14 @@ jobs:
           node-version: 22
       - name: Install & Build
         run: |
-          cd web
+          cd kilimolink/web
           npm install
           npm run build
       - uses: actions/configure-pages@v4
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: web/dist
+          path: kilimolink/web/dist
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

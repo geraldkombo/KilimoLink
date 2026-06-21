@@ -1,8 +1,0 @@
-[
-  { "county": "Nairobi", "crop": "vegetables", "avgPriceKes": 40, "yieldPerAcre": 5.0, "year": 2026 },
-  { "county": "Kiambu", "crop": "dairy", "avgPriceKes": 60, "yieldPerAcre": null, "year": 2026 },
-  { "county": "Nakuru", "crop": "maize", "avgPriceKes": 180, "yieldPerAcre": 2.4, "year": 2026 },
-  { "county": "Uasin Gishu", "crop": "maize", "avgPriceKes": 170, "yieldPerAcre": 3.1, "year": 2026 },
-  { "county": "Nairobi", "crop": "poultry", "avgPriceKes": 450, "yieldPerAcre": null, "year": 2026 },
-  { "county": "Nairobi", "crop": "traditional", "avgPriceKes": 55, "yieldPerAcre": 4.0, "year": 2026 }
-]

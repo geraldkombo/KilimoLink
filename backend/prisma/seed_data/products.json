@@ -1,9 +1,0 @@
-[
-  { "sellerPhone": "+254700000001", "name": "Sukuma Wiki (Nairobi Urban)", "category": "vegetables", "priceKes": 30, "quantity": 1000, "unit": "bunch", "description": "Grown in Nairobi urban cooperatives using hydroponics. Low food miles." },
-  { "sellerPhone": "+254700000001", "name": "Urban Spinach", "category": "vegetables", "priceKes": 35, "quantity": 800, "unit": "bunch", "description": "Freshly harvested from Eastlands vertical farms." },
-  { "sellerPhone": "+254700000002", "name": "Fresh Milk (Limuru Dairy)", "category": "dairy", "priceKes": 65, "quantity": 500, "unit": "litre", "description": "Sourced from the Nairobi peri-urban milk shed in Limuru." },
-  { "sellerPhone": "+254700000003", "name": "Ground Maize Flour (2kg)", "category": "staples", "priceKes": 210, "quantity": 300, "unit": "bag", "description": "Stone-ground maize from Nairobi's local millers." },
-  { "sellerPhone": "+254700000004", "name": "Grade 1 Eggs (Tray)", "category": "poultry", "priceKes": 480, "quantity": 200, "unit": "tray", "description": "Farm-fresh eggs from Kikuyu peri-urban poultry farms." },
-  { "sellerPhone": "+254700000005", "name": "Managu (African Nightshade)", "category": "traditional", "priceKes": 50, "quantity": 600, "unit": "bunch", "description": "Nutrient-rich traditional greens from urban gardens." },
-  { "sellerPhone": "+254700000006", "name": "Nairobi Red Onions (Sack)", "category": "vegetables", "priceKes": 3500, "quantity": 50, "unit": "sack", "description": "Cured onions sourced from Nairobi's local food hubs." }
-]
