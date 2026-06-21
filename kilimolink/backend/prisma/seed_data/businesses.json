@@ -1,0 +1,12 @@
+[
+  { "phone": "+254700000001", "youthLed": true, "womenLed": true, "businessType": "CROPS", "sector": "Horticulture", "county": "Nakuru", "businessSize": "Micro" },
+  { "phone": "+254700000002", "youthLed": true, "womenLed": false, "businessType": "LIVESTOCK", "sector": "Dairy", "county": "Kiambu", "businessSize": "Micro" },
+  { "phone": "+254700000003", "youthLed": false, "womenLed": true, "businessType": "VALUE_ADDITION", "sector": "Value Addition", "county": "Machakos", "businessSize": "Small" },
+  { "phone": "+254700000004", "youthLed": true, "womenLed": true, "businessType": "CROPS", "sector": "Cereals", "county": "Uasin Gishu", "businessSize": "Small" },
+  { "phone": "+254700000005", "youthLed": false, "womenLed": true, "businessType": "LIVESTOCK", "sector": "Poultry", "county": "Kisumu", "businessSize": "Micro" },
+  { "phone": "+254700000006", "youthLed": true, "womenLed": false, "businessType": "CROPS", "sector": "Legumes", "county": "Meru", "businessSize": "Micro" },
+  { "phone": "+254700000007", "youthLed": false, "womenLed": true, "businessType": "VALUE_ADDITION", "sector": "Processing", "county": "Nyeri", "businessSize": "Small" },
+  { "phone": "+254700000008", "youthLed": true, "womenLed": true, "businessType": "CROPS", "sector": "Vegetables", "county": "Kakamega", "businessSize": "Micro" },
+  { "phone": "+254700000009", "youthLed": true, "womenLed": false, "businessType": "LIVESTOCK", "sector": "Goat Rearing", "county": "Kitui", "businessSize": "Micro" },
+  { "phone": "+254700000010", "youthLed": false, "womenLed": true, "businessType": "CROPS", "sector": "Fruits", "county": "Mombasa", "businessSize": "Small" }
+]
