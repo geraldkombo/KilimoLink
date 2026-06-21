@@ -1,0 +1,118 @@
+import { Box, Card, CardContent, Chip, Container, Grid, LinearProgress, Paper, Stack, Typography } from '@mui/material';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import MapIcon from '@mui/icons-material/Map';
+import ShowChartIcon from '@mui/icons-material/ShowChart';
+import Co2Icon from '@mui/icons-material/Co2';
+import InsightsIcon from '@mui/icons-material/Insights';
+
+const flows = [
+  { from: 'Kiambu corridor', to: 'Mathare', crop: 'Tomatoes', risk: 'High', color: '#dc2626' },
+  { from: 'Machakos corridor', to: 'Mukuru', crop: 'Sukuma Wiki', risk: 'Watch', color: '#f59e0b' },
+  { from: 'Kajiado corridor', to: 'Kibera', crop: 'Milk', risk: 'Stable', color: '#16a34a' },
+];
+
+const neighborhoods = [
+  { name: 'Mukuru', spike: 32, access: 42, status: 'critical' },
+  { name: 'Mathare', spike: 24, access: 55, status: 'watch' },
+  { name: 'Kibera', spike: 18, access: 61, status: 'watch' },
+  { name: 'Kilimani', spike: 5, access: 89, status: 'stable' },
+];
+
+export function CountyDashboard() {
+  return (
+    <Container maxWidth="xl" sx={{ py: 4 }}>
+      <Stack spacing={1} sx={{ mb: 4 }}>
+        <Chip
+          label="Prototype for Nairobi City County"
+          sx={{ alignSelf: 'flex-start', bgcolor: '#ecfdf5', color: '#047857', fontWeight: 900 }}
+        />
+        <Typography variant="h3" sx={{ fontWeight: 950, color: '#064e3b', letterSpacing: '-0.05em' }}>
+          Grace's Food System Climate Dashboard
+        </Typography>
+        <Typography variant="h6" sx={{ color: '#4b5563', maxWidth: 920, lineHeight: 1.5 }}>
+          Marketplace transactions become live intelligence: food flows, neighborhood price shocks, supply disruption alerts, informal settlement risk, and climate impact.
+        </Typography>
+      </Stack>
+
+      <Grid container spacing={3} sx={{ mb: 3 }}>
+        {[
+          { icon: <WarningAmberIcon />, label: 'Active disruption alerts', value: '3', tone: '#dc2626' },
+          { icon: <ShowChartIcon />, label: 'Highest price spike', value: '32%', tone: '#f59e0b' },
+          { icon: <Co2Icon />, label: 'Estimated CO₂e saved', value: 'Demo', tone: '#059669' },
+          { icon: <InsightsIcon />, label: 'Priority settlements', value: '3', tone: '#2563eb' },
+        ].map((item) => (
+          <Grid item xs={12} sm={6} md={3} key={item.label}>
+            <Card elevation={0} sx={{ borderRadius: 4, border: '1px solid #e5e7eb', height: '100%' }}>
+              <CardContent>
+                <Box sx={{ color: item.tone, mb: 1 }}>{item.icon}</Box>
+                <Typography variant="h4" sx={{ fontWeight: 950, color: item.tone }}>{item.value}</Typography>
+                <Typography variant="body2" sx={{ color: '#4b5563', fontWeight: 700 }}>{item.label}</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={7}>
+          <Paper elevation={0} sx={{ p: 3, borderRadius: 5, border: '1px solid #e5e7eb', minHeight: 430 }}>
+            <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
+              <MapIcon sx={{ color: '#064e3b' }} />
+              <Typography variant="h5" sx={{ fontWeight: 900, color: '#064e3b' }}>Live Nairobi food-flow map</Typography>
+            </Stack>
+            <Box sx={{ position: 'relative', height: 330, borderRadius: 4, overflow: 'hidden', bgcolor: '#ecfdf5', border: '1px solid #bbf7d0' }}>
+              <Box sx={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 45% 45%, rgba(6,78,59,.18), transparent 22%), radial-gradient(circle at 70% 60%, rgba(220,38,38,.18), transparent 18%), radial-gradient(circle at 30% 70%, rgba(245,158,11,.18), transparent 16%)' }} />
+              {flows.map((flow, idx) => (
+                <Box key={flow.to} sx={{ position: 'absolute', left: `${12 + idx * 18}%`, top: `${18 + idx * 21}%`, width: `${52 - idx * 8}%`, borderTop: `5px solid ${flow.color}`, transform: `rotate(${14 - idx * 11}deg)`, transformOrigin: 'left center', borderRadius: 999 }}>
+                  <Chip size="small" label={`${flow.from} → ${flow.to}`} sx={{ mt: -4, bgcolor: 'white', color: flow.color, fontWeight: 900, boxShadow: '0 8px 20px rgba(0,0,0,.08)' }} />
+                </Box>
+              ))}
+              <Box sx={{ position: 'absolute', bottom: 16, left: 16, right: 16, p: 2, bgcolor: 'rgba(255,255,255,.92)', borderRadius: 3 }}>
+                <Typography variant="body2" sx={{ fontWeight: 800, color: '#064e3b' }}>
+                  Demo map layer: replace with live Leaflet/PostGIS food-flow routes by August 31.
+                </Typography>
+              </Box>
+            </Box>
+          </Paper>
+        </Grid>
+
+        <Grid item xs={12} md={5}>
+          <Paper elevation={0} sx={{ p: 3, borderRadius: 5, border: '1px solid #e5e7eb', mb: 3 }}>
+            <Typography variant="h5" sx={{ fontWeight: 900, color: '#064e3b', mb: 2 }}>AI disruption alert</Typography>
+            <Box sx={{ p: 2, borderRadius: 3, bgcolor: '#fef2f2', border: '1px solid #fecaca' }}>
+              <Typography sx={{ fontWeight: 950, color: '#991b1b' }}>Kiambu tomato corridor at risk</Typography>
+              <Typography variant="body2" sx={{ color: '#7f1d1d', mt: 1 }}>
+                Heavy rain forecast plus falling listing volume suggests possible tomato supply drop next week. Priority monitoring: Mathare and Mukuru.
+              </Typography>
+            </Box>
+          </Paper>
+
+          <Paper elevation={0} sx={{ p: 3, borderRadius: 5, border: '1px solid #e5e7eb' }}>
+            <Typography variant="h5" sx={{ fontWeight: 900, color: '#064e3b', mb: 2 }}>Price and food access risk</Typography>
+            <Stack spacing={2}>
+              {neighborhoods.map((n) => (
+                <Box key={n.name}>
+                  <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 0.5 }}>
+                    <Typography sx={{ fontWeight: 900 }}>{n.name}</Typography>
+                    <Chip
+                      size="small"
+                      label={`${n.spike}% price spike`}
+                      color={n.status === 'critical' ? 'error' : n.status === 'watch' ? 'warning' : 'success'}
+                      sx={{ fontWeight: 800 }}
+                    />
+                  </Stack>
+                  <LinearProgress
+                    variant="determinate"
+                    value={n.access}
+                    sx={{ height: 9, borderRadius: 999, bgcolor: '#e5e7eb', '& .MuiLinearProgress-bar': { bgcolor: n.status === 'critical' ? '#dc2626' : n.status === 'watch' ? '#f59e0b' : '#16a34a' } }}
+                  />
+                  <Typography variant="caption" color="text.secondary">Fresh food access index: {n.access}/100</Typography>
+                </Box>
+              ))}
+            </Stack>
+          </Paper>
+        </Grid>
+      </Grid>
+    </Container>
+  );
+}

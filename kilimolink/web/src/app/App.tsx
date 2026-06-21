@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Grid, Divider, Dialog, DialogTitle, DialogContent, DialogActions, RadioGroup, FormControlLabel, Radio, TextField } from '@mui/material';
+import { Grid, Divider, Dialog, DialogTitle, DialogContent, DialogActions, RadioGroup, FormControlLabel, Radio, TextField, Alert } from '@mui/material';
 import { AppBar, Badge, Box, Button, Container, Toolbar, Typography, Stack, useTheme, useMediaQuery, Paper, IconButton, Drawer, List, ListItem, ListItemText, ListItemButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
@@ -14,6 +14,7 @@ import { SellProduct } from '../pages/SellProduct';
 import { ProductDetail } from '../pages/ProductDetail';
 import { MyProducts } from '../pages/MyProducts';
 import { OrdersPage } from '../pages/OrdersPage';
+import { CountyDashboard } from '../pages/CountyDashboard';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { motion } from 'framer-motion';
@@ -76,6 +77,27 @@ function HomePage() {
             KilimoLink
           </MotionTypography>
           <MotionTypography 
+            variant="h6" 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.35 }}
+            sx={{
+              display: 'inline-flex',
+              px: 2,
+              py: 0.75,
+              mb: 3,
+              borderRadius: 999,
+              bgcolor: '#ecfdf5',
+              color: '#047857',
+              fontWeight: 900,
+              letterSpacing: '0.02em',
+              textTransform: 'uppercase',
+              fontSize: { xs: '0.75rem', md: '0.9rem' }
+            }}
+          >
+            Nairobi AI Food System Climate Intelligence
+          </MotionTypography>
+          <MotionTypography 
             variant="h5" 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -83,7 +105,7 @@ function HomePage() {
             sx={{ 
               mb: { xs: 4, md: 6 }, 
               color: '#374151',
-              maxWidth: '900px', 
+              maxWidth: '940px', 
               mx: 'auto', 
               fontWeight: 500, 
               lineHeight: 1.5,
@@ -91,7 +113,7 @@ function HomePage() {
               letterSpacing: '-0.01em'
             }}
           >
-            Cutting food miles. Cutting cold-chain emissions. Connecting Nairobi directly to the farmers who feed it.
+            A working marketplace that becomes Nairobi's real-time sensor network for food flows, price shocks, emissions, and climate disruption risk.
           </MotionTypography>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center" sx={{ px: 2 }}>
             <Button 
@@ -144,30 +166,30 @@ function HomePage() {
 
       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
         <Typography variant="h3" align="center" gutterBottom sx={{ fontWeight: 900, mb: 2, letterSpacing: '-0.04em', color: '#064e3b' }}>
-          How it works
+          Marketplace data becomes city climate intelligence
         </Typography>
-        <Typography variant="body1" align="center" sx={{ mb: 8, color: '#4b5563', maxWidth: '700px', mx: 'auto', fontSize: '1.25rem' }}>
-          Simple, fast, and fair for everyone.
+        <Typography variant="body1" align="center" sx={{ mb: 8, color: '#4b5563', maxWidth: '760px', mx: 'auto', fontSize: '1.25rem' }}>
+          Farmers and buyers use the app. Nairobi County gets the missing food-flow data needed to protect vulnerable neighborhoods before climate shocks become food crises.
         </Typography>
 
         <Grid container spacing={4} sx={{ mb: 15 }}>
           {[
             {
-              title: "Browse & Order",
-              desc: "Find fresh produce from farmers near you. Order directly with no markup.",
+              title: "Direct Food Flows",
+              desc: "Each listing records what food is available, where it comes from, and which Nairobi neighborhoods it can serve.",
               icon: "🛒",
               color: "#f0fdf4"
             },
             {
-              title: "Sell Your Produce",
-              desc: "List your harvest in minutes. Set your own price and reach customers in your city.",
-              icon: "🌿",
+              title: "AI Risk Signals",
+              desc: "Price guidance, disruption alerts, and transaction trends become early warnings for shortages and price spikes.",
+              icon: "🧠",
               color: "#fffbeb"
             },
             {
-              title: "Fair for Everyone",
-              desc: "Farmers keep more profit. Buyers pay less. No middlemen taking a cut.",
-              icon: "🤝",
+              title: "County Dashboard",
+              desc: "Grace sees food-flow maps, informal settlement risk, food desert gaps, and climate impact metrics in one place.",
+              icon: "🏙️",
               color: "#eff6ff"
             }
           ].map((item, idx) => (
@@ -268,10 +290,10 @@ function HomePage() {
           }}
         >
           <Typography variant="h2" sx={{ fontWeight: 900, mb: 2, fontSize: { xs: '2.5rem', md: '3.5rem' }, letterSpacing: '-0.04em' }}>
-            Ready to get started?
+            Give Grace the dashboard
           </Typography>
-          <Typography variant="h5" sx={{ opacity: 0.9, fontWeight: 400, mb: 2, maxWidth: '600px', lineHeight: 1.5 }}>
-            Farmers list produce. Buyers order directly. No middlemen.
+          <Typography variant="h5" sx={{ opacity: 0.9, fontWeight: 400, mb: 2, maxWidth: '680px', lineHeight: 1.5 }}>
+            Farmers list produce. Buyers order directly. Nairobi finally sees where food is, where it is going, and when climate will break the chain.
           </Typography>
           <Typography variant="body2" sx={{ opacity: 0.7, fontWeight: 500, mb: 6, maxWidth: '600px', lineHeight: 1.5 }}>
             kilimolink.onrender.com — live demo for I4C26 Nairobi
@@ -328,6 +350,7 @@ export function AppContent() {
   const [loginError, setLoginError] = useState<string | null>(null);
   const [authLoading, setAuthLoading] = useState(true);
   const [pendingOrderCount, setPendingOrderCount] = useState(0);
+  const [isOnline, setIsOnline] = useState(() => typeof navigator === 'undefined' ? true : navigator.onLine);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const location = useLocation();
@@ -358,6 +381,17 @@ export function AppContent() {
     window.addEventListener('orders:changed', handler);
     return () => window.removeEventListener('orders:changed', handler);
   }, [fetchPendingCount]);
+
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
 
   const showDemoBanner = userEmail === 'demo@kilimolink.com' && authenticated;
 
@@ -410,6 +444,11 @@ export function AppContent() {
 
   return (
     <Box sx={{ flexGrow: 1, minHeight: '100vh', bgcolor: 'background.default', display: 'flex', flexDirection: 'column' }}>
+      {!isOnline && (
+        <Alert severity="warning" sx={{ borderRadius: 0, justifyContent: 'center', '& .MuiAlert-message': { fontWeight: 800 } }}>
+          You're offline — use the preloaded demo pages or backup recording.
+        </Alert>
+      )}
       {showDemoBanner && (
         <Box sx={{ bgcolor: '#2e7d32', color: 'white', textAlign: 'center', py: 0.5, fontSize: 13, fontWeight: 700 }}>
           Demo Mode — live system (kilimolink.onrender.com)
@@ -462,6 +501,7 @@ export function AppContent() {
                 </Box>
               )}
               <Button color="inherit" component={Link} to="/market" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Market</Button>
+              <Button color="inherit" component={Link} to="/county-dashboard" sx={{ color: '#064e3b', fontWeight: 800, px: 2 }}>County Dashboard</Button>
               {authenticated && currentRole === 'FARMER' && (
                 <Button color="inherit" component={Link} to="/my-products" sx={{ color: '#333', fontWeight: 600, px: 2 }}>My Products</Button>
               )}
@@ -516,6 +556,11 @@ export function AppContent() {
           <ListItem disablePadding>
             <ListItemButton component={Link} to="/orders" onClick={() => setMobileMenuOpen(false)}>
               <ListItemText primary="My Orders" primaryTypographyProps={{ fontWeight: 700 }} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/county-dashboard" onClick={() => setMobileMenuOpen(false)}>
+              <ListItemText primary="County Dashboard" primaryTypographyProps={{ fontWeight: 800, color: '#064e3b' }} />
             </ListItemButton>
           </ListItem>
           {authenticated && currentRole === 'FARMER' && (
@@ -737,6 +782,7 @@ export function AppContent() {
                 <Route path="/sell" element={<SellProduct />} />
                 <Route path="/product/:id" element={<ProductDetail />} />
                 <Route path="/orders" element={<OrdersPage />} />
+                <Route path="/county-dashboard" element={<CountyDashboard />} />
                 <Route path="/my-products" element={<MyProducts />} />
                 <Route path="/admin" element={<AdminPage />} />
               </Routes>
@@ -757,6 +803,7 @@ export function AppContent() {
               <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 2 }}>Platform</Typography>
               <Stack spacing={1}>
                 <Link to="/market" style={{ textDecoration: 'none', color: '#666', fontSize: '0.875rem' }}>Marketplace</Link>
+                <Link to="/county-dashboard" style={{ textDecoration: 'none', color: '#064e3b', fontSize: '0.875rem', fontWeight: 800 }}>County Dashboard</Link>
                 <Link to="/sell" style={{ textDecoration: 'none', color: '#666', fontSize: '0.875rem' }}>Sell Produce</Link>
                 <Link to="/my-products" style={{ textDecoration: 'none', color: '#666', fontSize: '0.875rem' }}>My Products</Link>
                 <Link to="/orders" style={{ textDecoration: 'none', color: '#666', fontSize: '0.875rem' }}>My Orders</Link>
@@ -792,8 +839,18 @@ export function AppContent() {
   );
 }
 
+const routerBasename = import.meta.env.BASE_URL === '/' ? undefined : import.meta.env.BASE_URL.replace(/\/$/, '');
+
 export function App() {
   const [online, setOnline] = useState(navigator.onLine);
+
+  useEffect(() => {
+    if (window.location.search.startsWith('?/')) {
+      const restoredPath = window.location.search.slice(2);
+      const basePath = import.meta.env.BASE_URL === '/' ? '/' : import.meta.env.BASE_URL;
+      window.history.replaceState(null, '', `${basePath}${restoredPath}${window.location.hash}`);
+    }
+  }, []);
 
   useEffect(() => {
     const on = () => setOnline(true);
@@ -807,7 +864,7 @@ export function App() {
   }, []);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={routerBasename}>
       {!online && (
         <Box sx={{ bgcolor: '#f59e0b', color: 'black', textAlign: 'center', py: 0.5 }}>
           <Typography variant="caption">You are offline. Showing last loaded data.</Typography>

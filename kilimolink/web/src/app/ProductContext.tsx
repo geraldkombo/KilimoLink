@@ -52,9 +52,9 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         setPage(data.page || 1);
         setTotalPages(data.totalPages || 0);
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error('Failed to fetch products', err);
-      setError('Failed to load products. Please check your connection.');
+      setError(err.userMessage || 'Failed to load products. Please check your connection.');
     } finally {
       setLoading(false);
     }
