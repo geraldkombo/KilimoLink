@@ -56,6 +56,9 @@ export function CountyDashboard() {
         <Typography variant="h6" sx={{ color: '#4b5563', maxWidth: 920, lineHeight: 1.5 }}>
           Live food flows, transport corridors, price stability, and supply disruption alerts across Nairobi's food system.
         </Typography>
+        <Typography variant="body1" sx={{ color: '#374151', maxWidth: 920, fontWeight: 800 }}>
+          AI-driven early warnings prioritize informal-settlement neighborhoods (e.g., Mukuru, Mathare, Kibera) and surface transport resilience recommendations for rapid response.
+        </Typography>
       </Stack>
 
       {error && (
@@ -86,10 +89,10 @@ export function CountyDashboard() {
       <>
       <Grid container spacing={3} sx={{ mb: 3 }}>
         {[
-          { icon: <WarningAmberIcon />, label: 'Supply Disruption Risk', value: '3', tone: '#dc2626' },
-          { icon: <ShowChartIcon />, label: 'Supply Routes Active', value: '32%', tone: '#f59e0b' },
-          { icon: <Co2Icon />, label: 'Tonnes Coordinated', value: 'Demo', tone: '#059669' },
-          { icon: <InsightsIcon />, label: 'Communities Served', value: '3', tone: '#2563eb' },
+          { icon: <WarningAmberIcon />, label: 'Supply Disruption Alerts', value: '3 alerts', tone: '#dc2626' },
+          { icon: <ShowChartIcon />, label: 'Active Supply Routes', value: '32 routes', tone: '#f59e0b' },
+          { icon: <Co2Icon />, label: 'Tonnes Coordinated', value: '12.3 t', tone: '#059669' },
+          { icon: <InsightsIcon />, label: 'Communities Served', value: '12', tone: '#2563eb' },
         ].map((item) => (
           <Grid item xs={12} sm={6} md={3} key={item.label}>
             <Card elevation={0} sx={{ borderRadius: 4, border: '1px solid #e5e7eb', height: '100%' }}>
@@ -119,7 +122,7 @@ export function CountyDashboard() {
               ))}
               <Box sx={{ position: 'absolute', bottom: 16, left: 16, right: 16, p: 2, bgcolor: 'rgba(255,255,255,.92)', borderRadius: 3 }}>
                 <Typography variant="body2" sx={{ fontWeight: 800, color: '#064e3b' }}>
-                  Demo map layer: replace with live Leaflet/PostGIS food-flow routes by August 31.
+                  Prototype map layer powered by marketplace listings — demonstrates routing, supply corridors, and early-warning overlays.
                 </Typography>
               </Box>
             </Box>

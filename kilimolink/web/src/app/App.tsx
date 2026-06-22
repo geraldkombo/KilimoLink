@@ -120,6 +120,15 @@ function HomePage() {
           >
             A working marketplace that becomes Nairobi's real-time sensor network for food flows, price shocks, emissions, and climate disruption risk.
           </MotionTypography>
+          <MotionTypography
+            variant="body1"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.6 }}
+            sx={{ color: '#4b5563', maxWidth: '820px', mx: 'auto', fontWeight: 700 }}
+          >
+            AI-driven risk signals and transport coordination focused on Nairobi's informal settlements and neighborhoods.
+          </MotionTypography>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center" sx={{ px: 2 }}>
             <Button 
               variant="contained" 
@@ -701,6 +710,14 @@ export function AppContent() {
           )}
         </Toolbar>
       </AppBar>
+
+      {showDemoBanner && (
+        <Alert severity="info" sx={{ borderRadius: 0, justifyContent: 'center', '& .MuiAlert-message': { fontWeight: 800 } }}
+          action={<Button size="small" component={Link} to="/county-dashboard" sx={{ fontWeight: 800 }}>View County Dashboard</Button>}
+        >
+          Demo Mode active — data is representative and powers the County Dashboard prototype.
+        </Alert>
+      )}
 
       <Drawer
         anchor="right"

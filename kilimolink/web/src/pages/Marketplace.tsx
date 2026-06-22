@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Box, Container, Grid, Typography, Chip, Button, TextField, InputAdornment, Stack, Skeleton, Fade, IconButton, Tooltip } from '@mui/material';
+import { Box, Container, Grid, Typography, Chip, Button, TextField, InputAdornment, Stack, Skeleton, Fade, IconButton, Tooltip, Alert } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import SearchIcon from '@mui/icons-material/Search';
@@ -76,6 +76,9 @@ export function Marketplace() {
           </IconButton>
           <Typography variant="h3" sx={{ fontWeight: 900, letterSpacing: '-0.04em', color: '#064e3b', fontSize: { xs: '1.75rem', sm: '3rem' } }}>
             Food Supply Network
+          </Typography>
+          <Typography variant="body2" sx={{ color: '#374151', fontWeight: 700, ml: 2 }}>
+            Marketplace listings generate AI risk signals and transport coordination insights focused on Nairobi's informal-settlement neighborhoods.
           </Typography>
         </Stack>
 
@@ -180,6 +183,13 @@ export function Marketplace() {
             {coords ? 'Showing fresh produce within 5km of your location' : 'Enable location to see the closest produce'}
           </Typography>
         </Box>
+      </Box>
+
+      <Box sx={{ mb: 4 }}>
+        <Alert severity="info" sx={{ borderRadius: 2, py: 1.5, px: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
+          action={<Button component={Link} to="/county-dashboard" variant="contained" sx={{ bgcolor: '#064e3b', fontWeight: 800 }}>View County Intelligence</Button>}>
+          Marketplace listings feed the County Dashboard — listings become the sensor data that powers early warnings and route coordination.
+        </Alert>
       </Box>
 
       {impactLoading ? (

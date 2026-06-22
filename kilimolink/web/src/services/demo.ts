@@ -175,7 +175,19 @@ const DEFAULT_DEMO_MESSAGES: DemoMessage[] = [
   },
 ];
 
-const safeStorage = () => (typeof window === 'undefined' ? null : window.localStorage);
+const safeStorage = () => {
+  try {
+    // prefer browser `window.localStorage` when available
+    // fall back to globalThis.localStorage for Node/test environments
+    // eslint-disable-next-line no-undef
+    if (typeof window !== 'undefined' && window?.localStorage) return window.localStorage;
+  } catch (e) {
+    // ignore
+  }
+  // @ts-ignore
+  if (typeof globalThis !== 'undefined' && globalThis.localStorage) return globalThis.localStorage;
+  return null;
+};
 
 export function isDemoSession(): boolean {
   const storage = safeStorage();
