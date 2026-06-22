@@ -28,9 +28,14 @@ export class AdminAuthService {
     
     const ok = await bcrypt.compare(password, admin.passwordHash);
     if (!ok) {
-      // Simple throttle update
+      const failures = (throttle?.failures || 0) + 1;
       await this.prisma.adminLoginThrottle.create({
-        data: { adminEmail: email, adminId: admin.id, failures: (throttle?.failures || 0) + 1 }
+        data: {
+          adminEmail: email,
+          adminId: admin.id,
+          failures,
+          lockedUntil: failures >= 5 ? new Date(Date.now() + 15 * 60 * 1000) : undefined,
+        }
       });
       throw new UnauthorizedException('Invalid credentials');
     }

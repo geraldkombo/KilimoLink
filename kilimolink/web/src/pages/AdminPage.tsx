@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Box, Container, Typography, Paper, Tab, Tabs, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, IconButton, Stack, Chip, Card, CardContent, Divider } from '@mui/material';
+import { Box, Container, Typography, Paper, Tab, Tabs, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, IconButton, Stack, Chip, Card, CardContent, Divider, CircularProgress, Alert, Skeleton } from '@mui/material';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, BarChart, Bar, Cell, PieChart, Pie } from 'recharts';
 import { api } from '../services/api';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -28,8 +28,13 @@ export function AdminPage() {
   const [systemHealth, setSystemHealth] = useState(securityService.getHealthScore());
   const [simulationMode, setSimulationMode] = useState<'NORMAL' | 'PEAK_HARVEST' | 'DROUGHT_ALERT'>('NORMAL');
   const [priorityFee, setPriorityFee] = useState<number>(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [actionMsg, setActionMsg] = useState<string | null>(null);
 
   const fetchData = async () => {
+    setLoading(true);
+    setError(null);
     try {
       const [mRes, uRes, pRes, rRes, fee] = await Promise.all([
         api.get('/admin/impact'),
@@ -57,7 +62,9 @@ export function AdminPage() {
         { date: 'Today', co2: mRes.data.co2SavedKg, waste: mRes.data.wasteDivertedKg, supply: 120 * multiplier, demand: 150 }
       ]);
     } catch (err) {
-      console.error('Failed to fetch admin data', err);
+      setError('Failed to load admin data. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -72,8 +79,13 @@ export function AdminPage() {
 
   const handleDeleteProduct = async (id: string) => {
     if (window.confirm('Delete this product?')) {
-      await api.delete(`/admin/products/${id}`);
-      setProducts(products.filter(p => p.id !== id));
+      try {
+        await api.delete(`/admin/products/${id}`);
+        setProducts(products.filter(p => p.id !== id));
+        setActionMsg('Product deleted');
+      } catch {
+        setError('Failed to delete product');
+      }
     }
   };
 
@@ -111,8 +123,13 @@ export function AdminPage() {
               startIcon={<CloudUploadIcon />}
               onClick={async () => {
                 if(window.confirm('Seed demo data?')) {
-                  await api.post('/admin/seed');
-                  fetchData();
+                  try {
+                    await api.post('/admin/seed');
+                    setActionMsg('Demo data seeded successfully');
+                    fetchData();
+                  } catch {
+                    setError('Failed to seed data');
+                  }
                 }
               }}
               sx={{ borderRadius: 4, px: 3, bgcolor: '#064e3b', fontWeight: 800, boxShadow: 'none', '&:hover': { bgcolor: '#065f46', boxShadow: 'none' } }}
@@ -148,6 +165,34 @@ export function AdminPage() {
           </Stack>
         </Box>
         
+        {loading && (
+          <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
+            <CircularProgress sx={{ color: '#064e3b' }} />
+          </Box>
+        )}
+
+        {error && (
+          <Alert
+            severity="error"
+            sx={{ mb: 4, borderRadius: 3, fontWeight: 700 }}
+            action={
+              <Button size="small" variant="outlined" sx={{ fontWeight: 800 }} onClick={fetchData}>
+                Retry
+              </Button>
+            }
+          >
+            {error}
+          </Alert>
+        )}
+
+        {actionMsg && (
+          <Alert severity="success" sx={{ mb: 4, borderRadius: 3, fontWeight: 700 }} onClose={() => setActionMsg(null)}>
+            {actionMsg}
+          </Alert>
+        )}
+
+        {!loading && !error && (
+        <>
         <Tabs 
           value={tab} 
           onChange={(_, v) => setTab(v)} 
@@ -476,6 +521,8 @@ export function AdminPage() {
               </Grid>
             </Grid>
           </Grid>
+        )}
+        </>
         )}
       </Container>
     </Box>

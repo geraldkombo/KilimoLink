@@ -1,9 +1,11 @@
-import { Box, Card, CardContent, Chip, Container, Grid, LinearProgress, Paper, Stack, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Box, Card, CardContent, Chip, Container, Grid, LinearProgress, Paper, Stack, Typography, Skeleton, Alert, Button } from '@mui/material';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import MapIcon from '@mui/icons-material/Map';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import Co2Icon from '@mui/icons-material/Co2';
 import InsightsIcon from '@mui/icons-material/Insights';
+import { api } from '../services/api';
 
 const flows = [
   { from: 'Kiambu corridor', to: 'Mathare', crop: 'Tomatoes', risk: 'High', color: '#dc2626' },
@@ -19,6 +21,28 @@ const neighborhoods = [
 ];
 
 export function CountyDashboard() {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [impact, setImpact] = useState<any>(null);
+
+  const fetchImpact = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await api.get('/impact');
+      setImpact(res.data);
+    } catch {
+      setError('Could not load live impact data. Showing demo data.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchImpact();
+  }, []);
+  const showDemo = !!error || !impact;
+
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
       <Stack spacing={1} sx={{ mb: 4 }}>
@@ -34,6 +58,32 @@ export function CountyDashboard() {
         </Typography>
       </Stack>
 
+      {error && (
+        <Alert severity="warning" sx={{ mb: 4, borderRadius: 3, fontWeight: 700 }}
+          action={<Button size="small" variant="outlined" sx={{ fontWeight: 800 }} onClick={fetchImpact}>Retry</Button>}
+        >
+          {error}
+        </Alert>
+      )}
+
+      {loading && (
+        <Grid container spacing={3} sx={{ mb: 3 }}>
+          {[1, 2, 3, 4].map((i) => (
+            <Grid item xs={12} sm={6} md={3} key={i}>
+              <Card elevation={0} sx={{ borderRadius: 4, border: '1px solid #e5e7eb', height: '100%' }}>
+                <CardContent>
+                  <Skeleton variant="circular" width={40} height={40} />
+                  <Skeleton variant="text" width="60%" height={48} />
+                  <Skeleton variant="text" width="80%" />
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      )}
+
+      {!loading && (
+      <>
       <Grid container spacing={3} sx={{ mb: 3 }}>
         {[
           { icon: <WarningAmberIcon />, label: 'Active disruption alerts', value: '3', tone: '#dc2626' },
@@ -113,6 +163,8 @@ export function CountyDashboard() {
           </Paper>
         </Grid>
       </Grid>
+      </>
+      )}
     </Container>
   );
 }
