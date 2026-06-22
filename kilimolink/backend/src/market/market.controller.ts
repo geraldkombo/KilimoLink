@@ -24,13 +24,23 @@ export class MarketController {
     @Query('lng') lng?: string,
     @Query('page') page?: string,
     @Query('limit') limit?: string,
+    @Query('search') search?: string,
+    @Query('category') category?: string,
+    @Query('minPrice') minPrice?: string,
+    @Query('maxPrice') maxPrice?: string,
+    @Query('sort') sort?: string,
   ) {
-    return this.marketService.listProducts(
-      lat ? Number(lat) : undefined,
-      lng ? Number(lng) : undefined,
-      page ? Math.max(1, Number(page)) : 1,
-      limit ? Math.min(100, Math.max(1, Number(limit))) : 50,
-    );
+    return this.marketService.listProducts({
+      lat: lat ? Number(lat) : undefined,
+      lng: lng ? Number(lng) : undefined,
+      page: page ? Math.max(1, Number(page)) : 1,
+      limit: limit ? Math.min(100, Math.max(1, Number(limit))) : 50,
+      search,
+      category,
+      minPrice: minPrice ? Number(minPrice) : undefined,
+      maxPrice: maxPrice ? Number(maxPrice) : undefined,
+      sort,
+    });
   }
 
   @Get('my')

@@ -44,11 +44,33 @@ export class MarketService {
     return product;
   }
 
-  async listProducts(lat?: number, lng?: number, page = 1, limit = 50) {
+  async listProducts(params: {
+    lat?: number; lng?: number; page?: number; limit?: number;
+    search?: string; category?: string; minPrice?: number; maxPrice?: number; sort?: string;
+  }) {
+    const { lat, lng, page = 1, limit = 50, search, category, minPrice, maxPrice, sort } = params;
     const skip = (page - 1) * limit;
-    const cacheKey = `products:page${page}:limit${limit}`;
-    let products: any[];
+    const cacheKey = `products:${search || ''}:${category || ''}:${minPrice || ''}:${maxPrice || ''}:${sort || 'newest'}:page${page}:limit${limit}`;
 
+    const where: any = {};
+    if (search) {
+      where.OR = [
+        { title: { contains: search, mode: 'insensitive' } },
+        { description: { contains: search, mode: 'insensitive' } },
+      ];
+    }
+    if (category) where.category = category;
+    if (minPrice !== undefined || maxPrice !== undefined) {
+      where.price = {};
+      if (minPrice !== undefined) where.price.gte = minPrice;
+      if (maxPrice !== undefined) where.price.lte = maxPrice;
+    }
+
+    let orderBy: any = { createdAt: 'desc' };
+    if (sort === 'price_asc') orderBy = { price: 'asc' };
+    else if (sort === 'price_desc') orderBy = { price: 'desc' };
+
+    let products: any[];
     const cached = await this.redis.get(cacheKey);
     if (cached) {
       products = JSON.parse(cached);
@@ -56,14 +78,15 @@ export class MarketService {
       products = await this.prisma.product.findMany({
         skip,
         take: limit,
+        where,
         include: { farmer: true },
-        orderBy: { createdAt: 'desc' },
+        orderBy,
       });
       await this.redis.set(cacheKey, JSON.stringify(products), 300);
     }
 
     if (lat !== undefined && lng !== undefined) {
-      return products
+      products = products
         .map((p: any) => {
           const distance = this.calculateDistance(lat, lng, p.location?.lat, p.location?.lng);
           return { ...p, distance };
@@ -71,7 +94,7 @@ export class MarketService {
         .sort((a, b) => (a.distance || 0) - (b.distance || 0));
     }
 
-    const total = await this.prisma.product.count();
+    const total = await this.prisma.product.count({ where });
     return { products, total, page, limit, totalPages: Math.ceil(total / limit) };
   }
 
