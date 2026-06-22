@@ -16,6 +16,7 @@ import { UIProvider, useUI } from './UIContext';
 import { ProductProvider } from './ProductContext';
 import { api, setAuthToken } from '../services/api';
 import { applyToken, saveToken, loadRole, saveRole, isOnboardingDone, setOnboardingDone, clearAllAuth } from '../services/auth';
+import { getDemoOrders, getDemoProfile, isDemoSession, startDemoSession, clearDemoSession } from '../services/demo';
 
 const AdminPage = lazy(() => import('../pages/AdminPage').then(m => ({ default: m.AdminPage })));
 const Marketplace = lazy(() => import('../pages/Marketplace').then(m => ({ default: m.Marketplace })));
@@ -370,33 +371,83 @@ export function AppContent() {
   const [isOnline, setIsOnline] = useState(() => typeof navigator === 'undefined' ? true : navigator.onLine);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isPhone = useMediaQuery(theme.breakpoints.down('sm'));
   const location = useLocation();
+
+  const applyAuthenticatedSession = useCallback((session: {
+    email: string;
+    id: string;
+    name: string;
+    role: string;
+    token?: string;
+  }) => {
+    if (session.token) {
+      saveToken('user', session.token);
+      setAuthToken(session.token);
+    }
+    saveRole(session.role);
+    localStorage.setItem('email', session.email);
+    localStorage.setItem('kilomolink_user_id', session.id);
+    localStorage.setItem('kilomolink_user_name', session.name);
+    setAuthenticated(true);
+    setUserEmail(session.email);
+    setUserId(session.id);
+    setUserName(session.name);
+    setCurrentRole(session.role);
+  }, []);
+
+  const resetLoginForm = useCallback(() => {
+    setLoginOpen(false);
+    setLoginEmail('');
+    setLoginPassword('');
+    setRegisterPassword('');
+    setConfirmPassword('');
+    setRegisterName('');
+    setPhone('');
+    setOtpCode('');
+    setOtpSent(false);
+    setOtpDevCode(null);
+    setRegisterMode(false);
+    setLoginError(null);
+  }, []);
 
   useEffect(() => {
     const token = applyToken('user');
-    if (token) {
-      api.get('/auth/me').then(r => {
-        setAuthenticated(true);
-        const data = r.data;
-        setUserEmail(data?.email || localStorage.getItem('email'));
-        setUserName(data?.name || null);
-        setUserId(data?.id || null);
-        setCurrentRole(data?.role || loadRole());
-      }).catch(() => {
-        clearAllAuth();
-        setAuthenticated(false);
-        setUserEmail(null);
-        setUserId(null);
-        setUserName(null);
-        setCurrentRole(null);
-      }).finally(() => setAuthLoading(false));
-    } else {
+    if (!token) {
       setAuthLoading(false);
+      return;
     }
-  }, []);
+    if (isDemoSession()) {
+      const demoProfile = getDemoProfile(loadRole() === 'BUYER' ? 'BUYER' : 'FARMER');
+      applyAuthenticatedSession({ ...demoProfile, token });
+      setAuthLoading(false);
+      return;
+    }
+    setAuthLoading(true);
+    api.get('/auth/me', { timeout: 4000 }).then(r => {
+      const data = r.data;
+      applyAuthenticatedSession({
+        email: data?.email || localStorage.getItem('email') || 'user@kilimolink.local',
+        id: data?.id || localStorage.getItem('kilimolink_user_id') || 'user-id',
+        name: data?.name || localStorage.getItem('kilimolink_user_name') || 'KilimoLink User',
+        role: data?.role || loadRole() || 'BUYER',
+      });
+    }).catch(() => {
+      clearAllAuth();
+      setAuthenticated(false);
+      setUserEmail(null);
+      setUserId(null);
+      setUserName(null);
+      setCurrentRole(null);
+    }).finally(() => setAuthLoading(false));
+  }, [applyAuthenticatedSession]);
 
   const fetchPendingCount = useCallback(async () => {
     if (!authenticated) { setPendingOrderCount(0); return; }
+    if (isDemoSession()) {
+      setPendingOrderCount(getDemoOrders().filter((o) => o.status === 'PENDING').length);
+      return;
+    }
     try {
       const r = await api.get('/orders', { params: { limit: 100 } });
       const orders = r.data?.orders ?? [];
@@ -423,6 +474,18 @@ export function AppContent() {
     };
   }, []);
 
+  const showDemoBanner = userEmail?.startsWith('demo@') && authenticated;
+
+  const demoLogin = () => {
+    const demoProfile = startDemoSession(selectedRole === 'BUYER' ? 'BUYER' : 'FARMER');
+    applyAuthenticatedSession({ ...demoProfile, token: 'demo-token-123' });
+    resetLoginForm();
+    if (!isOnboardingDone()) {
+      setSelectedRole(demoProfile.role);
+      setOnboardingOpen(true);
+    }
+  };
+
   const handlePasswordLogin = async () => {
     if (!loginEmail.trim() || !loginPassword.trim()) return;
     setLoginError(null);
@@ -433,21 +496,8 @@ export function AppContent() {
         password: loginPassword,
       });
       const { token, user } = response.data;
-      saveToken('user', token);
-      saveRole(user.role);
-      localStorage.setItem('email', user.email);
-      localStorage.setItem('kilomolink_user_id', user.id);
-      localStorage.setItem('kilomolink_user_name', user.name);
-      setAuthToken(token);
-      setAuthenticated(true);
-      setUserEmail(user.email);
-      setUserId(user.id);
-      setUserName(user.name);
-      setCurrentRole(user.role);
-      setLoginOpen(false);
-      setLoginEmail('');
-      setLoginPassword('');
-      setLoginError(null);
+      applyAuthenticatedSession({ ...user, token });
+      resetLoginForm();
       if (!isOnboardingDone()) {
         setSelectedRole(user.role);
         setOnboardingOpen(true);
@@ -456,7 +506,7 @@ export function AppContent() {
       const status = err?.response?.status;
       if (status === 401) setLoginError('Wrong password');
       else if (status === 404) setLoginError('User not found. Please register first.');
-      else setLoginError('Server error. Please try again or register.');
+      else setLoginError(err?.userMessage || 'Live login is unavailable right now. Tap Demo Mode for the phone demo.');
     } finally {
       setLoginLoading(false);
     }
@@ -482,24 +532,8 @@ export function AppContent() {
         role: selectedRole,
       });
       const { token, user } = response.data;
-      saveToken('user', token);
-      saveRole(user.role);
-      localStorage.setItem('email', user.email);
-      localStorage.setItem('kilomolink_user_id', user.id);
-      localStorage.setItem('kilomolink_user_name', user.name);
-      setAuthToken(token);
-      setAuthenticated(true);
-      setUserEmail(user.email);
-      setUserId(user.id);
-      setUserName(user.name);
-      setCurrentRole(user.role);
-      setLoginOpen(false);
-      setRegisterMode(false);
-      setLoginEmail('');
-      setRegisterPassword('');
-      setConfirmPassword('');
-      setRegisterName('');
-      setLoginError(null);
+      applyAuthenticatedSession({ ...user, token });
+      resetLoginForm();
       if (!isOnboardingDone()) {
         setSelectedRole(user.role);
         setOnboardingOpen(true);
@@ -543,23 +577,8 @@ export function AppContent() {
         code: otpCode,
       });
       const { token, user } = response.data;
-      saveToken('user', token);
-      saveRole(user.role);
-      localStorage.setItem('email', user.email);
-      localStorage.setItem('kilomolink_user_id', user.id);
-      localStorage.setItem('kilomolink_user_name', user.name);
-      setAuthToken(token);
-      setAuthenticated(true);
-      setUserEmail(user.email);
-      setUserId(user.id);
-      setUserName(user.name);
-      setCurrentRole(user.role);
-      setLoginOpen(false);
-      setPhone('');
-      setOtpCode('');
-      setOtpSent(false);
-      setOtpDevCode(null);
-      setLoginError(null);
+      applyAuthenticatedSession({ ...user, token });
+      resetLoginForm();
       if (!isOnboardingDone()) {
         setSelectedRole(user.role);
         setOnboardingOpen(true);
@@ -574,42 +593,9 @@ export function AppContent() {
     }
   };
 
-  const handleOldLogin = async () => {
-    if (!loginEmail.trim()) return;
-    setLoginError(null);
-    try {
-      const response = await api.post('/auth/login-email', {
-        email: loginEmail.trim(),
-        name: loginEmail.trim().split('@')[0],
-        role: 'BUYER',
-      });
-      const token = response.data?.token;
-      const role = response.data?.user?.role || 'BUYER';
-      saveToken('user', token);
-      saveRole(role);
-      localStorage.setItem('email', loginEmail.trim());
-      setAuthToken(token);
-      setAuthenticated(true);
-      setUserEmail(loginEmail.trim());
-      setCurrentRole(role);
-      setLoginOpen(false);
-      setLoginEmail('');
-      if (!isOnboardingDone()) {
-        setSelectedRole(role);
-        setOnboardingOpen(true);
-      }
-    } catch {
-      setLoginError('Server is waking up. Please wait a moment and try again.');
-    }
-  };
-
   const handleLogout = () => {
-    saveToken('user', null);
-    setAuthToken(null);
     clearAllAuth();
-    localStorage.removeItem('email');
-    localStorage.removeItem('kilomolink_user_id');
-    localStorage.removeItem('kilomolink_user_name');
+    clearDemoSession();
     setAuthenticated(false);
     setUserEmail(null);
     setUserId(null);
@@ -633,20 +619,21 @@ export function AppContent() {
         </Alert>
       )}
       <AppBar position="sticky" elevation={0} sx={{ bgcolor: 'rgba(255,255,255,0.8)', backdropFilter: 'blur(10px)', borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
-        <Toolbar sx={{ height: 80, justifyContent: 'space-between' }}>
-          <Typography 
-            variant="h5" 
-            component={Link} 
-            to="/" 
-            sx={{ 
-              fontWeight: '900', 
-              letterSpacing: '-0.05em', 
-              color: '#064e3b', 
-              textDecoration: 'none', 
+        <Toolbar sx={{ minHeight: { xs: 72, sm: 80 }, height: { xs: 72, sm: 80 }, justifyContent: 'space-between', gap: 1 }}>
+          <Typography
+            variant={isPhone ? 'h6' : 'h5'}
+            component={Link}
+            to="/"
+            sx={{
+              fontWeight: '900',
+              letterSpacing: '-0.05em',
+              color: '#064e3b',
+              textDecoration: 'none',
               fontFamily: '"Inter", "Roboto", sans-serif',
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: 1 
+              display: 'flex',
+              alignItems: 'center',
+              gap: 1,
+              fontSize: { xs: '1rem', sm: '1.5rem' }
             }}
           >
             KILIMOLINK DIRECT
@@ -788,11 +775,18 @@ export function AppContent() {
       </Drawer>
 
       {/* Login Dialog */}
-      <Dialog open={loginOpen} onClose={() => { setLoginOpen(false); setRegisterMode(false); setOtpSent(false); setLoginError(null); }} maxWidth="xs" fullWidth PaperProps={{ sx: { borderRadius: 4, p: 2 } }}>
+      <Dialog open={loginOpen} onClose={resetLoginForm} maxWidth="xs" fullWidth fullScreen={isPhone} PaperProps={{ sx: { borderRadius: isPhone ? 0 : 4, p: isPhone ? 1 : 2 } }}>
         <DialogTitle sx={{ fontWeight: 900, color: '#064e3b', textAlign: 'center', fontSize: '1.5rem' }}>
           {registerMode ? 'Create Account' : 'Sign In'}
         </DialogTitle>
         <DialogContent>
+          {!registerMode && (
+            <Alert severity="info" sx={{ mb: 3, borderRadius: 3, '& .MuiAlert-message': { width: '100%' } }}>
+              <Typography sx={{ fontWeight: 800, fontSize: '0.95rem' }}>
+                Fastest phone demo: use Demo Mode. Live login still works when the backend is already awake.
+              </Typography>
+            </Alert>
+          )}
           {!registerMode && (
             <Tabs value={authTab} onChange={(_, v) => { setAuthTab(v); setLoginError(null); setOtpSent(false); }} sx={{ mb: 3, '& .MuiTab-root': { fontWeight: 700, textTransform: 'none' } }} centered>
               <Tab label="Password" />
@@ -843,6 +837,11 @@ export function AppContent() {
               {loginError}
             </Typography>
           )}
+          {otpDevCode && (
+            <Typography sx={{ mt: 1, color: '#166534', fontWeight: 700, textAlign: 'center', fontSize: '0.85rem' }}>
+              Dev OTP: {otpDevCode}
+            </Typography>
+          )}
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 3, flexDirection: 'column', gap: 1.5 }}>
           {registerMode ? (
@@ -883,7 +882,14 @@ export function AppContent() {
             </>
           )}
 
-
+          <Button fullWidth variant="contained" size="large"
+            onClick={demoLogin} sx={{ bgcolor: '#059669', py: 1.5, borderRadius: 3, fontWeight: 900, '&:hover': { bgcolor: '#047857' } }}>
+            Start Demo Now
+          </Button>
+          <Button fullWidth variant="outlined" size="large"
+            onClick={demoLogin} sx={{ color: '#059669', borderColor: '#059669', py: 1.25, borderRadius: 3, fontWeight: 700, '&:hover': { borderColor: '#047857', bgcolor: '#f0fdf4' } }}>
+            Demo Mode (offline)
+          </Button>
         </DialogActions>
       </Dialog>
 
