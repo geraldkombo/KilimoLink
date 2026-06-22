@@ -141,14 +141,56 @@ export function createMockPrismaService() {
       return results;
     },
     findUnique: async (args: any) => {
-      if (args.where.id) return getStore(model).get(args.where.id) || null;
-      if (args.where.email) return findInStore(getStore(model), { email: args.where.email });
+      const store = getStore(model);
+      if (args.where.id) return store.get(args.where.id) || null;
+      if (args.where.email) return findInStore(store, { email: args.where.email });
+      // Handle compound unique keys like productId_buyerId
+      for (const [key, val] of Object.entries(args.where)) {
+        if (key !== 'id' && key !== 'email' && typeof val === 'object' && val !== null) {
+          return findInStore(store, val as any);
+        }
+      }
       return null;
     },
     findFirst: async (args?: any) => {
       const store = getStore(model);
-      if (args?.where) return findInStore(store, args.where);
-      return store.values().next().value || null;
+      let results = Array.from(store.values());
+      if (args?.where) {
+        results = results.filter((item: any) => {
+          for (const [key, val] of Object.entries(args.where)) {
+            if (key === 'OR') continue;
+            if (typeof val === 'object' && val !== null && 'some' in val) {
+              const someVal = (val as any).some;
+              // Resolve related items from the relation store
+              const relNames: Record<string, string> = { items: 'orderItem', orderItems: 'orderItem' };
+              const relStoreName = relNames[key] || key;
+              const relStore = getStore(relStoreName);
+              // Check FK: rel store should have a field matching this model's id
+              const match = Array.from(relStore.values()).some((relItem: any) => {
+                if ((relItem as any).orderId === item.id || (relItem as any).productId === item.id || (relItem as any).buyerId === item.id) {
+                  for (const [sk, sv] of Object.entries(someVal)) {
+                    if ((relItem as any)[sk] !== sv) return false;
+                  }
+                  return true;
+                }
+                return false;
+              });
+              if (!match) return false;
+            } else if (!isMatch(item, key, val)) {
+              return false;
+            }
+          }
+          return true;
+        });
+      }
+      if (args?.orderBy) {
+        const [sortKey, sortDir] = Object.entries(args.orderBy)[0];
+        results.sort((a, b) => {
+          if (sortDir === 'desc') return new Date(b[sortKey]).getTime() - new Date(a[sortKey]).getTime();
+          return new Date(a[sortKey]).getTime() - new Date(b[sortKey]).getTime();
+        });
+      }
+      return results[0] || null;
     },
     findUniqueOrThrow: async (args: any) => {
       const item = args.where.id ? getStore(model).get(args.where.id) : null;
@@ -268,6 +310,50 @@ export function createMockPrismaService() {
       }
       return store.size;
     },
+    aggregate: async (args?: any) => {
+      const store = getStore(model);
+      let items = Array.from(store.values());
+      if (args?.where) {
+        items = items.filter((item: any) => {
+          for (const [key, val] of Object.entries(args.where)) {
+            if (!isMatch(item, key, val)) return false;
+          }
+          return true;
+        });
+      }
+      const result: any = { _avg: {}, _count: items.length };
+      if (args?._avg) {
+        for (const field of Object.keys(args._avg)) {
+          const vals = items.map((i: any) => Number(i[field])).filter((v: any) => !isNaN(v));
+          result._avg[field] = vals.length > 0 ? vals.reduce((a: number, b: number) => a + b, 0) / vals.length : null;
+        }
+      }
+      return result;
+    },
+    groupBy: async (args?: any) => {
+      const store = getStore(model);
+      let items = Array.from(store.values());
+      const byField = args?.by?.[0];
+      if (!byField) return [];
+      const groups = new Map<any, any[]>();
+      for (const item of items) {
+        const key = (item as any)[byField];
+        if (!groups.has(key)) groups.set(key, []);
+        groups.get(key)!.push(item);
+      }
+      const result: any[] = [];
+      for (const [key, groupItems] of groups) {
+        const entry: any = { [byField]: key, _avg: {}, _count: groupItems.length };
+        if (args?._avg) {
+          for (const field of Object.keys(args._avg)) {
+            const vals = groupItems.map((i: any) => Number(i[field])).filter((v: any) => !isNaN(v));
+            entry._avg[field] = vals.length > 0 ? vals.reduce((a: number, b: number) => a + b, 0) / vals.length : null;
+          }
+        }
+        result.push(entry);
+      }
+      return result;
+    },
   });
 
   return {
@@ -280,6 +366,7 @@ export function createMockPrismaService() {
     adminUser: mockQuery('adminUser'),
     adminLoginThrottle: mockQuery('adminLoginThrottle'),
     auditLog: mockQuery('auditLog'),
+    review: mockQuery('review'),
     otpChallenge: mockQuery('otpChallenge'),
     otpVerifyThrottle: mockQuery('otpVerifyThrottle'),
     notificationLog: mockQuery('notificationLog'),

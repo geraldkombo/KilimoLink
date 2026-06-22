@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { CircularProgress, Link, IconButton, Fade, Stack } from '@mui/material';
+import { CircularProgress, Link, IconButton, Fade, Stack, Rating, TextField, Card, CardContent, Skeleton } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import StarIcon from '@mui/icons-material/Star';
 import { useParams, useNavigate, Link as RouterLink } from 'react-router-dom';
 import { Box, Button, Container, Grid, Paper, Typography, Chip, Divider, Alert } from '@mui/material';
 import { api } from '../services/api';
-import { applyToken } from '../services/auth';
+import { applyToken, loadToken } from '../services/auth';
 import { PriceTruthGap } from '../components/PriceTruthGap';
 
 const DEMO_PRODUCTS: Record<string, any> = {
@@ -32,6 +33,17 @@ export function ProductDetail() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
+  const [reviews, setReviews] = useState<any[]>([]);
+  const [avgRating, setAvgRating] = useState(0);
+  const [reviewCount, setReviewCount] = useState(0);
+  const [reviewsLoading, setReviewsLoading] = useState(true);
+  const [userCanReview, setUserCanReview] = useState(false);
+  const [reviewFormOpen, setReviewFormOpen] = useState(false);
+  const [reviewRating, setReviewRating] = useState<number | null>(5);
+  const [reviewText, setReviewText] = useState('');
+  const [reviewSubmitting, setReviewSubmitting] = useState(false);
+  const [reviewError, setReviewError] = useState<string | null>(null);
+
   useEffect(() => {
     const fetchProduct = async () => {
       setFetching(true);
@@ -57,6 +69,68 @@ export function ProductDetail() {
     };
     fetchProduct();
   }, [id]);
+
+  useEffect(() => {
+    if (!id) return;
+    const fetchReviews = async () => {
+      setReviewsLoading(true);
+      try {
+        const res = await api.get(`/products/${id}/reviews`);
+        setReviews(res.data.reviews ?? []);
+        setAvgRating(res.data.avgRating ?? 0);
+        setReviewCount(res.data.reviewCount ?? 0);
+      } catch {
+        // ignore
+      } finally {
+        setReviewsLoading(false);
+      }
+    };
+    fetchReviews();
+  }, [id]);
+
+  useEffect(() => {
+    if (!id || !loadToken('user')) return;
+    const checkEligibility = async () => {
+      try {
+        const ordersRes = await api.get('/orders');
+        const orders = ordersRes.data?.orders ?? [];
+        const hasDelivered = orders.some(
+          (o: any) =>
+            o.status === 'DELIVERED' &&
+            o.items?.some((i: any) => i.productId === id || i.product?.id === id),
+        );
+        setUserCanReview(hasDelivered);
+      } catch {
+        // not authenticated
+      }
+    };
+    checkEligibility();
+  }, [id]);
+
+  const handleSubmitReview = async () => {
+    if (!reviewRating) return;
+    setReviewSubmitting(true);
+    setReviewError(null);
+    try {
+      await api.post('/reviews', {
+        productId: id,
+        rating: reviewRating,
+        comment: reviewText || undefined,
+      });
+      setReviewFormOpen(false);
+      setReviewText('');
+      setReviewRating(5);
+      setUserCanReview(false);
+      const res = await api.get(`/products/${id}/reviews`);
+      setReviews(res.data.reviews ?? []);
+      setAvgRating(res.data.avgRating ?? 0);
+      setReviewCount(res.data.reviewCount ?? 0);
+    } catch (err: any) {
+      setReviewError(err?.response?.data?.message || 'Failed to submit review');
+    } finally {
+      setReviewSubmitting(false);
+    }
+  };
 
   const handleOrder = async () => {
     setLoading(true);
@@ -147,6 +221,75 @@ export function ProductDetail() {
             </Typography>
 
             <PriceTruthGap slug={id || null} />
+
+            {/* Reviews Section */}
+            <Box sx={{ mt: 5, mb: 4 }}>
+              <Stack direction="row" alignItems="center" spacing={1.5} sx={{ mb: 2 }}>
+                {avgRating > 0 ? (
+                  <>
+                    <Rating value={avgRating} readOnly size="large" precision={0.5} emptyIcon={<StarIcon fontSize="inherit" sx={{ opacity: 0.3 }} />} sx={{ color: '#f59e0b' }} />
+                    <Typography variant="h6" sx={{ fontWeight: 900, color: '#111827' }}>{avgRating.toFixed(1)}</Typography>
+                    <Typography variant="body2" sx={{ color: '#6b7280', fontWeight: 600 }}>({reviewCount} reviews)</Typography>
+                  </>
+                ) : reviewsLoading ? (
+                  <Skeleton variant="rounded" width={200} height={32} />
+                ) : (
+                  <Typography variant="body1" sx={{ fontWeight: 700, color: '#6b7280' }}>No reviews yet</Typography>
+                )}
+              </Stack>
+
+              {reviewsLoading ? (
+                [1, 2].map((i) => (
+                  <Skeleton key={i} variant="rounded" height={80} sx={{ mb: 2, borderRadius: 3 }} />
+                ))
+              ) : reviews.length > 0 ? (
+                reviews.map((review: any) => (
+                  <Card key={review.id} elevation={0} sx={{ mb: 2, p: 2, bgcolor: '#f9fafb', borderRadius: 4 }}>
+                    <Stack direction="row" spacing={1.5} alignItems="center" sx={{ mb: 1 }}>
+                      <Rating value={review.rating} readOnly size="small" emptyIcon={<StarIcon fontSize="inherit" sx={{ opacity: 0.3 }} />} sx={{ color: '#f59e0b' }} />
+                      <Typography variant="caption" sx={{ fontWeight: 800, color: '#111827' }}>
+                        {review.buyer?.name || 'Buyer'}
+                      </Typography>
+                      <Typography variant="caption" sx={{ color: '#9ca3af' }}>
+                        {new Date(review.createdAt).toLocaleDateString()}
+                      </Typography>
+                    </Stack>
+                    {review.comment && (
+                      <Typography variant="body2" sx={{ color: '#374151', fontWeight: 500 }}>
+                        {review.comment}
+                      </Typography>
+                    )}
+                  </Card>
+                ))
+              ) : null}
+
+              {userCanReview && !reviewFormOpen && (
+                <Button variant="outlined" size="small" onClick={() => setReviewFormOpen(true)}
+                  sx={{ mt: 1, borderRadius: 3, fontWeight: 700, color: '#064e3b', borderColor: '#064e3b' }}>
+                  Write a Review
+                </Button>
+              )}
+
+              {reviewFormOpen && (
+                <Paper elevation={0} sx={{ p: 3, bgcolor: '#f0fdf4', borderRadius: 4, border: '1px solid #dcfce7', mt: 2 }}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 800, mb: 2, color: '#064e3b' }}>Write your review</Typography>
+                  <Rating value={reviewRating} onChange={(_, v) => setReviewRating(v)} size="large" sx={{ mb: 2, color: '#f59e0b' }} />
+                  <TextField fullWidth multiline rows={2} placeholder="Share your experience with this product..." value={reviewText}
+                    onChange={(e) => setReviewText(e.target.value)} sx={{ mb: 2, '& .MuiOutlinedInput-root': { borderRadius: 3 } }} />
+                  {reviewError && <Typography sx={{ color: '#991b1b', fontWeight: 600, mb: 1, fontSize: '0.85rem' }}>{reviewError}</Typography>}
+                  <Stack direction="row" spacing={1}>
+                    <Button variant="contained" size="small" disabled={reviewSubmitting || !reviewRating}
+                      onClick={handleSubmitReview} sx={{ bgcolor: '#064e3b', borderRadius: 3, fontWeight: 800, '&:hover': { bgcolor: '#065f46' } }}>
+                      {reviewSubmitting ? <CircularProgress size={18} color="inherit" /> : 'Submit Review'}
+                    </Button>
+                    <Button variant="text" size="small" onClick={() => { setReviewFormOpen(false); setReviewError(null); }}
+                      sx={{ color: '#6b7280', fontWeight: 700 }}>
+                      Cancel
+                    </Button>
+                  </Stack>
+                </Paper>
+              )}
+            </Box>
 
             <Divider sx={{ my: 5 }} />
 

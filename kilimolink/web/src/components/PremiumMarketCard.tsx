@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Box, Card, CardContent, CardMedia, Typography, Chip, Button, Fade, Stack, Snackbar, Alert, CircularProgress } from '@mui/material';
+import { Box, Card, CardContent, CardMedia, Typography, Chip, Button, Fade, Stack, Snackbar, Alert, CircularProgress, Rating } from '@mui/material';
 import { Link } from 'react-router-dom';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import StarIcon from '@mui/icons-material/Star';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import { api } from '../services/api';
 
@@ -16,6 +17,8 @@ interface PremiumMarketCardProps {
     imageUrl?: string;
     distance?: number;
     verified?: boolean;
+    avgRating?: number | null;
+    reviewCount?: number;
     farmer?: { name: string };
     location?: { address: string };
   };
@@ -125,6 +128,15 @@ export const PremiumMarketCard = ({ product, delay = 0 }: PremiumMarketCardProps
             </Box>
           </Box>
           
+          {product.avgRating != null && (
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mb: 1 }}>
+              <Rating value={product.avgRating} readOnly size="small" precision={0.5} emptyIcon={<StarIcon fontSize="inherit" sx={{ opacity: 0.3 }} />} />
+              <Typography variant="caption" sx={{ fontWeight: 700, color: '#6b7280' }}>
+                ({product.reviewCount ?? 0})
+              </Typography>
+            </Box>
+          )}
+
           <Typography variant="body2" color="text.secondary" sx={{ mb: 3, fontWeight: 500 }}>
             {product.quantity} units available • Direct from farm
           </Typography>

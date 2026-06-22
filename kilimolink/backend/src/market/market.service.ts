@@ -82,6 +82,16 @@ export class MarketService {
         include: { farmer: true },
         orderBy,
       });
+
+      const productIds = products.map((p: any) => p.id);
+      const reviewAggs = await this.getReviewAggregations(productIds);
+
+      products = products.map((p: any) => ({
+        ...p,
+        avgRating: reviewAggs.get(p.id)?.avgRating ?? null,
+        reviewCount: reviewAggs.get(p.id)?.reviewCount ?? 0,
+      }));
+
       await this.redis.set(cacheKey, JSON.stringify(products), 300);
     }
 
@@ -104,7 +114,18 @@ export class MarketService {
       include: { farmer: true },
     });
     if (!product) throw new NotFoundException('Product not found');
-    return product;
+
+    const reviewAgg = await this.prisma.review.aggregate({
+      where: { productId },
+      _avg: { rating: true },
+      _count: true,
+    });
+
+    return {
+      ...product,
+      avgRating: reviewAgg._avg.rating ?? null,
+      reviewCount: reviewAgg._count,
+    };
   }
 
   async getMyProducts(farmerId: string) {
@@ -144,6 +165,24 @@ export class MarketService {
     await this.prisma.product.delete({ where: { id: productId } });
     await this.redis.del('products:all');
     return { success: true };
+  }
+
+  private async getReviewAggregations(productIds: string[]) {
+    const aggs = await this.prisma.review.groupBy({
+      by: ['productId'],
+      where: { productId: { in: productIds } },
+      _avg: { rating: true },
+      _count: true,
+    });
+
+    const map = new Map<string, { avgRating: number; reviewCount: number }>();
+    for (const agg of aggs) {
+      map.set(agg.productId, {
+        avgRating: agg._avg.rating ?? 0,
+        reviewCount: agg._count,
+      });
+    }
+    return map;
   }
 
   private calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number | null {
