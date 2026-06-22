@@ -230,9 +230,9 @@ function HomePage() {
             Our Impact
           </Typography>
           <Typography variant="body1" align="center" sx={{ mb: 8, color: '#4b5563', maxWidth: '700px', mx: 'auto', fontSize: '1.25rem' }}>
-            Real results from real transactions on KilimoLink.
+            Real results from real transactions on KilimoLink Direct.
           </Typography>
-          <Grid container spacing={4}>
+          <Grid container spacing={4} justifyContent="center">
             {[
               { label: 'Waste Reduction', value: impact ? `${Math.round(impact.wasteDivertedKg)}kg` : '-', unit: 'diverted from landfill', color: '#ef6c00', icon: '♻️' },
               { label: 'Urban Farming', value: impact ? `${impact.greenSpaceM2}m\u00b2` : '-', unit: 'green space cultivated', color: '#1565c0', icon: '🏙️' },
