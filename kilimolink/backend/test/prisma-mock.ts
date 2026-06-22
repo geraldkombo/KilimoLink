@@ -5,21 +5,32 @@ export function createMockPrismaService() {
     return stores[name];
   };
 
+  const isMatch = (item: any, key: string, val: any): boolean => {
+    if (val === null) return (item as any)[key] == null;
+    const itemVal = (item as any)[key];
+    if (typeof val === 'object' && val !== null) {
+      if (key === 'OR') return true;
+      for (const [op, opVal] of Object.entries(val)) {
+        if (op === 'contains' && typeof itemVal === 'string') {
+          if (!itemVal.includes(String(opVal as string))) return false;
+        } else if (op === 'gt') {
+          if (!(itemVal > (opVal as any))) return false;
+        } else if (op === 'lt') {
+          if (!(itemVal < (opVal as any))) return false;
+        } else if (itemVal !== opVal) return false;
+      }
+      return true;
+    }
+    return itemVal === val;
+  };
+
   const findInStore = (store: Map<string, any>, where: any) => {
     if (!where) return null;
     for (const [, item] of store) {
       let match = true;
       for (const [key, val] of Object.entries(where)) {
         if (key === 'OR') continue;
-        if (typeof val === 'object' && val !== null) {
-          for (const [op, opVal] of Object.entries(val)) {
-            if (op === 'contains' && typeof (item as any)[key] === 'string') {
-              if (!(item as any)[key].includes(String(opVal))) { match = false; }
-            } else if (op === 'startsWith' && typeof (item as any)[key] === 'string') {
-              if (!(item as any)[key].startsWith(String(opVal))) { match = false; }
-            } else if ((item as any)[key] !== opVal) { match = false; }
-          }
-        } else if ((item as any)[key] !== val) { match = false; }
+        if (!isMatch(item, key, val)) { match = false; break; }
       }
       if (match) return item;
     }
@@ -186,6 +197,24 @@ export function createMockPrismaService() {
       const item = { ...args.create, id, createdAt: now, updatedAt: now };
       store.set(id, item);
       return item;
+    },
+    updateMany: async (args: any) => {
+      const store = getStore(model);
+      if (args?.where) {
+        for (const [, item] of store) {
+          let match = true;
+          for (const [key, val] of Object.entries(args.where)) {
+            if (key === 'OR') continue;
+            if (!isMatch(item, key, val)) { match = false; break; }
+          }
+          if (match && args.data) {
+            for (const [dk, dv] of Object.entries(args.data)) {
+              (item as any)[dk] = dv;
+            }
+          }
+        }
+      }
+      return { count: 0 };
     },
     deleteMany: async (args: any) => {
       const store = getStore(model);

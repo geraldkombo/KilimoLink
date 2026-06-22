@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback, lazy, Suspense } from 'react';
-import { Grid, Divider, Dialog, DialogTitle, DialogContent, DialogActions, RadioGroup, FormControlLabel, Radio, TextField, Alert } from '@mui/material';
+import { Grid, Divider, Dialog, DialogTitle, DialogContent, DialogActions, RadioGroup, FormControlLabel, Radio, TextField, Alert, Tabs, Tab, CircularProgress, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import { AppBar, Badge, Box, Button, Container, Toolbar, Typography, Stack, useTheme, useMediaQuery, Paper, IconButton, Drawer, List, ListItem, ListItemText, ListItemButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
@@ -344,14 +344,27 @@ function PageTransition({ children }: { children: React.ReactNode }) {
 export function AppContent() {
   const [authenticated, setAuthenticated] = useState(false);
   const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string | null>(null);
   const [loginOpen, setLoginOpen] = useState(false);
   const [loginEmail, setLoginEmail] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [registerName, setRegisterName] = useState('');
+  const [registerPassword, setRegisterPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [selectedRole, setSelectedRole] = useState<string>('FARMER');
+  const [authTab, setAuthTab] = useState(0);
+  const [registerMode, setRegisterMode] = useState(false);
+  const [phone, setPhone] = useState('');
+  const [otpCode, setOtpCode] = useState('');
+  const [otpSent, setOtpSent] = useState(false);
+  const [otpDevCode, setOtpDevCode] = useState<string | null>(null);
+  const [authLoading, setAuthLoading] = useState(true);
+  const [loginLoading, setLoginLoading] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentRole, setCurrentRole] = useState<string | null>(loadRole());
   const [onboardingOpen, setOnboardingOpen] = useState(false);
-  const [selectedRole, setSelectedRole] = useState<string>('FARMER');
   const [loginError, setLoginError] = useState<string | null>(null);
-  const [authLoading, setAuthLoading] = useState(true);
   const [pendingOrderCount, setPendingOrderCount] = useState(0);
   const [isOnline, setIsOnline] = useState(() => typeof navigator === 'undefined' ? true : navigator.onLine);
   const theme = useTheme();
@@ -361,11 +374,24 @@ export function AppContent() {
   useEffect(() => {
     const token = applyToken('user');
     if (token) {
-      setAuthenticated(true);
-      const email = localStorage.getItem('email');
-      if (email) setUserEmail(email);
+      api.get('/auth/me').then(r => {
+        setAuthenticated(true);
+        const data = r.data;
+        setUserEmail(data?.email || localStorage.getItem('email'));
+        setUserName(data?.name || null);
+        setUserId(data?.id || null);
+        setCurrentRole(data?.role || loadRole());
+      }).catch(() => {
+        clearAllAuth();
+        setAuthenticated(false);
+        setUserEmail(null);
+        setUserId(null);
+        setUserName(null);
+        setCurrentRole(null);
+      }).finally(() => setAuthLoading(false));
+    } else {
+      setAuthLoading(false);
     }
-    setAuthLoading(false);
   }, []);
 
   const fetchPendingCount = useCallback(async () => {
@@ -402,12 +428,21 @@ export function AppContent() {
     saveToken('user', 'demo-token-123');
     saveRole('FARMER');
     localStorage.setItem('email', 'demo@farmers.co.ke');
+    localStorage.setItem('kilomolink_user_id', 'demo-user-123');
+    localStorage.setItem('kilomolink_user_name', 'Demo Farmer');
     setAuthToken('demo-token-123');
     setAuthenticated(true);
     setUserEmail('demo@farmers.co.ke');
+    setUserId('demo-user-123');
+    setUserName('Demo Farmer');
     setCurrentRole('FARMER');
     setLoginOpen(false);
     setLoginEmail('');
+    setLoginPassword('');
+    setPhone('');
+    setOtpCode('');
+    setOtpSent(false);
+    setRegisterMode(false);
     setLoginError(null);
     if (!isOnboardingDone()) {
       setSelectedRole('FARMER');
@@ -415,7 +450,158 @@ export function AppContent() {
     }
   };
 
-  const handleLogin = async () => {
+  const handlePasswordLogin = async () => {
+    if (!loginEmail.trim() || !loginPassword.trim()) return;
+    setLoginError(null);
+    setLoginLoading(true);
+    try {
+      const response = await api.post('/auth/login', {
+        email: loginEmail.trim(),
+        password: loginPassword,
+      });
+      const { token, user } = response.data;
+      saveToken('user', token);
+      saveRole(user.role);
+      localStorage.setItem('email', user.email);
+      localStorage.setItem('kilomolink_user_id', user.id);
+      localStorage.setItem('kilomolink_user_name', user.name);
+      setAuthToken(token);
+      setAuthenticated(true);
+      setUserEmail(user.email);
+      setUserId(user.id);
+      setUserName(user.name);
+      setCurrentRole(user.role);
+      setLoginOpen(false);
+      setLoginEmail('');
+      setLoginPassword('');
+      setLoginError(null);
+      if (!isOnboardingDone()) {
+        setSelectedRole(user.role);
+        setOnboardingOpen(true);
+      }
+    } catch (err: any) {
+      const status = err?.response?.status;
+      if (status === 401) setLoginError('Wrong password');
+      else if (status === 404) setLoginError('User not found. Please register first.');
+      else setLoginError('Server error. Use Demo Mode below.');
+    } finally {
+      setLoginLoading(false);
+    }
+  };
+
+  const handleRegister = async () => {
+    if (!loginEmail.trim() || !registerPassword.trim()) return;
+    if (registerPassword !== confirmPassword) {
+      setLoginError('Passwords do not match');
+      return;
+    }
+    if (registerPassword.length < 6) {
+      setLoginError('Password must be at least 6 characters');
+      return;
+    }
+    setLoginError(null);
+    setLoginLoading(true);
+    try {
+      const response = await api.post('/auth/register', {
+        email: loginEmail.trim(),
+        password: registerPassword,
+        name: registerName.trim() || loginEmail.trim().split('@')[0],
+        role: selectedRole,
+      });
+      const { token, user } = response.data;
+      saveToken('user', token);
+      saveRole(user.role);
+      localStorage.setItem('email', user.email);
+      localStorage.setItem('kilomolink_user_id', user.id);
+      localStorage.setItem('kilomolink_user_name', user.name);
+      setAuthToken(token);
+      setAuthenticated(true);
+      setUserEmail(user.email);
+      setUserId(user.id);
+      setUserName(user.name);
+      setCurrentRole(user.role);
+      setLoginOpen(false);
+      setRegisterMode(false);
+      setLoginEmail('');
+      setRegisterPassword('');
+      setConfirmPassword('');
+      setRegisterName('');
+      setLoginError(null);
+      if (!isOnboardingDone()) {
+        setSelectedRole(user.role);
+        setOnboardingOpen(true);
+      }
+    } catch (err: any) {
+      const status = err?.response?.status;
+      if (status === 409) setLoginError('An account with this email already exists');
+      else setLoginError('Registration failed. Please try again.');
+    } finally {
+      setLoginLoading(false);
+    }
+  };
+
+  const handleSendOtp = async () => {
+    if (!phone.trim()) return;
+    setLoginError(null);
+    setLoginLoading(true);
+    try {
+      const res = await api.post('/auth/send-otp', { phone: phone.trim() });
+      setOtpSent(true);
+      if (res.data.devCode) {
+        setOtpDevCode(res.data.devCode);
+        setLoginError(`Dev code: ${res.data.devCode}`);
+      } else {
+        setLoginError('Code sent to your phone');
+      }
+    } catch {
+      setLoginError('Failed to send code. Try again.');
+    } finally {
+      setLoginLoading(false);
+    }
+  };
+
+  const handleVerifyOtp = async () => {
+    if (!phone.trim() || !otpCode.trim()) return;
+    setLoginError(null);
+    setLoginLoading(true);
+    try {
+      const response = await api.post('/auth/verify-otp', {
+        phone: phone.trim(),
+        code: otpCode,
+      });
+      const { token, user } = response.data;
+      saveToken('user', token);
+      saveRole(user.role);
+      localStorage.setItem('email', user.email);
+      localStorage.setItem('kilomolink_user_id', user.id);
+      localStorage.setItem('kilomolink_user_name', user.name);
+      setAuthToken(token);
+      setAuthenticated(true);
+      setUserEmail(user.email);
+      setUserId(user.id);
+      setUserName(user.name);
+      setCurrentRole(user.role);
+      setLoginOpen(false);
+      setPhone('');
+      setOtpCode('');
+      setOtpSent(false);
+      setOtpDevCode(null);
+      setLoginError(null);
+      if (!isOnboardingDone()) {
+        setSelectedRole(user.role);
+        setOnboardingOpen(true);
+      }
+    } catch (err: any) {
+      const status = err?.response?.status;
+      if (status === 429) setLoginError('Too many attempts. Account locked 10 minutes.');
+      else if (status === 401) setLoginError('Invalid or expired code');
+      else setLoginError('Verification failed');
+    } finally {
+      setLoginLoading(false);
+    }
+  };
+
+  const handleOldLogin = async () => {
     if (!loginEmail.trim()) return;
     setLoginError(null);
     try {
@@ -449,8 +635,12 @@ export function AppContent() {
     setAuthToken(null);
     clearAllAuth();
     localStorage.removeItem('email');
+    localStorage.removeItem('kilomolink_user_id');
+    localStorage.removeItem('kilomolink_user_name');
     setAuthenticated(false);
     setUserEmail(null);
+    setUserId(null);
+    setUserName(null);
     setCurrentRole(null);
   };
 
@@ -624,48 +814,103 @@ export function AppContent() {
       </Drawer>
 
       {/* Login Dialog */}
-      <Dialog open={loginOpen} onClose={() => setLoginOpen(false)} maxWidth="xs" fullWidth PaperProps={{ sx: { borderRadius: 4, p: 2 } }}>
+      <Dialog open={loginOpen} onClose={() => { setLoginOpen(false); setRegisterMode(false); setOtpSent(false); setLoginError(null); }} maxWidth="xs" fullWidth PaperProps={{ sx: { borderRadius: 4, p: 2 } }}>
         <DialogTitle sx={{ fontWeight: 900, color: '#064e3b', textAlign: 'center', fontSize: '1.5rem' }}>
-          Sign In
+          {registerMode ? 'Create Account' : 'Sign In'}
         </DialogTitle>
         <DialogContent>
-          <Typography sx={{ textAlign: 'center', mb: 3, color: '#4b5563' }}>
-            Enter your email to get started.
-          </Typography>
-          <TextField
-            autoFocus
-            fullWidth
-            label="Email"
-            type="email"
-            placeholder="you@example.com"
-            value={loginEmail}
-            onChange={(e) => setLoginEmail(e.target.value)}
-            onKeyDown={(e) => { if (e.key === 'Enter') handleLogin(); }}
-            sx={{ '& .MuiOutlinedInput-root': { borderRadius: 3 } }}
-          />
+          {!registerMode && (
+            <Tabs value={authTab} onChange={(_, v) => { setAuthTab(v); setLoginError(null); setOtpSent(false); }} sx={{ mb: 3, '& .MuiTab-root': { fontWeight: 700, textTransform: 'none' } }} centered>
+              <Tab label="Password" />
+              <Tab label="OTP" />
+            </Tabs>
+          )}
+
+          {registerMode ? (
+            <>
+              <TextField autoFocus fullWidth label="Email" type="email" placeholder="you@example.com" value={loginEmail}
+                onChange={(e) => setLoginEmail(e.target.value)} sx={{ mb: 2, '& .MuiOutlinedInput-root': { borderRadius: 3 } }} />
+              <TextField fullWidth label="Full Name" placeholder="Your name" value={registerName}
+                onChange={(e) => setRegisterName(e.target.value)} sx={{ mb: 2, '& .MuiOutlinedInput-root': { borderRadius: 3 } }} />
+              <TextField fullWidth label="Password" type="password" value={registerPassword}
+                onChange={(e) => setRegisterPassword(e.target.value)} sx={{ mb: 2, '& .MuiOutlinedInput-root': { borderRadius: 3 } }} />
+              <TextField fullWidth label="Confirm Password" type="password" value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)} sx={{ mb: 2, '& .MuiOutlinedInput-root': { borderRadius: 3 } }} />
+              <FormControl fullWidth sx={{ mb: 2 }}>
+                <InputLabel>Role</InputLabel>
+                <Select value={selectedRole} label="Role" onChange={(e) => setSelectedRole(e.target.value)} sx={{ borderRadius: 3 }}>
+                  <MenuItem value="FARMER">Farmer</MenuItem>
+                  <MenuItem value="BUYER">Buyer</MenuItem>
+                </Select>
+              </FormControl>
+            </>
+          ) : authTab === 0 ? (
+            <>
+              <TextField autoFocus fullWidth label="Email" type="email" placeholder="you@example.com" value={loginEmail}
+                onChange={(e) => setLoginEmail(e.target.value)} sx={{ mb: 2, '& .MuiOutlinedInput-root': { borderRadius: 3 } }} />
+              <TextField fullWidth label="Password" type="password" value={loginPassword}
+                onChange={(e) => setLoginPassword(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') handlePasswordLogin(); }}
+                sx={{ '& .MuiOutlinedInput-root': { borderRadius: 3 } }} />
+            </>
+          ) : (
+            <>
+              <TextField autoFocus fullWidth label="Phone Number" placeholder="+2547XXXXXXXX" value={phone}
+                onChange={(e) => setPhone(e.target.value)} sx={{ mb: 2, '& .MuiOutlinedInput-root': { borderRadius: 3 } }} />
+              {otpSent && (
+                <TextField fullWidth label="6-digit Code" value={otpCode}
+                  onChange={(e) => setOtpCode(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') handleVerifyOtp(); }}
+                  sx={{ mb: 2, '& .MuiOutlinedInput-root': { borderRadius: 3 } }} />
+              )}
+            </>
+          )}
+
           {loginError && (
-            <Typography sx={{ mt: 2, color: '#991b1b', fontWeight: 600, textAlign: 'center', fontSize: '0.85rem' }}>
+            <Typography sx={{ mt: 1, color: '#991b1b', fontWeight: 600, textAlign: 'center', fontSize: '0.85rem' }}>
               {loginError}
             </Typography>
           )}
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 3, flexDirection: 'column', gap: 1.5 }}>
-          <Button
-            fullWidth
-            variant="contained"
-            size="large"
-            onClick={handleLogin}
-            sx={{ bgcolor: '#064e3b', py: 1.5, borderRadius: 3, fontWeight: 800, '&:hover': { bgcolor: '#065f46' } }}
-          >
-            Sign In
-          </Button>
-          <Button
-            fullWidth
-            variant="outlined"
-            size="large"
-            onClick={demoLogin}
-            sx={{ color: '#059669', borderColor: '#059669', py: 1.5, borderRadius: 3, fontWeight: 800, '&:hover': { borderColor: '#047857', bgcolor: '#f0fdf4' } }}
-          >
+          {registerMode ? (
+            <>
+              <Button fullWidth variant="contained" size="large" disabled={loginLoading}
+                onClick={handleRegister} sx={{ bgcolor: '#064e3b', py: 1.5, borderRadius: 3, fontWeight: 800, '&:hover': { bgcolor: '#065f46' } }}>
+                {loginLoading ? <CircularProgress size={24} sx={{ color: 'white' }} /> : 'Register'}
+              </Button>
+              <Button fullWidth size="small" sx={{ textTransform: 'none', fontWeight: 600, color: '#059669' }}
+                onClick={() => { setRegisterMode(false); setLoginError(null); }}>
+                Already have an account? Sign In
+              </Button>
+            </>
+          ) : authTab === 0 ? (
+            <>
+              <Button fullWidth variant="contained" size="large" disabled={loginLoading}
+                onClick={handlePasswordLogin} sx={{ bgcolor: '#064e3b', py: 1.5, borderRadius: 3, fontWeight: 800, '&:hover': { bgcolor: '#065f46' } }}>
+                {loginLoading ? <CircularProgress size={24} sx={{ color: 'white' }} /> : 'Sign In'}
+              </Button>
+              <Button fullWidth size="small" sx={{ textTransform: 'none', fontWeight: 600, color: '#059669' }}
+                onClick={() => { setRegisterMode(true); setLoginError(null); }}>
+                No account? Create one
+              </Button>
+            </>
+          ) : (
+            <>
+              {!otpSent ? (
+                <Button fullWidth variant="contained" size="large" disabled={loginLoading}
+                  onClick={handleSendOtp} sx={{ bgcolor: '#064e3b', py: 1.5, borderRadius: 3, fontWeight: 800, '&:hover': { bgcolor: '#065f46' } }}>
+                  {loginLoading ? <CircularProgress size={24} sx={{ color: 'white' }} /> : 'Send Code'}
+                </Button>
+              ) : (
+                <Button fullWidth variant="contained" size="large" disabled={loginLoading}
+                  onClick={handleVerifyOtp} sx={{ bgcolor: '#064e3b', py: 1.5, borderRadius: 3, fontWeight: 800, '&:hover': { bgcolor: '#065f46' } }}>
+                  {loginLoading ? <CircularProgress size={24} sx={{ color: 'white' }} /> : 'Verify & Sign In'}
+                </Button>
+              )}
+            </>
+          )}
+
+          <Button fullWidth variant="outlined" size="large"
+            onClick={demoLogin} sx={{ color: '#059669', borderColor: '#059669', py: 1.5, borderRadius: 3, fontWeight: 800, '&:hover': { borderColor: '#047857', bgcolor: '#f0fdf4' } }}>
             Demo Mode (offline)
           </Button>
         </DialogActions>
@@ -800,7 +1045,7 @@ export function AppContent() {
       </Dialog>
 
         <Container sx={{ py: 6, flexGrow: 1 }}>
-          {loginError && (
+          {loginError && !loginOpen && (
             <Box sx={{ mb: 3, p: 2, bgcolor: '#fef2f2', borderRadius: 3, border: '1px solid #fecaca', textAlign: 'center' }}>
               <Typography sx={{ color: '#991b1b', fontWeight: 600, fontSize: '0.9rem' }}>{loginError}</Typography>
               <Button size="small" sx={{ mt: 1, color: '#059669', fontWeight: 700, textTransform: 'none' }} onClick={() => { clearAllAuth(); handleLogout(); }}>

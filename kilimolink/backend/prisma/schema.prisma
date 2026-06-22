@@ -21,12 +21,13 @@ enum OrderStatus {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  phone     String?
-  name      String
-  role      Role     @default(FARMER)
-  createdAt DateTime @default(now())
+  id           String   @id @default(cuid())
+  email        String   @unique
+  phone        String?
+  name         String
+  role         Role     @default(FARMER)
+  passwordHash String?
+  createdAt    DateTime @default(now())
   
   products  Product[]
   orders    Order[]
@@ -96,14 +97,15 @@ model ResilienceLog {
 
 // Keep these for existing auth/admin functionality
 model OtpChallenge {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   phone     String
   codeHash  String
   expiresAt DateTime
-  createdAt DateTime @default(now())
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
 
   userId    String?
-  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([phone, createdAt])
 }
