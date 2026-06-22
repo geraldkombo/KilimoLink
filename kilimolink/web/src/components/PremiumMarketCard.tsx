@@ -156,7 +156,7 @@ export const PremiumMarketCard = ({ product, delay = 0 }: PremiumMarketCardProps
             />
           </Stack>
 
-          <Stack direction="row" spacing={1}>
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
             <Button 
               fullWidth 
               variant="contained" 

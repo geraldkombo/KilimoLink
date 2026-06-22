@@ -210,10 +210,10 @@ export function ProductDetail() {
               />
             </Stack>
 
-            <Typography variant="h2" sx={{ fontWeight: 950, mb: 1, letterSpacing: '-0.05em', color: '#111827', lineHeight: 1.1 }}>
+            <Typography variant="h2" sx={{ fontWeight: 950, mb: 1, letterSpacing: '-0.05em', color: '#111827', lineHeight: 1.1, fontSize: { xs: '2rem', sm: '3.75rem' } }}>
               {product.title}
             </Typography>
-            <Typography variant="h3" sx={{ fontWeight: 900, color: '#064e3b', mb: 5, letterSpacing: '-0.02em' }}>
+            <Typography variant="h3" sx={{ fontWeight: 900, color: '#064e3b', mb: 5, letterSpacing: '-0.02em', fontSize: { xs: '1.5rem', sm: '3rem' } }}>
               KES {product.price}
             </Typography>
             

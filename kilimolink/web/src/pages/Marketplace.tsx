@@ -74,7 +74,7 @@ export function Marketplace() {
           <IconButton component={Link} to="/" sx={{ bgcolor: '#f0fdf4', color: '#064e3b', '&:hover': { bgcolor: '#dcfce7' } }}>
             <ArrowBackIcon />
           </IconButton>
-          <Typography variant="h3" sx={{ fontWeight: 900, letterSpacing: '-0.04em', color: '#064e3b' }}>
+          <Typography variant="h3" sx={{ fontWeight: 900, letterSpacing: '-0.04em', color: '#064e3b', fontSize: { xs: '1.75rem', sm: '3rem' } }}>
             Cut food miles. Feed your city.
           </Typography>
         </Stack>

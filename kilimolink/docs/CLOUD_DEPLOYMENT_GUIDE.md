@@ -14,7 +14,7 @@ Railway is recommended for the NestJS/Prisma backend.
    - `DATABASE_URL`: (Automatically set by Railway Postgres).
    - `JWT_SECRET`: Generate a strong random string.
    - `MOCK_PAYMENTS`: `false` (for real mode).
-   - `DEEPSEEK_API_KEY`: `sk-be19eb78057a4cc393f7c2f35ef560d3`.
+    - `DEEPSEEK_API_KEY`: `sk-your-deepseek-api-key-here`.
    - `PORT`: `3000`.
 4. **Build Command**: `pnpm install && cd backend && npx prisma generate && npx prisma migrate deploy && pnpm run build`.
 5. **Start Command**: `cd backend && pnpm run start:prod`.

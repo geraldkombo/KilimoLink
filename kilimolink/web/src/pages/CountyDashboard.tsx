@@ -50,7 +50,7 @@ export function CountyDashboard() {
           label="Prototype for Nairobi City County"
           sx={{ alignSelf: 'flex-start', bgcolor: '#ecfdf5', color: '#047857', fontWeight: 900 }}
         />
-        <Typography variant="h3" sx={{ fontWeight: 950, color: '#064e3b', letterSpacing: '-0.05em' }}>
+        <Typography variant="h3" sx={{ fontWeight: 950, color: '#064e3b', letterSpacing: '-0.05em', fontSize: { xs: '1.5rem', sm: '3rem' } }}>
           Nairobi Food System Climate Dashboard
         </Typography>
         <Typography variant="h6" sx={{ color: '#4b5563', maxWidth: 920, lineHeight: 1.5 }}>

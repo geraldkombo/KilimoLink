@@ -78,7 +78,7 @@ export function OrdersPage() {
           </Button>
         </Box>
       ) : (
-        <TableContainer component={motion.div} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} sx={{ borderRadius: 6, boxShadow: '0 10px 30px rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.05)', overflow: 'hidden' }}>
+        <TableContainer component={motion.div} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} sx={{ borderRadius: 6, boxShadow: '0 10px 30px rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.05)', overflowX: 'auto' }}>
           <Table>
                 <TableHead sx={{ bgcolor: '#f9fafb' }}>
                   <TableRow>
