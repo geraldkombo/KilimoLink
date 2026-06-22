@@ -423,34 +423,6 @@ export function AppContent() {
     };
   }, []);
 
-  const showDemoBanner = userEmail?.startsWith('demo@') && authenticated;
-
-  const demoLogin = () => {
-    saveToken('user', 'demo-token-123');
-    saveRole('FARMER');
-    localStorage.setItem('email', 'demo@farmers.co.ke');
-    localStorage.setItem('kilomolink_user_id', 'demo-user-123');
-    localStorage.setItem('kilomolink_user_name', 'Demo Farmer');
-    setAuthToken('demo-token-123');
-    setAuthenticated(true);
-    setUserEmail('demo@farmers.co.ke');
-    setUserId('demo-user-123');
-    setUserName('Demo Farmer');
-    setCurrentRole('FARMER');
-    setLoginOpen(false);
-    setLoginEmail('');
-    setLoginPassword('');
-    setPhone('');
-    setOtpCode('');
-    setOtpSent(false);
-    setRegisterMode(false);
-    setLoginError(null);
-    if (!isOnboardingDone()) {
-      setSelectedRole('FARMER');
-      setOnboardingOpen(true);
-    }
-  };
-
   const handlePasswordLogin = async () => {
     if (!loginEmail.trim() || !loginPassword.trim()) return;
     setLoginError(null);
@@ -484,7 +456,7 @@ export function AppContent() {
       const status = err?.response?.status;
       if (status === 401) setLoginError('Wrong password');
       else if (status === 404) setLoginError('User not found. Please register first.');
-      else setLoginError('Server error. Use Demo Mode below.');
+      else setLoginError('Server error. Please try again or register.');
     } finally {
       setLoginLoading(false);
     }
@@ -627,7 +599,7 @@ export function AppContent() {
         setOnboardingOpen(true);
       }
     } catch {
-      setLoginError('Server is waking up. Use Demo Mode below.');
+      setLoginError('Server is waking up. Please wait a moment and try again.');
     }
   };
 
@@ -659,11 +631,6 @@ export function AppContent() {
         <Alert severity="warning" sx={{ borderRadius: 0, justifyContent: 'center', '& .MuiAlert-message': { fontWeight: 800 } }}>
           You're offline - use the preloaded demo pages or backup recording.
         </Alert>
-      )}
-      {showDemoBanner && (
-        <Box sx={{ bgcolor: '#2e7d32', color: 'white', textAlign: 'center', py: 0.5, fontSize: 13, fontWeight: 700 }}>
-          Demo Mode - one tap to explore
-        </Box>
       )}
       <AppBar position="sticky" elevation={0} sx={{ bgcolor: 'rgba(255,255,255,0.8)', backdropFilter: 'blur(10px)', borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
         <Toolbar sx={{ height: 80, justifyContent: 'space-between' }}>
@@ -916,10 +883,7 @@ export function AppContent() {
             </>
           )}
 
-          <Button fullWidth variant="outlined" size="large"
-            onClick={demoLogin} sx={{ color: '#059669', borderColor: '#059669', py: 1.5, borderRadius: 3, fontWeight: 800, '&:hover': { borderColor: '#047857', bgcolor: '#f0fdf4' } }}>
-            Demo Mode (offline)
-          </Button>
+
         </DialogActions>
       </Dialog>
 
