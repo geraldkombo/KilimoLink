@@ -5,11 +5,11 @@
 
 ---
 
-## 0:00–0:35 — The Hook: Grace
+## 0:00–0:35 — The Hook
 
-> "Meet the person responsible for keeping Nairobi fed during climate shocks. She works at Nairobi City County, responsible for food system resilience. Every week she has to answer urgent questions: where is Nairobi's food coming from, which neighborhoods are facing price spikes, and will flooding outside the city disrupt supply next week? Today, she has no real-time answer. She is flying blind."
+> "Today, Nairobi's food resilience officer has no real-time view of where food is coming from, which neighborhoods face price spikes, or where climate disruption will hit next."
 
-**[Slide: Grace at county dashboard placeholder + Nairobi food routes map]**
+**[Slide: County dashboard placeholder + Nairobi food routes map]**
 
 ---
 
@@ -27,13 +27,13 @@
 
 **[Live demo: open marketplace → product listing → sell flow or product detail]**
 
-> "On screen, this looks like a farmer-to-consumer marketplace. But for Grace, every listing becomes a sensor for Nairobi's food system."
+> "On screen, this looks like a farmer-to-consumer marketplace. But for Nairobi's food resilience officer, every listing becomes a sensor for the city's food system."
 
 ---
 
 ## 1:45–2:25 — County Dashboard + AI
 
-> "Now Grace sees the real product: a county dashboard. She sees food flows into Nairobi, price spikes by neighborhood, informal settlements at risk, and food deserts with too few active sellers nearby. Three AI engines power it: a supply disruption predictor using weather and transaction patterns, a price anomaly detector for sudden inflation, and a carbon calculator estimating emissions saved per order through shorter supply chains and less waste."
+> "Now the county sees the real product: a dashboard showing food flows into Nairobi, price spikes by neighborhood, informal settlements at risk, and food deserts with too few active sellers nearby. Three AI engines power it: a supply disruption predictor using weather and transaction patterns, a price anomaly detector for sudden inflation, and a carbon calculator estimating emissions saved per order through shorter supply chains and less waste."
 
 **[Live demo: open `/county-dashboard` with map, heatmap, alert, CO₂ tile]**
 
@@ -51,7 +51,7 @@
 
 > "By August 31, we will ship the county dashboard, AI alerts, and informal settlement pilot. We want to pilot with Nairobi City County. KilimoLink Direct helps Nairobi see where food is, where it is going, and where climate risk will hit next — before families feel the shock."
 
-**[Slide: "Nairobi Food System Climate Intelligence" + QR code]**
+**[Slide: "Give Nairobi real-time food system intelligence." + QR code]**
 
 ---
 

@@ -35,7 +35,7 @@ Timing starts when Gerald says: **"This looks like a marketplace, but it is actu
 | :20 | "The map captures supply location while protecting privacy." | Click Kibera/Kilimani area on map | Marker or privacy radius visible |
 | :24 | "Privacy mode hides the exact farm location." | Toggle privacy mode if not already enabled | 500m radius appears |
 | :27 | "One click lists it." | Click **List My Produce Now** | Loading state / redirect starts |
-| :30 | "That transaction becomes climate intelligence for Grace." | Open `/county-dashboard` or switch to preloaded dashboard tab | County dashboard visual |
+| :30 | "That transaction becomes climate intelligence for Nairobi." | Open `/county-dashboard` or switch to preloaded dashboard tab | County dashboard visual |
 
 ---
 
@@ -61,4 +61,4 @@ Timing starts when Gerald says: **"This looks like a marketplace, but it is actu
 
 ## Final transition line
 
-> "The marketplace is working today. By August 31, this data powers Grace's county dashboard: food flows, price alerts, climate disruption warnings, and informal settlement risk." 
+> "The marketplace is working today. By August 31, this data powers Nairobi's county dashboard: food flows, price alerts, climate disruption warnings, and informal settlement risk." 

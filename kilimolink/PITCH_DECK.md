@@ -15,7 +15,7 @@ The marketplace is the data engine. The county dashboard is the product.
 - She must plan for food access, climate disruption, waste, and price shocks.
 - Today she has no real-time data on where food comes from, where it goes, or where climate will break the chain.
 
-**Visual:** Grace + Nairobi map with missing data gaps.
+**Visual:** Food resilience officer + Nairobi map with missing data gaps.
 
 ---
 

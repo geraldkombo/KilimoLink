@@ -77,4 +77,4 @@ Check Render logs for:
 
 ## Demo rule
 
-Never wait silently. If something takes more than two seconds, keep speaking about Grace, climate risk, and real-time food intelligence.
+Never wait silently. If something takes more than two seconds, keep speaking about climate risk and real-time food intelligence.

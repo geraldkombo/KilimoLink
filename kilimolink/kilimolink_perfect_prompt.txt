@@ -153,9 +153,9 @@ The orientation emphasized: "bring your personal lived experience... your unique
 ### Part A: The Perfect Pitch Script (3 minutes, word-for-word)
 
 Structure following JP's advice (FOCUS + DIFFERENTIATE):
-- **0:00-0:40 — The Hook with a Person**: "Meet the person responsible for keeping Nairobi fed during climate shocks. She's the food system resilience officer at Nairobi City County. Every day she asks: where is our food coming from? Is it safe? Will climate disrupt it next week? She has no answer."
-- **0:40-1:15 — The Problem with Evidence**: "Nairobi imports 70% of its food. 40% is lost before it reaches a plate. Food waste in Dandora generates methane. When floods hit, Grace has no data on which supply chains are broken. She's flying blind." (cite Nairobi Climate Action Plan, FAO with specific URLs)
-- **1:15-2:00 — The Solution with LIVE Demo**: "We built KilimoLink. [Open app] This is a marketplace connecting farmers directly to consumers. [Show listing, show order] But the real product is this: [Switch to county dashboard] real-time food flow intelligence for Grace. Every transaction generates data on origin, price, route. Here's the supply disruption alert for next week's rain in Kiambu."
+- **0:00-0:40 — The Hook**: "Today, Nairobi's food resilience officer has no real-time view of where food is coming from, which neighborhoods face price spikes, or where climate disruption will hit next."
+- **0:40-1:15 — The Problem with Evidence**: "Nairobi imports 70% of its food. 40% is lost before it reaches a plate. Food waste in Dandora generates methane. When floods hit, the county has no data on which supply chains are broken. The officer is flying blind." (cite Nairobi Climate Action Plan, FAO with specific URLs)
+- **1:15-2:00 — The Solution with LIVE Demo**: "We built KilimoLink. [Open app] This is a marketplace connecting farmers directly to consumers. [Show listing, show order] But the real product is this: [Switch to county dashboard] real-time food flow intelligence for the county. Every transaction generates data on origin, price, route. Here's the supply disruption alert for next week's rain in Kiambu."
 - **2:00-2:30 — The AI & Climate Impact**: "Three AI engines: supply prediction uses weather data to forecast shortages; price anomaly detection flags food inflation in informal settlements before it hurts families; carbon calculator shows 2.3kg CO2e saved per order versus the supermarket chain." (show live calculation)
 - **2:30-2:50 — The Evidence**: "Nairobi Climate Action Plan targets 30% food system emission reduction. KilimoLink delivers the data to measure it. KNBS confirms 50,000+ smallholder farmers within 100km of Nairobi. We've already built the platform."
 - **2:50-3:00 — The Ask**: "We want to pilot with Nairobi County. KilimoLink Direct helps Nairobi see where food is, where it is going, and where climate risk will hit next — before families feel the shock. And take this to the Cambridge finale."
@@ -165,7 +165,7 @@ Structure following JP's advice (FOCUS + DIFFERENTIATE):
 You have 3 minutes. You MUST show the WORKING app (JP said viability = prototype helps):
 - Screen 1: KilimoLink marketplace — browse products, filter by neighborhood, show a farmer's listing with phone number (5 seconds — "this is the data engine")
 - Screen 2: Click into a product — show the carbon badge: "2.3kg CO2e saved" (5 seconds — "every transaction measures climate impact")
-- Screen 3: The COUNTY DASHBOARD — map with food flow lines, price heatmap, disruption alerts (20 seconds — "this is what Grace sees")
+- Screen 3: The COUNTY DASHBOARD — map with food flow lines, price heatmap, disruption alerts (20 seconds — "this is what the county sees")
 - Screen 4: AI alert detail: "Supply disruption predicted: Kiambu corridor — heavy rain Jan 15-17 — expected 30% drop in tomato supply" (10 seconds — "AI predicting climate impact")
 - The remaining 2:20 is YOU speaking, not the screen
 
@@ -237,6 +237,6 @@ Already built: full marketplace, auth, orders, admin, AI module, Oracle, Impact 
 - The live demo must use the ACTUAL built app, not wireframes
 - No paid anything except Helius (use only if ZK compression genuinely adds carbon credit value)
 - The informal settlements bonus track is the PRIMARY lever for extra points — maximize it
-- The pitch must pass the "focus test": ONE user (Grace), ONE problem (no food system data), ONE solution (KilimoLink analytics)
+- The pitch must pass the "focus test": ONE user (county food resilience officer), ONE problem (no food system data), ONE solution (KilimoLink analytics)
 - The pitch must pass the "differentiation test": this is NOT what AI would generate — it comes from living in Nairobi
 - Previous winners: DUCT Explorer (one city, one heat problem, one user). Polisense (one tool for energy planners). KilimoLink follows this pattern: one city (Nairobi), one problem (food system data gap), one user (county resilience officer).

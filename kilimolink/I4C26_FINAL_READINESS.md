@@ -7,7 +7,7 @@ KilimoLink is not a generic farm-to-table marketplace.
 **KilimoLink is Nairobi's AI food system climate intelligence platform.** The marketplace is the data engine. The county dashboard is the product.
 
 - **One city:** Nairobi.
-- **One user:** Grace, Nairobi City County food system resilience officer.
+- **One user:** Nairobi City County food system resilience officer.
 - **One problem:** no real-time visibility into food flows, price shocks, waste, emissions, and climate disruption.
 - **One solution:** a working marketplace that generates transaction data for a county climate dashboard.
 
@@ -87,7 +87,7 @@ Use safer phrasing if not verified:
 3. Open sell page: "A farmer can create a new data point in seconds."
 4. Select Sukuma Wiki and generate AI description.
 5. Show map + privacy radius.
-6. Open `/county-dashboard`: "This is what Grace sees."
+6. Open `/county-dashboard`: "This is what the county dashboard shows."
 7. Point to AI alert: "Climate risk becomes an early warning, not a surprise."
 
 ---
@@ -98,7 +98,7 @@ Use safer phrasing if not verified:
 - **If product creation fails:** show existing listing.
 - **If map fails:** show dashboard and say GPS/radius is captured even if venue blocks map tiles.
 - **If internet fails:** play screen recording and narrate live.
-- **If all tech fails:** use PDF screenshots and keep the Grace story.
+- **If all tech fails:** use PDF screenshots and keep the climate intelligence story.
 
 ---
 

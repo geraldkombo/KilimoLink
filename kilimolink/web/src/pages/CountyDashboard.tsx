@@ -27,7 +27,7 @@ export function CountyDashboard() {
           sx={{ alignSelf: 'flex-start', bgcolor: '#ecfdf5', color: '#047857', fontWeight: 900 }}
         />
         <Typography variant="h3" sx={{ fontWeight: 950, color: '#064e3b', letterSpacing: '-0.05em' }}>
-          Grace's Food System Climate Dashboard
+          Nairobi Food System Climate Dashboard
         </Typography>
         <Typography variant="h6" sx={{ color: '#4b5563', maxWidth: 920, lineHeight: 1.5 }}>
           Marketplace transactions become live intelligence: food flows, neighborhood price shocks, supply disruption alerts, informal settlement risk, and climate impact.

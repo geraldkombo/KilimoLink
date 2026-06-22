@@ -86,4 +86,4 @@ Take these 5 screenshots and embed in slide deck:
 
 ## Final Word
 
-> If EVERYTHING fails — no internet, no laptop, no projector — gather the judges around one phone showing the app. The team should narrate one story: Grace cannot see Nairobi's food system today; KilimoLink gives her the dashboard.
+> If EVERYTHING fails — no internet, no laptop, no projector — gather the judges around one phone showing the app. The team should narrate one story: Nairobi's food resilience officer cannot see the city's food system today; KilimoLink gives her real-time intelligence.

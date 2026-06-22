@@ -50,7 +50,7 @@ To give Nairobi City County real-time food system visibility before climate shoc
 | Feature | Description |
 |---------|-------------|
 | **Marketplace Data Engine** | Farmer listings and buyer orders generate food-flow signals for Nairobi |
-| **County Dashboard Prototype** | `/county-dashboard` shows Grace's food-flow map, price risk, disruption alert, and settlement access indicators |
+| **County Dashboard Prototype** | `/county-dashboard` shows food-flow map, price risk, disruption alert, and settlement access indicators |
 | **AI Price Suggestion** | Helps farmers list quickly while creating comparable price data |
 | **Price Truth Gap** | Shows the difference between reference prices and broker/middleman quotes |
 | **Location + Privacy Mode** | Captures supply location while protecting exact farmer coordinates |
