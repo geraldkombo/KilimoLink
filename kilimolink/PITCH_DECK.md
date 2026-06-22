@@ -7,11 +7,11 @@ The marketplace is the data engine. The county dashboard is the product.
 
 ---
 
-## Slide 1 — Meet Grace: The One User
+## Slide 1 — The One User: Keeping Nairobi Fed During Climate Shocks
 
 **Judging criteria:** Presentation, Thematic relevance
 
-- Grace is Nairobi City County's food system resilience officer.
+- Our user is Nairobi City County's food system resilience officer.
 - She must plan for food access, climate disruption, waste, and price shocks.
 - Today she has no real-time data on where food comes from, where it goes, or where climate will break the chain.
 
@@ -117,7 +117,7 @@ The marketplace is the data engine. The county dashboard is the product.
 - Access to county GIS/market datasets.
 - Support to onboard informal settlement buyers and peri-urban farmers.
 
-**Closing line:** Give Grace the dashboard, and Nairobi can see its food system before climate breaks it.
+**Closing line:** KilimoLink Direct helps Nairobi see where food is, where it is going, and where climate risk will hit next — before families feel the shock.
 
 ---
 

@@ -290,7 +290,7 @@ function HomePage() {
           }}
         >
           <Typography variant="h2" sx={{ fontWeight: 900, mb: 2, fontSize: { xs: '2.5rem', md: '3.5rem' }, letterSpacing: '-0.04em' }}>
-            Give Grace the dashboard
+            Help Nairobi see its food system before climate breaks it
           </Typography>
           <Typography variant="h5" sx={{ opacity: 0.9, fontWeight: 400, mb: 2, maxWidth: '680px', lineHeight: 1.5 }}>
             Farmers list produce. Buyers order directly. Nairobi finally sees where food is, where it is going, and when climate will break the chain.

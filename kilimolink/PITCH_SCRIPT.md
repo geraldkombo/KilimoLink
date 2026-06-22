@@ -7,7 +7,7 @@
 
 ## 0:00–0:35 — The Hook: Grace
 
-> "Meet Grace. Grace works at Nairobi City County, responsible for food system resilience. Every week she has to answer urgent questions: where is Nairobi's food coming from, which neighborhoods are facing price spikes, and will flooding outside the city disrupt supply next week? Today, Grace has no real-time answer. She is flying blind."
+> "Meet the person responsible for keeping Nairobi fed during climate shocks. She works at Nairobi City County, responsible for food system resilience. Every week she has to answer urgent questions: where is Nairobi's food coming from, which neighborhoods are facing price spikes, and will flooding outside the city disrupt supply next week? Today, she has no real-time answer. She is flying blind."
 
 **[Slide: Grace at county dashboard placeholder + Nairobi food routes map]**
 
@@ -49,9 +49,9 @@
 
 ## 2:45–3:00 — The Ask
 
-> "By August 31, we will ship the county dashboard, AI alerts, and informal settlement pilot. We want to pilot with Nairobi City County. Give Grace the dashboard, and Nairobi can finally see its food system before climate breaks it."
+> "By August 31, we will ship the county dashboard, AI alerts, and informal settlement pilot. We want to pilot with Nairobi City County. KilimoLink Direct helps Nairobi see where food is, where it is going, and where climate risk will hit next — before families feel the shock."
 
-**[Slide: "Give Grace the dashboard" + QR code]**
+**[Slide: "Nairobi Food System Climate Intelligence" + QR code]**
 
 ---
 

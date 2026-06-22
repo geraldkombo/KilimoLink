@@ -113,4 +113,4 @@ Before final pitch submission, verify and cite every number used on stage:
 
 ## Winning close
 
-Give Grace the dashboard, and Nairobi can finally see its food system before climate breaks it.
+KilimoLink Direct helps Nairobi see where food is, where it is going, and where climate risk will hit next — before families feel the shock.

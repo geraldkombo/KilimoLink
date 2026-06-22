@@ -37,7 +37,7 @@ Impact logic is strong, but every numeric claim must be citation-backed before t
 
 The story now follows one character, one problem, one solution, and a 30-second demo path.
 
-**Stage sentence:** Give Grace the dashboard, and Nairobi can finally see its food system before climate breaks it.
+**Stage sentence:** KilimoLink Direct helps Nairobi see where food is, where it is going, and where climate risk will hit next — before families feel the shock.
 
 ---
 

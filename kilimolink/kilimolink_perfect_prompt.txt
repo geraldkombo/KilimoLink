@@ -153,12 +153,12 @@ The orientation emphasized: "bring your personal lived experience... your unique
 ### Part A: The Perfect Pitch Script (3 minutes, word-for-word)
 
 Structure following JP's advice (FOCUS + DIFFERENTIATE):
-- **0:00-0:40 — The Hook with a Person**: "Meet Grace. She's the food system resilience officer at Nairobi City County. Every day she asks: where is our food coming from? Is it safe? Will climate disrupt it next week? She has no answer."
+- **0:00-0:40 — The Hook with a Person**: "Meet the person responsible for keeping Nairobi fed during climate shocks. She's the food system resilience officer at Nairobi City County. Every day she asks: where is our food coming from? Is it safe? Will climate disrupt it next week? She has no answer."
 - **0:40-1:15 — The Problem with Evidence**: "Nairobi imports 70% of its food. 40% is lost before it reaches a plate. Food waste in Dandora generates methane. When floods hit, Grace has no data on which supply chains are broken. She's flying blind." (cite Nairobi Climate Action Plan, FAO with specific URLs)
 - **1:15-2:00 — The Solution with LIVE Demo**: "We built KilimoLink. [Open app] This is a marketplace connecting farmers directly to consumers. [Show listing, show order] But the real product is this: [Switch to county dashboard] real-time food flow intelligence for Grace. Every transaction generates data on origin, price, route. Here's the supply disruption alert for next week's rain in Kiambu."
 - **2:00-2:30 — The AI & Climate Impact**: "Three AI engines: supply prediction uses weather data to forecast shortages; price anomaly detection flags food inflation in informal settlements before it hurts families; carbon calculator shows 2.3kg CO2e saved per order versus the supermarket chain." (show live calculation)
 - **2:30-2:50 — The Evidence**: "Nairobi Climate Action Plan targets 30% food system emission reduction. KilimoLink delivers the data to measure it. KNBS confirms 50,000+ smallholder farmers within 100km of Nairobi. We've already built the platform."
-- **2:50-3:00 — The Ask**: "We want to pilot with Nairobi County. Give Grace the dashboard. And take this to the Cambridge finale."
+- **2:50-3:00 — The Ask**: "We want to pilot with Nairobi County. KilimoLink Direct helps Nairobi see where food is, where it is going, and where climate risk will hit next — before families feel the shock. And take this to the Cambridge finale."
 
 ### Part B: Live Demo Strategy (What to Show on Screen)
 
