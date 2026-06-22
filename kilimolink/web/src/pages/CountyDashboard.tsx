@@ -51,10 +51,10 @@ export function CountyDashboard() {
           sx={{ alignSelf: 'flex-start', bgcolor: '#ecfdf5', color: '#047857', fontWeight: 900 }}
         />
         <Typography variant="h3" sx={{ fontWeight: 950, color: '#064e3b', letterSpacing: '-0.05em', fontSize: { xs: '1.5rem', sm: '3rem' } }}>
-          Urban Food-System Resilience Dashboard
+          Nairobi Food System Intelligence - Climate & Transport Dashboard
         </Typography>
         <Typography variant="h6" sx={{ color: '#4b5563', maxWidth: 920, lineHeight: 1.5 }}>
-          Real-time indicators for transport continuity and supply stability across Nairobi.
+          Live food flows, transport corridors, price stability, and supply disruption alerts across Nairobi's food system.
         </Typography>
       </Stack>
 
@@ -62,7 +62,7 @@ export function CountyDashboard() {
         <Alert severity="warning" sx={{ mb: 4, borderRadius: 3, fontWeight: 700 }}
           action={<Button size="small" variant="outlined" sx={{ fontWeight: 800 }} onClick={fetchImpact}>Retry</Button>}
         >
-          Live resilience data is temporarily unavailable. Displaying representative figures for demonstration.
+          Could not load live data. Showing demo figures.
         </Alert>
       )}
 
