@@ -294,10 +294,10 @@ function HomePage() {
           }}
         >
           <Typography variant="h2" sx={{ fontWeight: 900, mb: 2, fontSize: { xs: '2.5rem', md: '3.5rem' }, letterSpacing: '-0.04em' }}>
-            Move food faster. Waste less. Earn more.
+            Climate-Smart Food Transport Intelligence for Nairobi
           </Typography>
           <Typography variant="h5" sx={{ opacity: 0.9, fontWeight: 400, mb: 2, maxWidth: '680px', lineHeight: 1.5 }}>
-            Farmers list produce. Buyers order directly. Real-time food intelligence for Nairobi.
+            Coordinating resilient supply routes between rural producers and urban markets.
           </Typography>
           <Typography variant="body2" sx={{ opacity: 0.7, fontWeight: 500, mb: 6, maxWidth: '600px', lineHeight: 1.5 }}>
             Strengthening the resilience of city food systems through data-driven transport coordination.

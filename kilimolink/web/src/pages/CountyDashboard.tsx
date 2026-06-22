@@ -62,7 +62,7 @@ export function CountyDashboard() {
         <Alert severity="warning" sx={{ mb: 4, borderRadius: 3, fontWeight: 700 }}
           action={<Button size="small" variant="outlined" sx={{ fontWeight: 800 }} onClick={fetchImpact}>Retry</Button>}
         >
-          Could not load live data. Showing demo figures.
+          Live resilience data is temporarily unavailable. Displaying representative figures for demonstration.
         </Alert>
       )}
 
@@ -86,10 +86,10 @@ export function CountyDashboard() {
       <>
       <Grid container spacing={3} sx={{ mb: 3 }}>
         {[
-          { icon: <WarningAmberIcon />, label: 'Supply Disruption Alerts', value: '3', tone: '#dc2626' },
-          { icon: <ShowChartIcon />, label: 'Supply Routes Active', value: '8', tone: '#f59e0b' },
-          { icon: <Co2Icon />, label: 'CO₂e Saved This Month', value: 'Demo', tone: '#059669' },
-          { icon: <InsightsIcon />, label: 'Priority Settlements Monitored', value: '3', tone: '#2563eb' },
+          { icon: <WarningAmberIcon />, label: 'Supply Disruption Risk', value: '3', tone: '#dc2626' },
+          { icon: <ShowChartIcon />, label: 'Supply Routes Active', value: '32%', tone: '#f59e0b' },
+          { icon: <Co2Icon />, label: 'Tonnes Coordinated', value: 'Demo', tone: '#059669' },
+          { icon: <InsightsIcon />, label: 'Communities Served', value: '3', tone: '#2563eb' },
         ].map((item) => (
           <Grid item xs={12} sm={6} md={3} key={item.label}>
             <Card elevation={0} sx={{ borderRadius: 4, border: '1px solid #e5e7eb', height: '100%' }}>
