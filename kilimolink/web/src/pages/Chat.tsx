@@ -124,7 +124,7 @@ export function Chat() {
           <Alert severity="error" action={<Button onClick={loadConversations}>Retry</Button>}>{error}</Alert>
         </Box>
       ) : conversations.length === 0 ? (
-        <Typography sx={{ p: 2 }} color="text.secondary">No conversations yet.</Typography>
+        <Typography sx={{ p: 2 }} color="text.secondary">No active coordination threads.</Typography>
       ) : (
         conversations.map((c) => (
           <Box
@@ -169,7 +169,7 @@ export function Chat() {
             <Skeleton variant="rounded" height={52} width="55%" />
           </Stack>
         ) : messages.length === 0 ? (
-          <Typography color="text.secondary">Send a message to start chatting.</Typography>
+          <Typography color="text.secondary">No messages yet. Begin coordinating supply logistics.</Typography>
         ) : (
           <Stack spacing={1.5}>
             {messages.map((msg) => {
@@ -189,7 +189,7 @@ export function Chat() {
       </Box>
       <Divider />
       <Stack direction="row" spacing={1} sx={{ p: 2 }}>
-        <TextField fullWidth multiline maxRows={3} placeholder="Type a message..." value={text}
+        <TextField fullWidth multiline maxRows={3} placeholder="Write a message..." value={text}
           onChange={(e) => setText(e.target.value)}
           onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }} />
         <IconButton color="primary" disabled={!text.trim()} onClick={sendMessage}><SendIcon /></IconButton>
@@ -203,7 +203,7 @@ export function Chat() {
         <Stack direction="row" spacing={2}>
           {conversationList}
           {activeUserId ? messageThread : (
-            <Paper sx={{ flex: 1, p: 4 }}><Typography color="text.secondary">Select a conversation.</Typography></Paper>
+            <Paper sx={{ flex: 1, p: 4 }}><Typography color="text.secondary">Select a coordination thread.</Typography></Paper>
           )}
         </Stack>
       ) : activeUserId ? messageThread : conversationList}

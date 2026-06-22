@@ -230,12 +230,12 @@ export function ProductDetail() {
                   <>
                     <Rating value={avgRating} readOnly size="large" precision={0.5} emptyIcon={<StarIcon fontSize="inherit" sx={{ opacity: 0.3 }} />} sx={{ color: '#f59e0b' }} />
                     <Typography variant="h6" sx={{ fontWeight: 900, color: '#111827' }}>{avgRating.toFixed(1)}</Typography>
-                    <Typography variant="body2" sx={{ color: '#6b7280', fontWeight: 600 }}>({reviewCount} reviews)</Typography>
+                    <Typography variant="body2" sx={{ color: '#6b7280', fontWeight: 600 }}>{reviewCount} assessments</Typography>
                   </>
                 ) : reviewsLoading ? (
                   <Skeleton variant="rounded" width={200} height={32} />
                 ) : (
-                  <Typography variant="body1" sx={{ fontWeight: 700, color: '#6b7280' }}>No reviews yet</Typography>
+                  <Typography variant="body1" sx={{ fontWeight: 700, color: '#6b7280' }}>No supplier assessments recorded yet.</Typography>
                 )}
               </Stack>
 
@@ -267,13 +267,13 @@ export function ProductDetail() {
               {userCanReview && !reviewFormOpen && (
                 <Button variant="outlined" size="small" onClick={() => setReviewFormOpen(true)}
                   sx={{ mt: 1, borderRadius: 3, fontWeight: 700, color: '#064e3b', borderColor: '#064e3b' }}>
-                  Write a Review
+                  Submit Assessment
                 </Button>
               )}
 
               {reviewFormOpen && (
                 <Paper elevation={0} sx={{ p: 3, bgcolor: '#f0fdf4', borderRadius: 4, border: '1px solid #dcfce7', mt: 2 }}>
-                  <Typography variant="subtitle2" sx={{ fontWeight: 800, mb: 2, color: '#064e3b' }}>Write your review</Typography>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 800, mb: 2, color: '#064e3b' }}>Supplier Assessment</Typography>
                   <Rating value={reviewRating} onChange={(_, v) => setReviewRating(v)} size="large" sx={{ mb: 2, color: '#f59e0b' }} />
                   <TextField fullWidth multiline rows={2} placeholder="Share your experience with this product..." value={reviewText}
                     onChange={(e) => setReviewText(e.target.value)} sx={{ mb: 2, '& .MuiOutlinedInput-root': { borderRadius: 3 } }} />
@@ -281,7 +281,7 @@ export function ProductDetail() {
                   <Stack direction="row" spacing={1}>
                     <Button variant="contained" size="small" disabled={reviewSubmitting || !reviewRating}
                       onClick={handleSubmitReview} sx={{ bgcolor: '#064e3b', borderRadius: 3, fontWeight: 800, '&:hover': { bgcolor: '#065f46' } }}>
-                      {reviewSubmitting ? <CircularProgress size={18} color="inherit" /> : 'Submit Review'}
+                      {reviewSubmitting ? <CircularProgress size={18} color="inherit" /> : 'Submit Assessment'}
                     </Button>
                     <Button variant="text" size="small" onClick={() => { setReviewFormOpen(false); setReviewError(null); }}
                       sx={{ color: '#6b7280', fontWeight: 700 }}>

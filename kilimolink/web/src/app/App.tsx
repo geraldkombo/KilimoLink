@@ -294,13 +294,13 @@ function HomePage() {
           }}
         >
           <Typography variant="h2" sx={{ fontWeight: 900, mb: 2, fontSize: { xs: '2.5rem', md: '3.5rem' }, letterSpacing: '-0.04em' }}>
-            Move food faster. Waste less. Earn more.
+            Climate-Smart Food Transport Intelligence for Nairobi
           </Typography>
           <Typography variant="h5" sx={{ opacity: 0.9, fontWeight: 400, mb: 2, maxWidth: '680px', lineHeight: 1.5 }}>
-            Farmers list produce. Buyers order directly. Nairobi finally sees where food is, where it is going, and when climate will break the chain.
+            Coordinating resilient supply routes between rural producers and urban markets.
           </Typography>
           <Typography variant="body2" sx={{ opacity: 0.7, fontWeight: 500, mb: 6, maxWidth: '600px', lineHeight: 1.5 }}>
-            kilimolink.onrender.com - live demo for I4C26 Nairobi
+            Strengthening the resilience of city food systems through data-driven transport coordination.
           </Typography>
           <Button 
             variant="contained" 
@@ -1085,7 +1085,7 @@ export function AppContent() {
             <Grid item xs={12} md={4}>
               <Typography variant="h6" sx={{ fontWeight: 900, color: '#064e3b', mb: 2 }}>KILIMOLINK DIRECT</Typography>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                KilimoLink Direct connects you directly with local farmers. Fresh produce, fair prices, no middlemen.
+                KilimoLink Direct - an urban food-system resilience platform. I4C26.
               </Typography>
             </Grid>
             <Grid item xs={6} md={2}>
@@ -1110,7 +1110,7 @@ export function AppContent() {
             kilimolink.onrender.com - I4C26
           </Typography>
           <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 0.5 }}>
-            &copy; 2026 KilimoLink Direct. Fresh from the farm, straight to your table.
+            &copy; 2026 KilimoLink Direct - strengthening urban food-system resilience through climate-smart transport coordination.
           </Typography>
         </Container>
       </Box>

@@ -132,7 +132,7 @@ export const PremiumMarketCard = ({ product, delay = 0 }: PremiumMarketCardProps
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mb: 1 }}>
               <Rating value={product.avgRating} readOnly size="small" precision={0.5} emptyIcon={<StarIcon fontSize="inherit" sx={{ opacity: 0.3 }} />} />
               <Typography variant="caption" sx={{ fontWeight: 700, color: '#6b7280' }}>
-                ({product.reviewCount ?? 0})
+                {product.avgRating} ({product.reviewCount ?? 0} assessments)
               </Typography>
             </Box>
           )}
@@ -174,7 +174,7 @@ export const PremiumMarketCard = ({ product, delay = 0 }: PremiumMarketCardProps
                 '&:hover': { bgcolor: '#065f46', boxShadow: '0 4px 12px rgba(6, 78, 59, 0.2)' }
               }}
             >
-              {ordering ? 'Ordering...' : 'Add to Cart'}
+              {ordering ? 'Ordering...' : 'Add to Order'}
             </Button>
             <Button 
               fullWidth 

@@ -75,7 +75,7 @@ export function Marketplace() {
             <ArrowBackIcon />
           </IconButton>
           <Typography variant="h3" sx={{ fontWeight: 900, letterSpacing: '-0.04em', color: '#064e3b', fontSize: { xs: '1.75rem', sm: '3rem' } }}>
-            Cut food miles. Feed your city.
+            Food Supply Network
           </Typography>
         </Stack>
 
@@ -232,7 +232,7 @@ export function Marketplace() {
         <Box sx={{ textAlign: 'center', py: 15, bgcolor: '#f9fafb', borderRadius: 8, border: '2px dashed #e5e7eb' }}>
           <Typography variant="h4" sx={{ fontWeight: 900, mb: 2, color: '#064e3b', letterSpacing: '-0.02em' }}>No produce found</Typography>
           <Typography variant="h6" color="text.secondary" sx={{ mb: 5, fontWeight: 500 }}>
-            {filters.search ? `We couldn't find anything matching "${filters.search}"` : 'There are no listings in your area yet. Be the first!'}
+            {filters.search ? `No produce matches "${filters.search}"` : 'No produce matches the current supply criteria. List your produce to get started.'}
           </Typography>
           <Button variant="contained" component={Link} to="/sell" sx={{ bgcolor: '#064e3b', px: 6, py: 2, borderRadius: 4, fontWeight: 900, fontSize: '1.1rem' }}>
             List Your Produce
