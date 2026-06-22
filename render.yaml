@@ -4,7 +4,7 @@ services:
     runtime: node
     rootDir: kilimolink/backend
     plan: free
-    buildCommand: npm ci && npx prisma generate && npm run build
+    buildCommand: npm ci && npx prisma generate && npx prisma db push && npm run build
     startCommand: npm run start
     healthCheckPath: /api/v1/health
     autoDeploy: true
@@ -16,6 +16,15 @@ services:
       - key: MOCK_PAYMENTS
         value: "true"
       - key: JWT_SECRET
-        sync: false
+        generateValue: true
       - key: DATABASE_URL
-        sync: false
+        fromDatabase:
+          name: kilimolink-db
+          property: connectionString
+
+databases:
+  - name: kilimolink-db
+    plan: free
+    region: ohio
+    databaseName: kilimolink
+    user: kilimolink
