@@ -845,12 +845,7 @@ export function AppContent() {
                 <Link to="/orders" style={{ textDecoration: 'none', color: '#666', fontSize: '0.875rem' }}>My Orders</Link>
               </Stack>
             </Grid>
-            <Grid item xs={6} md={2}>
-              <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 2 }}>For Farmers</Typography>
-              <Stack spacing={1}>
-                <Typography variant="body2" color="text.secondary">Start Selling</Typography>
-              </Stack>
-            </Grid>
+
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 2 }}>Contact</Typography>
               <Typography variant="body2" color="text.secondary">kilimolink@proton.me</Typography>
@@ -859,7 +854,7 @@ export function AppContent() {
           </Grid>
           <Divider sx={{ my: 4 }} />
           <Typography variant="body2" color="text.secondary" align="center" sx={{ fontWeight: 600 }}>
-            kilimolink.onrender.com - I4C26 Nairobi Live Demo
+            kilimolink.onrender.com - I4C26
           </Typography>
           <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 0.5 }}>
             &copy; 2026 KilimoLink Direct. Fresh from the farm, straight to your table.
