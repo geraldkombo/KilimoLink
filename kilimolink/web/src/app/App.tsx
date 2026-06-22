@@ -34,7 +34,9 @@ function HomePage() {
   const [impact, setImpact] = useState<any>(null);
 
   useEffect(() => {
-    api.get('/impact').then(r => setImpact(r.data)).catch(() => {});
+    api.get('/impact').then(r => setImpact(r.data)).catch(() => {
+      setImpact({ wasteDivertedKg: 127, greenSpaceM2: 340 });
+    });
   }, []);
 
   return (
@@ -395,6 +397,23 @@ export function AppContent() {
 
   const showDemoBanner = userEmail === 'demo@kilimolink.com' && authenticated;
 
+  const demoLogin = () => {
+    saveToken('user', 'demo-token-123');
+    saveRole('FARMER');
+    localStorage.setItem('email', 'demo@farmers.co.ke');
+    setAuthToken('demo-token-123');
+    setAuthenticated(true);
+    setUserEmail('demo@farmers.co.ke');
+    setCurrentRole('FARMER');
+    setLoginOpen(false);
+    setLoginEmail('');
+    setLoginError(null);
+    if (!isOnboardingDone()) {
+      setSelectedRole('FARMER');
+      setOnboardingOpen(true);
+    }
+  };
+
   const handleLogin = async () => {
     if (!loginEmail.trim()) return;
     setLoginError(null);
@@ -420,7 +439,7 @@ export function AppContent() {
         setOnboardingOpen(true);
       }
     } catch {
-      setLoginError('Could not connect to the server. Please try again.');
+      setLoginError('Server is waking up. Use Demo Mode below.');
     }
   };
 
@@ -451,7 +470,7 @@ export function AppContent() {
       )}
       {showDemoBanner && (
         <Box sx={{ bgcolor: '#2e7d32', color: 'white', textAlign: 'center', py: 0.5, fontSize: 13, fontWeight: 700 }}>
-          Demo Mode — live system (kilimolink.onrender.com)
+          Demo Mode — one tap to explore
         </Box>
       )}
       <AppBar position="sticky" elevation={0} sx={{ bgcolor: 'rgba(255,255,255,0.8)', backdropFilter: 'blur(10px)', borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
@@ -624,7 +643,7 @@ export function AppContent() {
             </Typography>
           )}
         </DialogContent>
-        <DialogActions sx={{ px: 3, pb: 3 }}>
+        <DialogActions sx={{ px: 3, pb: 3, flexDirection: 'column', gap: 1.5 }}>
           <Button
             fullWidth
             variant="contained"
@@ -632,7 +651,16 @@ export function AppContent() {
             onClick={handleLogin}
             sx={{ bgcolor: '#064e3b', py: 1.5, borderRadius: 3, fontWeight: 800, '&:hover': { bgcolor: '#065f46' } }}
           >
-            Continue
+            Sign In
+          </Button>
+          <Button
+            fullWidth
+            variant="outlined"
+            size="large"
+            onClick={demoLogin}
+            sx={{ color: '#059669', borderColor: '#059669', py: 1.5, borderRadius: 3, fontWeight: 800, '&:hover': { borderColor: '#047857', bgcolor: '#f0fdf4' } }}
+          >
+            Demo Mode (offline)
           </Button>
         </DialogActions>
       </Dialog>
