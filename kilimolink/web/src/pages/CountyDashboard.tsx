@@ -86,10 +86,10 @@ export function CountyDashboard() {
       <>
       <Grid container spacing={3} sx={{ mb: 3 }}>
         {[
-          { icon: <WarningAmberIcon />, label: 'Supply Disruption Risk', value: '3', tone: '#dc2626' },
-          { icon: <ShowChartIcon />, label: 'Supply Routes Active', value: '32%', tone: '#f59e0b' },
-          { icon: <Co2Icon />, label: 'Tonnes Coordinated', value: 'Demo', tone: '#059669' },
-          { icon: <InsightsIcon />, label: 'Communities Served', value: '3', tone: '#2563eb' },
+          { icon: <WarningAmberIcon />, label: 'Supply Disruption Alerts', value: '3', tone: '#dc2626' },
+          { icon: <ShowChartIcon />, label: 'Supply Routes Active', value: '8', tone: '#f59e0b' },
+          { icon: <Co2Icon />, label: 'CO₂e Saved This Month', value: 'Demo', tone: '#059669' },
+          { icon: <InsightsIcon />, label: 'Priority Settlements Monitored', value: '3', tone: '#2563eb' },
         ].map((item) => (
           <Grid item xs={12} sm={6} md={3} key={item.label}>
             <Card elevation={0} sx={{ borderRadius: 4, border: '1px solid #e5e7eb', height: '100%' }}>
@@ -108,7 +108,7 @@ export function CountyDashboard() {
           <Paper elevation={0} sx={{ p: 3, borderRadius: 5, border: '1px solid #e5e7eb', minHeight: 430 }}>
             <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
               <MapIcon sx={{ color: '#064e3b' }} />
-              <Typography variant="h5" sx={{ fontWeight: 900, color: '#064e3b' }}>Food-Flow Corridor Map</Typography>
+              <Typography variant="h5" sx={{ fontWeight: 900, color: '#064e3b' }}>🚜 Food-Flow Corridor Map</Typography>
             </Stack>
             <Box sx={{ position: 'relative', height: 330, borderRadius: 4, overflow: 'hidden', bgcolor: '#ecfdf5', border: '1px solid #bbf7d0' }}>
               <Box sx={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 45% 45%, rgba(6,78,59,.18), transparent 22%), radial-gradient(circle at 70% 60%, rgba(220,38,38,.18), transparent 18%), radial-gradient(circle at 30% 70%, rgba(245,158,11,.18), transparent 16%)' }} />
@@ -128,9 +128,9 @@ export function CountyDashboard() {
 
         <Grid item xs={12} md={5}>
           <Paper elevation={0} sx={{ p: 3, borderRadius: 5, border: '1px solid #e5e7eb', mb: 3 }}>
-            <Typography variant="h5" sx={{ fontWeight: 900, color: '#064e3b', mb: 2 }}>Supply Disruption Risk</Typography>
+            <Typography variant="h5" sx={{ fontWeight: 900, color: '#064e3b', mb: 2 }}>⚠️ Supply Disruption Risk</Typography>
             <Box sx={{ p: 2, borderRadius: 3, bgcolor: '#fef2f2', border: '1px solid #fecaca' }}>
-              <Typography sx={{ fontWeight: 950, color: '#991b1b' }}>Kiambu tomato corridor at risk</Typography>
+              <Typography sx={{ fontWeight: 950, color: '#991b1b' }}>🚨 Kiambu tomato corridor at risk</Typography>
               <Typography variant="body2" sx={{ color: '#7f1d1d', mt: 1 }}>
                 Heavy rain forecast plus falling listing volume suggests possible tomato supply drop next week. Priority monitoring: Mathare and Mukuru.
               </Typography>
@@ -138,7 +138,7 @@ export function CountyDashboard() {
           </Paper>
 
           <Paper elevation={0} sx={{ p: 3, borderRadius: 5, border: '1px solid #e5e7eb' }}>
-            <Typography variant="h5" sx={{ fontWeight: 900, color: '#064e3b', mb: 2 }}>Price Stability & Food Access</Typography>
+            <Typography variant="h5" sx={{ fontWeight: 900, color: '#064e3b', mb: 2 }}>📊 Price Stability & Food Access</Typography>
             <Stack spacing={2}>
               {neighborhoods.map((n) => (
                 <Box key={n.name}>
