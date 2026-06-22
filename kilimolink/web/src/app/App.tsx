@@ -360,7 +360,7 @@ export function AppContent() {
   const [otpCode, setOtpCode] = useState('');
   const [otpSent, setOtpSent] = useState(false);
   const [otpDevCode, setOtpDevCode] = useState<string | null>(null);
-  const [authLoading, setAuthLoading] = useState(true);
+  const [authLoading, setAuthLoading] = useState(false);
   const [loginLoading, setLoginLoading] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentRole, setCurrentRole] = useState<string | null>(loadRole());
@@ -373,11 +373,9 @@ export function AppContent() {
   const location = useLocation();
 
   useEffect(() => {
-    const timer = setTimeout(() => setAuthLoading(false), 8000);
     const token = applyToken('user');
     if (token) {
       api.get('/auth/me').then(r => {
-        clearTimeout(timer);
         setAuthenticated(true);
         const data = r.data;
         setUserEmail(data?.email || localStorage.getItem('email'));
@@ -385,7 +383,6 @@ export function AppContent() {
         setUserId(data?.id || null);
         setCurrentRole(data?.role || loadRole());
       }).catch(() => {
-        clearTimeout(timer);
         clearAllAuth();
         setAuthenticated(false);
         setUserEmail(null);
@@ -394,7 +391,6 @@ export function AppContent() {
         setCurrentRole(null);
       }).finally(() => setAuthLoading(false));
     } else {
-      clearTimeout(timer);
       setAuthLoading(false);
     }
   }, []);
