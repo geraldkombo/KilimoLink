@@ -6,7 +6,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import PersonIcon from '@mui/icons-material/Person';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { BrowserRouter, Link, Route, Routes, useNavigate, useLocation } from 'react-router-dom';
+import { HashRouter, Link, Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -1118,18 +1118,8 @@ export function AppContent() {
   );
 }
 
-const routerBasename = import.meta.env.BASE_URL === '/' ? undefined : import.meta.env.BASE_URL.replace(/\/$/, '');
-
 export function App() {
   const [online, setOnline] = useState(navigator.onLine);
-
-  useEffect(() => {
-    if (window.location.search.startsWith('?/')) {
-      const restoredPath = window.location.search.slice(2);
-      const basePath = import.meta.env.BASE_URL === '/' ? '/' : import.meta.env.BASE_URL;
-      window.history.replaceState(null, '', `${basePath}${restoredPath}${window.location.hash}`);
-    }
-  }, []);
 
   useEffect(() => {
     setTimeout(() => {
@@ -1150,7 +1140,7 @@ export function App() {
   }, []);
 
   return (
-    <BrowserRouter basename={routerBasename}>
+    <HashRouter>
       {!online && (
         <Box sx={{ bgcolor: '#f59e0b', color: 'black', textAlign: 'center', py: 0.5 }}>
           <Typography variant="caption">You are offline. Showing last loaded data.</Typography>
@@ -1161,6 +1151,6 @@ export function App() {
           <AppContent />
         </ProductProvider>
       </UIProvider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }

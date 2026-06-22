@@ -1,4 +1,4 @@
-# KilimoLink Direct — I4C26 Pitch Deck
+# KilimoLink Direct - I4C26 Pitch Deck
 
 ## Positioning
 
@@ -7,7 +7,7 @@ The marketplace matches supply to demand. The data becomes Nairobi's food-flow a
 
 ---
 
-## Slide 1 — The One User: Keeping Nairobi Fed During Climate Shocks
+## Slide 1 - The One User: Keeping Nairobi Fed During Climate Shocks
 
 **Judging criteria:** Presentation, Thematic relevance, Bonus: urban transport
 
@@ -19,7 +19,7 @@ The marketplace matches supply to demand. The data becomes Nairobi's food-flow a
 
 ---
 
-## Slide 2 — The Climate Food Risk + Transport
+## Slide 2 - The Climate Food Risk + Transport
 
 **Judging criteria:** Thematic relevance, Impact, Bonus: urban transport, Bonus: informal settlements
 
@@ -28,17 +28,17 @@ The marketplace matches supply to demand. The data becomes Nairobi's food-flow a
 - Climate shocks disrupt roads, harvests, prices, and availability.
 - Food waste creates methane; long routes increase transport emissions.
 - Kibera, Mathare, and Mukuru face the sharpest food price and access shocks.
-- There is no matching of supply zones to demand neighborhoods — trucks run empty and food rots.
+- There is no matching of supply zones to demand neighborhoods - trucks run empty and food rots.
 
 **Visual:** Food transport corridor map → flood/rain disruption → informal settlement household.
 
 ---
 
-## Slide 3 — The Solution: Climate-Smart Food Transport
+## Slide 3 - The Solution: Climate-Smart Food Transport
 
 **Judging criteria:** Innovation, Thematic relevance, Bonus: urban transport
 
-- KilimoLink Direct connects farmers directly with Nairobi buyers — matching supply zones to demand neighborhoods.
+- KilimoLink Direct connects farmers directly with Nairobi buyers - matching supply zones to demand neighborhoods.
 - Every transaction captures origin, destination, price, route, quantity, and product.
 - That marketplace data becomes Nairobi's live food transport and logistics intelligence.
 - Reduces empty trips, shortens last-mile routes, cuts middlemen, and estimates emissions per delivery.
@@ -47,11 +47,11 @@ The marketplace matches supply to demand. The data becomes Nairobi's food-flow a
 
 ---
 
-## Slide 4 — County Climate Intelligence Dashboard
+## Slide 4 - County Climate Intelligence Dashboard
 
 **Judging criteria:** Innovation, Impact, Presentation, Bonus: urban transport
 
-- Live food transport flow map — which corridors are active, which are at risk.
+- Live food transport flow map - which corridors are active, which are at risk.
 - Price anomaly heatmap by neighborhood.
 - Supply disruption alerts from weather + route + transaction signals.
 - Food desert index with transport gap analysis.
@@ -61,7 +61,7 @@ The marketplace matches supply to demand. The data becomes Nairobi's food-flow a
 
 ---
 
-## Slide 5 — The AI Engines
+## Slide 5 - The AI Engines
 
 **Judging criteria:** Innovation, Impact, Bonus: urban transport
 
@@ -69,11 +69,11 @@ The marketplace matches supply to demand. The data becomes Nairobi's food-flow a
 2. **Price anomaly detector:** flags unusual food inflation, especially in informal settlements.
 3. **Carbon calculator:** estimates per-order emissions savings from shorter routes, fewer middlemen, and avoided waste.
 
-**Visual:** Three AI cards connected to dashboard alerts — transport corridor risk highlighted.
+**Visual:** Three AI cards connected to dashboard alerts - transport corridor risk highlighted.
 
 ---
 
-## Slide 6 — Why KilimoLink Is Different
+## Slide 6 - Why KilimoLink Is Different
 
 **Judging criteria:** Innovation, Presentation, Bonus: urban transport
 
@@ -88,7 +88,7 @@ The marketplace matches supply to demand. The data becomes Nairobi's food-flow a
 
 ---
 
-## Slide 7 — Informal Settlements Bonus Track
+## Slide 7 - Informal Settlements Bonus Track
 
 **Judging criteria:** Thematic relevance, Impact, Bonus: informal settlements
 
@@ -100,7 +100,7 @@ The marketplace matches supply to demand. The data becomes Nairobi's food-flow a
 
 ---
 
-## Slide 8 — Roadmap to August 31
+## Slide 8 - Roadmap to August 31
 
 **Judging criteria:** Impact, Presentation, Bonus: urban transport
 
@@ -112,7 +112,7 @@ The marketplace matches supply to demand. The data becomes Nairobi's food-flow a
 
 ---
 
-## Slide 9 — Ask
+## Slide 9 - Ask
 
 **Judging criteria:** Presentation
 
@@ -120,7 +120,7 @@ The marketplace matches supply to demand. The data becomes Nairobi's food-flow a
 - Access to county GIS/market datasets.
 - Support to onboard informal settlement buyers and peri-urban farmers.
 
-**Closing line:** KilimoLink Direct helps Nairobi see where food is, which routes carry it, where climate risk will hit next, and how to move food smarter — before families feel the shock.
+**Closing line:** KilimoLink Direct helps Nairobi see where food is, which routes carry it, where climate risk will hit next, and how to move food smarter - before families feel the shock.
 
 ---
 

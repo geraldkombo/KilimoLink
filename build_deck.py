@@ -292,8 +292,9 @@ add_bullet_slide(slide, Inches(1), Inches(4.0), Inches(10), Inches(2.5), items, 
 # Closing line
 add_rect(slide, Inches(0), Inches(6.5), Inches(13.333), Inches(1.0), RGBColor(0x04, 0x3B, 0x2D))
 add_text_box(slide, Inches(1), Inches(6.6), Inches(11), Inches(0.8),
-    'KilimoLink Direct helps Nairobi see where food is, which routes carry it, where climate risk will hit next — before families feel the shock.', 18, True, WHITE, PP_ALIGN.CENTER)
+    'KilimoLink Direct helps Nairobi see where food is, which routes carry it, where climate risk will hit next - before families feel the shock.', 18, True, WHITE, PP_ALIGN.CENTER)
 
-output_path = 'C:\\Users\\Rosemary\\Desktop\\AgriBizPlatform_FINAL\\I4C26_PITCH_DECK.pptx'
+import tempfile; output_path = tempfile.NamedTemporaryFile(delete=False, suffix='.pptx').name
 prs.save(output_path)
-print(f'Deck saved to {output_path}')
+import shutil; shutil.copy(output_path, 'C:\\Users\\Rosemary\\Desktop\\AgriBizPlatform_FINAL\\I4C26_PITCH_DECK.pptx')
+print(f'Deck saved to I4C26_PITCH_DECK.pptx')
