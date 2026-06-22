@@ -64,7 +64,7 @@ export function PriceTruthGap({ slug }: { slug: string | null }) {
         size="small"
         color="error"
         sx={{ mt: 1.5, fontWeight: 800, height: 24 }}
-        label={`Farmer underpaid KES ${t.gapKes} — ${t.farmerLossPercent}% lost to bad information`}
+        label={`Farmer underpaid KES ${t.gapKes} - ${t.farmerLossPercent}% lost to bad information`}
       />
       <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 0.5, fontSize: '0.6rem' }}>
         Reference: {t.source}. Middleman rate: representative field quote, being validated.

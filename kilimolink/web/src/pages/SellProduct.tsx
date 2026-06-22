@@ -533,7 +533,7 @@ export function SellProduct() {
               {priceSuggestion && (
                 <Chip
                   icon={<AutoAwesomeIcon sx={{ fontSize: 14 }} />}
-                  label={`AI suggests KES ${priceSuggestion.suggestedPrice} — ${priceSuggestion.source}`}
+                  label={`AI suggests KES ${priceSuggestion.suggestedPrice} - ${priceSuggestion.source}`}
                   size="small"
                   sx={{ mt: 1, bgcolor: '#f5f3ff', color: '#7c3aed', fontWeight: 700 }}
                 />

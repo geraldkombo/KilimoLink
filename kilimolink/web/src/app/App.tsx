@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, lazy, Suspense } from 'react';
 import { Grid, Divider, Dialog, DialogTitle, DialogContent, DialogActions, RadioGroup, FormControlLabel, Radio, TextField, Alert } from '@mui/material';
 import { AppBar, Badge, Box, Button, Container, Toolbar, Typography, Stack, useTheme, useMediaQuery, Paper, IconButton, Drawer, List, ListItem, ListItemText, ListItemButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -8,13 +8,6 @@ import StorefrontIcon from '@mui/icons-material/Storefront';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { BrowserRouter, Link, Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
-import { AdminPage } from '../pages/AdminPage';
-import { Marketplace } from '../pages/Marketplace';
-import { SellProduct } from '../pages/SellProduct';
-import { ProductDetail } from '../pages/ProductDetail';
-import { MyProducts } from '../pages/MyProducts';
-import { OrdersPage } from '../pages/OrdersPage';
-import { CountyDashboard } from '../pages/CountyDashboard';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { motion } from 'framer-motion';
@@ -23,6 +16,14 @@ import { UIProvider, useUI } from './UIContext';
 import { ProductProvider } from './ProductContext';
 import { api, setAuthToken } from '../services/api';
 import { applyToken, saveToken, loadRole, saveRole, isOnboardingDone, setOnboardingDone, clearAllAuth } from '../services/auth';
+
+const AdminPage = lazy(() => import('../pages/AdminPage').then(m => ({ default: m.AdminPage })));
+const Marketplace = lazy(() => import('../pages/Marketplace').then(m => ({ default: m.Marketplace })));
+const SellProduct = lazy(() => import('../pages/SellProduct').then(m => ({ default: m.SellProduct })));
+const ProductDetail = lazy(() => import('../pages/ProductDetail').then(m => ({ default: m.ProductDetail })));
+const MyProducts = lazy(() => import('../pages/MyProducts').then(m => ({ default: m.MyProducts })));
+const OrdersPage = lazy(() => import('../pages/OrdersPage').then(m => ({ default: m.OrdersPage })));
+const CountyDashboard = lazy(() => import('../pages/CountyDashboard').then(m => ({ default: m.CountyDashboard })));
 
 const MotionTypography = motion(Typography);
 const MotionPaper = motion(Paper);
@@ -76,7 +77,7 @@ function HomePage() {
               color: '#064e3b'
             }}
           >
-            KilimoLink
+            KilimoLink Direct
           </MotionTypography>
           <MotionTypography 
             variant="h6" 
@@ -292,13 +293,13 @@ function HomePage() {
           }}
         >
           <Typography variant="h2" sx={{ fontWeight: 900, mb: 2, fontSize: { xs: '2.5rem', md: '3.5rem' }, letterSpacing: '-0.04em' }}>
-            Give Nairobi real-time food system intelligence.
+            Move food faster. Waste less. Earn more.
           </Typography>
           <Typography variant="h5" sx={{ opacity: 0.9, fontWeight: 400, mb: 2, maxWidth: '680px', lineHeight: 1.5 }}>
             Farmers list produce. Buyers order directly. Nairobi finally sees where food is, where it is going, and when climate will break the chain.
           </Typography>
           <Typography variant="body2" sx={{ opacity: 0.7, fontWeight: 500, mb: 6, maxWidth: '600px', lineHeight: 1.5 }}>
-            kilimolink.onrender.com — live demo for I4C26 Nairobi
+            kilimolink.onrender.com - live demo for I4C26 Nairobi
           </Typography>
           <Button 
             variant="contained" 
@@ -465,12 +466,12 @@ export function AppContent() {
     <Box sx={{ flexGrow: 1, minHeight: '100vh', bgcolor: 'background.default', display: 'flex', flexDirection: 'column' }}>
       {!isOnline && (
         <Alert severity="warning" sx={{ borderRadius: 0, justifyContent: 'center', '& .MuiAlert-message': { fontWeight: 800 } }}>
-          You're offline — use the preloaded demo pages or backup recording.
+          You're offline - use the preloaded demo pages or backup recording.
         </Alert>
       )}
       {showDemoBanner && (
         <Box sx={{ bgcolor: '#2e7d32', color: 'white', textAlign: 'center', py: 0.5, fontSize: 13, fontWeight: 700 }}>
-          Demo Mode — one tap to explore
+          Demo Mode - one tap to explore
         </Box>
       )}
       <AppBar position="sticky" elevation={0} sx={{ bgcolor: 'rgba(255,255,255,0.8)', backdropFilter: 'blur(10px)', borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
@@ -490,7 +491,7 @@ export function AppContent() {
               gap: 1 
             }}
           >
-            KILIMOLINK
+            KILIMOLINK DIRECT
           </Typography>
 
           {isMobile ? (
@@ -673,7 +674,7 @@ export function AppContent() {
       {/* Onboarding Dialog */}
       <Dialog open={onboardingOpen} maxWidth="sm" fullWidth PaperProps={{ sx: { borderRadius: 4, p: 2 } }}>
         <DialogTitle sx={{ fontWeight: 900, color: '#064e3b', textAlign: 'center', fontSize: '1.5rem' }}>
-          Welcome to KilimoLink
+          Welcome to KilimoLink Direct
         </DialogTitle>
         <DialogContent>
           <Typography sx={{ textAlign: 'center', mb: 4, color: '#4b5563' }}>
@@ -809,16 +810,18 @@ export function AppContent() {
           )}
           <AnimatePresence mode="wait">
             <MotionBox key={location.pathname} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }}>
-              <Routes location={location}>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/market" element={<Marketplace />} />
-                <Route path="/sell" element={<SellProduct />} />
-                <Route path="/product/:id" element={<ProductDetail />} />
-                <Route path="/orders" element={<OrdersPage />} />
-                <Route path="/county-dashboard" element={<CountyDashboard />} />
-                <Route path="/my-products" element={<MyProducts />} />
-                <Route path="/admin" element={<AdminPage />} />
-              </Routes>
+              <Suspense fallback={<Box sx={{ p: 4, textAlign: 'center' }}><Typography color="text.secondary">Loading...</Typography></Box>}>
+                <Routes location={location}>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/market" element={<Marketplace />} />
+                  <Route path="/sell" element={<SellProduct />} />
+                  <Route path="/product/:id" element={<ProductDetail />} />
+                  <Route path="/orders" element={<OrdersPage />} />
+                  <Route path="/county-dashboard" element={<CountyDashboard />} />
+                  <Route path="/my-products" element={<MyProducts />} />
+                  <Route path="/admin" element={<AdminPage />} />
+                </Routes>
+              </Suspense>
             </MotionBox>
           </AnimatePresence>
         </Container>
@@ -827,9 +830,9 @@ export function AppContent() {
         <Container maxWidth="lg">
           <Grid container spacing={4}>
             <Grid item xs={12} md={4}>
-              <Typography variant="h6" sx={{ fontWeight: 900, color: '#064e3b', mb: 2 }}>KILIMOLINK</Typography>
+              <Typography variant="h6" sx={{ fontWeight: 900, color: '#064e3b', mb: 2 }}>KILIMOLINK DIRECT</Typography>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                KilimoLink connects you directly with local farmers. Fresh produce, fair prices, no middlemen.
+                KilimoLink Direct connects you directly with local farmers. Fresh produce, fair prices, no middlemen.
               </Typography>
             </Grid>
             <Grid item xs={6} md={2}>
@@ -846,25 +849,20 @@ export function AppContent() {
               <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 2 }}>For Farmers</Typography>
               <Stack spacing={1}>
                 <Typography variant="body2" color="text.secondary">Start Selling</Typography>
-                <Typography variant="body2" color="text.secondary">Pricing Guide</Typography>
-                <Typography variant="body2" color="text.secondary">Farmer Tips</Typography>
               </Stack>
             </Grid>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 2 }}>Contact</Typography>
               <Typography variant="body2" color="text.secondary">kilimolink@proton.me</Typography>
               <Typography variant="body2" color="text.secondary">Nairobi, Kenya</Typography>
-              <Typography variant="caption" color="text.secondary" sx={{ mt: 2, display: 'block', opacity: 0.5 }}>
-                v1.2.0
-              </Typography>
             </Grid>
           </Grid>
           <Divider sx={{ my: 4 }} />
           <Typography variant="body2" color="text.secondary" align="center" sx={{ fontWeight: 600 }}>
-            kilimolink.onrender.com — I4C26 Nairobi Live Demo
+            kilimolink.onrender.com - I4C26 Nairobi Live Demo
           </Typography>
           <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 0.5 }}>
-            &copy; 2026 KilimoLink. Fresh from the farm, straight to your table.
+            &copy; 2026 KilimoLink Direct. Fresh from the farm, straight to your table.
           </Typography>
         </Container>
       </Box>
@@ -883,6 +881,13 @@ export function App() {
       const basePath = import.meta.env.BASE_URL === '/' ? '/' : import.meta.env.BASE_URL;
       window.history.replaceState(null, '', `${basePath}${restoredPath}${window.location.hash}`);
     }
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      import('../pages/Marketplace');
+      import('../pages/CountyDashboard');
+    }, 2000);
   }, []);
 
   useEffect(() => {

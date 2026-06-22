@@ -11,7 +11,7 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.code === 'ECONNABORTED') {
-      error.userMessage = 'The KilimoLink server is waking up. Please retry in a few seconds.';
+      error.userMessage = 'The KilimoLink Direct server is waking up. Please retry in a few seconds.';
     } else if (!error.response) {
       error.userMessage = 'Network connection unavailable. Check internet or use the backup demo.';
     } else if (error.response.status >= 500) {
