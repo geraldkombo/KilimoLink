@@ -19,10 +19,9 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v3
         with:
-          node-version: 24
-          cache: 'npm'
+          node-version: '24.x'
       - name: Install & Build
         working-directory: kilimolink/web
         run: |
