@@ -1,8 +1,8 @@
 # KilimoLink Direct — 30-Second Live Demo Choreography
 
-**Presenter:** Gerald  
-**Operator:** Shadrack  
-**Slide support:** James  
+**Presenter:** confirm on June 22  
+**Operator:** confirm on June 22  
+**Slide support:** confirm on June 22  
 **Demo goal:** Prove the marketplace works, then reveal it as Nairobi's food-system data engine.
 
 ---
@@ -11,11 +11,11 @@
 
 | Step | Who | Action | Success check |
 |---|---|---|---|
-| 1 | Peter | Open `https://kilimolink.onrender.com/api/v1/health` | Returns `status: ok` |
-| 2 | Gisore | Open `https://geraldkombo.github.io/KilimoLink/` | Homepage loads fully |
-| 3 | Shadrack | Log in with demo account | Token stored; `/sell` opens |
-| 4 | Shadrack | Preload `/market`, `/sell`, and one product detail tab | No cold navigation during demo |
-| 5 | James | Open slide deck to "Live Demo" slide | Ready to switch back after demo |
+| 1 | Backend lead | Open `https://kilimolink.onrender.com/api/v1/health` | Returns `status: ok` |
+| 2 | Frontend lead | Open `https://geraldkombo.github.io/KilimoLink/` | Homepage loads fully |
+| 3 | Demo operator | Log in with demo account | Token stored; `/sell` opens |
+| 4 | Demo operator | Preload `/market`, `/sell`, one product detail tab, and `/county-dashboard` | No cold navigation during demo |
+| 5 | Slide support | Open slide deck to "Live Demo" slide | Ready to switch back after demo |
 | 6 | Everyone | Close extra tabs, silence notifications, set browser zoom to 90% | 720p projector-safe |
 
 ---

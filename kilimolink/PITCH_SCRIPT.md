@@ -1,6 +1,6 @@
 # KilimoLink Direct — I4C26 Pitch Script
 
-**Total time:** 3:00 | **Words:** ~430 | **Speaker:** Gerald Kombo  
+**Total time:** 3:00 | **Words:** ~430 | **Speaker:** confirm final presenter on June 22  
 **Focus test:** One city: Nairobi. One user: Nairobi County food system resilience officer. One problem: no real-time food climate intelligence.
 
 ---

@@ -69,7 +69,7 @@ Take these 5 screenshots and embed in slide deck:
     [ ] Hotspot enabled and tested
     [ ] Render health endpoint bookmarked
     [ ] Frontend URL bookmarked
-[ ] Google Drive link shared with all 6 team members
+[ ] Google Drive link shared with all confirmed Team 10 members
 [ ] Printed copies of:
     [ ] Pitch script (for presenter)
     [ ] Demo choreography (for operator)
@@ -86,4 +86,4 @@ Take these 5 screenshots and embed in slide deck:
 
 ## Final Word
 
-> If EVERYTHING fails — no internet, no laptop, no projector — gather the judges around one phone showing the app. The 6 of you can narrate together. 6 voices telling one story is more powerful than any slide deck.
+> If EVERYTHING fails — no internet, no laptop, no projector — gather the judges around one phone showing the app. The team should narrate one story: Grace cannot see Nairobi's food system today; KilimoLink gives her the dashboard.
