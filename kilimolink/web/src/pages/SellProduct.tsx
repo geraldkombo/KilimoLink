@@ -7,7 +7,6 @@ import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
-import SearchIcon from '@mui/icons-material/Search';
 import GppGoodIcon from '@mui/icons-material/GppGood';
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import RefreshIcon from '@mui/icons-material/Refresh';
@@ -168,6 +167,7 @@ export function SellProduct() {
   const [error, setError] = useState<string | null>(null);
   const [marketInsights, setMarketInsights] = useState<MarketInsights | null>(null);
   const [mapPosition, setMapPosition] = useState<{ lat: number, lng: number } | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -178,6 +178,35 @@ export function SellProduct() {
     phone: '',
     location: { lat: -1.286389, lng: 36.817223, address: '' }
   });
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const MAX = 800;
+        let w = img.width;
+        let h = img.height;
+        if (w > MAX || h > MAX) {
+          const ratio = Math.min(MAX / w, MAX / h);
+          w = Math.round(w * ratio);
+          h = Math.round(h * ratio);
+        }
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx?.drawImage(img, 0, 0, w, h);
+        const compressed = canvas.toDataURL('image/jpeg', 0.7);
+        setPreviewImage(compressed);
+        setFormData(prev => ({ ...prev, imageUrl: compressed }));
+      };
+      img.src = ev.target?.result as string;
+    };
+    reader.readAsDataURL(file);
+  };
 
   const handleOracleRefresh = () => {
     setRefreshingOracle(true);
@@ -551,53 +580,53 @@ export function SellProduct() {
             </Grid>
             <Grid item xs={12}>
               <Divider sx={{ my: 2 }} />
-              <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: '#064e3b' }}>PRODUCT PHOTO</Typography>
-              <TextField
-                fullWidth
-                label="Photo Link"
-                placeholder="Paste a link to a photo of your produce"
-                value={formData.imageUrl}
-                onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                helperText="Tip: You can upload your photo to Google Photos or Imgur and paste the link here."
-                InputProps={{ 
-                  sx: { borderRadius: 3 },
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <HelpOutlineIcon sx={{ fontSize: 18, color: '#064e3b' }} />
-                    </InputAdornment>
-                  )
-                }}
-              />
-              <Box sx={{ mt: 1.5, display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                <Typography variant="caption" sx={{ color: '#666', mr: 1, mt: 0.5 }}>Quick samples:</Typography>
-                {[
-                  { label: 'Kale/Sukuma', url: 'https://images.unsplash.com/photo-1777353245982-c34b21fc5175?auto=format&fit=crop&w=800&q=80' },
-                  { label: 'Fresh Milk', url: 'https://images.unsplash.com/photo-1601436423474-51738541c1b1?auto=format&fit=crop&w=800&q=80' },
-                  { label: 'Maize/Corn', url: 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=800&q=80' },
-                  { label: 'Mixed Fruits', url: 'https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80' },
-                  { label: 'Meat/Beef', url: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=800&q=80' },
-                  { label: 'Honey', url: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80' },
-                ].map((chip) => (
-                  <Chip 
-                    key={chip.label} 
-                    label={chip.label} 
-                    size="small" 
-                    onClick={() => setFormData({ ...formData, imageUrl: chip.url })}
-                    sx={{ bgcolor: formData.imageUrl === chip.url ? '#064e3b' : '#f0fdf4', color: formData.imageUrl === chip.url ? '#fff' : '#064e3b', fontWeight: 600, fontSize: '0.7rem', cursor: 'pointer', '&:hover': { bgcolor: '#dcfce7' } }} 
-                  />
-                ))}
-              </Box>
-              {formData.imageUrl && (
-                <Box sx={{ mt: 2, borderRadius: 3, overflow: 'hidden', border: '2px solid #e0e0e0', maxHeight: 300 }}>
-                  <Box
-                    component="img"
-                    src={formData.imageUrl}
-                    alt="Product preview"
-                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
-                    sx={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                  />
+              <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: '#064e3b' }}>Product photo</Typography>
+              <label htmlFor="product-photo" style={{ display: 'block', cursor: 'pointer' }}>
+                <Box
+                  sx={{
+                    border: '2px dashed',
+                    borderColor: previewImage ? '#064e3b' : '#d1d5db',
+                    borderRadius: 4,
+                    p: 4,
+                    textAlign: 'center',
+                    bgcolor: previewImage ? '#f0fdf4' : '#f9fafb',
+                    transition: 'all 0.2s',
+                    '&:hover': { borderColor: '#064e3b', bgcolor: '#f0fdf4' }
+                  }}
+                >
+                  {previewImage ? (
+                    <>
+                      <Box
+                        component="img"
+                        src={previewImage}
+                        alt="Product preview"
+                        sx={{ width: '100%', maxHeight: 300, objectFit: 'cover', borderRadius: 3, mb: 2 }}
+                      />
+                      <Typography sx={{ color: '#064e3b', fontWeight: 700, fontSize: '0.9rem' }}>
+                        Change photo
+                      </Typography>
+                    </>
+                  ) : (
+                    <>
+                      <Typography sx={{ fontSize: '2.5rem', mb: 1 }}>📷</Typography>
+                      <Typography sx={{ fontWeight: 900, color: '#064e3b', mb: 0.5 }}>
+                        Add product photo
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Take a photo or choose from gallery
+                      </Typography>
+                    </>
+                  )}
                 </Box>
-              )}
+              </label>
+              <input
+                id="product-photo"
+                type="file"
+                accept="image/*"
+                capture="environment"
+                onChange={handleImageUpload}
+                style={{ display: 'none' }}
+              />
             </Grid>
             <Grid item xs={12}>
               <Divider sx={{ my: 2 }} />
