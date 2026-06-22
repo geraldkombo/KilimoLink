@@ -1,4 +1,4 @@
-# KilimoLink Direct: Hyperlocal Urban Food Resilience
+# KilimoLink Direct: Nairobi AI Food System Climate Intelligence
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript)](https://www.typescriptlang.org/)
 [![NestJS](https://img.shields.io/badge/NestJS-11-E0234E?logo=nestjs)](https://nestjs.com/)
@@ -11,7 +11,7 @@
 [![tests](https://img.shields.io/badge/tests-30+/30+-success)](https://github.com/geraldkombo/KilimoLink/actions)
 [![CI](https://github.com/geraldkombo/KilimoLink/actions/workflows/ci.yml/badge.svg)](https://github.com/geraldkombo/KilimoLink/actions/workflows/ci.yml)
 
-**KilimoLink Direct** is a direct-to-city marketplace designed for the **Innovate4Cities 2026** challenge. It connects urban residents with nearby farmers to reduce food waste and transport emissions across East Africa.
+**KilimoLink Direct** is Nairobi's AI food system climate intelligence platform for the **Innovate4Cities 2026** challenge. The marketplace is the data engine: every listing and order creates food-flow, price-risk, and climate-impact signals for a future Nairobi City County resilience dashboard.
 
 ---
 
@@ -34,13 +34,14 @@
 
 ## Our Mission
 
-To build climate-resilient cities by decentralizing food supply chains and empowering urban agricultural producers in informal settlements.
+To give Nairobi City County real-time food system visibility before climate shocks become household food crises.
 
 **Why It Matters:**
-- **30%+** of food in Africa spoils before reaching consumers
-- **85%** of Nairobi's fresh produce comes from rural areas 100+ km away
-- Urban farming could supply **20-30%** of city food needs by 2030
-- Every km shortened in the food supply chain reduces CO2 by **~0.5 kg** per delivery
+- Nairobi depends heavily on surrounding counties for fresh food.
+- Climate shocks can disrupt harvests, roads, market prices, and neighborhood access.
+- Food waste creates methane, and long supply routes increase transport emissions.
+- Informal settlements such as Kibera, Mathare, and Mukuru feel price and access shocks first.
+- Every numeric claim used in the pitch must be verified in `EVIDENCE_LOG.md` before submission.
 
 ---
 
@@ -48,13 +49,13 @@ To build climate-resilient cities by decentralizing food supply chains and empow
 
 | Feature | Description |
 |---------|-------------|
-| **Geolocation Market** | Find produce within walking distance of your home using Haversine distance sorting |
-| **Impact Dashboard** | Real-time tracking of CO2 savings, waste diversion, and green space metrics |
-| **AI Price Suggestion** | Fair trade pricing powered by intelligent category baselines with attribute adjustment |
-| **Hybrid Payments** | Instant mock payments or Solana devnet USDC settlements |
-| **Privy Auth** | Email-to-wallet authentication with JWT session management |
-| **Price Oracle** | Simulated market price feeds with category averages in KES |
-| **Admin Console** | Impact metrics, user/product management, resilience logs, data seeding |
+| **Marketplace Data Engine** | Farmer listings and buyer orders generate food-flow signals for Nairobi |
+| **County Dashboard Prototype** | `/county-dashboard` shows Grace's food-flow map, price risk, disruption alert, and settlement access indicators |
+| **AI Price Suggestion** | Helps farmers list quickly while creating comparable price data |
+| **Price Truth Gap** | Shows the difference between reference prices and broker/middleman quotes |
+| **Location + Privacy Mode** | Captures supply location while protecting exact farmer coordinates |
+| **Impact Dashboard** | Tracks estimated CO₂, waste, and food access indicators for demo purposes |
+| **Health + Cold-Start Handling** | Render health endpoint and frontend messages support live demo reliability |
 | **Swagger Docs** | Auto-generated API documentation at `/docs` |
 
 ---
