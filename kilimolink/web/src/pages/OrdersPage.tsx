@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Box, Container, Typography, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Chip, Stack, Button, CircularProgress, IconButton } from '@mui/material';
 import { motion } from 'framer-motion';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ChatIcon from '@mui/icons-material/Chat';
 import { api } from '../services/api';
 import { applyToken } from '../services/auth';
 import { useNavigate } from 'react-router-dom';
@@ -87,6 +88,7 @@ export function OrdersPage() {
                     <TableCell sx={{ fontWeight: 800 }}>Amount</TableCell>
                     <TableCell sx={{ fontWeight: 800 }}>Status</TableCell>
                     <TableCell sx={{ fontWeight: 800 }}>Date</TableCell>
+                    <TableCell sx={{ fontWeight: 800 }}>Actions</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -127,6 +129,13 @@ export function OrdersPage() {
                           />
                         </TableCell>
                         <TableCell sx={{ fontWeight: 500, color: '#6b7280' }}>{new Date(order.createdAt).toLocaleDateString()}</TableCell>
+                        <TableCell>
+                          {order.items?.[0]?.product?.farmer?.id ? (
+                            <IconButton size="small" onClick={() => navigate(`/chat?userId=${order.items[0].product.farmer.id}`)} sx={{ color: '#064e3b' }}>
+                              <ChatIcon />
+                            </IconButton>
+                          ) : null}
+                        </TableCell>
                       </TableRow>
                     );
                   })}

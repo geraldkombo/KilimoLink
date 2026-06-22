@@ -36,6 +36,8 @@ model User {
   otps      OtpChallenge[]
   notifications NotificationLog[]
   reviews   Review[]
+  sentMessages     Message[] @relation("SentMessages")
+  receivedMessages Message[] @relation("ReceivedMessages")
 }
 
 model Product {
@@ -66,6 +68,7 @@ model Order {
   createdAt      DateTime    @default(now())
   
   items          OrderItem[]
+  messages       Message[]
 }
 
 model Review {
@@ -79,6 +82,19 @@ model Review {
   createdAt DateTime @default(now())
 
   @@unique([productId, buyerId])
+}
+
+model Message {
+  id         String   @id @default(cuid())
+  senderId   String
+  sender     User     @relation("SentMessages", fields: [senderId], references: [id])
+  receiverId String
+  receiver   User     @relation("ReceivedMessages", fields: [receiverId], references: [id])
+  orderId    String?
+  order      Order?   @relation(fields: [orderId], references: [id])
+  text       String
+  readAt     DateTime?
+  createdAt  DateTime @default(now())
 }
 
 model OrderItem {

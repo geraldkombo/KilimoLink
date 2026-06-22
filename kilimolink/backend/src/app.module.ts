@@ -8,6 +8,7 @@ import { AiModule } from './ai/ai.module';
 import { ImpactModule } from './impact/impact.module';
 import { SeedModule } from './seed/seed.module';
 import { AuthModule } from './auth/auth.module';
+import { ChatModule } from './chat/chat.module';
 import { NotificationsModule } from './common/notifications/notifications.module';
 import { PrismaModule } from './common/prisma/prisma.module';
 import { RedisModule } from './common/redis/redis.module';
@@ -32,6 +33,7 @@ import { UsersModule } from './users/users.module';
     PrismaModule,
     RedisModule,
     AuthModule,
+    ChatModule,
     UsersModule,
     MarketModule,
     OracleModule,

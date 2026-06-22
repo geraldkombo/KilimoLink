@@ -24,6 +24,7 @@ const ProductDetail = lazy(() => import('../pages/ProductDetail').then(m => ({ d
 const MyProducts = lazy(() => import('../pages/MyProducts').then(m => ({ default: m.MyProducts })));
 const OrdersPage = lazy(() => import('../pages/OrdersPage').then(m => ({ default: m.OrdersPage })));
 const CountyDashboard = lazy(() => import('../pages/CountyDashboard').then(m => ({ default: m.CountyDashboard })));
+const Chat = lazy(() => import('../pages/Chat').then(m => ({ default: m.Chat })));
 
 const MotionTypography = motion(Typography);
 const MotionPaper = motion(Paper);
@@ -715,6 +716,7 @@ export function AppContent() {
               {authenticated && currentRole === 'FARMER' && (
                 <Button color="inherit" component={Link} to="/my-products" sx={{ color: '#333', fontWeight: 600, px: 2 }}>My Products</Button>
               )}
+              <Button color="inherit" component={Link} to="/chat" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Messages</Button>
               <Badge badgeContent={pendingOrderCount} color="success" sx={{ '& .MuiBadge-badge': { fontWeight: 800, fontSize: '0.65rem' } }}>
                 <Button color="inherit" component={Link} to="/orders" sx={{ color: '#333', fontWeight: 600, px: 2 }}>Orders</Button>
               </Badge>
@@ -771,6 +773,11 @@ export function AppContent() {
           <ListItem disablePadding>
             <ListItemButton component={Link} to="/orders" onClick={() => setMobileMenuOpen(false)}>
               <ListItemText primary="My Orders" primaryTypographyProps={{ fontWeight: 700 }} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/chat" onClick={() => setMobileMenuOpen(false)}>
+              <ListItemText primary="Messages" primaryTypographyProps={{ fontWeight: 700 }} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
@@ -1064,6 +1071,7 @@ export function AppContent() {
                   <Route path="/orders" element={<OrdersPage />} />
                   <Route path="/county-dashboard" element={<CountyDashboard />} />
                   <Route path="/my-products" element={<MyProducts />} />
+                  <Route path="/chat" element={<Chat />} />
                   <Route path="/admin" element={<AdminPage />} />
                 </Routes>
               </Suspense>

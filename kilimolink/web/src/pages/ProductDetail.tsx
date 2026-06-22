@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { CircularProgress, Link, IconButton, Fade, Stack, Rating, TextField, Card, CardContent, Skeleton } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import StarIcon from '@mui/icons-material/Star';
+import ChatIcon from '@mui/icons-material/Chat';
 import { useParams, useNavigate, Link as RouterLink } from 'react-router-dom';
 import { Box, Button, Container, Grid, Paper, Typography, Chip, Divider, Alert } from '@mui/material';
 import { api } from '../services/api';
@@ -305,6 +306,13 @@ export function ProductDetail() {
                     <Typography variant="body2" sx={{ color: '#064e3b', fontWeight: 700, mt: 0.5 }}>
                       📞 {product.farmer.phone}
                     </Typography>
+                  )}
+                  {product.farmer?.id && (
+                    <Button variant="outlined" size="small" startIcon={<ChatIcon />}
+                      onClick={() => navigate(`/chat?userId=${product.farmer.id}`)}
+                      sx={{ mt: 1.5, borderRadius: 3, fontWeight: 700, color: '#064e3b', borderColor: '#064e3b', textTransform: 'none' }}>
+                      Message Seller
+                    </Button>
                   )}
                 </Box>
               </Box>

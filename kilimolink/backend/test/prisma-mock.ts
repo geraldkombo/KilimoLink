@@ -41,7 +41,15 @@ export function createMockPrismaService() {
     if (!include || !item) return item;
     const result = { ...item };
     for (const [relName, relConfig] of Object.entries(include)) {
-      if (relConfig === true) {
+      if (relName === 'sender' || relName === 'receiver') {
+        const fk = relName === 'sender' ? 'senderId' : 'receiverId';
+        const user = stores['user']?.get((item as any)[fk]);
+        if (user) {
+          result[relName] = relConfig === true ? user : { id: user.id, name: user.name };
+        } else {
+          result[relName] = null;
+        }
+      } else if (relConfig === true) {
         if (relName === 'farmer') {
           const farmer = stores['user']?.get((item as any).farmerId);
           result[relName] = farmer || null;
@@ -367,6 +375,7 @@ export function createMockPrismaService() {
     adminLoginThrottle: mockQuery('adminLoginThrottle'),
     auditLog: mockQuery('auditLog'),
     review: mockQuery('review'),
+    message: mockQuery('message'),
     otpChallenge: mockQuery('otpChallenge'),
     otpVerifyThrottle: mockQuery('otpVerifyThrottle'),
     notificationLog: mockQuery('notificationLog'),
