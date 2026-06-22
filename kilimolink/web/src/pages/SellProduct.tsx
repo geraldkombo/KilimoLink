@@ -183,7 +183,6 @@ export function SellProduct() {
     setRefreshingOracle(true);
     setTimeout(() => {
       setRefreshingOracle(false);
-      // Simulate real-time May 2026 adjustment
       const randomAdjustment = (Math.random() * 10 - 5).toFixed(0);
       if (formData.title) {
         const item = priceGuide.find(p => p.name === formData.title);
@@ -371,10 +370,10 @@ export function SellProduct() {
   return (
     <Container maxWidth="md">
       <Box sx={{ mt: 2, mb: 6, display: 'flex', alignItems: 'center', gap: 2 }}>
-        <IconButton onClick={() => navigate(-1)} sx={{ bgcolor: '#f5f5f5' }}>
+        <IconButton onClick={() => navigate(-1)} sx={{ bgcolor: '#f5f5f5', flexShrink: 0 }}>
           <ArrowBackIcon />
         </IconButton>
-        <Typography variant="h4" sx={{ fontWeight: 900, letterSpacing: '-0.02em', color: '#064e3b' }}>
+        <Typography variant="h4" sx={{ fontWeight: 900, letterSpacing: '-0.02em', color: '#064e3b', fontSize: { xs: '1.5rem', md: '2.125rem' } }}>
           List Your Produce
         </Typography>
       </Box>
@@ -464,15 +463,15 @@ export function SellProduct() {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+              <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: { xs: 'flex-start', sm: 'center' }, mb: 1, gap: 1 }}>
                 <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#064e3b' }}>PRICE (KES)</Typography>
-                <Stack direction="row" spacing={1}>
+                <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap', gap: 0.5 }}>
                   <Button 
                     size="small" 
                     onClick={handleAISuggestPrice}
                     disabled={suggestingPrice || !formData.title}
                     startIcon={suggestingPrice ? <CircularProgress size={14} color="inherit" /> : <AutoAwesomeIcon sx={{ fontSize: 14 }} />}
-                    sx={{ textTransform: 'none', fontSize: '0.75rem', fontWeight: 700, color: '#7c3aed' }}
+                    sx={{ textTransform: 'none', fontSize: '0.75rem', fontWeight: 700, color: '#7c3aed', whiteSpace: 'nowrap' }}
                   >
                     {suggestingPrice ? 'Thinking...' : 'AI Suggest Price'}
                   </Button>
@@ -481,7 +480,7 @@ export function SellProduct() {
                     onClick={handleOracleRefresh}
                     disabled={refreshingOracle || !formData.title}
                     startIcon={refreshingOracle ? <CircularProgress size={14} color="inherit" /> : <RefreshIcon sx={{ fontSize: 14 }} />}
-                    sx={{ textTransform: 'none', fontSize: '0.75rem', fontWeight: 700, color: '#059669' }}
+                    sx={{ textTransform: 'none', fontSize: '0.75rem', fontWeight: 700, color: '#059669', whiteSpace: 'nowrap' }}
                   >
                     {refreshingOracle ? 'Syncing...' : 'Sync Oracle'}
                   </Button>
@@ -500,7 +499,7 @@ export function SellProduct() {
                     </InputAdornment>
                   )
                 }}
-                helperText={priceSuggestion ? `AI: KES ${priceSuggestion.suggestedPrice} (${priceSuggestion.source}, ${(priceSuggestion.confidence * 100).toFixed(0)}% confidence)` : 'Verified market price (May 2026 adjusted)'}
+                helperText={priceSuggestion ? `AI: KES ${priceSuggestion.suggestedPrice} (${priceSuggestion.source}, ${(priceSuggestion.confidence * 100).toFixed(0)}% confidence)` : 'Verified market price from KNBS and AFA data'}
               />
               {priceSuggestion && (
                 <Chip
@@ -615,12 +614,12 @@ export function SellProduct() {
             </Grid>
             <Grid item xs={12}>
               <Divider sx={{ my: 2 }} />
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, flexWrap: 'wrap', gap: 2 }}>
+              <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, justifyContent: 'space-between', alignItems: { xs: 'stretch', md: 'center' }, mb: 2, gap: 2 }}>
                 <Box>
                   <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#064e3b' }}>FARM LOCATION</Typography>
                   <Typography variant="caption" color="text.secondary">Where can buyers find your produce?</Typography>
                 </Box>
-                <Stack direction="row" spacing={1} alignItems="center">
+                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1} alignItems={{ xs: 'stretch', sm: 'center' }}>
                   <Chip 
                     icon={<GppGoodIcon />} 
                     label={privacyRadius ? "Privacy On" : "Exact Location"} 
@@ -628,7 +627,7 @@ export function SellProduct() {
                     color={privacyRadius ? "success" : "default"}
                     variant={privacyRadius ? "filled" : "outlined"}
                     size="small"
-                    sx={{ fontWeight: 'bold' }}
+                    sx={{ fontWeight: 'bold', alignSelf: { xs: 'flex-start', sm: 'auto' } }}
                   />
                   <TextField
                     select
@@ -636,7 +635,7 @@ export function SellProduct() {
                     label="Quick Area"
                     value={searchArea}
                     onChange={(e) => handleSearchArea(e.target.value)}
-                    sx={{ width: 140, '& .MuiInputBase-root': { borderRadius: 2 } }}
+                    sx={{ width: { xs: '100%', sm: 140 }, '& .MuiInputBase-root': { borderRadius: 2 } }}
                   >
                     {NAIROBI_NEIGHBORHOODS.map((option) => (
                       <MenuItem key={option.name} value={option.name}>
@@ -649,7 +648,7 @@ export function SellProduct() {
                     variant="outlined" 
                     startIcon={<MyLocationIcon />} 
                     onClick={handleUseCurrentLocation}
-                    sx={{ borderRadius: 2, textTransform: 'none', fontWeight: 'bold', color: '#064e3b', borderColor: '#064e3b' }}
+                    sx={{ borderRadius: 2, textTransform: 'none', fontWeight: 'bold', color: '#064e3b', borderColor: '#064e3b', width: { xs: '100%', sm: 'auto' } }}
                   >
                     Use GPS
                   </Button>

@@ -395,7 +395,7 @@ export function AppContent() {
     };
   }, []);
 
-  const showDemoBanner = userEmail === 'demo@kilimolink.com' && authenticated;
+  const showDemoBanner = userEmail?.startsWith('demo@') && authenticated;
 
   const demoLogin = () => {
     saveToken('user', 'demo-token-123');
@@ -570,6 +570,11 @@ export function AppContent() {
           <ListItem disablePadding>
             <ListItemButton component={Link} to="/market" onClick={() => setMobileMenuOpen(false)}>
               <ListItemText primary="Marketplace" primaryTypographyProps={{ fontWeight: 700 }} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/sell" onClick={() => setMobileMenuOpen(false)}>
+              <ListItemText primary="Sell Produce" primaryTypographyProps={{ fontWeight: 700, color: '#064e3b' }} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>

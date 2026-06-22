@@ -8,6 +8,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../services/api';
+import { applyToken } from '../services/auth';
 
 interface Product {
   id: string;
@@ -34,11 +35,19 @@ export function MyProducts() {
   const fetchMyProducts = async () => {
     setLoading(true);
     setError(null);
+    const isDemo = !!applyToken('user') && localStorage.getItem('email')?.startsWith('demo@');
     try {
       const res = await api.get('/products/my');
       setProducts(res.data);
     } catch {
-      setError('Failed to load your products.');
+      if (isDemo) {
+        setProducts([
+          { id: 'demo-1', title: 'Sukuma Wiki (Kale)', price: 45, quantity: 50, category: 'Vegetables', description: 'Freshly harvested sukuma wiki.', createdAt: new Date().toISOString() },
+          { id: 'demo-2', title: 'Fresh Tomatoes', price: 120, quantity: 80, category: 'Vegetables', description: 'Quality tomatoes.', createdAt: new Date().toISOString() },
+        ]);
+      } else {
+        setError('Failed to load your products.');
+      }
     } finally {
       setLoading(false);
     }

@@ -3,6 +3,7 @@ import { Box, Container, Typography, Paper, Table, TableBody, TableCell, TableCo
 import { motion } from 'framer-motion';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { api } from '../services/api';
+import { applyToken } from '../services/auth';
 import { useNavigate } from 'react-router-dom';
 
 export function OrdersPage() {
@@ -15,12 +16,20 @@ export function OrdersPage() {
     const fetchOrders = async () => {
       setLoading(true);
       setError(null);
+      const isDemo = !!applyToken('user') && localStorage.getItem('email')?.startsWith('demo@');
       try {
         const res = await api.get('/orders');
         setOrders(res.data.orders ?? res.data ?? []);
       } catch (err) {
-        console.error('Failed to fetch orders', err);
-        setError('Failed to load orders. Please ensure you are logged in.');
+        if (isDemo) {
+          setOrders([
+            { id: 'demo-001', status: 'DELIVERED', totalAmount: 450, createdAt: new Date(Date.now() - 86400000).toISOString(), items: [{ product: { title: 'Sukuma Wiki (Kale)', farmer: { phone: '0712345678' } } }] },
+            { id: 'demo-002', status: 'PENDING', totalAmount: 960, createdAt: new Date().toISOString(), items: [{ product: { title: 'Fresh Tomatoes', farmer: { phone: '0723456789' } } }] },
+          ]);
+        } else {
+          console.error('Failed to fetch orders', err);
+          setError('Failed to load orders. Please ensure you are logged in.');
+        }
       } finally {
         setLoading(false);
       }

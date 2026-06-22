@@ -4,7 +4,13 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useParams, useNavigate, Link as RouterLink } from 'react-router-dom';
 import { Box, Button, Container, Grid, Paper, Typography, Chip, Divider, Alert } from '@mui/material';
 import { api } from '../services/api';
+import { applyToken } from '../services/auth';
 import { PriceTruthGap } from '../components/PriceTruthGap';
+
+const DEMO_PRODUCTS: Record<string, any> = {
+  'demo-1': { id: 'demo-1', title: 'Sukuma Wiki (Kale)', price: 45, category: 'Vegetables', description: 'Freshly harvested sukuma wiki. Grown locally using organic methods. Picked this morning for the best taste and nutrition.', farmer: { name: 'Jane Wanjiku', phone: '0712345678' }, location: { address: 'Kiambu' }, imageUrl: '' },
+  'demo-2': { id: 'demo-2', title: 'Fresh Tomatoes', price: 120, category: 'Vegetables', description: 'Quality tomatoes from our local garden. We don\'t use harsh chemicals, and we deliver fast to keep them crisp.', farmer: { name: 'Peter Kamau', phone: '0723456789' }, location: { address: 'Machakos' }, imageUrl: '' },
+};
 
 const CATEGORY_IMAGES: Record<string, string> = {
   Vegetables: 'https://images.unsplash.com/photo-1777353245982-c34b21fc5175?auto=format&fit=crop&w=800&q=80',
@@ -30,12 +36,21 @@ export function ProductDetail() {
     const fetchProduct = async () => {
       setFetching(true);
       setError(null);
+      const isDemo = !!applyToken('user') && localStorage.getItem('email')?.startsWith('demo@');
+      if (isDemo && id && DEMO_PRODUCTS[id]) {
+        setProduct(DEMO_PRODUCTS[id]);
+        setFetching(false);
+        return;
+      }
       try {
         const res = await api.get(`/products/${id}`);
         setProduct(res.data);
       } catch (err: any) {
-        console.error('Failed to fetch product', err);
-        setError(err.response?.status === 404 ? 'Product not found.' : (err.userMessage || 'Failed to load product details.'));
+        if (isDemo && DEMO_PRODUCTS['demo-1']) {
+          setProduct(DEMO_PRODUCTS['demo-1']);
+        } else {
+          setError(err.response?.status === 404 ? 'Product not found.' : (err.userMessage || 'Failed to load product details.'));
+        }
       } finally {
         setFetching(false);
       }
