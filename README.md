@@ -7,7 +7,8 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](kilimolink/CONTRIBUTING.md)
 
-**Live web app:** https://geraldkombo.github.io/KilimoLink/ — runs in offline demo mode with a built-in dataset when the API is not reachable, so it always works.
+**Live web app:** https://kilimolink.pages.dev — full mode: React SPA + API (Cloudflare Pages Functions) + D1 database, all same-origin.
+**Mirror:** https://geraldkombo.github.io/KilimoLink/ (same live API; falls back to an offline demo dataset if it is unreachable).
 
 Built for the **Innovate4Cities 2026** challenge. The marketplace is the data engine: food-flow, price-gap and climate-impact signals aggregate into a resilience view for Nairobi City County.
 
@@ -42,7 +43,7 @@ graph LR
   subgraph Client
     W[React 19 + Vite + MUI<br/>GitHub Pages]
   end
-  subgraph Backend [NestJS 11 — Render]
+  subgraph Backend [API — Cloudflare Pages Functions + D1 in production; NestJS 11 self-hosted alternative]
     A[Auth<br/>JWT + OTP]
     M[Market]
     O[Orders]
@@ -59,7 +60,8 @@ graph LR
   M -.-> R
 ```
 
-- **Backend:** NestJS 11, TypeScript 5.7, Prisma 6 (PostgreSQL), Redis (graceful degradation), Swagger at `/api/v1/docs`
+- **Edge backend (production):** Cloudflare Pages Functions + D1 (SQLite) — same-origin with the SPA, WebCrypto JWT/PBKDF2, see `docs/EDGE_API.md`
+- **Backend (self-host):** NestJS 11, TypeScript 5.7, Prisma 6 (PostgreSQL), Redis (graceful degradation), Swagger at `/api/v1/docs`
 - **Web:** React 19, Vite 6, MUI 6, TanStack Query, Leaflet, Recharts
 - **Tests:** 9 Jest e2e suites (backend) + Vitest (web)
 
@@ -122,9 +124,10 @@ CI runs both suites plus production builds on every push (`.github/workflows/ci.
 
 ## Deployment
 
-- **API:** Render — `render.yaml` provisions the web service + managed Postgres, runs migrations and seeds on build. Free instances sleep when idle; the first request after idle takes ~60s.
-- **Web:** GitHub Pages — `deploy.yml` builds `kilimolink/web` and publishes on every push to `master` that touches the frontend.
-- **Docker:** `kilimolink/docker-compose.yml` runs API + Postgres + Redis locally.
+- **Production (edge):** Cloudflare Pages — SPA + API functions + D1 (SQLite) same-origin at https://kilimolink.pages.dev. See [`docs/EDGE_API.md`](kilimolink/docs/EDGE_API.md). Deploy: `cd kilimolink/web && npm run build && npx wrangler pages deploy dist --project-name kilimolink --branch master`.
+- **API (self-hosted):** Render — `render.yaml` provisions the NestJS service + managed Postgres.
+- **Web mirror:** GitHub Pages — `deploy.yml` builds `kilimolink/web` against the edge API on every push to `master`.
+- **Docker:** `kilimolink/docker-compose.yml` runs the NestJS API + Postgres + Redis locally.
 
 ## Data sources
 

@@ -1,0 +1,8 @@
+name = "kilimolink"
+compatibility_date = "2026-10-01"
+pages_build_output_dir = "dist"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "kilimolink"
+database_id = "8da98030-b1e6-4683-946c-e9563e5e2769"
