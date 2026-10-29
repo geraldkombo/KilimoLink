@@ -30,8 +30,9 @@ npx wrangler d1 execute kilimolink --remote --file db/schema.sql   # schema (ide
 
 Secrets (Pages → kilimolink → Settings): `JWT_SECRET` (required, strong random),
 `ADMIN_EMAILS` (comma-separated admin logins for `POST /auth/login-email`),
-`MOCK_PAYMENTS=true`, `DEV_OTP=true` (returns `devCode` in send-otp responses until an
-SMS provider is wired — remove for real phone auth).
+`MOCK_PAYMENTS=true`, `AT_USERNAME` + `AT_API_KEY` (Africa's Talking SMS for real OTP
+delivery — REST call from `_lib/sms.js`), `DEV_OTP=true` (returns `devCode` in send-otp
+responses when AT is not configured or the send fails — remove once real SMS is live).
 
 Demo dataset: `GET /api/v1/seed?key=seedme-2024` (idempotent, slug ids match
 `/ai/price-truth/:slug`). Admin dataset: `POST /api/v1/admin/seed` (ADMIN role only).

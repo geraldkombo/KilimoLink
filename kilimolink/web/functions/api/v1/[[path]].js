@@ -3,6 +3,7 @@
 import { json, err, withCors, uuid, nowIso, parseLocation, stripUser } from '../../_lib/util.js';
 import { hashSecret, verifySecret } from '../../_lib/crypto.js';
 import { signToken, authenticate } from '../../_lib/jwt.js';
+import { sendSms } from '../../_lib/sms.js';
 import {
   PRICE_TRUTH, PRICE_TRUTH_DEFAULT_NOTE, ORACLE_AVERAGES, AI_BASELINES,
   DEMO_PRODUCTS, DEMO_FARMER, DEMO_BUYER, slugify,
@@ -100,9 +101,13 @@ async function route({ request, env }) {
       await db.prepare('UPDATE otpChallenges SET usedAt = ?1 WHERE phone = ?2 AND usedAt IS NULL AND expiresAt > ?1').bind(now, phone).run();
       await db.prepare('INSERT INTO otpChallenges (id, phone, codeHash, expiresAt, createdAt) VALUES (?1,?2,?3,?4,?5)')
         .bind(uuid(), phone, codeHash, new Date(Date.now() + 10 * 60 * 1000).toISOString(), now).run();
-      // No SMS provider is wired on the edge yet; DEV_OTP=true returns the code
-      // so the phone flow stays usable (mirrors NODE_ENV=dev devCode in the Node backend).
-      return json(env.DEV_OTP === 'true' ? { ok: true, devCode: code } : { ok: true });
+      // Real SMS via Africa's Talking when AT_USERNAME + AT_API_KEY secrets are set.
+      // Without them, DEV_OTP=true returns the code so the phone flow stays testable
+      // (mirrors NODE_ENV=dev devCode in the Node backend).
+      const smsResult = await sendSms(env, phone, `Your KilimoLink code is ${code}. Valid for 10 minutes.`);
+      if (smsResult?.status === 'sent') return json({ ok: true, channel: 'sms' });
+      if (env.DEV_OTP === 'true') return json({ ok: true, devCode: code, channel: smsResult ? 'sms-failed' : 'dry-run' });
+      return json({ ok: true });
     }
 
     if (m === 'POST' && (seg[1] === 'verify-otp' || seg[1] === 'verify')) {

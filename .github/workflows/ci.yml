@@ -72,3 +72,18 @@ jobs:
 
       - name: Run frontend tests
         run: cd kilimolink/web && npm run test --if-present
+
+  edge-api-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Live edge API smoke test
+        run: |
+          set -e
+          B=https://kilimolink.pages.dev/api/v1
+          curl -sf "$B/health" | grep -q '"status":"ok"'
+          curl -sf "$B/products?limit=5" | grep -q '"products"'
+          curl -sf "$B/impact" | grep -q '"completedOrders"'
+          curl -sf "$B/oracle/prices?product=grains" | grep -q '"KES"'
+          curl -sf "$B/ai/price-truth/tomatoes" | grep -q '"referencePrice"'
+          curl -sf "$B/market/disruption-alerts" | grep -q '"active"'
+          echo "edge API smoke: OK"
