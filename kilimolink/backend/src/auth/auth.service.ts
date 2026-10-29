@@ -19,8 +19,13 @@ export class AuthService {
   ) {}
 
   async loginWithEmail(email: string, name: string, role: Role = Role.FARMER) {
-    const adminEmails = ['kombo@protonmail.com', 'kilimolink@proton.me'];
-    const isWhitelistedAdmin = adminEmails.includes(email);
+    // Admins are provisioned via the ADMIN_EMAILS env var (comma-separated).
+    // No hardcoded emails: claiming an address must not grant ADMIN.
+    const adminEmails = (process.env.ADMIN_EMAILS ?? '')
+      .split(',')
+      .map((e) => e.trim().toLowerCase())
+      .filter(Boolean);
+    const isWhitelistedAdmin = adminEmails.includes(email.toLowerCase());
 
     const existing = await this.prisma.user.findUnique({ where: { email } });
 

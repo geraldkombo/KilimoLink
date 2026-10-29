@@ -46,26 +46,29 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install backend deps
-        run: cd backend && npm install --legacy-peer-deps
+        run: cd kilimolink/backend && npm install --legacy-peer-deps
 
       - name: Generate Prisma Client
-        run: cd backend && npx prisma generate
+        run: cd kilimolink/backend && npx prisma generate
 
       - name: Push DB schema
-        run: cd backend && npx prisma db push
+        run: cd kilimolink/backend && npx prisma db push
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/kilimolink?schema=public
 
       - name: Build backend
-        run: cd backend && npm run build
+        run: cd kilimolink/backend && npm run build
 
       - name: Run backend tests
-        run: cd backend && npm test
+        run: cd kilimolink/backend && npm test
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/kilimolink?schema=public
 
       - name: Install frontend deps
-        run: cd web && npm install
+        run: cd kilimolink/web && npm install
 
       - name: Build frontend
-        run: cd web && npm run build
+        run: cd kilimolink/web && npm run build
+
+      - name: Run frontend tests
+        run: cd kilimolink/web && npm run test --if-present

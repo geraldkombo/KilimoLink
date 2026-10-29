@@ -28,7 +28,3 @@ try {
     res.end(JSON.stringify({ status: 'ok', service: 'KilimoLink' }));
   }).listen(PORT);
 }
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ status: 'ok', service: 'KilimoLink' }));
-  }).listen(PORT);
-}

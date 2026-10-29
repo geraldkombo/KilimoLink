@@ -109,9 +109,9 @@ describe('Market (e2e)', () => {
       .get('/api/v1/products?lat=-1.286&lng=36.817')
       .expect(200);
 
-    expect(Array.isArray(res.body)).toBe(true);
-    if (res.body.length > 0) {
-      expect(res.body[0]).toHaveProperty('distance');
+    expect(Array.isArray(res.body.products)).toBe(true);
+    if (res.body.products.length > 0) {
+      expect(res.body.products[0]).toHaveProperty('distance');
     }
   });
 });

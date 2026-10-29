@@ -47,6 +47,9 @@ export class AiService {
     'irish-potatoes': { reference: 140, source: 'KNBS Food Price Bulletin', asOf: '2026-05', typicalMiddleman: 95, note: 'Middleman figure is a typical quoted rate; reference is the published government price.' },
     'bananas-sweet': { reference: 100, source: 'AFA Horticulture', asOf: '2026-05', typicalMiddleman: 65, note: 'Middleman figure is a typical quoted rate; reference is the published government price.' },
     'avocados': { reference: 80, source: 'AFA Horticulture', asOf: '2026-05', typicalMiddleman: 50, note: 'Middleman figure is a typical quoted rate; reference is the published government price.' },
+    'macadamia-nuts-in-shell': { reference: 100, source: 'Ministry of Agriculture farmgate minimum (Apr 2026)', asOf: '2026-10', typicalMiddleman: 30, note: 'Government minimum price announced Apr 2026; MACNUT warns brokers pay as low as KSh 30/kg. Retail kernel ~KSh 1,456/kg.' },
+    'goat-meat-mbuzi': { reference: 940, source: 'Verified Nairobi retail benchmark (KMP, Oct 2026)', asOf: '2026-10', typicalMiddleman: 600, note: 'Retail benchmark for all cuts; farmgate sellers should price against this, not broker offers.' },
+    'beef-with-bones': { reference: 690, source: 'KNBS 2026 Economic Survey (Sh689.62/kg avg retail)', asOf: '2026-10', typicalMiddleman: 450, note: 'Official national average retail price, up 8.6% from Sh635.08/kg in 2024.' },
   };
 
   getPriceTruth(slug: string) {

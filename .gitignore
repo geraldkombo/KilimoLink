@@ -9,3 +9,11 @@ coverage
 *.tsbuildinfo
 
 AgriBizPlatform_FINAL.zip
+# compiled test artifacts (tsc misfires)
+kilimolink/backend/test/**/*.js
+kilimolink/backend/test/**/*.js.map
+
+# local databases
+*.db
+.env*
+!.env.example

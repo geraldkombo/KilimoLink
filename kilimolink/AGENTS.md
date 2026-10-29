@@ -4,7 +4,7 @@
 **KilimoLink Direct** is a hyperlocal urban food resilience marketplace connecting city consumers directly with local farmers across East Africa.
 
 - **Stack**: NestJS (backend) + React/Vite (frontend) + PostgreSQL (database) + Redis (cache)
-- **Auth**: Privy (email-to-wallet) + JWT
+- **Auth**: Email/phone OTP + JWT (passport)
 - **Payments**: Mock/Solana devnet (USDC)
 - **Hosting**: Render (API, `kilimolink.onrender.com`) + GitHub Pages (web, `geraldkombo.github.io/KilimoLink`)
 
@@ -19,13 +19,13 @@
 7. **Environment variables** — add to `.env.example` and validate in config service
 8. **Redis** — use `RedisService` for caching; graceful degradation when unavailable
 9. **Docker** — multi-stage builds; non-root users; health checks on all services
-10. **Test suite must pass** before any PR: `pnpm test`
+10. **Test suite must pass** before any PR: `npm test` in backend and web
 
 ## Test Commands
 ```bash
-pnpm --filter @kilimolink/backend test   # Jest backend tests
-pnpm --filter @kilimolink/web test       # Vitest frontend tests
-pnpm test                                # All tests
+cd backend && npm test                  # Jest backend e2e tests
+cd web && npm run test                   # Vitest frontend tests
+# run both from the kilimolink/ directory
 ```
 
 ## File Map

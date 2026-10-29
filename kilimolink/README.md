@@ -6,9 +6,7 @@
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?logo=postgresql)](https://www.postgresql.org/)
 [![Redis](https://img.shields.io/badge/Redis-7-DC382D?logo=redis)](https://redis.io/)
 [![Prisma](https://img.shields.io/badge/Prisma-6-2D3748?logo=prisma)](https://www.prisma.io/)
-[![Solana](https://img.shields.io/badge/Solana-1.98-9945FF?logo=solana)](https://solana.com/)
-[![MIT License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![tests](https://img.shields.io/badge/tests-30+/30+-success)](https://github.com/geraldkombo/KilimoLink/actions)
+[![MIT License](https://img.shields.io/badge/license-MIT-green)](../LICENSE)
 [![CI](https://github.com/geraldkombo/KilimoLink/actions/workflows/ci.yml/badge.svg)](https://github.com/geraldkombo/KilimoLink/actions/workflows/ci.yml)
 
 **KilimoLink Direct** is Nairobi's AI food system climate intelligence platform for the **Innovate4Cities 2026** challenge. The marketplace is the data engine: every listing and order creates food-flow, price-risk, and climate-impact signals for a future Nairobi City County resilience dashboard.
@@ -88,7 +86,7 @@ To give Nairobi City County real-time food system visibility before climate shoc
 
 ### Data Flow
 
-1. **User** authenticates via Privy → backend issues JWT
+1. **User** authenticates via email or phone OTP → backend issues JWT
 2. **Farmer** creates product listing with geolocation → cached in Redis
 3. **Buyer** browses marketplace → products sorted by Haversine distance
 4. **Buyer** places order → product quantity decremented → impact metrics updated
@@ -106,8 +104,7 @@ To give Nairobi City County real-time food system visibility before climate shoc
 | **Frontend** | React + Vite + MUI | 19 / 6 |
 | **Database** | PostgreSQL (via Prisma) | 16 |
 | **Cache** | Redis | 7 |
-| **Auth** | Privy + JWT (passport) | 1.99 |
-| **Blockchain** | Solana Web3.js + Squads | 1.98 |
+| **Auth** | JWT (passport) + bcrypt OTP | — |
 | **Maps** | Leaflet / react-leaflet | 1.9 |
 | **Charts** | Recharts | 3.8 |
 | **API Docs** | Swagger (NestJS) | 11 |
@@ -178,23 +175,24 @@ All endpoints are prefixed with `/api/v1/`.
 ## Quick Start
 
 ### Prerequisites
-- Node.js >= 18.0.0
-- pnpm >= 9
+- Node.js >= 20
+- npm >= 10
 - PostgreSQL 16 (or Docker)
-- Redis 7 (or Docker)
+- Redis 7 (optional, or Docker)
 
 ### Development Setup
 
 ```bash
 # 1. Install dependencies
-pnpm install
+cd backend && npm install --legacy-peer-deps && cd ..
+cd web && npm install && cd ..
 
 # 2. Set up environment
 cp backend/.env.example backend/.env
 cp web/.env.example web/.env
 # Edit .env files with your configuration
 
-# 3. Start PostgreSQL and Redis (Docker)
+# 3. Start PostgreSQL and Redis (Docker, optional — demo mode works without)
 docker compose up -d db redis
 
 # 4. Generate Prisma client and push schema
@@ -202,10 +200,10 @@ cd backend
 npx prisma generate
 npx prisma db push
 npx ts-node --transpile-only prisma/seed.ts
-cd ..
 
-# 5. Start development servers
-pnpm dev
+# 5. Start development servers (backend first, then web in another terminal)
+npm run start
+cd ../web && npm run dev
 ```
 
 - **API**: http://localhost:3000
@@ -216,20 +214,17 @@ pnpm dev
 
 ## Testing
 
-**Currently: 30+ tests across 8 test suites.**
+**Currently: 9 backend e2e suites (Jest) + web unit tests (Vitest).**
 
 ```bash
 # Backend tests (Jest)
-pnpm --filter @kilimolink/backend test
+cd backend && npm test
 
 # Frontend tests (Vitest)
-pnpm --filter @kilimolink/web test
+cd web && npm run test
 
-# All tests
-pnpm test
-
-# Run specific backend test
-pnpm --filter @kilimolink/backend test -- --testPathPattern=auth
+# Run a specific backend test
+cd backend && npm test -- --testPathPattern=auth
 ```
 
 ### Test Suites
@@ -280,25 +275,17 @@ All services include Docker health checks:
 
 ## Deployment
 
-### Railway (Backend API)
+### Render (Backend API)
 
-```bash
-railway login
-railway up
-```
-
-The `railway.json` at root configures:
-- Build: `pnpm install → prisma generate → prisma migrate deploy → build`
-- Deploy: `node dist/main.js`
+The repo-root `render.yaml` blueprint provisions the API service plus managed PostgreSQL:
+- Build: `npm ci → prisma generate → prisma db push → npm run build`
+- Start: `node dist/main.js`
 - Health check: `/api/v1/health`
+- `JWT_SECRET` auto-generated; set `ADMIN_EMAILS` manually
 
-### Vercel (Frontend)
+### GitHub Pages (Frontend)
 
-The `vercel.json` configures SPA rewrites. Connect your GitHub repo to Vercel for automatic deployments.
-
-```bash
-vercel --prod
-```
+`.github/workflows/deploy.yml` builds `web/` and publishes to https://geraldkombo.github.io/KilimoLink/ on every push that touches the frontend. The SPA falls back to its built-in demo dataset when the API is unreachable.
 
 ---
 
@@ -326,11 +313,11 @@ kilimolink/
 │   │   ├── schema.prisma     # 10 models + 4 enums
 │   │   ├── seed.ts           # Database seed script
 │   │   └── seed_data/        # JSON datasets (KNBS, products)
-│   └── test/                 # 8 test suites (30+ tests)
+│   └── test/                 # 9 e2e suites (Jest)
 ├── web/                      # React SPA (19 source files)
 │   ├── src/
 │   │   ├── app/              # App shell, routing, contexts
-│   │   ├── pages/            # 5 route pages
+│   │   ├── pages/            # 8 route pages
 │   │   ├── components/       # Reusable UI components
 │   │   ├── services/         # API client, auth, security
 │   │   └── types/            # Type declarations
@@ -364,7 +351,6 @@ kilimolink/
 Built for **Innovate4Cities 2026** and the **Colosseum Agent Hackathon**.
 
 - **City Resilience**: Focus on informal settlements and hyperlocal logistics
-- **Solana Integration**: Leveraging Privy for seamless on-chain identity and payments
 - **Track**: Urban Food Systems & Climate Resilience
 - **Team**: Gerald Kombo (lead), opencode.ai (agent-assisted development)
 
@@ -372,7 +358,7 @@ Built for **Innovate4Cities 2026** and the **Colosseum Agent Hackathon**.
 
 ## License
 
-[MIT](LICENSE) — See LICENSE file for details.
+[MIT](../LICENSE) — See LICENSE file at repository root.
 
 ---
 
