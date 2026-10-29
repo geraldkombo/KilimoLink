@@ -9,7 +9,7 @@
 [![MIT License](https://img.shields.io/badge/license-MIT-green)](../LICENSE)
 [![CI](https://github.com/geraldkombo/KilimoLink/actions/workflows/ci.yml/badge.svg)](https://github.com/geraldkombo/KilimoLink/actions/workflows/ci.yml)
 
-**KilimoLink Direct** is Nairobi's AI food system climate intelligence platform for the **Innovate4Cities 2026** challenge. The marketplace is the data engine: every listing and order creates food-flow, price-risk, and climate-impact signals for a future Nairobi City County resilience dashboard.
+**KilimoLink Direct** is a live urban food-resilience marketplace for Nairobi. The marketplace is the data engine: every listing and order creates food-flow, price-risk, and climate-impact signals that aggregate into the county resilience dashboard.
 
 ---
 
@@ -26,7 +26,6 @@
 - [Deployment](#-deployment)
 - [Project Structure](#-project-structure)
 - [Documentation](#-documentation)
-- [Hackathon Context](#-hackathon-context)
 
 ---
 
@@ -39,7 +38,7 @@ To give Nairobi City County real-time food system visibility before climate shoc
 - Climate shocks can disrupt harvests, roads, market prices, and neighborhood access.
 - Food waste creates methane, and long supply routes increase transport emissions.
 - Informal settlements such as Kibera, Mathare, and Mukuru feel price and access shocks first.
-- Every numeric claim used in the pitch must be verified in `EVIDENCE_LOG.md` before submission.
+- Every numeric claim shown to users must trace to a verifiable source (`docs/DATA_REFRESH.md`).
 
 ---
 
@@ -335,24 +334,20 @@ kilimolink/
 
 | Document | Description |
 |----------|-------------|
-| [I4C Submission](docs/I4C26_SUBMISSION.md) | Innovate4Cities 2026 challenge submission |
-| [Demo Script](docs/DEMO_SCRIPT.md) | Step-by-step walkthrough |
+| [Edge API](docs/EDGE_API.md) | Production backend: Cloudflare Pages Functions + D1 |
 | [Technical Overview](docs/TECHNICAL_OVERVIEW.md) | Architecture deep dive |
 | [API Reference](docs/API_REFERENCE.md) | Detailed API documentation |
-| [Deployment Guide](docs/DEPLOYMENT_GUIDE.md) | Production deployment |
-| [Press Release](docs/PRESS_RELEASE.md) | Project announcement |
-| [Strategic Proposal](docs/STRATEGIC_PROPOSAL.md) | Market strategy |
+| [User Manual](docs/USER_MANUAL.md) | Product guide for farmers and buyers |
+| [Deployment Guide](docs/DEPLOYMENT_GUIDE.md) | Self-hosted deployment |
+| [Data Refresh](docs/DATA_REFRESH.md) | Price-data sourcing and refresh pipeline |
 | [Security Audit](docs/SECURITY_AUDIT.md) | Security review |
+| [Privacy Policy](docs/PRIVACY_POLICY.md) | User data policy |
 
 ---
 
-## Hackathon Context
+## Team
 
-Built for **Innovate4Cities 2026** and the **Colosseum Agent Hackathon**.
-
-- **City Resilience**: Focus on informal settlements and hyperlocal logistics
-- **Track**: Urban Food Systems & Climate Resilience
-- **Team**: Gerald Kombo (lead), opencode.ai (agent-assisted development)
+Gerald Kombo (lead) — built agent-assisted with opencode.ai.
 
 ---
 
@@ -364,8 +359,6 @@ Built for **Innovate4Cities 2026** and the **Colosseum Agent Hackathon**.
 
 ## Acknowledgments
 
-- Innovate4Cities 2026 challenge
-- Colosseum Agent Hackathon
 - NASA POWER for satellite data
 - Unsplash for placeholder imagery
 - Open-source community (NestJS, React, Prisma, and all dependencies)

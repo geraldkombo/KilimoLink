@@ -1072,7 +1072,7 @@ export function AppContent() {
             <Grid item xs={12} md={4}>
               <Typography variant="h6" sx={{ fontWeight: 900, color: '#064e3b', mb: 2 }}>KILIMOLINK DIRECT</Typography>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                KilimoLink Direct - an urban food-system resilience platform. I4C26.
+                Direct trade between Nairobi's consumers and its peri-urban farmers. Fair prices from official KNBS/AFA data, lower food miles, stronger county food systems.
               </Typography>
             </Grid>
             <Grid item xs={6} md={2}>
@@ -1094,10 +1094,12 @@ export function AppContent() {
           </Grid>
           <Divider sx={{ my: 4 }} />
           <Typography variant="body2" color="text.secondary" align="center" sx={{ fontWeight: 600 }}>
-            kilimolink.onrender.com - I4C26
+            <a href="https://kilimolink.pages.dev" style={{ color: '#064e3b', textDecoration: 'none' }}>kilimolink.pages.dev</a>
+            {' · '}
+            <a href="https://github.com/geraldkombo/KilimoLink" style={{ color: '#064e3b', textDecoration: 'none' }}>github.com/geraldkombo/KilimoLink</a>
           </Typography>
           <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 0.5 }}>
-            &copy; 2026 KilimoLink Direct - strengthening urban food-system resilience through climate-smart transport coordination.
+            &copy; 2026 KilimoLink Direct - strengthening urban food-system resilience through direct farmer-to-city trade.
           </Typography>
         </Container>
       </Box>

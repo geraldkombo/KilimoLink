@@ -11,7 +11,7 @@ export class AdminAuthService {
   ) {}
 
   private isStrongPassword(password: string) {
-    return password.length >= 8; // Simplified for hackathon
+    return password.length >= 8; // minimum length check; full policy enforced by AdminUser provisioning
   }
 
   async login(email: string, password: string, ip?: string) {

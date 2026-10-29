@@ -10,7 +10,7 @@
 **Live web app:** https://kilimolink.pages.dev — full mode: React SPA + API (Cloudflare Pages Functions) + D1 database, all same-origin.
 **Mirror:** https://geraldkombo.github.io/KilimoLink/ (same live API; falls back to an offline demo dataset if it is unreachable).
 
-Built for the **Innovate4Cities 2026** challenge. The marketplace is the data engine: food-flow, price-gap and climate-impact signals aggregate into a resilience view for Nairobi City County.
+The marketplace is the data engine: food-flow, price-gap and climate-impact signals aggregate into a live resilience view for Nairobi City County. Production runs entirely on the edge — https://kilimolink.pages.dev (SPA + API + D1 database, same origin).
 
 ---
 
@@ -138,7 +138,7 @@ Price references combine official and field-verified data, refreshed Oct 2026:
 - Ministry of Agriculture farmgate minimums (macadamia, Apr 2026)
 - Verified supplier price lists, Laikipia/Nanyuki–Nairobi corridor (Oct 2026)
 
-See [`docs/DATA_REFRESH.md`](kilimolink/docs/DATA_REFRESH.md) for the refresh pipeline and [`docs/EVIDENCE_LOG.md`](kilimolink/docs/EVIDENCE_LOG.md) for claim-by-claim verification status.
+See [`docs/DATA_REFRESH.md`](kilimolink/docs/DATA_REFRESH.md) for the refresh pipeline.
 
 ## Security
 

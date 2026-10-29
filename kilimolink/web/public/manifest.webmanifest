@@ -1,0 +1,12 @@
+{
+  "name": "KilimoLink Direct",
+  "short_name": "KilimoLink",
+  "description": "Direct trade between Nairobi's consumers and peri-urban farmers. Fair prices from official KNBS/AFA data.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#064e3b",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
