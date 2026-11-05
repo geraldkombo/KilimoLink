@@ -1,0 +1,56 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/kilimolink"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      deps:
+        patterns:
+          - "*"
+  - package-ecosystem: "npm"
+    directory: "/kilimolink/web"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      deps:
+        patterns:
+          - "*"
+  - package-ecosystem: "npm"
+    directory: "/kilimolink/backend"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      deps:
+        patterns:
+          - "*"
+  - package-ecosystem: "npm"
+    directory: "/kilimolink/mcp-server"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      deps:
+        patterns:
+          - "*"
+  - package-ecosystem: "npm"
+    directory: "/kilimolink/mobile"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      deps:
+        patterns:
+          - "*"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      deps:
+        patterns:
+          - "*"
