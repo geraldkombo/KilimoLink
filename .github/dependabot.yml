@@ -9,6 +9,10 @@ updates:
       deps:
         patterns:
           - "*"
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
   - package-ecosystem: "npm"
     directory: "/kilimolink/web"
     schedule:
@@ -18,6 +22,10 @@ updates:
       deps:
         patterns:
           - "*"
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
   - package-ecosystem: "npm"
     directory: "/kilimolink/backend"
     schedule:
@@ -27,6 +35,10 @@ updates:
       deps:
         patterns:
           - "*"
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
   - package-ecosystem: "npm"
     directory: "/kilimolink/mcp-server"
     schedule:
@@ -36,6 +48,10 @@ updates:
       deps:
         patterns:
           - "*"
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
   - package-ecosystem: "npm"
     directory: "/kilimolink/mobile"
     schedule:
@@ -45,6 +61,10 @@ updates:
       deps:
         patterns:
           - "*"
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -54,3 +74,7 @@ updates:
       deps:
         patterns:
           - "*"
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
