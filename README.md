@@ -76,7 +76,7 @@ kilimolink/
   docs/        Architecture, deployment, data-refresh docs
 render.yaml    Render blueprint: API + managed Postgres
 .github/       CI (build + test) and GitHub Pages deploy workflows
-archive/       Hackathon artifacts (prompts, pitch deck)
+archive/       Legacy sprint artifacts (prompts, pitch deck)
 ```
 
 ## Quick start
