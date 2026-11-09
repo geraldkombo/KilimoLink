@@ -412,13 +412,13 @@ async function route({ request, env }) {
     if (m === 'GET' && seg[1] === 'price-truth' && seg[2]) {
       const row = PRICE_TRUTH[seg[2]];
       if (!row) return err(404, 'No reference price for this product');
-      const gap = row.reference - row.typicalMiddleman;
+      const spread = row.reference - row.typicalFieldQuote;
       return json({
         slug: seg[2],
         referencePrice: row.reference,
-        middlemanPrice: row.typicalMiddleman,
-        gapKes: gap,
-        farmerLossPercent: Math.round((gap / row.reference) * 100),
+        middlemanPrice: row.typicalFieldQuote,
+        spreadKes: spread,
+        spreadPercent: Math.round((spread / row.reference) * 100),
         source: row.source,
         asOf: row.asOf,
         note: row.note || PRICE_TRUTH_DEFAULT_NOTE,

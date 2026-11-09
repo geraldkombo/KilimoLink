@@ -2,9 +2,17 @@
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
+// Asset base path, per deploy target:
+//   GitHub Pages  -> /KilimoLink/   (project-site subpath)
+//   Cloudflare Pages / Vercel / Render -> /   (domain root)
+// Set BASE_PATH explicitly in each target's build; defaulting to '/' is the
+// safe choice because a wrong subpath 404s every asset, while a wrong '/'
+// still resolves on a subpath host in most cases.
+const basePath = process.env.BASE_PATH ?? process.env.PAGES_BASE ?? '/';
+
 export default defineConfig({
   plugins: [react()],
-  base: process.env.PAGES_BASE || '/KilimoLink/',
+  base: basePath,
   server: {
     host: true,
     port: 5173

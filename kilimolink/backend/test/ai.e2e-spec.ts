@@ -90,4 +90,23 @@ describe('AiService (unit)', () => {
     const result = await aiService.suggestPrice('Weird Item', 'UnknownCategory', []);
     expect(result.recommended).toBeGreaterThan(0);
   });
+
+  it('getPriceTruth returns a neutral spread shape, not a fraud verdict', () => {
+    const t = aiService.getPriceTruth('sukuma-wiki-kale');
+    expect(t).not.toBeNull();
+    const row = t!;
+    expect(row.referencePrice).toBe(45);
+    expect(row.middlemanPrice).toBe(28);
+    expect(row.spreadKes).toBe(17);
+    expect(row.spreadPercent).toBe(38);
+    // Old defamatory field is gone.
+    expect((row as any).farmerLossPercent).toBeUndefined();
+    expect((row as any).gapKes).toBeUndefined();
+    // Note must not assert any buyer is cheating the farmer.
+    expect(row.note.toLowerCase()).not.toMatch(/cheat|exploit|fraud/);
+  });
+
+  it('getPriceTruth returns null for unknown slug', () => {
+    expect(aiService.getPriceTruth('nonexistent-crop')).toBeNull();
+  });
 });

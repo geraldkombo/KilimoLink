@@ -2,7 +2,11 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
   "installCommand": "echo 'install runs inside buildCommand (the app lives in kilimolink/web)'",
-  "buildCommand": "cd kilimolink/web && npm ci && VITE_API_BASE_URL=https://kilimolink.pages.dev/api/v1 npm run build",
+  "buildCommand": "cd kilimolink/web && npm ci && npm run build",
   "outputDirectory": "kilimolink/web/dist",
+  "env": {
+    "BASE_PATH": "/",
+    "VITE_API_BASE_URL": "https://kilimolink.pages.dev/api/v1"
+  },
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }

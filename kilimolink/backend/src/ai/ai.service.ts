@@ -35,34 +35,41 @@ export class AiService {
     };
   }
 
-  private readonly PRICE_TRUTH: Record<string, { reference: number; source: string; asOf: string; typicalMiddleman: number; note: string }> = {
-    'sukuma-wiki-kale': { reference: 45, source: 'KNBS Food Price Bulletin', asOf: '2026-05', typicalMiddleman: 28, note: 'Middleman figure is a typical quoted rate; reference is the published government price.' },
-    'tomatoes': { reference: 120, source: 'AFA Horticulture', asOf: '2026-05', typicalMiddleman: 80, note: 'Middleman figure is a typical quoted rate; reference is the published government price.' },
-    'onions-red': { reference: 130, source: 'AFA Horticulture', asOf: '2026-05', typicalMiddleman: 85, note: 'Middleman figure is a typical quoted rate; reference is the published government price.' },
-    'grade-a-milk-raw': { reference: 65, source: 'AFA Dairy Directorate', asOf: '2026-05', typicalMiddleman: 42, note: 'Middleman figure is a typical quoted rate; reference is the published government price.' },
-    'spinach': { reference: 50, source: 'KNBS Food Price Bulletin', asOf: '2026-05', typicalMiddleman: 32, note: 'Middleman figure is a typical quoted rate; reference is the published government price.' },
-    'maize-white': { reference: 185, source: 'KNBS / AFA', asOf: '2026-05', typicalMiddleman: 130, note: 'Middleman figure is a typical quoted rate; reference is the published government price.' },
-    'cabbage': { reference: 80, source: 'KNBS Food Price Bulletin', asOf: '2026-05', typicalMiddleman: 55, note: 'Middleman figure is a typical quoted rate; reference is the published government price.' },
-    'pure-honey': { reference: 850, source: 'AFA Honey Directorate', asOf: '2026-05', typicalMiddleman: 600, note: 'Middleman figure is a typical quoted rate; reference is the published government price.' },
-    'irish-potatoes': { reference: 140, source: 'KNBS Food Price Bulletin', asOf: '2026-05', typicalMiddleman: 95, note: 'Middleman figure is a typical quoted rate; reference is the published government price.' },
-    'bananas-sweet': { reference: 100, source: 'AFA Horticulture', asOf: '2026-05', typicalMiddleman: 65, note: 'Middleman figure is a typical quoted rate; reference is the published government price.' },
-    'avocados': { reference: 80, source: 'AFA Horticulture', asOf: '2026-05', typicalMiddleman: 50, note: 'Middleman figure is a typical quoted rate; reference is the published government price.' },
-    'macadamia-nuts-in-shell': { reference: 100, source: 'Ministry of Agriculture farmgate minimum (Apr 2026)', asOf: '2026-10', typicalMiddleman: 30, note: 'Government minimum price announced Apr 2026; MACNUT warns brokers pay as low as KSh 30/kg. Retail kernel ~KSh 1,456/kg.' },
-    'goat-meat-mbuzi': { reference: 940, source: 'Verified Nairobi retail benchmark (KMP, Oct 2026)', asOf: '2026-10', typicalMiddleman: 600, note: 'Retail benchmark for all cuts; farmgate sellers should price against this, not broker offers.' },
-    'beef-with-bones': { reference: 690, source: 'KNBS 2026 Economic Survey (Sh689.62/kg avg retail)', asOf: '2026-10', typicalMiddleman: 450, note: 'Official national average retail price, up 8.6% from Sh635.08/kg in 2024.' },
+  /**
+   * Two price points per crop: a published government reference and a typical
+   * field/buyer quote. The spread between them is a market fact to display —
+   * it is NOT an accusation that any particular buyer is defrauding the farmer.
+   * Each row states its provenance; the tool's job is to make the spread
+   * visible, not to deliver a moral verdict.
+   */
+  private readonly PRICE_TRUTH: Record<string, { reference: number; source: string; asOf: string; typicalFieldQuote: number; note: string }> = {
+    'sukuma-wiki-kale': { reference: 45, source: 'KNBS Food Price Bulletin', asOf: '2026-05', typicalFieldQuote: 28, note: 'Government reference vs. a typical field quote. A single representative rate cannot capture what every buyer actually pays.' },
+    'tomatoes': { reference: 120, source: 'AFA Horticulture', asOf: '2026-05', typicalFieldQuote: 80, note: 'Government reference vs. a typical field quote. A single representative rate cannot capture what every buyer actually pays.' },
+    'onions-red': { reference: 130, source: 'AFA Horticulture', asOf: '2026-05', typicalFieldQuote: 85, note: 'Government reference vs. a typical field quote. A single representative rate cannot capture what every buyer actually pays.' },
+    'grade-a-milk-raw': { reference: 65, source: 'AFA Dairy Directorate', asOf: '2026-05', typicalFieldQuote: 42, note: 'Government reference vs. a typical field quote. A single representative rate cannot capture what every buyer actually pays.' },
+    'spinach': { reference: 50, source: 'KNBS Food Price Bulletin', asOf: '2026-05', typicalFieldQuote: 32, note: 'Government reference vs. a typical field quote. A single representative rate cannot capture what every buyer actually pays.' },
+    'maize-white': { reference: 185, source: 'KNBS / AFA', asOf: '2026-05', typicalFieldQuote: 130, note: 'Government reference vs. a typical field quote. A single representative rate cannot capture what every buyer actually pays.' },
+    'cabbage': { reference: 80, source: 'KNBS Food Price Bulletin', asOf: '2026-05', typicalFieldQuote: 55, note: 'Government reference vs. a typical field quote. A single representative rate cannot capture what every buyer actually pays.' },
+    'pure-honey': { reference: 850, source: 'AFA Honey Directorate', asOf: '2026-05', typicalFieldQuote: 600, note: 'Government reference vs. a typical field quote. A single representative rate cannot capture what every buyer actually pays.' },
+    'irish-potatoes': { reference: 140, source: 'KNBS Food Price Bulletin', asOf: '2026-05', typicalFieldQuote: 95, note: 'Government reference vs. a typical field quote. A single representative rate cannot capture what every buyer actually pays.' },
+    'bananas-sweet': { reference: 100, source: 'AFA Horticulture', asOf: '2026-05', typicalFieldQuote: 65, note: 'Government reference vs. a typical field quote. A single representative rate cannot capture what every buyer actually pays.' },
+    'avocados': { reference: 80, source: 'AFA Horticulture', asOf: '2026-05', typicalFieldQuote: 50, note: 'Government reference vs. a typical field quote. A single representative rate cannot capture what every buyer actually pays.' },
+    'macadamia-nuts-in-shell': { reference: 100, source: 'Ministry of Agriculture farmgate minimum (Apr 2026)', asOf: '2026-10', typicalFieldQuote: 30, note: 'Government minimum price announced Apr 2026; MACNUT warns brokers pay as low as KSh 30/kg. Retail kernel ~KSh 1,456/kg. Farmgate, wholesale and retail are different markets — compare like with like.' },
+    'goat-meat-mbuzi': { reference: 940, source: 'Verified Nairobi retail benchmark (KMP, Oct 2026)', asOf: '2026-10', typicalFieldQuote: 600, note: 'Retail benchmark for all cuts. Farmgate sellers should compare against the farmgate market, not a retail figure — the two are not the same market.' },
+    'beef-with-bones': { reference: 690, source: 'KNBS 2026 Economic Survey (Sh689.62/kg avg retail)', asOf: '2026-10', typicalFieldQuote: 450, note: 'Official national average retail price, up 8.6% from Sh635.08/kg in 2024. Retail average, not a farmgate quote.' },
   };
 
   getPriceTruth(slug: string) {
     const row = this.PRICE_TRUTH[slug];
     if (!row) return null;
-    const gap = row.reference - row.typicalMiddleman;
-    const lossPct = Math.round((gap / row.reference) * 100);
+    const spread = row.reference - row.typicalFieldQuote;
+    const spreadPct = Math.round((spread / row.reference) * 100);
     return {
       slug,
       referencePrice: row.reference,
-      middlemanPrice: row.typicalMiddleman,
-      gapKes: gap,
-      farmerLossPercent: lossPct,
+      middlemanPrice: row.typicalFieldQuote,
+      spreadKes: spread,
+      spreadPercent: spreadPct,
       source: row.source,
       asOf: row.asOf,
       note: row.note,
